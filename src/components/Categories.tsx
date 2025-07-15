@@ -52,54 +52,54 @@ const categories = [
 
 export const Categories = () => {
   return (
-    <section className="py-6 bg-gray-50">
-      <div className="px-4">
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+    <section className="py-20 bg-gray-50">
+      <div className="container mx-auto px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Nos Catégories
           </h2>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Découvrez notre sélection de produits de la mer frais
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((category) => (
             <div
               key={category.name}
-              className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
+              className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
             >
-              <div className="relative aspect-square overflow-hidden">
+              <div className="relative aspect-[4/3] overflow-hidden">
                 <img
                   src={category.image}
                   alt={category.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 {category.featured && (
-                  <Badge className="absolute top-2 left-2 bg-coral text-white text-xs px-2 py-1">
+                  <Badge className="absolute top-4 left-4 bg-ocean text-white">
                     Vedette
                   </Badge>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3">
-                  <h3 className="font-bold text-white text-sm mb-1">
-                    {category.name}
-                  </h3>
-                  <p className="text-white/80 text-xs">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+              <div className="p-6">
+                <h3 className="font-semibold text-xl text-gray-900 mb-2">
+                  {category.name}
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {category.description}
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-500">
                     {category.productCount} produits
-                  </p>
+                  </span>
+                  <Button className="bg-ocean hover:bg-ocean/90 text-white px-6">
+                    Voir Tout
+                  </Button>
                 </div>
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="text-center mt-6">
-          <Button
-            className="bg-ocean hover:bg-ocean/90 text-white shadow-lg rounded-full px-6 py-3 font-medium"
-          >
-            Voir Toutes les Catégories
-          </Button>
         </div>
       </div>
     </section>
