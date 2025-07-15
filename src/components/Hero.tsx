@@ -1,67 +1,100 @@
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Fish, Truck, Shield } from 'lucide-react';
+import { ArrowRight, Timer, Star, Award } from 'lucide-react';
 import heroImage from '@/assets/hero-seafood.jpg';
+import salmonImage from '@/assets/salmon.jpg';
+import shrimpImage from '@/assets/shrimp.jpg';
+import wholeFishImage from '@/assets/whole-fish.jpg';
 
 export const Hero = () => {
   return (
-    <section className="relative bg-gradient-to-br from-ocean to-ocean-light px-4 py-8">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={heroImage}
-          alt="Fresh seafood display"
-          className="w-full h-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-ocean/80 to-ocean-light/60"></div>
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-          Produits de la Mer
-          <span className="block text-seafoam text-2xl md:text-3xl mt-1">Frais Quotidiennement</span>
-        </h1>
-        <p className="text-white/90 mb-8 max-w-sm mx-auto text-sm leading-relaxed">
-          Poissons et fruits de mer de qualité premium, de l'océan à votre table.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-3 mb-8 max-w-sm mx-auto">
-          <Button className="bg-coral hover:bg-coral/90 text-white shadow-lg rounded-full py-3 px-6 font-medium">
-            Commander Maintenant
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-          <Button variant="outline" className="border-white text-white hover:bg-white/10 rounded-full py-3 px-6">
-            Voir le Menu
-          </Button>
-        </div>
-
-        {/* Features */}
-        <div className="grid grid-cols-1 gap-4 mt-8">
-          <div className="flex items-center justify-center space-x-3 text-white/90">
-            <div className="bg-seafoam/20 p-2 rounded-full">
-              <Fish className="h-4 w-4 text-seafoam" />
+    <section className="bg-white py-8 md:py-16">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Left Content */}
+          <div className="text-center lg:text-left">
+            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+              Produits de la Mer
+              <span className="block text-ocean text-2xl md:text-4xl mt-2">Frais Quotidiennement</span>
+            </h1>
+            <p className="text-gray-600 mb-6 text-lg max-w-lg mx-auto lg:mx-0">
+              Poissons et fruits de mer de qualité premium, de l'océan à votre table avec fraîcheur garantie.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
+              <Button className="bg-ocean hover:bg-ocean/90 text-white px-8 py-3 rounded-full font-medium">
+                Commander Maintenant
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button variant="outline" className="border-ocean text-ocean hover:bg-ocean/10 px-8 py-3 rounded-full font-medium">
+                Voir le Menu
+              </Button>
             </div>
-            <div className="text-left">
-              <h3 className="font-semibold text-sm">Fraîcheur Quotidienne</h3>
-              <p className="text-xs text-white/70">Pêché frais chaque matin</p>
+
+            {/* Features */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center lg:text-left">
+              <div className="flex items-center justify-center lg:justify-start space-x-2">
+                <div className="bg-ocean/10 p-2 rounded-full">
+                  <Timer className="h-4 w-4 text-ocean" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm">Livraison Rapide</p>
+                  <p className="text-xs text-gray-600">Même jour</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-center lg:justify-start space-x-2">
+                <div className="bg-ocean/10 p-2 rounded-full">
+                  <Star className="h-4 w-4 text-ocean" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm">Fraîcheur</p>
+                  <p className="text-xs text-gray-600">Garantie</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-center lg:justify-start space-x-2">
+                <div className="bg-ocean/10 p-2 rounded-full">
+                  <Award className="h-4 w-4 text-ocean" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm">Qualité</p>
+                  <p className="text-xs text-gray-600">Premium</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="flex items-center justify-center space-x-3 text-white/90">
-            <div className="bg-seafoam/20 p-2 rounded-full">
-              <Truck className="h-4 w-4 text-seafoam" />
+
+          {/* Right Image Cards */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+                <img src={salmonImage} alt="Saumon" className="w-full h-32 object-cover" />
+                <div className="p-3">
+                  <h3 className="font-semibold text-sm mb-1">Saumon Frais</h3>
+                  <p className="text-xs text-gray-600">À partir de 249 DH/kg</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+                <img src={wholeFishImage} alt="Poisson entier" className="w-full h-32 object-cover" />
+                <div className="p-3">
+                  <h3 className="font-semibold text-sm mb-1">Poisson Entier</h3>
+                  <p className="text-xs text-gray-600">À partir de 189 DH/kg</p>
+                </div>
+              </div>
             </div>
-            <div className="text-left">
-              <h3 className="font-semibold text-sm">Livraison Rapide</h3>
-              <p className="text-xs text-white/70">Livraison le jour même</p>
-            </div>
-          </div>
-          <div className="flex items-center justify-center space-x-3 text-white/90">
-            <div className="bg-seafoam/20 p-2 rounded-full">
-              <Shield className="h-4 w-4 text-seafoam" />
-            </div>
-            <div className="text-left">
-              <h3 className="font-semibold text-sm">Qualité Garantie</h3>
-              <p className="text-xs text-white/70">100% satisfaction</p>
+            <div className="space-y-4 mt-8">
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+                <img src={shrimpImage} alt="Crevettes" className="w-full h-32 object-cover" />
+                <div className="p-3">
+                  <h3 className="font-semibold text-sm mb-1">Crevettes</h3>
+                  <p className="text-xs text-gray-600">À partir de 329 DH/kg</p>
+                </div>
+              </div>
+              <div className="bg-gradient-to-br from-ocean to-ocean-light rounded-xl p-4 text-white">
+                <h3 className="font-bold text-sm mb-2">Offre Spéciale</h3>
+                <p className="text-xs mb-2">-20% sur votre première commande</p>
+                <Button size="sm" className="bg-white text-ocean hover:bg-gray-100 text-xs px-3 py-1">
+                  Profiter
+                </Button>
+              </div>
             </div>
           </div>
         </div>
