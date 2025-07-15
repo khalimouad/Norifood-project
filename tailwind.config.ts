@@ -61,7 +61,29 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				ocean: {
+					DEFAULT: 'hsl(var(--ocean-blue))',
+					light: 'hsl(var(--ocean-light))',
+					deep: 'hsl(var(--deep-blue))'
+				},
+				seafoam: 'hsl(var(--seafoam))',
+				coral: 'hsl(var(--coral))',
+				wave: 'hsl(var(--wave))'
+			},
+			backgroundImage: {
+				'gradient-ocean': 'var(--gradient-ocean)',
+				'gradient-seafoam': 'var(--gradient-seafoam)',
+				'gradient-wave': 'var(--gradient-wave)'
+			},
+			boxShadow: {
+				'ocean': 'var(--shadow-ocean)',
+				'float': 'var(--shadow-float)',
+				'deep': 'var(--shadow-deep)'
+			},
+			transitionTimingFunction: {
+				'smooth': 'var(--transition-smooth)',
+				'bounce': 'var(--transition-bounce)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
