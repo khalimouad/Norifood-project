@@ -3,6 +3,7 @@ import { ShoppingCart, Search, User, Heart, Menu, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import logo from '@/assets/logo.png';
 
 export const Header = () => {
   const [cartCount, setCartCount] = useState(0);
@@ -13,8 +14,7 @@ export const Header = () => {
       <div className="block md:hidden px-4 py-3">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-full bg-gradient-ocean"></div>
-            <span className="text-lg font-bold text-ocean">Fresh N'Good</span>
+            <img src={logo} alt="Fresh N'Good" className="h-8 w-auto" />
           </div>
           <div className="flex items-center space-x-2">
             <Button variant="ghost" size="icon" className="relative">
@@ -40,8 +40,7 @@ export const Header = () => {
         <div className="container mx-auto px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="h-10 w-10 rounded-full bg-gradient-ocean"></div>
-              <span className="text-2xl font-bold text-ocean">Fresh N'Good</span>
+              <img src={logo} alt="Fresh N'Good" className="h-10 w-auto" />
             </div>
             <nav className="hidden lg:flex items-center space-x-8">
               <a href="#home" className="text-gray-700 hover:text-ocean transition-colors font-medium">Accueil</a>
