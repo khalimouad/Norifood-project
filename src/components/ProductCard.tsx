@@ -153,7 +153,7 @@ export const ProductCard = ({
             </div>
           </div>
           <div className="flex items-end justify-between">
-            <div className="text-lg font-bold text-ocean">
+            <div className="text-lg font-bold text-ocean whitespace-nowrap">
               {discountedPrice.toFixed(2)} DH
             </div>
             <div className="flex items-center gap-1 text-gray-500 text-xs">
