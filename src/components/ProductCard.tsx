@@ -81,7 +81,7 @@ export const ProductCard = ({
   const discountedPrice = discount ? price * (1 - discount / 100) : price;
 
   return (
-    <div className="bg-white rounded-2xl md:rounded-xl overflow-hidden shadow-subtle hover:shadow-elegant transition-all duration-300 active:scale-[0.98] md:active:scale-100">
+    <div className="bg-white rounded-2xl md:rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 active:scale-[0.98] md:active:scale-100 border border-gray-100">
       {/* Image Container optimized for mobile */}
       <div className="relative aspect-[5/4] md:aspect-square overflow-hidden">
         <div ref={imgRef} className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200">
