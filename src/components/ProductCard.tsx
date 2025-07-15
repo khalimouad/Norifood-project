@@ -134,48 +134,48 @@ export const ProductCard = ({
         )}
       </div>
 
-      {/* Content with improved mobile padding */}
-      <div className="p-5 md:p-4">
-        <h3 className="font-bold text-gray-900 text-lg md:text-base mb-2 line-clamp-1 leading-tight">
+      {/* Content with improved mobile padding and text sizing */}
+      <div className="p-4 md:p-4">
+        <h3 className="font-bold text-gray-900 text-base md:text-base mb-2 leading-tight">
           {name}
         </h3>
-        <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2 min-h-[2.5rem]">
+        <p className="text-gray-600 text-sm leading-relaxed mb-3 line-clamp-2">
           {description}
         </p>
         
-        {/* Price and unit info with better mobile layout */}
-        <div className="flex items-end justify-between mb-5">
-          <div className="flex items-center gap-1.5 text-gray-500">
+        {/* Price and unit info with compact mobile layout */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-1 text-gray-500 text-xs">
             {getUnitIcon()}
-            <span className="text-sm font-medium">{getUnitLabel()}</span>
+            <span className="font-medium">{getUnitLabel()}</span>
           </div>
           <div className="text-right">
             {discount && (
-              <span className="text-sm text-gray-400 line-through block mb-1">
+              <span className="text-xs text-gray-400 line-through block">
                 {price.toFixed(2)} DH
               </span>
             )}
-            <div className="text-2xl md:text-xl font-bold text-ocean">
+            <div className="text-lg font-bold text-ocean">
               {discountedPrice.toFixed(2)} DH
             </div>
           </div>
         </div>
 
-        {/* Enhanced mobile-first controls */}
-        <div className="space-y-4">
-          {/* Quantity selector with better mobile design */}
+        {/* Enhanced mobile-first controls with compact spacing */}
+        <div className="space-y-3">
+          {/* Quantity selector with compact mobile design */}
           <div className="flex items-center justify-center">
-            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-2xl p-1.5 shadow-sm">
+            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl p-1 shadow-sm">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
                 disabled={!inStock}
-                className="h-11 w-11 md:h-10 md:w-10 p-0 rounded-xl hover:bg-gray-200 disabled:opacity-50 transition-colors"
+                className="h-9 w-9 p-0 rounded-lg hover:bg-gray-200 disabled:opacity-50 transition-colors"
               >
-                <Minus className="h-5 w-5 md:h-4 md:w-4" />
+                <Minus className="h-4 w-4" />
               </Button>
-              <span className="min-w-[60px] md:min-w-[48px] text-center text-xl md:text-lg font-bold text-gray-900">
+              <span className="min-w-[40px] text-center text-lg font-bold text-gray-900">
                 {quantity}
               </span>
               <Button
@@ -183,19 +183,19 @@ export const ProductCard = ({
                 size="sm"
                 onClick={() => setQuantity(quantity + 1)}
                 disabled={!inStock}
-                className="h-11 w-11 md:h-10 md:w-10 p-0 rounded-xl hover:bg-gray-200 disabled:opacity-50 transition-colors"
+                className="h-9 w-9 p-0 rounded-lg hover:bg-gray-200 disabled:opacity-50 transition-colors"
               >
-                <Plus className="h-5 w-5 md:h-4 md:w-4" />
+                <Plus className="h-4 w-4" />
               </Button>
             </div>
           </div>
           
-          {/* Add to cart button with enhanced mobile experience */}
+          {/* Add to cart button with proper text sizing */}
           <Button
-            className="w-full bg-gradient-to-r from-ocean to-ocean/90 hover:from-ocean/90 hover:to-ocean text-white py-4 md:py-3 px-6 rounded-2xl font-bold text-lg md:text-base shadow-lg hover:shadow-xl active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-ocean to-ocean/90 hover:from-ocean/90 hover:to-ocean text-white py-3 px-4 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={!inStock}
           >
-            <ShoppingCart className="h-6 w-6 md:h-5 md:w-5 mr-3 md:mr-2" />
+            <ShoppingCart className="h-4 w-4 mr-2" />
             {inStock ? 'Ajouter au Panier' : 'Rupture de Stock'}
           </Button>
         </div>
