@@ -60,27 +60,22 @@ export const ProductCard = ({
   const discountedPrice = discount ? price * (1 - discount / 100) : price;
 
   return (
-    <Card className="group hover:shadow-float transition-all duration-300 border-0 bg-card overflow-hidden">
+    <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95">
       <div className="relative aspect-square overflow-hidden">
         <img
           src={image}
           alt={name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover"
         />
         
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-2">
+        <div className="absolute top-2 left-2 flex flex-col gap-1">
           {featured && (
-            <Badge className="bg-coral text-white">Vedette</Badge>
+            <Badge className="bg-coral text-white text-xs px-2 py-1">Vedette</Badge>
           )}
           {discount && (
-            <Badge className="bg-destructive text-white">
+            <Badge className="bg-red-500 text-white text-xs px-2 py-1">
               -{discount}%
-            </Badge>
-          )}
-          {!inStock && (
-            <Badge variant="secondary" className="bg-muted text-muted-foreground">
-              Rupture de Stock
             </Badge>
           )}
         </div>
@@ -89,38 +84,41 @@ export const ProductCard = ({
         <Button
           variant="ghost"
           size="icon"
-          className="absolute top-3 right-3 bg-white/80 hover:bg-white"
+          className="absolute top-2 right-2 bg-white/80 hover:bg-white h-8 w-8"
           onClick={() => setIsLiked(!isLiked)}
         >
           <Heart
             className={`h-4 w-4 ${
-              isLiked ? 'fill-coral text-coral' : 'text-muted-foreground'
+              isLiked ? 'fill-coral text-coral' : 'text-gray-600'
             }`}
           />
         </Button>
 
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {!inStock && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <Badge className="bg-white text-gray-900 px-3 py-1">
+              Rupture de Stock
+            </Badge>
+          </div>
+        )}
       </div>
 
-      <CardContent className="p-4">
-        <h3 className="font-semibold text-lg mb-2 text-card-foreground line-clamp-1">
+      <div className="p-3">
+        <h3 className="font-semibold text-gray-900 text-sm mb-1 line-clamp-1">
           {name}
         </h3>
-        <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
+        <p className="text-gray-600 text-xs mb-2 line-clamp-2">
           {description}
         </p>
         
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 text-muted-foreground">
-              {getUnitIcon()}
-              <span className="text-sm">{getUnitLabel()}</span>
-            </div>
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-1 text-gray-500">
+            {getUnitIcon()}
+            <span className="text-xs">{getUnitLabel()}</span>
           </div>
           <div className="text-right">
             {discount && (
-              <span className="text-sm text-muted-foreground line-through">
+              <span className="text-xs text-gray-400 line-through block">
                 {price.toFixed(2)} DH
               </span>
             )}
@@ -130,41 +128,40 @@ export const ProductCard = ({
           </div>
         </div>
 
-        {/* Quantity Selector */}
-        <div className="flex items-center gap-2 mb-4">
+        {/* Quantity and Add to Cart */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center bg-gray-100 rounded-full">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              disabled={!inStock}
+              className="h-8 w-8 p-0 rounded-full hover:bg-gray-200"
+            >
+              -
+            </Button>
+            <span className="min-w-[32px] text-center text-sm font-medium">
+              {quantity}
+            </span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setQuantity(quantity + 1)}
+              disabled={!inStock}
+              className="h-8 w-8 p-0 rounded-full hover:bg-gray-200"
+            >
+              +
+            </Button>
+          </div>
           <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            className="flex-1 bg-ocean hover:bg-ocean/90 text-white text-sm py-2 rounded-full font-medium"
             disabled={!inStock}
-            className="h-8 w-8 p-0"
           >
-            -
-          </Button>
-          <span className="min-w-[40px] text-center font-medium">
-            {quantity}
-          </span>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setQuantity(quantity + 1)}
-            disabled={!inStock}
-            className="h-8 w-8 p-0"
-          >
-            +
+            <ShoppingCart className="h-4 w-4 mr-1" />
+            {inStock ? 'Ajouter' : 'Épuisé'}
           </Button>
         </div>
-      </CardContent>
-
-      <CardFooter className="p-4 pt-0">
-        <Button
-          className="w-full bg-gradient-seafoam hover:opacity-90 text-white shadow-ocean"
-          disabled={!inStock}
-        >
-          <ShoppingCart className="h-4 w-4 mr-2" />
-          {inStock ? 'Ajouter au Panier' : 'Rupture de Stock'}
-        </Button>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 };

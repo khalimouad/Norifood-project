@@ -52,23 +52,22 @@ const categories = [
 
 export const Categories = () => {
   return (
-    <section id="categories" className="py-16 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+    <section className="py-6 bg-gray-50">
+      <div className="px-4">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Nos Catégories
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Découvrez notre sélection soigneusement choisie de produits de la mer frais, 
-            organisés par catégorie pour votre commodité.
+          <p className="text-gray-600 text-sm">
+            Découvrez notre sélection de produits de la mer frais
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 gap-3">
           {categories.map((category) => (
-            <Card
+            <div
               key={category.name}
-              className="group cursor-pointer hover:shadow-float transition-all duration-300 border-0 bg-card overflow-hidden"
+              className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
             >
               <div className="relative aspect-square overflow-hidden">
                 <img
@@ -77,40 +76,27 @@ export const Categories = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {category.featured && (
-                  <Badge className="absolute top-3 left-3 bg-coral text-white">
+                  <Badge className="absolute top-2 left-2 bg-coral text-white text-xs px-2 py-1">
                     Vedette
                   </Badge>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-lg mb-2 text-card-foreground">
-                  {category.name}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-3">
-                  {category.description}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3">
+                  <h3 className="font-bold text-white text-sm mb-1">
+                    {category.name}
+                  </h3>
+                  <p className="text-white/80 text-xs">
                     {category.productCount} produits
-                  </span>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="text-ocean hover:text-ocean-light hover:bg-ocean/10 group-hover:bg-ocean group-hover:text-white transition-colors"
-                  >
-                    Voir Tout
-                  </Button>
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-6">
           <Button
-            size="lg"
-            className="bg-gradient-ocean hover:opacity-90 text-white shadow-ocean"
+            className="bg-ocean hover:bg-ocean/90 text-white shadow-lg rounded-full px-6 py-3 font-medium"
           >
             Voir Toutes les Catégories
           </Button>

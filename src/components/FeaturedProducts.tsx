@@ -71,28 +71,26 @@ const featuredProducts = [
 
 export const FeaturedProducts = () => {
   return (
-    <section className="py-16 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+    <section className="py-6 bg-white">
+      <div className="px-4">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Produits Vedettes
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Découvrez notre sélection soigneusement choisie des produits de la mer les plus frais et les plus fins, 
-            provenant de fournisseurs de confiance.
+          <p className="text-gray-600 text-sm">
+            Découvrez notre sélection des produits les plus frais
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 gap-3">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-6">
           <Button
-            size="lg"
-            className="bg-gradient-ocean hover:opacity-90 text-white shadow-ocean"
+            className="bg-ocean hover:bg-ocean/90 text-white shadow-lg rounded-full px-6 py-3 font-medium"
           >
             Voir Tous les Produits
           </Button>
