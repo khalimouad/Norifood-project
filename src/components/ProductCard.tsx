@@ -203,7 +203,7 @@ export const ProductCard = ({
             disabled={!inStock}
           >
             <ShoppingCart className="h-4 w-4 mr-2" />
-            {inStock ? 'Ajouter au Panier' : 'Rupture de Stock'}
+            {inStock ? 'Ajouter' : 'Rupture de Stock'}
           </Button>
         </div>
       </div>
