@@ -137,14 +137,9 @@ export const ProductCard = ({
       {/* Content section rearranged for mobile */}
       <div className="p-4">
         {/* Title */}
-        <h3 className="font-bold text-gray-900 text-base mb-2 leading-tight">
+        <h3 className="font-bold text-gray-900 text-base mb-4 leading-tight">
           {name}
         </h3>
-        
-        {/* Description */}
-        <p className="text-gray-600 text-sm leading-relaxed mb-3 line-clamp-2">
-          {description}
-        </p>
 
         {/* Price section with unit info below */}
         <div className="mb-4">
