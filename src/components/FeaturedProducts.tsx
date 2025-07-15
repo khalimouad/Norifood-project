@@ -7,9 +7,9 @@ import wholeFishImage from '@/assets/whole-fish.jpg';
 const featuredProducts = [
   {
     id: '1',
-    name: 'Fresh Atlantic Salmon',
-    description: 'Premium quality Atlantic salmon fillet, perfect for grilling or baking',
-    price: 24.99,
+    name: 'Saumon Atlantique Frais',
+    description: 'Filet de saumon atlantique de qualité premium, parfait pour griller ou cuire',
+    price: 249.99,
     image: salmonImage,
     unitType: 'kg' as const,
     inStock: true,
@@ -18,9 +18,9 @@ const featuredProducts = [
   },
   {
     id: '2',
-    name: 'Jumbo Shrimp',
-    description: 'Large, fresh shrimp perfect for any seafood dish',
-    price: 18.99,
+    name: 'Grosses Crevettes',
+    description: 'Grosses crevettes fraîches parfaites pour tous vos plats de fruits de mer',
+    price: 189.99,
     image: shrimpImage,
     unitType: 'kg' as const,
     inStock: true,
@@ -28,9 +28,9 @@ const featuredProducts = [
   },
   {
     id: '3',
-    name: 'Whole Red Snapper',
-    description: 'Fresh whole red snapper, cleaned and ready to cook',
-    price: 32.99,
+    name: 'Vivaneau Entier',
+    description: 'Vivaneau entier frais, nettoyé et prêt à cuisiner',
+    price: 329.99,
     image: wholeFishImage,
     unitType: 'pieces' as const,
     inStock: true,
@@ -38,9 +38,9 @@ const featuredProducts = [
   },
   {
     id: '4',
-    name: 'Sea Bass Fillet',
-    description: 'Delicate sea bass fillet, sustainably sourced',
-    price: 28.99,
+    name: 'Filet de Bar',
+    description: 'Filet de bar délicat, pêché de manière durable',
+    price: 289.99,
     image: wholeFishImage,
     unitType: 'kg' as const,
     inStock: false,
@@ -48,9 +48,9 @@ const featuredProducts = [
   },
   {
     id: '5',
-    name: 'King Prawns',
-    description: 'Extra large king prawns, perfect for special occasions',
-    price: 42.99,
+    name: 'Grosses Langoustines',
+    description: 'Langoustines extra larges, parfaites pour les occasions spéciales',
+    price: 429.99,
     image: shrimpImage,
     unitType: 'kg' as const,
     inStock: true,
@@ -59,9 +59,9 @@ const featuredProducts = [
   },
   {
     id: '6',
-    name: 'Tuna Steak',
-    description: 'Fresh tuna steak, sushi grade quality',
-    price: 36.99,
+    name: 'Steak de Thon',
+    description: 'Steak de thon frais, qualité sushi',
+    price: 369.99,
     image: salmonImage,
     unitType: 'kg' as const,
     inStock: true,
@@ -75,11 +75,11 @@ export const FeaturedProducts = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-            Featured Products
+            Produits Vedettes
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Discover our handpicked selection of the freshest and finest seafood, 
-            carefully sourced from trusted suppliers.
+            Découvrez notre sélection soigneusement choisie des produits de la mer les plus frais et les plus fins, 
+            provenant de fournisseurs de confiance.
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export const FeaturedProducts = () => {
             size="lg"
             className="bg-gradient-ocean hover:opacity-90 text-white shadow-ocean"
           >
-            View All Products
+            Voir Tous les Produits
           </Button>
         </div>
       </div>

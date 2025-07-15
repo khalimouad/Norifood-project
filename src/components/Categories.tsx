@@ -7,31 +7,45 @@ import wholeFishImage from '@/assets/whole-fish.jpg';
 
 const categories = [
   {
-    name: 'Fresh Fish',
-    description: 'Daily fresh fish selection',
+    name: 'Poissons Entiers',
+    description: 'Sélection quotidienne de poissons entiers',
     image: wholeFishImage,
     productCount: 15,
     featured: true,
   },
   {
-    name: 'Seafood',
-    description: 'Premium seafood selection',
-    image: shrimpImage,
+    name: 'Filets de Poissons',
+    description: 'Filets de poissons prêts à cuisiner',
+    image: salmonImage,
     productCount: 12,
     featured: false,
   },
   {
-    name: 'Fillets',
-    description: 'Ready-to-cook fish fillets',
-    image: salmonImage,
+    name: 'Crustacés',
+    description: 'Crustacés frais et de qualité',
+    image: shrimpImage,
     productCount: 8,
     featured: false,
   },
   {
-    name: 'Frozen',
-    description: 'Frozen fish and seafood',
+    name: 'Céphalopodes',
+    description: 'Pieuvres, seiches et calmars',
     image: wholeFishImage,
     productCount: 20,
+    featured: false,
+  },
+  {
+    name: 'Poissons Fumés',
+    description: 'Poissons fumés artisanaux',
+    image: salmonImage,
+    productCount: 6,
+    featured: false,
+  },
+  {
+    name: 'Produits Élaborés',
+    description: 'Produits transformés et élaborés',
+    image: shrimpImage,
+    productCount: 10,
     featured: false,
   },
 ];
@@ -42,11 +56,11 @@ export const Categories = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-            Shop by Category
+            Nos Catégories
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Browse our carefully curated selection of fresh seafood, organized by category 
-            for your convenience.
+            Découvrez notre sélection soigneusement choisie de produits de la mer frais, 
+            organisés par catégorie pour votre commodité.
           </p>
         </div>
 
@@ -64,7 +78,7 @@ export const Categories = () => {
                 />
                 {category.featured && (
                   <Badge className="absolute top-3 left-3 bg-coral text-white">
-                    Featured
+                    Vedette
                   </Badge>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -78,14 +92,14 @@ export const Categories = () => {
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">
-                    {category.productCount} products
+                    {category.productCount} produits
                   </span>
                   <Button
                     size="sm"
                     variant="ghost"
                     className="text-ocean hover:text-ocean-light hover:bg-ocean/10 group-hover:bg-ocean group-hover:text-white transition-colors"
                   >
-                    View All
+                    Voir Tout
                   </Button>
                 </div>
               </CardContent>
@@ -98,7 +112,7 @@ export const Categories = () => {
             size="lg"
             className="bg-gradient-ocean hover:opacity-90 text-white shadow-ocean"
           >
-            View All Categories
+            Voir Toutes les Catégories
           </Button>
         </div>
       </div>

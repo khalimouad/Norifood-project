@@ -17,25 +17,25 @@ export const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <div className="h-8 w-8 rounded-full bg-gradient-ocean"></div>
-            <span className="text-xl font-bold text-primary">SeaFresh</span>
+            <span className="text-xl font-bold text-primary">Fresh N'Good</span>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <a href="#home" className="text-foreground hover:text-primary transition-colors">
-              Home
+              Accueil
             </a>
             <a href="#products" className="text-foreground hover:text-primary transition-colors">
-              Products
+              Produits
             </a>
             <a href="#categories" className="text-foreground hover:text-primary transition-colors">
-              Categories
+              Catégories
             </a>
             <a href="#recipes" className="text-foreground hover:text-primary transition-colors">
-              Recipes
+              Recettes
             </a>
             <a href="#about" className="text-foreground hover:text-primary transition-colors">
-              About
+              À Propos
             </a>
           </nav>
 
@@ -44,7 +44,7 @@ export const Header = () => {
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
-                placeholder="Search seafood..."
+                placeholder="Rechercher des produits..."
                 className="pl-10 bg-muted/50 border-0 focus-visible:ring-2 focus-visible:ring-ocean"
               />
             </div>
@@ -81,28 +81,28 @@ export const Header = () => {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
-                  placeholder="Search seafood..."
+                  placeholder="Rechercher des produits..."
                   className="pl-10 bg-muted/50 border-0"
                 />
               </div>
               <a href="#home" className="text-foreground hover:text-primary py-2 transition-colors">
-                Home
+                Accueil
               </a>
               <a href="#products" className="text-foreground hover:text-primary py-2 transition-colors">
-                Products
+                Produits
               </a>
               <a href="#categories" className="text-foreground hover:text-primary py-2 transition-colors">
-                Categories
+                Catégories
               </a>
               <a href="#recipes" className="text-foreground hover:text-primary py-2 transition-colors">
-                Recipes
+                Recettes
               </a>
               <a href="#about" className="text-foreground hover:text-primary py-2 transition-colors">
-                About
+                À Propos
               </a>
               <Button variant="outline" className="mt-2">
                 <User className="h-4 w-4 mr-2" />
-                Login
+                Connexion
               </Button>
             </nav>
           </div>

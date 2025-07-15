@@ -19,21 +19,21 @@ export const Hero = () => {
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Fresh Seafood
-            <span className="block text-seafoam">Delivered Daily</span>
+            Produits de la Mer
+            <span className="block text-seafoam">Frais Quotidiennement</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl">
-            Premium quality fish and seafood from the ocean to your table. 
-            Choose by weight, units, or pieces with guaranteed freshness.
+            Poissons et fruits de mer de qualité premium, de l'océan à votre table.
+            Choisissez par poids, unité ou pièce avec fraîcheur garantie.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Button size="lg" className="bg-coral hover:bg-coral/90 text-white shadow-float">
-              Shop Now
+              Commander
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-              View Menu
+              Voir le Menu
             </Button>
           </div>
 
@@ -44,8 +44,8 @@ export const Hero = () => {
                 <Fish className="h-6 w-6 text-seafoam" />
               </div>
               <div>
-                <h3 className="font-semibold">Daily Fresh</h3>
-                <p className="text-sm text-white/70">Caught fresh every morning</p>
+                <h3 className="font-semibold">Fraîcheur Quotidienne</h3>
+                <p className="text-sm text-white/70">Pêché frais chaque matin</p>
               </div>
             </div>
             <div className="flex items-center space-x-3 text-white/90">
@@ -53,8 +53,8 @@ export const Hero = () => {
                 <Truck className="h-6 w-6 text-seafoam" />
               </div>
               <div>
-                <h3 className="font-semibold">Fast Delivery</h3>
-                <p className="text-sm text-white/70">Same day delivery available</p>
+                <h3 className="font-semibold">Livraison Rapide</h3>
+                <p className="text-sm text-white/70">Livraison le jour même disponible</p>
               </div>
             </div>
             <div className="flex items-center space-x-3 text-white/90">
@@ -62,7 +62,7 @@ export const Hero = () => {
                 <Shield className="h-6 w-6 text-seafoam" />
               </div>
               <div>
-                <h3 className="font-semibold">Quality Guaranteed</h3>
+                <h3 className="font-semibold">Qualité Garantie</h3>
                 <p className="text-sm text-white/70">100% satisfaction promise</p>
               </div>
             </div>

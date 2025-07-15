@@ -12,11 +12,11 @@ export const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <Fish className="h-8 w-8 text-seafoam" />
-              <span className="text-xl font-bold">SeaFresh</span>
+              <span className="text-xl font-bold">Fresh N'Good</span>
             </div>
             <p className="text-white/80 mb-4">
-              Your trusted source for fresh seafood delivery. From ocean to table, 
-              we ensure the highest quality and freshness.
+              FRESH N'GOOD a hérité le savoir faire de plus de 20 ans dans le domaine des produits de la mer !
+              Nous garantissons les meilleurs produits au meilleur coût.
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" className="hover:bg-white/10">

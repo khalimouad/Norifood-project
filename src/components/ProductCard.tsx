@@ -45,13 +45,13 @@ export const ProductCard = ({
   const getUnitLabel = () => {
     switch (unitType) {
       case 'kg':
-        return 'per kg';
+        return 'par kg';
       case 'g':
-        return 'per 100g';
+        return 'par 100g';
       case 'units':
-        return 'per unit';
+        return 'par unité';
       case 'pieces':
-        return 'per piece';
+        return 'par pièce';
       default:
         return '';
     }
@@ -71,7 +71,7 @@ export const ProductCard = ({
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {featured && (
-            <Badge className="bg-coral text-white">Featured</Badge>
+            <Badge className="bg-coral text-white">Vedette</Badge>
           )}
           {discount && (
             <Badge className="bg-destructive text-white">
@@ -80,7 +80,7 @@ export const ProductCard = ({
           )}
           {!inStock && (
             <Badge variant="secondary" className="bg-muted text-muted-foreground">
-              Out of Stock
+              Rupture de Stock
             </Badge>
           )}
         </div>
@@ -121,11 +121,11 @@ export const ProductCard = ({
           <div className="text-right">
             {discount && (
               <span className="text-sm text-muted-foreground line-through">
-                ${price.toFixed(2)}
+                {price.toFixed(2)} DH
               </span>
             )}
             <div className="text-lg font-bold text-ocean">
-              ${discountedPrice.toFixed(2)}
+              {discountedPrice.toFixed(2)} DH
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@ export const ProductCard = ({
           disabled={!inStock}
         >
           <ShoppingCart className="h-4 w-4 mr-2" />
-          {inStock ? 'Add to Cart' : 'Out of Stock'}
+          {inStock ? 'Ajouter au Panier' : 'Rupture de Stock'}
         </Button>
       </CardFooter>
     </Card>
