@@ -44,6 +44,60 @@ export type Database = {
         }
         Relationships: []
       }
+      banners: {
+        Row: {
+          button_text: string | null
+          created_at: string | null
+          end_date: string | null
+          id: string
+          image_url: string
+          is_active: boolean | null
+          link_url: string | null
+          mobile_image_url: string | null
+          position: number | null
+          show_on_desktop: boolean | null
+          show_on_mobile: boolean | null
+          start_date: string | null
+          subtitle: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          button_text?: string | null
+          created_at?: string | null
+          end_date?: string | null
+          id?: string
+          image_url: string
+          is_active?: boolean | null
+          link_url?: string | null
+          mobile_image_url?: string | null
+          position?: number | null
+          show_on_desktop?: boolean | null
+          show_on_mobile?: boolean | null
+          start_date?: string | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          button_text?: string | null
+          created_at?: string | null
+          end_date?: string | null
+          id?: string
+          image_url?: string
+          is_active?: boolean | null
+          link_url?: string | null
+          mobile_image_url?: string | null
+          position?: number | null
+          show_on_desktop?: boolean | null
+          show_on_mobile?: boolean | null
+          start_date?: string | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       blog_categories: {
         Row: {
           created_at: string | null
@@ -344,6 +398,83 @@ export type Database = {
           },
         ]
       }
+      payment_transactions: {
+        Row: {
+          amount: number
+          created_at: string | null
+          currency: string | null
+          gateway_response: Json | null
+          id: string
+          order_id: string
+          payment_method: string
+          status: string | null
+          transaction_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          currency?: string | null
+          gateway_response?: Json | null
+          id?: string
+          order_id: string
+          payment_method: string
+          status?: string | null
+          transaction_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          currency?: string | null
+          gateway_response?: Json | null
+          id?: string
+          order_id?: string
+          payment_method?: string
+          status?: string | null
+          transaction_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_transactions_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_tags: {
+        Row: {
+          product_id: string
+          tag_id: string
+        }
+        Insert: {
+          product_id: string
+          tag_id: string
+        }
+        Update: {
+          product_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_tags_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_variations: {
         Row: {
           created_at: string | null
@@ -482,6 +613,177 @@ export type Database = {
           id?: string
           last_name?: string | null
           phone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      promo_codes: {
+        Row: {
+          code: string
+          created_at: string | null
+          description: string | null
+          discount_type: string
+          discount_value: number
+          id: string
+          is_active: boolean | null
+          minimum_order_amount: number | null
+          name: string
+          updated_at: string | null
+          usage_limit: number | null
+          used_count: number | null
+          valid_from: string | null
+          valid_until: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string | null
+          description?: string | null
+          discount_type: string
+          discount_value: number
+          id?: string
+          is_active?: boolean | null
+          minimum_order_amount?: number | null
+          name: string
+          updated_at?: string | null
+          usage_limit?: number | null
+          used_count?: number | null
+          valid_from?: string | null
+          valid_until?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string | null
+          description?: string | null
+          discount_type?: string
+          discount_value?: number
+          id?: string
+          is_active?: boolean | null
+          minimum_order_amount?: number | null
+          name?: string
+          updated_at?: string | null
+          usage_limit?: number | null
+          used_count?: number | null
+          valid_from?: string | null
+          valid_until?: string | null
+        }
+        Relationships: []
+      }
+      recipe_products: {
+        Row: {
+          product_id: string
+          quantity: number | null
+          recipe_id: string
+          unit: string | null
+        }
+        Insert: {
+          product_id: string
+          quantity?: number | null
+          recipe_id: string
+          unit?: string | null
+        }
+        Update: {
+          product_id?: string
+          quantity?: number | null
+          recipe_id?: string
+          unit?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipe_products_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recipe_products_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recipes: {
+        Row: {
+          cook_time: number | null
+          created_at: string | null
+          description: string | null
+          difficulty: string | null
+          featured_image: string | null
+          id: string
+          images: string[] | null
+          ingredients: string[]
+          instructions: string[]
+          is_published: boolean | null
+          prep_time: number | null
+          servings: number | null
+          slug: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          cook_time?: number | null
+          created_at?: string | null
+          description?: string | null
+          difficulty?: string | null
+          featured_image?: string | null
+          id?: string
+          images?: string[] | null
+          ingredients: string[]
+          instructions: string[]
+          is_published?: boolean | null
+          prep_time?: number | null
+          servings?: number | null
+          slug: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          cook_time?: number | null
+          created_at?: string | null
+          description?: string | null
+          difficulty?: string | null
+          featured_image?: string | null
+          id?: string
+          images?: string[] | null
+          ingredients?: string[]
+          instructions?: string[]
+          is_published?: boolean | null
+          prep_time?: number | null
+          servings?: number | null
+          slug?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      tags: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          slug: string
+          updated_at: string | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          slug: string
+          updated_at?: string | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          slug?: string
           updated_at?: string | null
         }
         Relationships: []

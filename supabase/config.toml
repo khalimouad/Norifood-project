@@ -1,1 +1,28 @@
 project_id = "fxqeczayzxuvewncpaod"
+
+[functions.manage-products]
+verify_jwt = false
+
+[functions.manage-categories]
+verify_jwt = false
+
+[functions.manage-tags]
+verify_jwt = false
+
+[functions.manage-orders]
+verify_jwt = false
+
+[functions.manage-customers]
+verify_jwt = false
+
+[functions.manage-promo-codes]
+verify_jwt = false
+
+[functions.manage-recipes]
+verify_jwt = false
+
+[functions.manage-banners]
+verify_jwt = false
+
+[functions.manage-payments]
+verify_jwt = false
