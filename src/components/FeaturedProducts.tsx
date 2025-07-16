@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ProductCard } from './ProductCard';
 import { Button } from '@/components/ui/button';
 import salmonImage from '@/assets/salmon.jpg';
@@ -89,9 +90,11 @@ export const FeaturedProducts = () => {
         </div>
 
         <div className="text-center mt-8 md:mt-12">
-          <Button className="bg-ocean hover:bg-ocean/90 text-white px-6 py-3 rounded-full font-medium">
-            Voir Tous les Produits
-          </Button>
+          <Link to="/products">
+            <Button className="bg-ocean hover:bg-ocean/90 text-white px-6 py-3 rounded-full font-medium">
+              Voir Tous les Produits
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
+import { useWishlist } from '@/hooks/useWishlist';
 import logo from '@/assets/logo.png';
 
 export const Header = () => {
@@ -14,7 +15,9 @@ export const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { getTotalItems } = useCart();
   const { user, signOut } = useAuth();
+  const { items: wishlistItems } = useWishlist();
   const cartCount = getTotalItems();
+  const wishlistCount = wishlistItems.length;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,10 +82,18 @@ export const Header = () => {
                 />
               </form>
             </div>
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="icon" className="text-gray-600 hover:text-ocean">
-                <Heart className="h-5 w-5" />
-              </Button>
+              <div className="flex items-center space-x-4">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="relative text-gray-600 hover:text-ocean"
+                  onClick={() => navigate('/wishlist')}
+                >
+                  <Heart className="h-5 w-5" />
+                  {wishlistCount > 0 && (
+                    <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs bg-coral text-white">{wishlistCount}</Badge>
+                  )}
+                </Button>
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

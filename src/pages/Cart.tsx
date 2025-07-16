@@ -256,10 +256,12 @@ const Cart = () => {
                     </div>
                   </div>
 
-                  <Button size="lg" className="w-full">
-                    <ArrowRight className="h-5 w-5 mr-2" />
-                    Passer la Commande
-                  </Button>
+                  <Link to="/checkout">
+                    <Button size="lg" className="w-full">
+                      <ArrowRight className="h-5 w-5 mr-2" />
+                      Passer la Commande
+                    </Button>
+                  </Link>
 
                   <Link to="/products">
                     <Button variant="outline" size="lg" className="w-full">

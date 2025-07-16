@@ -11,8 +11,13 @@ import Cart from "./pages/Cart";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import ProductDetail from "./pages/ProductDetail";
+import Checkout from "./pages/Checkout";
+import OrderConfirmation from "./pages/OrderConfirmation";
+import Wishlist from "./pages/Wishlist";
 import { CartProvider } from "./hooks/useCart";
 import { AuthProvider } from "./hooks/useAuth";
+import { WishlistProvider } from "./hooks/useWishlist";
 
 const queryClient = new QueryClient();
 
@@ -23,8 +28,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <CartProvider>
-            <Routes>
+          <WishlistProvider>
+            <CartProvider>
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/products" element={<Products />} />
               <Route path="/about" element={<About />} />
@@ -32,10 +38,15 @@ const App = () => (
               <Route path="/cart" element={<Cart />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/order-confirmation" element={<OrderConfirmation />} />
+              <Route path="/wishlist" element={<Wishlist />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
-            </Routes>
-          </CartProvider>
+              </Routes>
+            </CartProvider>
+          </WishlistProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
