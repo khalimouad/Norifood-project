@@ -134,8 +134,10 @@ serve(async (req) => {
             .getPublicUrl(fileName);
 
           newProduct.image_url = publicUrl.publicUrl;
-          delete newProduct.image; // Remove the base64 data
         }
+        
+        // Always remove the image field before database insertion
+        delete newProduct.image;
 
         const { data: product, error: createError } = await supabaseClient
           .from("products")
@@ -194,8 +196,10 @@ serve(async (req) => {
             .getPublicUrl(fileName);
 
           updatedProduct.image_url = publicUrl.publicUrl;
-          delete updatedProduct.image; // Remove the base64 data
         }
+        
+        // Always remove the image field before database insertion
+        delete updatedProduct.image;
 
         const { data: updated, error: updateError } = await supabaseClient
           .from("products")
