@@ -31,7 +31,12 @@ serve(async (req) => {
     const { method: requestMethod, id: bodyId, ...categoryData } = requestData as any;
     const url = new URL(req.url);
     const categoryId = url.searchParams.get("id") || bodyId;
-    const method = requestMethod || req.method;
+    
+    // If there's only an ID in the body and no method, treat it as a GET request
+    let method = requestMethod || req.method;
+    if (req.method === "POST" && bodyId && !requestMethod && Object.keys(categoryData).length === 0) {
+      method = "GET";
+    }
 
     console.log(`[${method}] ${req.url}`);
 
