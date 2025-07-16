@@ -1,12 +1,23 @@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Scale, FileText, Shield, Phone, Mail, MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Scale, FileText, Shield, Phone, Mail, MapPin, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function TermsOfSale() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pearl to-white py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
+            <Link to="/">
+              <Button variant="ghost" className="text-ocean hover:bg-ocean/10">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Retour à l'accueil
+              </Button>
+            </Link>
+          </div>
+          
           <div className="text-center mb-8">
             <div className="flex items-center justify-center mb-4">
               <Scale className="h-12 w-12 text-ocean mr-3" />

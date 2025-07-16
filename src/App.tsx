@@ -15,6 +15,10 @@ import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import TermsOfSale from "./pages/TermsOfSale";
+import FAQ from "./pages/FAQ";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
+import Shipping from "./pages/Shipping";
 import Recipes from "./pages/Recipes";
 import Admin from "./pages/Admin";
 import NewAdmin from "./pages/NewAdmin";
@@ -47,6 +51,10 @@ const App = () => (
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
               <Route path="/recipes" element={<Recipes />} />
               <Route path="/conditions-de-vente" element={<TermsOfSale />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/shipping" element={<Shipping />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin-new/*" element={<NewAdmin />} />
               <Route path="/admin-new/product/:id" element={<ProductEdit />} />
