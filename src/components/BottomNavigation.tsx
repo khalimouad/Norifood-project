@@ -1,4 +1,4 @@
-import { Home, Grid3X3, ShoppingBag, Heart, User } from 'lucide-react';
+import { Home, Grid3X3, ShoppingBag, BookOpen, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
@@ -15,7 +15,7 @@ export const BottomNavigation = () => {
     { icon: Home, label: 'Accueil', path: '/', action: 'navigate' },
     { icon: Grid3X3, label: 'Catégories', path: '/products', action: 'categories' },
     { icon: ShoppingBag, label: 'Panier', path: '/cart', badge: getTotalItems(), action: 'navigate' },
-    { icon: Heart, label: 'Favoris', path: '/products', action: 'navigate' },
+    { icon: BookOpen, label: 'Recettes', path: '/recipes', action: 'navigate' },
     { icon: User, label: 'Profil', path: '/profile', action: 'navigate' },
   ];
 
