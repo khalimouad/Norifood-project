@@ -8,9 +8,10 @@ import { useCart } from '@/hooks/useCart';
 import logo from '@/assets/logo.png';
 
 export const Header = () => {
-  const { getTotalItems } = useCart();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
+  const { getTotalItems } = useCart();
+  const cartCount = getTotalItems();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,8 +19,6 @@ export const Header = () => {
       navigate(`/products?search=${encodeURIComponent(searchTerm.trim())}`);
     }
   };
-
-  const cartCount = getTotalItems();
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100">
