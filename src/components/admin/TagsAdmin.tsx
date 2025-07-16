@@ -38,9 +38,11 @@ export const TagsAdmin = () => {
 
   const fetchTags = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-tags');
+      const { data, error } = await supabase.functions.invoke('manage-tags', {
+        method: 'GET'
+      });
       if (error) throw error;
-      setTags(data);
+      setTags(data || []);
     } catch (error) {
       toast({
         title: "Erreur",
@@ -58,6 +60,7 @@ export const TagsAdmin = () => {
       const endpoint = editingTag ? `manage-tags?id=${editingTag.id}` : 'manage-tags';
       
       const { error } = await supabase.functions.invoke(endpoint, {
+        method: editingTag ? 'PUT' : 'POST',
         body: formData,
       });
       

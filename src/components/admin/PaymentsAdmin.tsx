@@ -27,9 +27,11 @@ export const PaymentsAdmin = () => {
 
   const fetchPayments = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-payments');
+      const { data, error } = await supabase.functions.invoke('manage-payments', {
+        method: 'GET'
+      });
       if (error) throw error;
-      setPayments(data);
+      setPayments(data || []);
     } catch (error) {
       toast({
         title: "Erreur",

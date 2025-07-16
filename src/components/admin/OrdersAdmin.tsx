@@ -37,9 +37,11 @@ export const OrdersAdmin = () => {
 
   const fetchOrders = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-orders');
+      const { data, error } = await supabase.functions.invoke('manage-orders', {
+        method: 'GET'
+      });
       if (error) throw error;
-      setOrders(data);
+      setOrders(data || []);
     } catch (error) {
       toast({
         title: "Erreur",
@@ -54,6 +56,7 @@ export const OrdersAdmin = () => {
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
       const { error } = await supabase.functions.invoke(`manage-orders?id=${orderId}`, {
+        method: 'PUT',
         body: { status: newStatus },
       });
       

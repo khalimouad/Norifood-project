@@ -39,7 +39,6 @@ export const ProductsAdmin = () => {
     stock_quantity: 0,
     is_active: true,
     featured: false,
-    slug: "",
     image_url: "",
   });
 
@@ -49,10 +48,13 @@ export const ProductsAdmin = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-products');
+      const { data, error } = await supabase.functions.invoke('manage-products', {
+        method: 'GET'
+      });
       if (error) throw error;
-      setProducts(data);
+      setProducts(data || []);
     } catch (error) {
+      console.error('Error fetching products:', error);
       toast({
         title: "Erreur",
         description: "Impossible de charger les produits",
@@ -66,10 +68,11 @@ export const ProductsAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const endpoint = editingProduct ? `manage-products?id=${editingProduct.id}` : 'manage-products';
       const method = editingProduct ? 'PUT' : 'POST';
+      const url = editingProduct ? `manage-products?id=${editingProduct.id}` : 'manage-products';
       
-      const { error } = await supabase.functions.invoke(endpoint, {
+      const { error } = await supabase.functions.invoke(url, {
+        method,
         body: formData,
       });
       
@@ -127,7 +130,6 @@ export const ProductsAdmin = () => {
       stock_quantity: 0,
       is_active: true,
       featured: false,
-      slug: "",
       image_url: "",
     });
   };
@@ -142,7 +144,6 @@ export const ProductsAdmin = () => {
       stock_quantity: product.stock_quantity || 0,
       is_active: product.is_active,
       featured: product.featured,
-      slug: product.slug,
       image_url: product.image_url || "",
     });
     setIsDialogOpen(true);
@@ -168,25 +169,17 @@ export const ProductsAdmin = () => {
               </DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="name">Nom</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="slug">Slug</Label>
-                  <Input
-                    id="slug"
-                    value={formData.slug}
-                    onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                    required
-                  />
-                </div>
+              <div>
+                <Label htmlFor="name">Nom</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                />
+                <p className="text-sm text-muted-foreground mt-1">
+                  Le slug sera généré automatiquement à partir du nom
+                </p>
               </div>
               
               <div>

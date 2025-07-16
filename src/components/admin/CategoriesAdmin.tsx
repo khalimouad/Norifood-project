@@ -30,7 +30,6 @@ export const CategoriesAdmin = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    slug: "",
     image_url: "",
     is_active: true,
   });
@@ -41,10 +40,13 @@ export const CategoriesAdmin = () => {
 
   const fetchCategories = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-categories');
+      const { data, error } = await supabase.functions.invoke('manage-categories', {
+        method: 'GET'
+      });
       if (error) throw error;
-      setCategories(data);
+      setCategories(data || []);
     } catch (error) {
+      console.error('Error fetching categories:', error);
       toast({
         title: "Erreur",
         description: "Impossible de charger les catégories",
@@ -58,9 +60,11 @@ export const CategoriesAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const endpoint = editingCategory ? `manage-categories?id=${editingCategory.id}` : 'manage-categories';
+      const method = editingCategory ? 'PUT' : 'POST';
+      const url = editingCategory ? `manage-categories?id=${editingCategory.id}` : 'manage-categories';
       
-      const { error } = await supabase.functions.invoke(endpoint, {
+      const { error } = await supabase.functions.invoke(url, {
+        method,
         body: formData,
       });
       
@@ -113,7 +117,6 @@ export const CategoriesAdmin = () => {
     setFormData({
       name: "",
       description: "",
-      slug: "",
       image_url: "",
       is_active: true,
     });
@@ -124,7 +127,6 @@ export const CategoriesAdmin = () => {
     setFormData({
       name: category.name,
       description: category.description || "",
-      slug: category.slug,
       image_url: category.image_url || "",
       is_active: category.is_active,
     });
@@ -159,16 +161,9 @@ export const CategoriesAdmin = () => {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                 />
-              </div>
-              
-              <div>
-                <Label htmlFor="slug">Slug</Label>
-                <Input
-                  id="slug"
-                  value={formData.slug}
-                  onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                  required
-                />
+                <p className="text-sm text-muted-foreground mt-1">
+                  Le slug sera généré automatiquement à partir du nom
+                </p>
               </div>
               
               <div>

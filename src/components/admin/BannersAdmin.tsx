@@ -55,9 +55,11 @@ export const BannersAdmin = () => {
 
   const fetchBanners = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-banners');
+      const { data, error } = await supabase.functions.invoke('manage-banners', {
+        method: 'GET'
+      });
       if (error) throw error;
-      setBanners(data);
+      setBanners(data || []);
     } catch (error) {
       toast({
         title: "Erreur",
@@ -75,6 +77,7 @@ export const BannersAdmin = () => {
       const endpoint = editingBanner ? `manage-banners?id=${editingBanner.id}` : 'manage-banners';
       
       const { error } = await supabase.functions.invoke(endpoint, {
+        method: editingBanner ? 'PUT' : 'POST',
         body: formData,
       });
       

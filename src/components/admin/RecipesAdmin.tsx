@@ -56,9 +56,11 @@ export const RecipesAdmin = () => {
 
   const fetchRecipes = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-recipes');
+      const { data, error } = await supabase.functions.invoke('manage-recipes', {
+        method: 'GET'
+      });
       if (error) throw error;
-      setRecipes(data);
+      setRecipes(data || []);
     } catch (error) {
       toast({
         title: "Erreur",
@@ -83,6 +85,7 @@ export const RecipesAdmin = () => {
       };
       
       const { error } = await supabase.functions.invoke(endpoint, {
+        method: editingRecipe ? 'PUT' : 'POST',
         body: cleanData,
       });
       

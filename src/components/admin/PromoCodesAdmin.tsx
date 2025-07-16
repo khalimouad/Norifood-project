@@ -53,9 +53,11 @@ export const PromoCodesAdmin = () => {
 
   const fetchPromoCodes = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-promo-codes');
+      const { data, error } = await supabase.functions.invoke('manage-promo-codes', {
+        method: 'GET'
+      });
       if (error) throw error;
-      setPromoCodes(data);
+      setPromoCodes(data || []);
     } catch (error) {
       toast({
         title: "Erreur",
@@ -73,6 +75,7 @@ export const PromoCodesAdmin = () => {
       const endpoint = editingCode ? `manage-promo-codes?id=${editingCode.id}` : 'manage-promo-codes';
       
       const { error } = await supabase.functions.invoke(endpoint, {
+        method: editingCode ? 'PUT' : 'POST',
         body: formData,
       });
       
