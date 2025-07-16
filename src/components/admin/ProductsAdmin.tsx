@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Edit, Trash2, Plus } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { ImageUpload } from './ImageUpload';
 
 interface Product {
   id: string;
@@ -32,14 +34,15 @@ export const ProductsAdmin = () => {
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
+    name: '',
+    description: '',
     base_price: 0,
-    unit_type: "kg",
+    unit_type: '',
     stock_quantity: 0,
     is_active: true,
     featured: false,
-    image_url: "",
+    image_url: '',
+    image: '',
   });
 
   useEffect(() => {
@@ -52,7 +55,8 @@ export const ProductsAdmin = () => {
         method: 'GET'
       });
       if (error) throw error;
-      // Handle the response structure - it returns an object with products array
+      
+      // Handle paginated response
       const productsData = data?.products || data || [];
       setProducts(productsData);
     } catch (error) {
@@ -125,30 +129,37 @@ export const ProductsAdmin = () => {
 
   const resetForm = () => {
     setFormData({
-      name: "",
-      description: "",
+      name: '',
+      description: '',
       base_price: 0,
-      unit_type: "kg",
+      unit_type: '',
       stock_quantity: 0,
       is_active: true,
       featured: false,
-      image_url: "",
+      image_url: '',
+      image: '',
     });
+    setEditingProduct(null);
   };
 
   const openEditDialog = (product: Product) => {
-    setEditingProduct(product);
     setFormData({
       name: product.name,
-      description: product.description || "",
+      description: product.description || '',
       base_price: product.base_price,
       unit_type: product.unit_type,
-      stock_quantity: product.stock_quantity || 0,
+      stock_quantity: product.stock_quantity,
       is_active: product.is_active,
       featured: product.featured,
-      image_url: product.image_url || "",
+      image_url: product.image_url || '',
+      image: '',
     });
+    setEditingProduct(product);
     setIsDialogOpen(true);
+  };
+
+  const handleImageSelect = (imageData: string) => {
+    setFormData({ ...formData, image: imageData, image_url: imageData });
   };
 
   if (loading) return <div>Chargement...</div>;
@@ -193,9 +204,9 @@ export const ProductsAdmin = () => {
                 />
               </div>
               
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="base_price">Prix (DH)</Label>
+                  <Label htmlFor="base_price">Prix de base</Label>
                   <Input
                     id="base_price"
                     type="number"
@@ -226,11 +237,9 @@ export const ProductsAdmin = () => {
               </div>
               
               <div>
-                <Label htmlFor="image_url">URL de l'image</Label>
-                <Input
-                  id="image_url"
-                  value={formData.image_url}
-                  onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                <ImageUpload 
+                  onImageSelect={handleImageSelect}
+                  currentImage={formData.image_url}
                 />
               </div>
               
@@ -243,6 +252,7 @@ export const ProductsAdmin = () => {
                   />
                   <Label htmlFor="is_active">Actif</Label>
                 </div>
+                
                 <div className="flex items-center space-x-2">
                   <Switch
                     id="featured"
@@ -290,6 +300,15 @@ export const ProductsAdmin = () => {
                     <span>Prix: {product.base_price} DH/{product.unit_type}</span>
                     <span>Stock: {product.stock_quantity}</span>
                   </div>
+                  {product.image_url && (
+                    <div className="mt-2">
+                      <img 
+                        src={product.image_url} 
+                        alt={product.name}
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="flex gap-2">
                   <Button

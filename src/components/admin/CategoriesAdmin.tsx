@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, Edit, Trash2 } from "lucide-react";
+import { ImageUpload } from "./ImageUpload";
 
 interface Category {
   id: string;
@@ -31,6 +32,7 @@ export const CategoriesAdmin = () => {
     name: "",
     description: "",
     image_url: "",
+    image: "",
     is_active: true,
   });
 
@@ -118,19 +120,26 @@ export const CategoriesAdmin = () => {
       name: "",
       description: "",
       image_url: "",
+      image: "",
       is_active: true,
     });
+    setEditingCategory(null);
   };
 
   const openEditDialog = (category: Category) => {
-    setEditingCategory(category);
     setFormData({
       name: category.name,
       description: category.description || "",
       image_url: category.image_url || "",
+      image: "",
       is_active: category.is_active,
     });
+    setEditingCategory(category);
     setIsDialogOpen(true);
+  };
+
+  const handleImageSelect = (imageData: string) => {
+    setFormData({ ...formData, image: imageData, image_url: imageData });
   };
 
   if (loading) return <div>Chargement...</div>;
@@ -176,11 +185,9 @@ export const CategoriesAdmin = () => {
               </div>
               
               <div>
-                <Label htmlFor="image_url">URL de l'image</Label>
-                <Input
-                  id="image_url"
-                  value={formData.image_url}
-                  onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                <ImageUpload 
+                  onImageSelect={handleImageSelect}
+                  currentImage={formData.image_url}
                 />
               </div>
               
@@ -222,6 +229,15 @@ export const CategoriesAdmin = () => {
                   </div>
                   <p className="text-sm text-muted-foreground mb-2">{category.description}</p>
                   <p className="text-sm">Slug: {category.slug}</p>
+                  {category.image_url && (
+                    <div className="mt-2">
+                      <img 
+                        src={category.image_url} 
+                        alt={category.name}
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="flex gap-2">
                   <Button
