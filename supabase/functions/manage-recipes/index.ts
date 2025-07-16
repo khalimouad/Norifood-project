@@ -92,7 +92,7 @@ serve(async (req) => {
         console.log('Request body:', body);
         
         if (!body) {
-          throw new Error("Request body is required");
+          throw new Error("Request body is required for POST requests");
         }
 
         let newRecipe;

@@ -64,7 +64,19 @@ serve(async (req) => {
         }
 
       case "POST":
-        const newBanner = await req.json();
+        const body = await req.text();
+        console.log('Request body:', body);
+        
+        if (!body) {
+          throw new Error("Request body is required for POST requests");
+        }
+
+        let newBanner;
+        try {
+          newBanner = JSON.parse(body);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
         const { data: banner, error: createError } = await supabaseClient
           .from("banners")
           .insert([newBanner])
@@ -81,7 +93,19 @@ serve(async (req) => {
           throw new Error("Banner ID is required for updates");
         }
         
-        const updatedBanner = await req.json();
+        const updateBody = await req.text();
+        console.log('Update body:', updateBody);
+        
+        if (!updateBody) {
+          throw new Error("Request body is required for PUT requests");
+        }
+
+        let updatedBanner;
+        try {
+          updatedBanner = JSON.parse(updateBody);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
         const { data: updated, error: updateError } = await supabaseClient
           .from("banners")
           .update(updatedBanner)

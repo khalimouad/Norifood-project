@@ -52,7 +52,9 @@ export const ProductsAdmin = () => {
         method: 'GET'
       });
       if (error) throw error;
-      setProducts(data || []);
+      // Handle the response structure - it returns an object with products array
+      const productsData = data?.products || data || [];
+      setProducts(productsData);
     } catch (error) {
       console.error('Error fetching products:', error);
       toast({

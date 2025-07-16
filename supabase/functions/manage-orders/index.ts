@@ -103,7 +103,7 @@ serve(async (req) => {
         console.log('Update body:', updateBody);
         
         if (!updateBody) {
-          throw new Error("Request body is required");
+          throw new Error("Request body is required for PUT requests");
         }
 
         let updatedOrder;
