@@ -299,32 +299,46 @@ const ProductDetail = () => {
               <div>
                 <h3 className="font-bold text-lg mb-4">Détails du Produit</h3>
                 <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Type:</span>
-                    <span className="font-medium">Poisson Frais</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Origine:</span>
-                    <span className="font-medium">Atlantique Nord</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Conservation:</span>
-                    <span className="font-medium">0-4°C</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Durée de conservation:</span>
-                    <span className="font-medium">2-3 jours</span>
-                  </div>
+                  {product.product_type && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Type:</span>
+                      <span className="font-medium">{product.product_type}</span>
+                    </div>
+                  )}
+                  {product.origin && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Origine:</span>
+                      <span className="font-medium">{product.origin}</span>
+                    </div>
+                  )}
+                  {product.storage_conditions && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Conservation:</span>
+                      <span className="font-medium">{product.storage_conditions}</span>
+                    </div>
+                  )}
+                  {product.shelf_life && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Durée de conservation:</span>
+                      <span className="font-medium">{product.shelf_life}</span>
+                    </div>
+                  )}
                 </div>
               </div>
               <div>
                 <h3 className="font-bold text-lg mb-4">Conseils de Préparation</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li>• Sortir du réfrigérateur 15 minutes avant cuisson</li>
-                  <li>• Cuisson recommandée: grillé, poêlé ou au four</li>
-                  <li>• Température interne: 63°C</li>
-                  <li>• Accompagne parfaitement les légumes de saison</li>
-                </ul>
+                {product.preparation_tips ? (
+                  <div className="text-sm text-gray-600 whitespace-pre-line">
+                    {product.preparation_tips}
+                  </div>
+                ) : (
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li>• Sortir du réfrigérateur 15 minutes avant cuisson</li>
+                    <li>• Cuisson recommandée: grillé, poêlé ou au four</li>
+                    <li>• Température interne: 63°C</li>
+                    <li>• Accompagne parfaitement les légumes de saison</li>
+                  </ul>
+                )}
               </div>
             </div>
           </div>
