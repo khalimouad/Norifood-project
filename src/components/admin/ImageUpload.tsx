@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Upload, X } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface ImageUploadProps {
   onImageSelect: (imageData: string) => void;
@@ -13,19 +14,41 @@ export const ImageUpload = ({ onImageSelect, currentImage }: ImageUploadProps) =
   const [preview, setPreview] = useState<string | null>(currentImage || null);
   const [uploading, setUploading] = useState(false);
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setUploading(true);
       
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setPreview(result);
-        onImageSelect(result);
+      try {
+        // Upload to Supabase storage
+        const fileName = `${Date.now()}-${file.name}`;
+        const { data, error } = await supabase.storage
+          .from('product-images')
+          .upload(fileName, file);
+
+        if (error) throw error;
+
+        // Get public URL
+        const { data: urlData } = supabase.storage
+          .from('product-images')
+          .getPublicUrl(fileName);
+
+        const publicUrl = urlData.publicUrl;
+        setPreview(publicUrl);
+        onImageSelect(publicUrl);
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        // Fallback to base64 if upload fails
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target?.result as string;
+          setPreview(result);
+          onImageSelect(result);
+        };
+        reader.readAsDataURL(file);
+      } finally {
         setUploading(false);
-      };
-      reader.readAsDataURL(file);
+      }
     }
   };
 

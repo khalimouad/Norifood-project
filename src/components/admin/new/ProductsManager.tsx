@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Eye, Package } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, Package } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { ProductForm } from './ProductForm';
 
 interface Product {
   id: string;
@@ -28,8 +27,7 @@ export function ProductsManager() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   const fetchProducts = async () => {
@@ -93,10 +91,12 @@ export function ProductsManager() {
     product.description?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleProductSaved = () => {
-    setIsDialogOpen(false);
-    setEditingProduct(null);
-    fetchProducts();
+  const handleEdit = (product: Product) => {
+    navigate(`/admin-new/product/${product.id}`);
+  };
+
+  const handleNewProduct = () => {
+    navigate('/admin-new/product/new');
   };
 
   if (loading) {
@@ -125,26 +125,10 @@ export function ProductsManager() {
               Gérez votre catalogue de produits
             </CardDescription>
           </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button onClick={() => setEditingProduct(null)}>
-                <Plus className="h-4 w-4 mr-2" />
-                Nouveau produit
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl">
-              <DialogHeader>
-                <DialogTitle>
-                  {editingProduct ? 'Modifier le produit' : 'Nouveau produit'}
-                </DialogTitle>
-              </DialogHeader>
-              <ProductForm
-                product={editingProduct}
-                onSaved={handleProductSaved}
-                onCancel={() => setIsDialogOpen(false)}
-              />
-            </DialogContent>
-          </Dialog>
+          <Button onClick={handleNewProduct}>
+            <Plus className="h-4 w-4 mr-2" />
+            Nouveau produit
+          </Button>
         </div>
       </CardHeader>
       <CardContent>
@@ -210,10 +194,7 @@ export function ProductsManager() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => {
-                          setEditingProduct(product);
-                          setIsDialogOpen(true);
-                        }}
+                        onClick={() => handleEdit(product)}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>

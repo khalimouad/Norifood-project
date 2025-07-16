@@ -7,6 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { ImageUpload } from '../ImageUpload';
 
 interface Product {
   id: string;
@@ -226,15 +227,10 @@ export function ProductForm({ product, onSaved, onCancel }: ProductFormProps) {
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="image_url">URL de l'image</Label>
-        <Input
-          id="image_url"
-          value={formData.image_url}
-          onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-          placeholder="https://exemple.com/image.jpg"
-        />
-      </div>
+      <ImageUpload
+        onImageSelect={(imageData) => setFormData({ ...formData, image_url: imageData })}
+        currentImage={formData.image_url}
+      />
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">

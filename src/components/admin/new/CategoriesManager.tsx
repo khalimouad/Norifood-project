@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
+import * as React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Tag } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, Tag, Fish, Waves, Anchor, Shell, Droplet, Flame, Star, Heart, Sparkles, Crown, Gem, Award, Zap, ShoppingCart } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Textarea } from '@/components/ui/textarea';
-import { Switch } from '@/components/ui/switch';
+import { CategoryForm } from './CategoryForm';
 
 interface Category {
   id: string;
@@ -19,8 +18,26 @@ interface Category {
   slug: string;
   is_active: boolean;
   image_url: string;
+  icon?: string;
   created_at: string;
 }
+
+const iconMap = {
+  fish: Fish,
+  waves: Waves,
+  anchor: Anchor,
+  shell: Shell,
+  droplet: Droplet,
+  flame: Flame,
+  star: Star,
+  heart: Heart,
+  sparkles: Sparkles,
+  crown: Crown,
+  gem: Gem,
+  award: Award,
+  zap: Zap,
+  'shopping-cart': ShoppingCart,
+};
 
 export function CategoriesManager() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -31,12 +48,11 @@ export function CategoriesManager() {
   const [formLoading, setFormLoading] = useState(false);
   const { toast } = useToast();
 
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    image_url: '',
-    is_active: true,
-  });
+  const handleCategorySaved = () => {
+    setIsDialogOpen(false);
+    setEditingCategory(null);
+    fetchCategories();
+  };
 
   const fetchCategories = async () => {
     try {
@@ -64,57 +80,8 @@ export function CategoriesManager() {
     fetchCategories();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormLoading(true);
-
-    try {
-      const dataToSubmit = {
-        ...formData,
-        slug: formData.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
-      };
-
-      if (editingCategory) {
-        // Update existing category
-        const { error } = await supabase
-          .from('categories')
-          .update(dataToSubmit)
-          .eq('id', editingCategory.id);
-
-        if (error) throw error;
-
-        toast({
-          title: "Succès",
-          description: "Catégorie modifiée avec succès",
-        });
-      } else {
-        // Create new category
-        const { error } = await supabase
-          .from('categories')
-          .insert([dataToSubmit]);
-
-        if (error) throw error;
-
-        toast({
-          title: "Succès",
-          description: "Catégorie créée avec succès",
-        });
-      }
-
-      setIsDialogOpen(false);
-      setEditingCategory(null);
-      resetForm();
-      fetchCategories();
-    } catch (error) {
-      console.error('Error saving category:', error);
-      toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder la catégorie",
-        variant: "destructive",
-      });
-    } finally {
-      setFormLoading(false);
-    }
+  const resetForm = () => {
+    setEditingCategory(null);
   };
 
   const handleDelete = async (id: string) => {
@@ -144,23 +111,7 @@ export function CategoriesManager() {
     }
   };
 
-  const resetForm = () => {
-    setFormData({
-      name: '',
-      description: '',
-      image_url: '',
-      is_active: true,
-    });
-    setEditingCategory(null);
-  };
-
   const openEditDialog = (category: Category) => {
-    setFormData({
-      name: category.name,
-      description: category.description || '',
-      image_url: category.image_url || '',
-      is_active: category.is_active,
-    });
     setEditingCategory(category);
     setIsDialogOpen(true);
   };
@@ -209,55 +160,11 @@ export function CategoriesManager() {
                   {editingCategory ? 'Modifier la catégorie' : 'Nouvelle catégorie'}
                 </DialogTitle>
               </DialogHeader>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Nom</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    rows={3}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="image_url">URL de l'image</Label>
-                  <Input
-                    id="image_url"
-                    value={formData.image_url}
-                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    placeholder="https://exemple.com/image.jpg"
-                  />
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    id="is_active"
-                    checked={formData.is_active}
-                    onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked })}
-                  />
-                  <Label htmlFor="is_active">Catégorie active</Label>
-                </div>
-
-                <div className="flex justify-end space-x-2">
-                  <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
-                    Annuler
-                  </Button>
-                  <Button type="submit" disabled={formLoading}>
-                    {formLoading ? 'Sauvegarde...' : (editingCategory ? 'Modifier' : 'Créer')}
-                  </Button>
-                </div>
-              </form>
+              <CategoryForm
+                category={editingCategory}
+                onSaved={handleCategorySaved}
+                onCancel={() => setIsDialogOpen(false)}
+              />
             </DialogContent>
           </Dialog>
         </div>
@@ -289,6 +196,13 @@ export function CategoriesManager() {
                 <TableRow key={category.id}>
                   <TableCell>
                     <div className="flex items-center space-x-3">
+                      {category.icon && iconMap[category.icon as keyof typeof iconMap] && (
+                        <div className="flex items-center justify-center h-10 w-10 rounded bg-muted">
+                          {React.createElement(iconMap[category.icon as keyof typeof iconMap], {
+                            className: "h-5 w-5 text-primary"
+                          })}
+                        </div>
+                      )}
                       {category.image_url && (
                         <img
                           src={category.image_url}
