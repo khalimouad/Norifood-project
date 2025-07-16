@@ -121,60 +121,66 @@ const Cart = () => {
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
               {items.map((item) => (
-                <Card key={item.id} className="border-0 shadow-sm">
-                  <CardContent className="p-6">
-                    <div className="flex gap-4">
+                <Card key={item.id} className="border-0 shadow-sm hover:shadow-md transition-shadow">
+                  <CardContent className="p-4 md:p-6">
+                    <div className="flex flex-col sm:flex-row gap-4">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
+                        className="w-full sm:w-24 md:w-28 h-24 md:h-28 object-cover rounded-lg flex-shrink-0"
                       />
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-900 mb-1">
-                          {item.name}
-                        </h3>
-                        <div className="flex items-center gap-2 mb-3">
-                          <span className="text-lg font-bold text-ocean">
-                            {item.price} DH
-                          </span>
-                          <span className="text-sm text-gray-500">
-                            / {item.unitType}
-                          </span>
+                      <div className="flex-1 min-w-0 space-y-3">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h3 className="font-semibold text-gray-900 text-lg mb-1">
+                              {item.name}
+                            </h3>
+                            <div className="flex items-center gap-2">
+                              <span className="text-xl font-bold text-ocean">
+                                {item.price} DH
+                              </span>
+                              <span className="text-sm text-gray-500">
+                                / {item.unitType}
+                              </span>
+                            </div>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleRemoveItem(item.id)}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0 flex-shrink-0"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
                         </div>
+                        
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-2">
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                              className="h-8 w-8 p-0"
+                              className="h-8 w-8 p-0 border-0 bg-white shadow-sm"
                             >
                               <Minus className="h-4 w-4" />
                             </Button>
-                            <span className="min-w-[3rem] text-center font-medium">
+                            <span className="min-w-[3rem] text-center font-semibold text-lg">
                               {item.quantity}
                             </span>
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                              className="h-8 w-8 p-0"
+                              className="h-8 w-8 p-0 border-0 bg-white shadow-sm"
                             >
                               <Plus className="h-4 w-4" />
                             </Button>
                           </div>
-                          <div className="flex items-center gap-3">
-                            <span className="font-bold text-lg">
+                          <div className="text-right">
+                            <p className="text-sm text-gray-500 mb-1">Total</p>
+                            <span className="font-bold text-2xl text-ocean">
                               {(item.price * item.quantity).toFixed(2)} DH
                             </span>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleRemoveItem(item.id)}
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
                           </div>
                         </div>
                       </div>
