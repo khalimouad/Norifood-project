@@ -113,12 +113,16 @@ serve(async (req) => {
         try {
           newProduct = JSON.parse(body);
         } catch (e) {
+          console.error('JSON parse error:', e);
           throw new Error("Invalid JSON in request body");
         }
 
+        // Extract variations from the product
+        const { variations, ...productData } = newProduct;
+
         // Handle image upload if present
-        if (newProduct.image && newProduct.image.startsWith('data:')) {
-          const imageBuffer = Uint8Array.from(atob(newProduct.image.split(',')[1]), c => c.charCodeAt(0));
+        if (productData.image && productData.image.startsWith('data:')) {
+          const imageBuffer = Uint8Array.from(atob(productData.image.split(',')[1]), c => c.charCodeAt(0));
           const fileName = `product_${Date.now()}.jpg`;
           
           const { error: uploadError } = await supabaseClient.storage
@@ -137,21 +141,38 @@ serve(async (req) => {
             .from('product-images')
             .getPublicUrl(fileName);
 
-          newProduct.image_url = publicUrl.publicUrl;
+          productData.image_url = publicUrl.publicUrl;
         }
         
         // Always remove the image field before database insertion
-        delete newProduct.image;
+        delete productData.image;
 
         const { data: product, error: createError } = await supabaseClient
           .from("products")
-          .insert([newProduct])
+          .insert([productData])
           .select()
           .single();
 
         if (createError) {
           console.error('Error creating product:', createError);
           throw createError;
+        }
+
+        // Insert variations if provided
+        if (variations && variations.length > 0) {
+          const variationsWithProductId = variations.map(v => ({
+            ...v,
+            product_id: product.id
+          }));
+          
+          const { error: variationsError } = await supabaseClient
+            .from("product_variations")
+            .insert(variationsWithProductId);
+
+          if (variationsError) {
+            console.error('Error creating variations:', variationsError);
+            throw variationsError;
+          }
         }
         
         console.log('Product created successfully');
@@ -175,12 +196,16 @@ serve(async (req) => {
         try {
           updatedProduct = JSON.parse(updateBody);
         } catch (e) {
+          console.error('JSON parse error:', e);
           throw new Error("Invalid JSON in request body");
         }
 
+        // Extract variations from the product
+        const { variations, ...productData } = updatedProduct;
+
         // Handle image upload if present
-        if (updatedProduct.image && updatedProduct.image.startsWith('data:')) {
-          const imageBuffer = Uint8Array.from(atob(updatedProduct.image.split(',')[1]), c => c.charCodeAt(0));
+        if (productData.image && productData.image.startsWith('data:')) {
+          const imageBuffer = Uint8Array.from(atob(productData.image.split(',')[1]), c => c.charCodeAt(0));
           const fileName = `product_${productId}_${Date.now()}.jpg`;
           
           const { error: uploadError } = await supabaseClient.storage
@@ -199,15 +224,15 @@ serve(async (req) => {
             .from('product-images')
             .getPublicUrl(fileName);
 
-          updatedProduct.image_url = publicUrl.publicUrl;
+          productData.image_url = publicUrl.publicUrl;
         }
         
         // Always remove the image field before database insertion
-        delete updatedProduct.image;
+        delete productData.image;
 
         const { data: updated, error: updateError } = await supabaseClient
           .from("products")
-          .update(updatedProduct)
+          .update(productData)
           .eq("id", productId)
           .select()
           .single();
@@ -215,6 +240,32 @@ serve(async (req) => {
         if (updateError) {
           console.error('Error updating product:', updateError);
           throw updateError;
+        }
+
+        // Handle variations update if provided
+        if (variations !== undefined) {
+          // Delete existing variations
+          await supabaseClient
+            .from("product_variations")
+            .delete()
+            .eq("product_id", productId);
+
+          // Insert new variations if any
+          if (variations && variations.length > 0) {
+            const variationsWithProductId = variations.map(v => ({
+              ...v,
+              product_id: productId
+            }));
+            
+            const { error: variationsError } = await supabaseClient
+              .from("product_variations")
+              .insert(variationsWithProductId);
+
+            if (variationsError) {
+              console.error('Error updating variations:', variationsError);
+              throw variationsError;
+            }
+          }
         }
         
         console.log('Product updated successfully');
