@@ -42,7 +42,7 @@ export const Header = () => {
             <Button variant="ghost" size="icon" className="relative" onClick={() => navigate('/cart')}>
               <ShoppingCart className="h-5 w-5 text-gray-600" />
               {cartCount > 0 && (
-                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs bg-ocean text-white">{cartCount}</Badge>
+                <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-ocean text-white flex items-center justify-center text-xs font-medium">{cartCount}</div>
               )}
             </Button>
           </div>
@@ -91,7 +91,7 @@ export const Header = () => {
                 >
                   <Heart className="h-5 w-5" />
                   {wishlistCount > 0 && (
-                    <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs bg-coral text-white">{wishlistCount}</Badge>
+                    <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-coral text-white flex items-center justify-center text-xs font-medium">{wishlistCount}</div>
                   )}
                 </Button>
               {user ? (
@@ -125,7 +125,7 @@ export const Header = () => {
               <Button variant="ghost" size="icon" className="relative text-gray-600 hover:text-ocean" onClick={() => navigate('/cart')}>
                 <ShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs bg-ocean text-white">{cartCount}</Badge>
+                  <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-ocean text-white flex items-center justify-center text-xs font-medium">{cartCount}</div>
                 )}
               </Button>
             </div>
