@@ -25,6 +25,8 @@ const Products = () => {
   const [sortBy, setSortBy] = useState("name");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [loading, setLoading] = useState(true);
+  const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -33,6 +35,7 @@ const Products = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       filterAndSortProducts();
+      generateSearchSuggestions();
     }, 100); // Small delay to make search feel immediate but not too heavy
     
     return () => clearTimeout(timeoutId);
@@ -115,10 +118,53 @@ const Products = () => {
     setFilteredProducts(filtered);
   };
 
+  const generateSearchSuggestions = () => {
+    if (!searchTerm || searchTerm.length < 2) {
+      setSearchSuggestions([]);
+      return;
+    }
+
+    const suggestions = new Set<string>();
+    const normalizedSearchTerm = normalizeText(searchTerm);
+    
+    products.forEach(product => {
+      const searchableTerms = [
+        product.name,
+        product.description || '',
+        product.product_type || '',
+        product.origin || ''
+      ];
+      
+      searchableTerms.forEach(term => {
+        if (term) {
+          const words = normalizeText(term).split(' ');
+          words.forEach(word => {
+            if (word.startsWith(normalizedSearchTerm) && word.length > normalizedSearchTerm.length) {
+              suggestions.add(word);
+            }
+          });
+          
+          // Also add full terms that contain the search
+          if (normalizeText(term).includes(normalizedSearchTerm)) {
+            suggestions.add(term);
+          }
+        }
+      });
+    });
+    
+    setSearchSuggestions(Array.from(suggestions).slice(0, 5));
+  };
+
+  const handleSearchSuggestionClick = (suggestion: string) => {
+    setSearchTerm(suggestion);
+    setShowSuggestions(false);
+  };
+
   const clearFilters = () => {
     setSearchTerm("");
     setSelectedCategory("all");
     setSortBy("name");
+    setShowSuggestions(false);
   };
 
   if (loading) {
@@ -164,17 +210,41 @@ const Products = () => {
                   <Input
                     placeholder="Rechercher un produit..."
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => {
+                      setSearchTerm(e.target.value);
+                      setShowSuggestions(true);
+                    }}
+                    onFocus={() => setShowSuggestions(true)}
+                    onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                     className="pl-10 transition-all duration-200 focus:ring-2 focus:ring-ocean/20"
                     autoComplete="off"
                   />
                   {searchTerm && (
                     <button
-                      onClick={() => setSearchTerm("")}
+                      onClick={() => {
+                        setSearchTerm("");
+                        setShowSuggestions(false);
+                      }}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                     >
                       ×
                     </button>
+                  )}
+                  
+                  {/* Search Suggestions */}
+                  {showSuggestions && searchSuggestions.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 max-h-48 overflow-y-auto">
+                      {searchSuggestions.map((suggestion, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleSearchSuggestionClick(suggestion)}
+                          className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors flex items-center gap-2"
+                        >
+                          <Search className="h-4 w-4 text-gray-400" />
+                          <span className="text-gray-700">{suggestion}</span>
+                        </button>
+                      ))}
+                    </div>
                   )}
                 </div>
 
