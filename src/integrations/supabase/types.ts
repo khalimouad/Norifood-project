@@ -533,8 +533,13 @@ export type Database = {
           max_order_quantity: number | null
           min_order_quantity: number | null
           name: string
+          origin: string | null
+          preparation_tips: string | null
+          product_type: string | null
+          shelf_life: string | null
           slug: string
           stock_quantity: number | null
+          storage_conditions: string | null
           unit_type: string
           updated_at: string | null
         }
@@ -551,8 +556,13 @@ export type Database = {
           max_order_quantity?: number | null
           min_order_quantity?: number | null
           name: string
+          origin?: string | null
+          preparation_tips?: string | null
+          product_type?: string | null
+          shelf_life?: string | null
           slug: string
           stock_quantity?: number | null
+          storage_conditions?: string | null
           unit_type: string
           updated_at?: string | null
         }
@@ -569,8 +579,13 @@ export type Database = {
           max_order_quantity?: number | null
           min_order_quantity?: number | null
           name?: string
+          origin?: string | null
+          preparation_tips?: string | null
+          product_type?: string | null
+          shelf_life?: string | null
           slug?: string
           stock_quantity?: number | null
+          storage_conditions?: string | null
           unit_type?: string
           updated_at?: string | null
         }

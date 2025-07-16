@@ -24,6 +24,11 @@ interface Product {
   slug: string;
   image_url: string;
   created_at: string;
+  product_type?: string;
+  origin?: string;
+  storage_conditions?: string;
+  shelf_life?: string;
+  preparation_tips?: string;
 }
 
 export const ProductsAdmin = () => {
@@ -43,6 +48,11 @@ export const ProductsAdmin = () => {
     featured: false,
     image_url: '',
     image: '',
+    product_type: 'Poisson Frais',
+    origin: 'Atlantique Nord',
+    storage_conditions: '0-4°C',
+    shelf_life: '2-3 jours',
+    preparation_tips: '',
   });
 
   useEffect(() => {
@@ -138,6 +148,11 @@ export const ProductsAdmin = () => {
       featured: false,
       image_url: '',
       image: '',
+      product_type: 'Poisson Frais',
+      origin: 'Atlantique Nord',
+      storage_conditions: '0-4°C',
+      shelf_life: '2-3 jours',
+      preparation_tips: '',
     });
     setEditingProduct(null);
   };
@@ -153,6 +168,11 @@ export const ProductsAdmin = () => {
       featured: product.featured,
       image_url: product.image_url || '',
       image: '',
+      product_type: product.product_type || 'Poisson Frais',
+      origin: product.origin || 'Atlantique Nord',
+      storage_conditions: product.storage_conditions || '0-4°C',
+      shelf_life: product.shelf_life || '2-3 jours',
+      preparation_tips: product.preparation_tips || '',
     });
     setEditingProduct(product);
     setIsDialogOpen(true);
@@ -243,6 +263,100 @@ export const ProductsAdmin = () => {
                 />
               </div>
               
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Détails du Produit</h3>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="product_type">Type</Label>
+                    <Select 
+                      value={formData.product_type} 
+                      onValueChange={(value) => setFormData({ ...formData, product_type: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Poisson Frais">Poisson Frais</SelectItem>
+                        <SelectItem value="Fruits de Mer">Fruits de Mer</SelectItem>
+                        <SelectItem value="Poisson Congelé">Poisson Congelé</SelectItem>
+                        <SelectItem value="Conserves">Conserves</SelectItem>
+                        <SelectItem value="Autre">Autre</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="origin">Origine</Label>
+                    <Select 
+                      value={formData.origin} 
+                      onValueChange={(value) => setFormData({ ...formData, origin: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Atlantique Nord">Atlantique Nord</SelectItem>
+                        <SelectItem value="Méditerranée">Méditerranée</SelectItem>
+                        <SelectItem value="Océan Indien">Océan Indien</SelectItem>
+                        <SelectItem value="Local">Local</SelectItem>
+                        <SelectItem value="Élevage">Élevage</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="storage_conditions">Conservation</Label>
+                    <Select 
+                      value={formData.storage_conditions} 
+                      onValueChange={(value) => setFormData({ ...formData, storage_conditions: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="0-4°C">0-4°C</SelectItem>
+                        <SelectItem value="-18°C">-18°C</SelectItem>
+                        <SelectItem value="Température ambiante">Température ambiante</SelectItem>
+                        <SelectItem value="Frais et sec">Frais et sec</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="shelf_life">Durée de conservation</Label>
+                    <Select 
+                      value={formData.shelf_life} 
+                      onValueChange={(value) => setFormData({ ...formData, shelf_life: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1-2 jours">1-2 jours</SelectItem>
+                        <SelectItem value="2-3 jours">2-3 jours</SelectItem>
+                        <SelectItem value="3-5 jours">3-5 jours</SelectItem>
+                        <SelectItem value="1 semaine">1 semaine</SelectItem>
+                        <SelectItem value="1 mois">1 mois</SelectItem>
+                        <SelectItem value="3 mois">3 mois</SelectItem>
+                        <SelectItem value="6 mois">6 mois</SelectItem>
+                        <SelectItem value="1 an">1 an</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                
+                <div>
+                  <Label htmlFor="preparation_tips">Conseils de Préparation</Label>
+                  <Textarea
+                    id="preparation_tips"
+                    value={formData.preparation_tips}
+                    onChange={(e) => setFormData({ ...formData, preparation_tips: e.target.value })}
+                    placeholder="Conseils pour la préparation, cuisson, assaisonnement..."
+                  />
+                </div>
+              </div>
+              
               <div className="flex gap-6">
                 <div className="flex items-center space-x-2">
                   <Switch
@@ -296,10 +410,26 @@ export const ProductsAdmin = () => {
                     )}
                   </div>
                   <p className="text-sm text-muted-foreground mb-2">{product.description}</p>
-                  <div className="flex gap-4 text-sm">
+                  <div className="flex gap-4 text-sm mb-2">
                     <span>Prix: {product.base_price} DH/{product.unit_type}</span>
                     <span>Stock: {product.stock_quantity}</span>
                   </div>
+                  {(product.product_type || product.origin || product.storage_conditions || product.shelf_life) && (
+                    <div className="border-t pt-2 mt-2">
+                      <h4 className="font-medium text-sm mb-1">Détails du Produit</h4>
+                      <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+                        {product.product_type && <div><span className="font-medium">Type:</span> {product.product_type}</div>}
+                        {product.origin && <div><span className="font-medium">Origine:</span> {product.origin}</div>}
+                        {product.storage_conditions && <div><span className="font-medium">Conservation:</span> {product.storage_conditions}</div>}
+                        {product.shelf_life && <div><span className="font-medium">Durée:</span> {product.shelf_life}</div>}
+                      </div>
+                      {product.preparation_tips && (
+                        <div className="mt-2 text-xs text-muted-foreground">
+                          <span className="font-medium">Conseils:</span> {product.preparation_tips}
+                        </div>
+                      )}
+                    </div>
+                  )}
                   {product.image_url && (
                     <div className="mt-2">
                       <img 
