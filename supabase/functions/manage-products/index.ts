@@ -102,7 +102,11 @@ serve(async (req) => {
         console.log('Request body:', body);
         
         if (!body) {
-          throw new Error("Request body is required for POST requests");
+          console.error('No request body provided for POST');
+          return new Response(JSON.stringify({ error: "Request body is required for POST requests" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
         }
 
         let newProduct;

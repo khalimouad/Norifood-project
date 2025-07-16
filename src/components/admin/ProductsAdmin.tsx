@@ -61,8 +61,20 @@ export const ProductsAdmin = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-products');
-      if (error) throw error;
+      const { data: { session } } = await supabase.auth.getSession();
+      const response = await fetch(`https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${session?.access_token}`,
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4cWVjemF5enh1dmV3bmNwYW9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2MTM0NjUsImV4cCI6MjA2ODE4OTQ2NX0.j_n5rgp75XkDVkl617685i_g4CcVkAv5OyLC7qdtkR8',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
       
       // Handle paginated response
       const productsData = data?.products || data || [];
@@ -82,14 +94,25 @@ export const ProductsAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const { data: { session } } = await supabase.auth.getSession();
       const method = editingProduct ? 'PUT' : 'POST';
-      const url = editingProduct ? `manage-products?id=${editingProduct.id}` : 'manage-products';
+      const url = editingProduct 
+        ? `https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products?id=${editingProduct.id}`
+        : 'https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products';
       
-      const { error } = await supabase.functions.invoke(url, {
-        body: formData,
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Authorization': `Bearer ${session?.access_token}`,
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4cWVjemF5enh1dmV3bmNwYW9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2MTM0NjUsImV4cCI6MjA2ODE4OTQ2NX0.j_n5rgp75XkDVkl617685i_g4CcVkAv5OyLC7qdtkR8',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
       
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       
       toast({
         title: "Succès",
@@ -113,9 +136,18 @@ export const ProductsAdmin = () => {
     if (!confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) return;
     
     try {
-      const { error } = await supabase.functions.invoke(`manage-products?id=${id}`);
+      const { data: { session } } = await supabase.auth.getSession();
+      const response = await fetch(`https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products?id=${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${session?.access_token}`,
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4cWVjemF5enh1dmV3bmNwYW9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2MTM0NjUsImV4cCI6MjA2ODE4OTQ2NX0.j_n5rgp75XkDVkl617685i_g4CcVkAv5OyLC7qdtkR8',
+        },
+      });
       
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       
       toast({
         title: "Succès",
