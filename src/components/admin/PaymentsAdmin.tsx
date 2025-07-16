@@ -29,8 +29,9 @@ export const PaymentsAdmin = () => {
     try {
       const { data, error } = await supabase.functions.invoke('manage-payments');
       if (error) throw error;
-      setPayments(Array.isArray(data) ? data : (data?.payments || []));
+      setPayments(Array.isArray(data) ? data : []);
     } catch (error) {
+      console.error('Error fetching payments:', error);
       toast({
         title: "Erreur",
         description: "Impossible de charger les paiements",

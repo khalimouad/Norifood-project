@@ -70,7 +70,7 @@ export const CategoriesAdmin = () => {
     try {
       const { data, error } = await supabase.functions.invoke('manage-categories');
       if (error) throw error;
-      setCategories(data || []);
+      setCategories(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching categories:', error);
       toast({

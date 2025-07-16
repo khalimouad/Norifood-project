@@ -82,9 +82,12 @@ export const OrdersAdmin = () => {
 
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
-      const { error } = await supabase.functions.invoke(`manage-orders?id=${orderId}`, {
-        method: 'PUT',
-        body: { status: newStatus },
+      const { error } = await supabase.functions.invoke('manage-orders', {
+        body: {
+          method: 'PUT',
+          id: orderId,
+          status: newStatus
+        }
       });
       
       if (error) throw error;

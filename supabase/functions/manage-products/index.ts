@@ -17,11 +17,24 @@ serve(async (req) => {
   );
 
   try {
-    const { method } = req;
+    const body = await req.text();
+    let requestData = {};
+    
+    if (body) {
+      try {
+        requestData = JSON.parse(body);
+      } catch (e) {
+        // If JSON parsing fails, continue with empty object
+      }
+    }
+    
+    const { method: requestMethod, id: bodyId, ...productData } = requestData as any;
     const url = new URL(req.url);
-    const productId = url.searchParams.get("id");
+    const productId = url.searchParams.get("id") || bodyId;
+    const method = requestMethod || req.method;
 
     console.log(`[${method}] ${req.url}`);
+    console.log(`Request data:`, requestData);
 
     switch (method) {
       case "GET":
@@ -98,31 +111,19 @@ serve(async (req) => {
         }
 
       case "POST":
-        const body = await req.text();
-        console.log('Request body:', body);
-        
-        if (!body) {
-          console.error('No request body provided for POST');
+        if (!productData || Object.keys(productData).length === 0) {
           return new Response(JSON.stringify({ error: "Request body is required for POST requests" }), {
             status: 400,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
           });
         }
 
-        let newProduct;
-        try {
-          newProduct = JSON.parse(body);
-        } catch (e) {
-          console.error('JSON parse error:', e);
-          throw new Error("Invalid JSON in request body");
-        }
-
         // Extract variations from the product
-        const { variations, ...productData } = newProduct;
+        const { variations, ...newProductData } = productData;
 
         // Handle image upload if present
-        if (productData.image && productData.image.startsWith('data:')) {
-          const imageBuffer = Uint8Array.from(atob(productData.image.split(',')[1]), c => c.charCodeAt(0));
+        if (newProductData.image && newProductData.image.startsWith('data:')) {
+          const imageBuffer = Uint8Array.from(atob(newProductData.image.split(',')[1]), c => c.charCodeAt(0));
           const fileName = `product_${Date.now()}.jpg`;
           
           const { error: uploadError } = await supabaseClient.storage
@@ -141,15 +142,15 @@ serve(async (req) => {
             .from('product-images')
             .getPublicUrl(fileName);
 
-          productData.image_url = publicUrl.publicUrl;
+          newProductData.image_url = publicUrl.publicUrl;
         }
         
         // Always remove the image field before database insertion
-        delete productData.image;
+        delete newProductData.image;
 
         const { data: product, error: createError } = await supabaseClient
           .from("products")
-          .insert([productData])
+          .insert([newProductData])
           .select()
           .single();
 
@@ -182,30 +183,25 @@ serve(async (req) => {
 
       case "PUT":
         if (!productId) {
-          throw new Error("Product ID is required for updates");
+          return new Response(JSON.stringify({ error: "Product ID is required for updates" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
         }
         
-        const updateBody = await req.text();
-        console.log('Update body:', updateBody);
-        
-        if (!updateBody) {
-          throw new Error("Request body is required for PUT requests");
-        }
-
-        let updatedProduct;
-        try {
-          updatedProduct = JSON.parse(updateBody);
-        } catch (e) {
-          console.error('JSON parse error:', e);
-          throw new Error("Invalid JSON in request body");
+        if (!productData || Object.keys(productData).length === 0) {
+          return new Response(JSON.stringify({ error: "Request body is required for PUT requests" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
         }
 
         // Extract variations from the product
-        const { variations, ...productData } = updatedProduct;
+        const { variations: updateVariations, ...updateProductData } = productData;
 
         // Handle image upload if present
-        if (productData.image && productData.image.startsWith('data:')) {
-          const imageBuffer = Uint8Array.from(atob(productData.image.split(',')[1]), c => c.charCodeAt(0));
+        if (updateProductData.image && updateProductData.image.startsWith('data:')) {
+          const imageBuffer = Uint8Array.from(atob(updateProductData.image.split(',')[1]), c => c.charCodeAt(0));
           const fileName = `product_${productId}_${Date.now()}.jpg`;
           
           const { error: uploadError } = await supabaseClient.storage
@@ -224,15 +220,15 @@ serve(async (req) => {
             .from('product-images')
             .getPublicUrl(fileName);
 
-          productData.image_url = publicUrl.publicUrl;
+          updateProductData.image_url = publicUrl.publicUrl;
         }
         
         // Always remove the image field before database insertion
-        delete productData.image;
+        delete updateProductData.image;
 
         const { data: updated, error: updateError } = await supabaseClient
           .from("products")
-          .update(productData)
+          .update(updateProductData)
           .eq("id", productId)
           .select()
           .single();
@@ -243,7 +239,7 @@ serve(async (req) => {
         }
 
         // Handle variations update if provided
-        if (variations !== undefined) {
+        if (updateVariations !== undefined) {
           // Delete existing variations
           await supabaseClient
             .from("product_variations")
@@ -251,8 +247,8 @@ serve(async (req) => {
             .eq("product_id", productId);
 
           // Insert new variations if any
-          if (variations && variations.length > 0) {
-            const variationsWithProductId = variations.map(v => ({
+          if (updateVariations && updateVariations.length > 0) {
+            const variationsWithProductId = updateVariations.map(v => ({
               ...v,
               product_id: productId
             }));
@@ -275,7 +271,10 @@ serve(async (req) => {
 
       case "DELETE":
         if (!productId) {
-          throw new Error("Product ID is required for deletion");
+          return new Response(JSON.stringify({ error: "Product ID is required for deletion" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
         }
         
         const { error: deleteError } = await supabaseClient

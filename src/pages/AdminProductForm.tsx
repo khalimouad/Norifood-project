@@ -86,15 +86,9 @@ const AdminProductForm = () => {
 
   const fetchCategories = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const response = await fetch(`https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-categories`, {
-        headers: {
-          'Authorization': `Bearer ${session?.access_token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      setCategories(data.categories || []);
+      const { data, error } = await supabase.functions.invoke('manage-categories');
+      if (error) throw error;
+      setCategories(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
@@ -103,34 +97,30 @@ const AdminProductForm = () => {
   const fetchProduct = async () => {
     try {
       setLoading(true);
-      const { data: { session } } = await supabase.auth.getSession();
-      const response = await fetch(`https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products?id=${id}`, {
-        headers: {
-          'Authorization': `Bearer ${session?.access_token}`,
-          'Content-Type': 'application/json',
-        },
+      const { data, error } = await supabase.functions.invoke('manage-products', {
+        body: { id }
       });
-      const data = await response.json();
+      if (error) throw error;
       
-      if (data.product) {
+      if (data) {
         setFormData({
-          name: data.product.name || '',
-          description: data.product.description || '',
-          base_price: data.product.base_price || 0,
-          unit_type: data.product.unit_type || 'kg',
-          stock_quantity: data.product.stock_quantity || 0,
-          is_active: data.product.is_active ?? true,
-          featured: data.product.featured ?? false,
-          image_url: data.product.image_url || '',
+          name: data.name || '',
+          description: data.description || '',
+          base_price: data.base_price || 0,
+          unit_type: data.unit_type || 'kg',
+          stock_quantity: data.stock_quantity || 0,
+          is_active: data.is_active ?? true,
+          featured: data.featured ?? false,
+          image_url: data.image_url || '',
           image: '',
-          product_type: data.product.product_type || 'Poisson Frais',
-          origin: data.product.origin || 'Atlantique Nord',
-          storage_conditions: data.product.storage_conditions || '0-4°C',
-          shelf_life: data.product.shelf_life || '2-3 jours',
-          preparation_tips: data.product.preparation_tips || '',
-          category_id: data.product.category_id || '',
+          product_type: data.product_type || 'Poisson Frais',
+          origin: data.origin || 'Atlantique Nord',
+          storage_conditions: data.storage_conditions || '0-4°C',
+          shelf_life: data.shelf_life || '2-3 jours',
+          preparation_tips: data.preparation_tips || '',
+          category_id: data.category_id || '',
         });
-        setVariations(data.product.variations || []);
+        setVariations(data.product_variations || []);
       }
     } catch (error) {
       console.error('Error fetching product:', error);
@@ -149,33 +139,25 @@ const AdminProductForm = () => {
     setLoading(true);
 
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const method = id ? 'PUT' : 'POST';
-      const url = id 
-        ? `https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products?id=${id}`
-        : `https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products`;
+      const functionName = 'manage-products';
+      const payload = {
+        ...formData,
+        variations: variations,
+        method: id ? 'PUT' : 'POST',
+        id: id || undefined,
+      };
 
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Authorization': `Bearer ${session?.access_token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          variations: variations,
-        }),
+      const { data, error } = await supabase.functions.invoke(functionName, {
+        body: payload,
       });
 
-      if (response.ok) {
-        toast({
-          title: "Succès",
-          description: id ? "Produit modifié avec succès" : "Produit créé avec succès",
-        });
-        navigate('/admin');
-      } else {
-        throw new Error('Failed to save product');
-      }
+      if (error) throw error;
+
+      toast({
+        title: "Succès",
+        description: id ? "Produit modifié avec succès" : "Produit créé avec succès",
+      });
+      navigate('/admin');
     } catch (error) {
       console.error('Error saving product:', error);
       toast({
