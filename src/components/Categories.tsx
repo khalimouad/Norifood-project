@@ -2,12 +2,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Fish, Waves, Utensils, Snowflake, Flame, Package } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import salmonImage from '@/assets/salmon.jpg';
 import shrimpImage from '@/assets/shrimp.jpg';
 import wholeFishImage from '@/assets/whole-fish.jpg';
 
 const categories = [
   {
+    id: 'poissons-entiers',
     name: 'Poissons Entiers',
     description: 'Sélection quotidienne de poissons entiers',
     image: wholeFishImage,
@@ -16,6 +18,7 @@ const categories = [
     featured: true,
   },
   {
+    id: 'filets-poissons',
     name: 'Filets de Poissons',
     description: 'Filets de poissons prêts à cuisiner',
     image: salmonImage,
@@ -24,6 +27,7 @@ const categories = [
     featured: false,
   },
   {
+    id: 'crustaces',
     name: 'Crustacés',
     description: 'Crustacés frais et de qualité',
     image: shrimpImage,
@@ -32,6 +36,7 @@ const categories = [
     featured: false,
   },
   {
+    id: 'cephalopodes',
     name: 'Céphalopodes',
     description: 'Pieuvres, seiches et calmars',
     image: wholeFishImage,
@@ -40,6 +45,7 @@ const categories = [
     featured: false,
   },
   {
+    id: 'poissons-fumes',
     name: 'Poissons Fumés',
     description: 'Poissons fumés artisanaux',
     image: salmonImage,
@@ -48,6 +54,7 @@ const categories = [
     featured: false,
   },
   {
+    id: 'produits-elabores',
     name: 'Produits Élaborés',
     description: 'Produits transformés et élaborés',
     image: shrimpImage,
@@ -58,6 +65,11 @@ const categories = [
 ];
 
 export const Categories = () => {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryId: string) => {
+    navigate(`/products?category=${categoryId}`);
+  };
   return (
     <section className="py-8 md:py-20 bg-gray-50">
       <div className="container mx-auto px-4 md:px-8">
@@ -73,8 +85,9 @@ export const Categories = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-8">
           {categories.map((category) => (
             <div
-              key={category.name}
+              key={category.id}
               className="group bg-white rounded-xl md:rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
+              onClick={() => handleCategoryClick(category.id)}
             >
               <div className="relative aspect-square md:aspect-[4/3] overflow-hidden">
                 <img
@@ -108,7 +121,13 @@ export const Categories = () => {
                   <span className="text-sm text-gray-500">
                     {category.productCount} produits
                   </span>
-                  <Button className="bg-ocean hover:bg-ocean/90 text-white px-4 py-2 text-sm">
+                  <Button 
+                    className="bg-ocean hover:bg-ocean/90 text-white px-4 py-2 text-sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCategoryClick(category.id);
+                    }}
+                  >
                     Voir Tout
                   </Button>
                 </div>

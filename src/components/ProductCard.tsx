@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingCart, Scale, Package, Heart, Plus, Minus } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+import { useCart } from '@/hooks/useCart';
+import { useToast } from '@/hooks/use-toast';
 
 interface ProductProps {
   id: string;

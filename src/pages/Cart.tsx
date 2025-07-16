@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { BottomNavigation } from "@/components/BottomNavigation";
@@ -8,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/hooks/useCart";
 import { 
   ShoppingBag, 
   Plus, 
@@ -20,64 +22,22 @@ import {
   Shield
 } from "lucide-react";
 
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  unit: string;
-  image: string;
-  weight?: number;
-}
-
 const Cart = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: "1",
-      name: "Saumon Atlantique Frais",
-      price: 85,
-      quantity: 2,
-      unit: "kg",
-      image: "/placeholder.svg",
-      weight: 1.5
-    },
-    {
-      id: "2",
-      name: "Crevettes Royales",
-      price: 120,
-      quantity: 1,
-      unit: "kg",
-      image: "/placeholder.svg",
-      weight: 0.5
-    },
-    {
-      id: "3",
-      name: "Dorade Royale",
-      price: 95,
-      quantity: 3,
-      unit: "pièce",
-      image: "/placeholder.svg"
-    }
-  ]);
-
+  const { items, updateQuantity, removeItem, getTotalItems, getTotalPrice } = useCart();
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const updateQuantity = (id: string, newQuantity: number) => {
+  const handleUpdateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) {
-      removeItem(id);
+      handleRemoveItem(id);
       return;
     }
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
+    updateQuantity(id, newQuantity);
   };
 
-  const removeItem = (id: string) => {
-    setCartItems(items => items.filter(item => item.id !== id));
+  const handleRemoveItem = (id: string) => {
+    removeItem(id);
     toast({
       title: "Produit retiré",
       description: "Le produit a été retiré de votre panier",
@@ -101,12 +61,12 @@ const Cart = () => {
     setPromoCode("");
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = getTotalPrice();
   const discount = appliedPromo === "FRESH10" ? subtotal * 0.1 : 0;
   const deliveryFee = subtotal > 200 ? 0 : 25;
   const total = subtotal - discount + deliveryFee;
 
-  if (cartItems.length === 0) {
+  if (items.length === 0) {
     return (
       <div className="min-h-screen bg-white">
         <Header />
@@ -122,10 +82,12 @@ const Cart = () => {
                   Découvrez nos produits frais et commencez vos achats
                 </p>
               </div>
-              <Button size="lg" className="w-full">
-                <ArrowRight className="h-5 w-5 mr-2" />
-                Découvrir nos Produits
-              </Button>
+              <Link to="/products">
+                <Button size="lg" className="w-full">
+                  <ArrowRight className="h-5 w-5 mr-2" />
+                  Découvrir nos Produits
+                </Button>
+              </Link>
             </div>
           </div>
         </main>
@@ -149,7 +111,7 @@ const Cart = () => {
               </h1>
             </div>
             <p className="text-gray-600">
-              {cartItems.length} article{cartItems.length > 1 ? "s" : ""} dans votre panier
+              {items.length} article{items.length > 1 ? "s" : ""} dans votre panier
             </p>
           </div>
         </div>
@@ -158,7 +120,7 @@ const Cart = () => {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
-              {cartItems.map((item) => (
+              {items.map((item) => (
                 <Card key={item.id} className="border-0 shadow-sm">
                   <CardContent className="p-6">
                     <div className="flex gap-4">
@@ -176,20 +138,15 @@ const Cart = () => {
                             {item.price} DH
                           </span>
                           <span className="text-sm text-gray-500">
-                            / {item.unit}
+                            / {item.unitType}
                           </span>
-                          {item.weight && (
-                            <Badge variant="secondary" className="text-xs">
-                              {item.weight} kg
-                            </Badge>
-                          )}
                         </div>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
                               className="h-8 w-8 p-0"
                             >
                               <Minus className="h-4 w-4" />
@@ -200,7 +157,7 @@ const Cart = () => {
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
                               className="h-8 w-8 p-0"
                             >
                               <Plus className="h-4 w-4" />
@@ -213,7 +170,7 @@ const Cart = () => {
                             <Button
                               variant="ghost"
                               size="sm"
-                              onClick={() => removeItem(item.id)}
+                              onClick={() => handleRemoveItem(item.id)}
                               className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0"
                             >
                               <Trash2 className="h-4 w-4" />
@@ -304,9 +261,11 @@ const Cart = () => {
                     Passer la Commande
                   </Button>
 
-                  <Button variant="outline" size="lg" className="w-full">
-                    Continuer mes Achats
-                  </Button>
+                  <Link to="/products">
+                    <Button variant="outline" size="lg" className="w-full">
+                      Continuer mes Achats
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
 
