@@ -52,6 +52,7 @@ export const CategoriesSidebar = ({ open, onOpenChange }: CategoriesSidebarProps
   ];
 
   const handleCategoryClick = (categoryId: string) => {
+    window.scrollTo(0, 0);
     navigate(`/products?category=${categoryId}`);
     onOpenChange(false);
   };
@@ -103,6 +104,7 @@ export const CategoriesSidebar = ({ open, onOpenChange }: CategoriesSidebarProps
         <div className="p-6 pt-0">
           <Button
             onClick={() => {
+              window.scrollTo(0, 0);
               navigate('/products');
               onOpenChange(false);
             }}

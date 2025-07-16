@@ -23,6 +23,7 @@ export const BottomNavigation = () => {
     if (item.action === 'categories') {
       setCategoriesSidebarOpen(true);
     } else {
+      window.scrollTo(0, 0);
       navigate(item.path);
     }
   };
