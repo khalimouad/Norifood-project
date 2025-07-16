@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "@/hooks/useAuth";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Navigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,11 +26,21 @@ import { RecipesAdmin } from "@/components/admin/RecipesAdmin";
 import { BannersAdmin } from "@/components/admin/BannersAdmin";
 
 const Admin = () => {
-  const { user } = useAuth();
+  const { isAdmin, loading } = useAdminAuth();
   const [activeTab, setActiveTab] = useState("products");
 
-  // For now, we'll check if user exists - in production you'd check admin role
-  if (!user) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-2 text-muted-foreground">Vérification des droits d'accès...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
     return <Navigate to="/auth" replace />;
   }
 
