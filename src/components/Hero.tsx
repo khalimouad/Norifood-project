@@ -30,34 +30,37 @@ export const Hero = () => {
               </Button>
             </div>
 
-            {/* Features */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 text-center lg:text-left px-2 md:px-0">
-              <div className="flex items-center justify-center lg:justify-start space-x-2 p-2 md:p-0">
-                <div className="bg-ocean/10 p-2 rounded-full flex-shrink-0">
-                  <Timer className="h-4 w-4 text-ocean" />
+            {/* Features - Condensed for mobile */}
+            <div className="flex justify-center lg:justify-start gap-4 md:gap-8 px-2 md:px-0">
+              <div className="flex items-center space-x-1.5 md:space-x-2">
+                <div className="bg-ocean/10 p-1.5 md:p-2 rounded-full">
+                  <Timer className="h-3 w-3 md:h-4 md:w-4 text-ocean" />
                 </div>
-                <div className="text-left">
+                <div className="hidden md:block">
                   <p className="font-semibold text-sm">Livraison Rapide</p>
                   <p className="text-xs text-gray-600">Même jour</p>
                 </div>
+                <p className="font-semibold text-xs md:hidden">Rapide</p>
               </div>
-              <div className="flex items-center justify-center lg:justify-start space-x-2 p-2 md:p-0">
-                <div className="bg-ocean/10 p-2 rounded-full flex-shrink-0">
-                  <Star className="h-4 w-4 text-ocean" />
+              <div className="flex items-center space-x-1.5 md:space-x-2">
+                <div className="bg-ocean/10 p-1.5 md:p-2 rounded-full">
+                  <Star className="h-3 w-3 md:h-4 md:w-4 text-ocean" />
                 </div>
-                <div className="text-left">
+                <div className="hidden md:block">
                   <p className="font-semibold text-sm">Fraîcheur</p>
                   <p className="text-xs text-gray-600">Garantie</p>
                 </div>
+                <p className="font-semibold text-xs md:hidden">Frais</p>
               </div>
-              <div className="flex items-center justify-center lg:justify-start space-x-2 p-2 md:p-0">
-                <div className="bg-ocean/10 p-2 rounded-full flex-shrink-0">
-                  <Award className="h-4 w-4 text-ocean" />
+              <div className="flex items-center space-x-1.5 md:space-x-2">
+                <div className="bg-ocean/10 p-1.5 md:p-2 rounded-full">
+                  <Award className="h-3 w-3 md:h-4 md:w-4 text-ocean" />
                 </div>
-                <div className="text-left">
+                <div className="hidden md:block">
                   <p className="font-semibold text-sm">Qualité</p>
                   <p className="text-xs text-gray-600">Premium</p>
                 </div>
+                <p className="font-semibold text-xs md:hidden">Premium</p>
               </div>
             </div>
           </div>
