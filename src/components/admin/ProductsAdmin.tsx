@@ -13,6 +13,7 @@ import { Edit, Trash2, Plus, Search, Grid, List, Filter } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { ImageUpload } from './ImageUpload';
+import { useNavigate } from 'react-router-dom';
 
 interface Product {
   id: string;
@@ -34,6 +35,7 @@ interface Product {
 }
 
 export const ProductsAdmin = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -248,13 +250,18 @@ export const ProductsAdmin = () => {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Produits ({filteredProducts.length})</h2>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => { resetForm(); setEditingProduct(null); }}>
-              <Plus className="h-4 w-4 mr-2" />
-              Ajouter un produit
-            </Button>
-          </DialogTrigger>
+        <div className="flex gap-2">
+          <Button onClick={() => navigate('/admin/product/new')}>
+            <Plus className="h-4 w-4 mr-2" />
+            Nouveau Produit
+          </Button>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" onClick={() => { resetForm(); setEditingProduct(null); }}>
+                <Plus className="h-4 w-4 mr-2" />
+                Ajout Rapide
+              </Button>
+            </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>
@@ -448,6 +455,7 @@ export const ProductsAdmin = () => {
             </form>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       {/* Filters and View Toggle */}
@@ -563,7 +571,7 @@ export const ProductsAdmin = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => openEditDialog(product)}
+                        onClick={() => navigate(`/admin/product/${product.id}`)}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
@@ -634,7 +642,7 @@ export const ProductsAdmin = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => openEditDialog(product)}
+                      onClick={() => navigate(`/admin/product/${product.id}`)}
                     >
                       <Edit className="h-4 w-4" />
                     </Button>

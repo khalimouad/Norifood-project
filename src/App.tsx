@@ -16,6 +16,7 @@ import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import Recipes from "./pages/Recipes";
 import Admin from "./pages/Admin";
+import AdminProductForm from "./pages/AdminProductForm";
 import { CartProvider } from "./hooks/useCart";
 import { AuthProvider } from "./hooks/useAuth";
 
@@ -42,6 +43,8 @@ const App = () => (
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
               <Route path="/recipes" element={<Recipes />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/product/new" element={<AdminProductForm />} />
+              <Route path="/admin/product/:id" element={<AdminProductForm />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
               </Routes>
