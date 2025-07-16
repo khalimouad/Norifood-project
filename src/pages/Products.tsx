@@ -31,7 +31,11 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    filterAndSortProducts();
+    const timeoutId = setTimeout(() => {
+      filterAndSortProducts();
+    }, 100); // Small delay to make search feel immediate but not too heavy
+    
+    return () => clearTimeout(timeoutId);
   }, [products, searchTerm, selectedCategory, sortBy]);
 
   const fetchData = async () => {
@@ -161,8 +165,17 @@ const Products = () => {
                     placeholder="Rechercher un produit..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 transition-all duration-200 focus:ring-2 focus:ring-ocean/20"
+                    autoComplete="off"
                   />
+                  {searchTerm && (
+                    <button
+                      onClick={() => setSearchTerm("")}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      ×
+                    </button>
+                  )}
                 </div>
 
                 {/* Category Filter */}
@@ -252,22 +265,27 @@ const Products = () => {
 
           {/* Products Grid/List */}
           {filteredProducts.length > 0 ? (
-            <div className={viewMode === "grid" 
+            <div className={`${viewMode === "grid" 
               ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
               : "space-y-4"
-            }>
-              {filteredProducts.map((product) => (
-                <ProductCard
+            } animate-fade-in`}>
+              {filteredProducts.map((product, index) => (
+                <div
                   key={product.id}
-                  id={product.id}
-                  name={product.name}
-                  description={product.description || ""}
-                  price={product.base_price}
-                  image={product.image_url || "/placeholder.svg"}
-                  unitType={product.unit_type as 'kg' | 'units' | 'g' | 'pieces'}
-                  inStock={product.stock_quantity ? product.stock_quantity > 0 : true}
-                  featured={product.featured || false}
-                />
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <ProductCard
+                    id={product.id}
+                    name={product.name}
+                    description={product.description || ""}
+                    price={product.base_price}
+                    image={product.image_url || "/placeholder.svg"}
+                    unitType={product.unit_type as 'kg' | 'units' | 'g' | 'pieces'}
+                    inStock={product.stock_quantity ? product.stock_quantity > 0 : true}
+                    featured={product.featured || false}
+                  />
+                </div>
               ))}
             </div>
           ) : (
