@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Eye, Package } from "lucide-react";
+import { Eye, Package, Search, Grid, List } from "lucide-react";
 
 interface Order {
   id: string;
@@ -28,8 +31,34 @@ interface Order {
 
 export const OrdersAdmin = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'processing' | 'completed' | 'cancelled'>('all');
   const { toast } = useToast();
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  useEffect(() => {
+    let filtered = orders;
+
+    if (searchTerm) {
+      filtered = filtered.filter(order =>
+        order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.delivery_address?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.guest_name?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(order => order.status === statusFilter);
+    }
+
+    setFilteredOrders(filtered);
+  }, [orders, searchTerm, statusFilter]);
 
   useEffect(() => {
     fetchOrders();
@@ -104,11 +133,39 @@ export const OrdersAdmin = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Commandes ({orders.length})</h2>
+        <h2 className="text-xl font-semibold">Commandes ({filteredOrders.length})</h2>
+      </div>
+
+      {/* Filters */}
+      <div className="flex items-center gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Rechercher des commandes..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+        
+        <Select value={statusFilter} onValueChange={(value: any) => setStatusFilter(value)}>
+          <SelectTrigger className="w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Tous les statuts</SelectItem>
+            <SelectItem value="pending">En attente</SelectItem>
+            <SelectItem value="confirmed">Confirmée</SelectItem>
+            <SelectItem value="preparing">En préparation</SelectItem>
+            <SelectItem value="ready">Prête</SelectItem>
+            <SelectItem value="delivered">Livrée</SelectItem>
+            <SelectItem value="cancelled">Annulée</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="grid gap-4">
-        {orders.map((order) => (
+        {filteredOrders.map((order) => (
           <Card key={order.id}>
             <CardContent className="p-4">
               <div className="flex justify-between items-start mb-4">

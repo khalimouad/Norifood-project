@@ -7,7 +7,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Edit, Trash2, Plus } from 'lucide-react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { Edit, Trash2, Plus, Search, Grid, List, Filter } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { ImageUpload } from './ImageUpload';
@@ -33,9 +35,14 @@ interface Product {
 
 export const ProductsAdmin = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
+  const [featuredFilter, setFeaturedFilter] = useState<'all' | 'featured' | 'not-featured'>('all');
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -58,6 +65,32 @@ export const ProductsAdmin = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    let filtered = products;
+
+    if (searchTerm) {
+      filtered = filtered.filter(product =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.product_type?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(product =>
+        statusFilter === 'active' ? product.is_active : !product.is_active
+      );
+    }
+
+    if (featuredFilter !== 'all') {
+      filtered = filtered.filter(product =>
+        featuredFilter === 'featured' ? product.featured : !product.featured
+      );
+    }
+
+    setFilteredProducts(filtered);
+  }, [products, searchTerm, statusFilter, featuredFilter]);
 
   const fetchProducts = async () => {
     try {
@@ -214,7 +247,7 @@ export const ProductsAdmin = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Produits ({products.length})</h2>
+        <h2 className="text-xl font-semibold">Produits ({filteredProducts.length})</h2>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button onClick={() => { resetForm(); setEditingProduct(null); }}>
@@ -417,77 +450,208 @@ export const ProductsAdmin = () => {
         </Dialog>
       </div>
 
-      <div className="grid gap-4">
-        {products.map((product) => (
-          <Card key={product.id}>
-            <CardContent className="p-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold">{product.name}</h3>
-                    {product.featured && (
-                      <span className="bg-primary text-primary-foreground px-2 py-1 rounded text-xs">
-                        Mis en avant
-                      </span>
-                    )}
-                    {!product.is_active && (
-                      <span className="bg-destructive text-destructive-foreground px-2 py-1 rounded text-xs">
-                        Inactif
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-2">{product.description}</p>
-                  <div className="flex gap-4 text-sm mb-2">
-                    <span>Prix: {product.base_price} DH/{product.unit_type}</span>
-                    <span>Stock: {product.stock_quantity}</span>
-                  </div>
-                  {(product.product_type || product.origin || product.storage_conditions || product.shelf_life) && (
-                    <div className="border-t pt-2 mt-2">
-                      <h4 className="font-medium text-sm mb-1">Détails du Produit</h4>
-                      <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
-                        {product.product_type && <div><span className="font-medium">Type:</span> {product.product_type}</div>}
-                        {product.origin && <div><span className="font-medium">Origine:</span> {product.origin}</div>}
-                        {product.storage_conditions && <div><span className="font-medium">Conservation:</span> {product.storage_conditions}</div>}
-                        {product.shelf_life && <div><span className="font-medium">Durée:</span> {product.shelf_life}</div>}
-                      </div>
-                      {product.preparation_tips && (
-                        <div className="mt-2 text-xs text-muted-foreground">
-                          <span className="font-medium">Conseils:</span> {product.preparation_tips}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {product.image_url && (
-                    <div className="mt-2">
+      {/* Filters and View Toggle */}
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Rechercher des produits..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          
+          <Select value={statusFilter} onValueChange={(value: any) => setStatusFilter(value)}>
+            <SelectTrigger className="w-40">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tous les statuts</SelectItem>
+              <SelectItem value="active">Actifs</SelectItem>
+              <SelectItem value="inactive">Inactifs</SelectItem>
+            </SelectContent>
+          </Select>
+          
+          <Select value={featuredFilter} onValueChange={(value: any) => setFeaturedFilter(value)}>
+            <SelectTrigger className="w-40">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tous</SelectItem>
+              <SelectItem value="featured">Mis en avant</SelectItem>
+              <SelectItem value="not-featured">Non mis en avant</SelectItem>
+            </SelectContent>
+          </Select>
+          
+          <div className="flex items-center gap-2">
+            <Button 
+              variant={viewMode === 'grid' ? 'default' : 'outline'} 
+              size="sm"
+              onClick={() => setViewMode('grid')}
+            >
+              <Grid className="h-4 w-4" />
+            </Button>
+            <Button 
+              variant={viewMode === 'table' ? 'default' : 'outline'} 
+              size="sm"
+              onClick={() => setViewMode('table')}
+            >
+              <List className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Data Display */}
+      {viewMode === 'table' ? (
+        <div className="border rounded-lg">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Image</TableHead>
+                <TableHead>Nom</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Prix</TableHead>
+                <TableHead>Stock</TableHead>
+                <TableHead>Statut</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredProducts.map((product) => (
+                <TableRow key={product.id}>
+                  <TableCell>
+                    {product.image_url ? (
                       <img 
                         src={product.image_url} 
                         alt={product.name}
-                        className="w-16 h-16 object-cover rounded"
+                        className="w-10 h-10 object-cover rounded"
                       />
+                    ) : (
+                      <div className="w-10 h-10 bg-gray-200 rounded flex items-center justify-center">
+                        <span className="text-xs text-gray-500">No img</span>
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <div>
+                      <div className="font-medium">{product.name}</div>
+                      <div className="text-sm text-muted-foreground">{product.description}</div>
                     </div>
-                  )}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline">{product.product_type || 'Non défini'}</Badge>
+                  </TableCell>
+                  <TableCell>{product.base_price} DH/{product.unit_type}</TableCell>
+                  <TableCell>
+                    <Badge variant={product.stock_quantity > 0 ? 'secondary' : 'destructive'}>
+                      {product.stock_quantity}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-1">
+                      <Badge variant={product.is_active ? 'secondary' : 'destructive'}>
+                        {product.is_active ? 'Actif' : 'Inactif'}
+                      </Badge>
+                      {product.featured && <Badge>Vedette</Badge>}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => openEditDialog(product)}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => handleDelete(product.id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <div className="grid gap-4">
+          {filteredProducts.map((product) => (
+            <Card key={product.id}>
+              <CardContent className="p-4">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="font-semibold">{product.name}</h3>
+                      {product.featured && (
+                        <Badge className="bg-primary text-primary-foreground">
+                          Vedette
+                        </Badge>
+                      )}
+                      <Badge variant={product.is_active ? 'secondary' : 'destructive'}>
+                        {product.is_active ? 'Actif' : 'Inactif'}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-2">{product.description}</p>
+                    <div className="flex gap-4 text-sm mb-2">
+                      <span>Prix: {product.base_price} DH/{product.unit_type}</span>
+                      <span>Stock: {product.stock_quantity}</span>
+                    </div>
+                    {(product.product_type || product.origin || product.storage_conditions || product.shelf_life) && (
+                      <div className="border-t pt-2 mt-2">
+                        <h4 className="font-medium text-sm mb-1">Détails du Produit</h4>
+                        <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+                          {product.product_type && <div><span className="font-medium">Type:</span> {product.product_type}</div>}
+                          {product.origin && <div><span className="font-medium">Origine:</span> {product.origin}</div>}
+                          {product.storage_conditions && <div><span className="font-medium">Conservation:</span> {product.storage_conditions}</div>}
+                          {product.shelf_life && <div><span className="font-medium">Durée:</span> {product.shelf_life}</div>}
+                        </div>
+                        {product.preparation_tips && (
+                          <div className="mt-2 text-xs text-muted-foreground">
+                            <span className="font-medium">Conseils:</span> {product.preparation_tips}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {product.image_url && (
+                      <div className="mt-2">
+                        <img 
+                          src={product.image_url} 
+                          alt={product.name}
+                          className="w-16 h-16 object-cover rounded"
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openEditDialog(product)}
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleDelete(product.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => openEditDialog(product)}
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => handleDelete(product.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

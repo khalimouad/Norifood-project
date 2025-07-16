@@ -6,9 +6,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Search, Grid, List } from "lucide-react";
 import { ImageUpload } from "./ImageUpload";
 
 interface Category {
@@ -23,9 +26,13 @@ interface Category {
 
 export const CategoriesAdmin = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -39,6 +46,25 @@ export const CategoriesAdmin = () => {
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    let filtered = categories;
+
+    if (searchTerm) {
+      filtered = filtered.filter(category =>
+        category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        category.description?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(category =>
+        statusFilter === 'active' ? category.is_active : !category.is_active
+      );
+    }
+
+    setFilteredCategories(filtered);
+  }, [categories, searchTerm, statusFilter]);
 
   const fetchCategories = async () => {
     try {
@@ -142,7 +168,7 @@ export const CategoriesAdmin = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Catégories ({categories.length})</h2>
+        <h2 className="text-xl font-semibold">Catégories ({filteredCategories.length})</h2>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button onClick={() => { resetForm(); setEditingCategory(null); }}>
@@ -208,53 +234,157 @@ export const CategoriesAdmin = () => {
         </Dialog>
       </div>
 
-      <div className="grid gap-4">
-        {categories.map((category) => (
-          <Card key={category.id}>
-            <CardContent className="p-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold">{category.name}</h3>
-                    {!category.is_active && (
-                      <span className="bg-destructive text-destructive-foreground px-2 py-1 rounded text-xs">
-                        Inactif
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-2">{category.description}</p>
-                  <p className="text-sm">Slug: {category.slug}</p>
-                  {category.image_url && (
-                    <div className="mt-2">
+      {/* Filters and View Toggle */}
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Rechercher des catégories..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          
+          <Select value={statusFilter} onValueChange={(value: any) => setStatusFilter(value)}>
+            <SelectTrigger className="w-40">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tous les statuts</SelectItem>
+              <SelectItem value="active">Actifs</SelectItem>
+              <SelectItem value="inactive">Inactifs</SelectItem>
+            </SelectContent>
+          </Select>
+          
+          <div className="flex items-center gap-2">
+            <Button 
+              variant={viewMode === 'grid' ? 'default' : 'outline'} 
+              size="sm"
+              onClick={() => setViewMode('grid')}
+            >
+              <Grid className="h-4 w-4" />
+            </Button>
+            <Button 
+              variant={viewMode === 'table' ? 'default' : 'outline'} 
+              size="sm"
+              onClick={() => setViewMode('table')}
+            >
+              <List className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Data Display */}
+      {viewMode === 'table' ? (
+        <div className="border rounded-lg">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Image</TableHead>
+                <TableHead>Nom</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Slug</TableHead>
+                <TableHead>Statut</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredCategories.map((category) => (
+                <TableRow key={category.id}>
+                  <TableCell>
+                    {category.image_url ? (
                       <img 
                         src={category.image_url} 
                         alt={category.name}
-                        className="w-16 h-16 object-cover rounded"
+                        className="w-10 h-10 object-cover rounded"
                       />
+                    ) : (
+                      <div className="w-10 h-10 bg-gray-200 rounded flex items-center justify-center">
+                        <span className="text-xs text-gray-500">No img</span>
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell className="font-medium">{category.name}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{category.description}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{category.slug}</TableCell>
+                  <TableCell>
+                    <Badge variant={category.is_active ? 'secondary' : 'destructive'}>
+                      {category.is_active ? 'Actif' : 'Inactif'}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => openEditDialog(category)}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => handleDelete(category.id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
-                  )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <div className="grid gap-4">
+          {filteredCategories.map((category) => (
+            <Card key={category.id}>
+              <CardContent className="p-4">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="font-semibold">{category.name}</h3>
+                      <Badge variant={category.is_active ? 'secondary' : 'destructive'}>
+                        {category.is_active ? 'Actif' : 'Inactif'}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-2">{category.description}</p>
+                    <p className="text-sm">Slug: {category.slug}</p>
+                    {category.image_url && (
+                      <div className="mt-2">
+                        <img 
+                          src={category.image_url} 
+                          alt={category.name}
+                          className="w-16 h-16 object-cover rounded"
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openEditDialog(category)}
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleDelete(category.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => openEditDialog(category)}
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => handleDelete(category.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
