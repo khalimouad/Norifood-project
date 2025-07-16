@@ -5,8 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useCart } from '@/hooks/useCart';
-import { useWishlist } from '@/hooks/useWishlist';
-import { Heart, ShoppingCart, Plus, Minus } from 'lucide-react';
+import { ShoppingCart, Plus, Minus } from 'lucide-react';
 
 interface ProductCardProps {
   id: string;
@@ -23,7 +22,6 @@ interface ProductCardProps {
 const ProductCard = ({ id, name, description, price, image, unitType, inStock = true, featured = false, discount }: ProductCardProps) => {
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCart();
-  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlist();
   const { toast } = useToast();
 
   const handleAddToCart = () => {
@@ -47,23 +45,6 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
     }
   };
 
-  const handleWishlistToggle = () => {
-    const wishlistItem = { id, name, price, image, unitType };
-    
-    if (isInWishlist(id)) {
-      removeFromWishlist(id);
-      toast({
-        title: "Retiré des favoris",
-        description: `${name} retiré de vos favoris`
-      });
-    } else {
-      addToWishlist(wishlistItem);
-      toast({
-        title: "Ajouté aux favoris",
-        description: `${name} ajouté à vos favoris`
-      });
-    }
-  };
 
   const discountedPrice = discount ? price * (1 - discount / 100) : price;
 
@@ -88,17 +69,6 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
               Vedette
             </Badge>
           )}
-          <button
-            onClick={handleWishlistToggle}
-            className="absolute top-2 right-2 p-2 bg-white/90 hover:bg-white rounded-full shadow-sm transition-colors"
-            style={{ right: featured ? '60px' : '8px' }}
-          >
-            <Heart 
-              className={`h-4 w-4 transition-colors ${
-                isInWishlist(id) ? 'text-coral fill-coral' : 'text-gray-600 hover:text-coral'
-              }`} 
-            />
-          </button>
           {!inStock && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <Badge variant="destructive">Rupture de Stock</Badge>

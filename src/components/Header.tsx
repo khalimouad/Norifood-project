@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Search, User, Heart, Menu, Bell, LogOut } from 'lucide-react';
+import { ShoppingCart, Search, User, Menu, Bell, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
-import { useWishlist } from '@/hooks/useWishlist';
 import logo from '@/assets/logo.png';
 
 export const Header = () => {
@@ -15,9 +14,7 @@ export const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { getTotalItems } = useCart();
   const { user, signOut } = useAuth();
-  const { items: wishlistItems } = useWishlist();
   const cartCount = getTotalItems();
-  const wishlistCount = wishlistItems.length;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,17 +80,6 @@ export const Header = () => {
               </form>
             </div>
               <div className="flex items-center space-x-4">
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="relative text-gray-600 hover:text-ocean"
-                  onClick={() => navigate('/wishlist')}
-                >
-                  <Heart className="h-5 w-5" />
-                  {wishlistCount > 0 && (
-                    <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-coral text-white flex items-center justify-center text-xs font-medium">{wishlistCount}</div>
-                  )}
-                </Button>
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
