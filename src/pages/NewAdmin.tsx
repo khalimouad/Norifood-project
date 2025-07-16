@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Package, Users, ShoppingCart, Tag, Receipt, Settings, BarChart3, Image, ChefHat, CreditCard, Percent } from 'lucide-react';
@@ -11,6 +12,8 @@ import { PaymentsManager } from '@/components/admin/new/PaymentsManager';
 import { PromoCodesManager } from '@/components/admin/new/PromoCodesManager';
 import { BannersManager } from '@/components/admin/new/BannersManager';
 import { RecipesManager } from '@/components/admin/new/RecipesManager';
+import { ProductEdit } from '@/components/admin/new/ProductEdit';
+import { BannerEdit } from '@/components/admin/new/BannerEdit';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { Navigate } from 'react-router-dom';
 
