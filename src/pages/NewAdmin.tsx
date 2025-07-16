@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Package, Users, ShoppingCart, Tag, Receipt, Settings, BarChart3 } from 'lucide-react';
+import { Package, Users, ShoppingCart, Tag, Receipt, Settings, BarChart3, Image, ChefHat, CreditCard, Percent } from 'lucide-react';
 import { ProductsManager } from '@/components/admin/new/ProductsManager';
 import { CategoriesManager } from '@/components/admin/new/CategoriesManager';
 import { OrdersManager } from '@/components/admin/new/OrdersManager';
 import { CustomersManager } from '@/components/admin/new/CustomersManager';
+import { TagsManager } from '@/components/admin/new/TagsManager';
+import { PaymentsManager } from '@/components/admin/new/PaymentsManager';
+import { PromoCodesManager } from '@/components/admin/new/PromoCodesManager';
+import { BannersManager } from '@/components/admin/new/BannersManager';
+import { RecipesManager } from '@/components/admin/new/RecipesManager';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { Navigate } from 'react-router-dom';
 
@@ -37,7 +42,7 @@ export default function NewAdmin() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-6">
+          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-9">
             <TabsTrigger value="products" className="flex items-center gap-2">
               <Package className="h-4 w-4" />
               <span className="hidden sm:inline">Produits</span>
@@ -54,13 +59,25 @@ export default function NewAdmin() {
               <Users className="h-4 w-4" />
               <span className="hidden sm:inline">Clients</span>
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" />
-              <span className="hidden sm:inline">Analytics</span>
+            <TabsTrigger value="tags" className="flex items-center gap-2">
+              <Tag className="h-4 w-4" />
+              <span className="hidden sm:inline">Tags</span>
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              <span className="hidden sm:inline">Paramètres</span>
+            <TabsTrigger value="payments" className="flex items-center gap-2">
+              <CreditCard className="h-4 w-4" />
+              <span className="hidden sm:inline">Paiements</span>
+            </TabsTrigger>
+            <TabsTrigger value="promo-codes" className="flex items-center gap-2">
+              <Percent className="h-4 w-4" />
+              <span className="hidden sm:inline">Promo</span>
+            </TabsTrigger>
+            <TabsTrigger value="banners" className="flex items-center gap-2">
+              <Image className="h-4 w-4" />
+              <span className="hidden sm:inline">Bannières</span>
+            </TabsTrigger>
+            <TabsTrigger value="recipes" className="flex items-center gap-2">
+              <ChefHat className="h-4 w-4" />
+              <span className="hidden sm:inline">Recettes</span>
             </TabsTrigger>
           </TabsList>
 
@@ -80,38 +97,24 @@ export default function NewAdmin() {
             <CustomersManager />
           </TabsContent>
 
-          <TabsContent value="analytics" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="h-5 w-5" />
-                  Statistiques
-                </CardTitle>
-                <CardDescription>
-                  Analysez les performances de votre boutique
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Module d'analytics à venir...</p>
-              </CardContent>
-            </Card>
+          <TabsContent value="tags" className="space-y-6">
+            <TagsManager />
           </TabsContent>
 
-          <TabsContent value="settings" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Settings className="h-5 w-5" />
-                  Paramètres
-                </CardTitle>
-                <CardDescription>
-                  Configurez votre boutique
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Paramètres à venir...</p>
-              </CardContent>
-            </Card>
+          <TabsContent value="payments" className="space-y-6">
+            <PaymentsManager />
+          </TabsContent>
+
+          <TabsContent value="promo-codes" className="space-y-6">
+            <PromoCodesManager />
+          </TabsContent>
+
+          <TabsContent value="banners" className="space-y-6">
+            <BannersManager />
+          </TabsContent>
+
+          <TabsContent value="recipes" className="space-y-6">
+            <RecipesManager />
           </TabsContent>
         </Tabs>
       </div>
