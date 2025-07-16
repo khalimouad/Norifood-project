@@ -82,7 +82,8 @@ export function CategoryForm({ category, onSaved, onCancel }: CategoryFormProps)
     name: '',
     description: '',
     image_url: '',
-    icon: 'fish',
+    icon: 'apple',
+    custom_svg: '',
     is_active: true,
   });
 
