@@ -29,3 +29,6 @@ verify_jwt = false
 
 [functions.manage-payments]
 verify_jwt = false
+
+[functions.cmi-payment]
+verify_jwt = false
