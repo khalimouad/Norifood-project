@@ -50,15 +50,44 @@ const Products = () => {
     }
   };
 
+  const normalizeText = (text: string) => {
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/[^a-z0-9\s]/g, ' ') // Replace special chars with spaces
+      .replace(/\s+/g, ' ') // Normalize whitespace
+      .trim();
+  };
+
   const filterAndSortProducts = () => {
     let filtered = products;
 
-    // Filter by search term
+    // Filter by search term with flexible matching
     if (searchTerm) {
-      filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      const normalizedSearchTerm = normalizeText(searchTerm);
+      const searchWords = normalizedSearchTerm.split(' ').filter(word => word.length > 0);
+      
+      filtered = filtered.filter(product => {
+        const searchableText = [
+          product.name || '',
+          product.description || '',
+          product.product_type || '',
+          product.origin || '',
+          product.unit_type || ''
+        ].join(' ');
+        
+        const normalizedText = normalizeText(searchableText);
+        
+        // Check if all search words are found in the product text
+        return searchWords.every(word => 
+          normalizedText.includes(word) || 
+          // Also check for partial matches at word boundaries
+          normalizedText.split(' ').some(textWord => 
+            textWord.startsWith(word) || textWord.includes(word)
+          )
+        );
+      });
     }
 
     // Filter by category
