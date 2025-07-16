@@ -9,6 +9,9 @@ verify_jwt = false
 [functions.manage-tags]
 verify_jwt = false
 
+[functions.cmi-payment]
+verify_jwt = false
+
 [functions.manage-orders]
 verify_jwt = false
 

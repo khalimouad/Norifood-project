@@ -20,8 +20,10 @@ import {
   Lock,
   CheckCircle,
   Phone,
-  Mail
+  Mail,
+  Shield
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ const Checkout = () => {
     deliveryDate: "",
     deliveryTime: "",
     notes: "",
-    paymentMethod: "card"
+    paymentMethod: "cmi"
   });
 
   const [loading, setLoading] = useState(false);
@@ -58,25 +60,95 @@ const Checkout = () => {
     setLoading(true);
 
     try {
-      // Simulate order processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const orderId = `ORDER_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      clearCart();
-      toast({
-        title: "Commande confirmée !",
-        description: "Votre commande a été passée avec succès",
-      });
-      
-      navigate("/order-confirmation");
+      if (formData.paymentMethod === "cmi") {
+        // Process CMI payment
+        await processCMIPayment(orderId);
+      } else if (formData.paymentMethod === "card") {
+        // Process regular card payment
+        await processCardPayment(orderId);
+      } else {
+        // Process cash on delivery
+        await processCashPayment(orderId);
+      }
     } catch (error) {
+      console.error('Payment error:', error);
       toast({
         title: "Erreur",
-        description: "Une erreur est survenue lors de la commande",
+        description: "Une erreur est survenue lors du paiement",
         variant: "destructive"
       });
     } finally {
       setLoading(false);
     }
+  };
+
+  const processCMIPayment = async (orderId: string) => {
+    try {
+      const paymentData = {
+        action: 'create_payment',
+        amount: total,
+        currency: 'MAD',
+        orderId: orderId,
+        customerEmail: formData.email,
+        customerPhone: formData.phone,
+        customerName: `${formData.firstName} ${formData.lastName}`,
+        returnUrl: `${window.location.origin}/payment-success?orderId=${orderId}`,
+        cancelUrl: `${window.location.origin}/payment-cancel?orderId=${orderId}`
+      };
+
+      const { data, error } = await supabase.functions.invoke('cmi-payment', {
+        body: paymentData
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (data.success) {
+        // Store order details in localStorage before redirect
+        localStorage.setItem('pendingOrder', JSON.stringify({
+          orderId,
+          items,
+          formData,
+          total
+        }));
+        
+        // Redirect to CMI payment page
+        window.location.href = data.paymentUrl;
+      } else {
+        throw new Error('Failed to create payment session');
+      }
+    } catch (error) {
+      throw new Error(`Erreur de paiement CMI: ${error.message}`);
+    }
+  };
+
+  const processCardPayment = async (orderId: string) => {
+    // Simulate card payment processing
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    clearCart();
+    toast({
+      title: "Paiement par carte confirmé !",
+      description: "Votre commande a été passée avec succès",
+    });
+    
+    navigate("/order-confirmation");
+  };
+
+  const processCashPayment = async (orderId: string) => {
+    // Simulate cash payment processing
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    clearCart();
+    toast({
+      title: "Commande confirmée !",
+      description: "Paiement à la livraison sélectionné",
+    });
+    
+    navigate("/order-confirmation");
   };
 
   if (items.length === 0) {
@@ -255,6 +327,22 @@ const Checkout = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
+                      <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                        <input
+                          type="radio"
+                          name="payment"
+                          value="cmi"
+                          checked={formData.paymentMethod === "cmi"}
+                          onChange={(e) => handleInputChange("paymentMethod", e.target.value)}
+                          className="text-ocean"
+                        />
+                        <Shield className="h-5 w-5 text-ocean" />
+                        <div>
+                          <p className="font-medium">CMI Paiement</p>
+                          <p className="text-sm text-gray-600">Paiement sécurisé par CMI Maroc</p>
+                        </div>
+                        <Badge className="ml-auto bg-blue-100 text-blue-800">Recommandé</Badge>
+                      </label>
                       <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
                         <input
                           type="radio"

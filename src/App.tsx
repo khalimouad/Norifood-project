@@ -25,6 +25,8 @@ import NewAdmin from "./pages/NewAdmin";
 import AdminProductForm from "./pages/AdminProductForm";
 import { ProductEdit } from "./components/admin/new/ProductEdit";
 import { BannerEdit } from "./components/admin/new/BannerEdit";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
 import { CartProvider } from "./hooks/useCart";
 import { AuthProvider } from "./hooks/useAuth";
 
@@ -61,6 +63,8 @@ const App = () => (
               <Route path="/admin-new/banner/:id" element={<BannerEdit />} />
               <Route path="/admin/product/new" element={<AdminProductForm />} />
               <Route path="/admin/product/:id" element={<AdminProductForm />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/payment-cancel" element={<PaymentCancel />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
               </Routes>
