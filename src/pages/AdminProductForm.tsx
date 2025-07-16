@@ -86,7 +86,9 @@ const AdminProductForm = () => {
 
   const fetchCategories = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-categories');
+      const { data, error } = await supabase.functions.invoke('manage-categories', {
+        body: { method: 'GET' }
+      });
       if (error) throw error;
       setCategories(Array.isArray(data) ? data : []);
     } catch (error) {
@@ -95,10 +97,12 @@ const AdminProductForm = () => {
   };
 
   const fetchProduct = async () => {
+    if (!id) return;
+    
     try {
       setLoading(true);
       const { data, error } = await supabase.functions.invoke('manage-products', {
-        body: { id }
+        body: { method: 'GET', id }
       });
       if (error) throw error;
       

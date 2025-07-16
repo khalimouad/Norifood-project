@@ -32,14 +32,22 @@ serve(async (req) => {
     const url = new URL(req.url);
     const productId = url.searchParams.get("id") || bodyId;
     
+    // Debug logging
+    console.log('Raw request data:', requestData);
+    console.log('requestMethod:', requestMethod);
+    console.log('bodyId:', bodyId);
+    console.log('productData keys:', Object.keys(productData));
+    console.log('productData length:', Object.keys(productData).length);
+    
     // If there's only an ID in the body and no method, treat it as a GET request
     let method = requestMethod || req.method;
     if (req.method === "POST" && bodyId && !requestMethod && Object.keys(productData).length === 0) {
+      console.log('Converting POST with only ID to GET');
       method = "GET";
     }
 
     console.log(`[${method}] ${req.url}`);
-    console.log(`Request data:`, requestData);
+    console.log(`Final method: ${method}`);
 
     switch (method) {
       case "GET":
