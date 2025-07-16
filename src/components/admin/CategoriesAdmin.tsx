@@ -42,9 +42,7 @@ export const CategoriesAdmin = () => {
 
   const fetchCategories = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-categories', {
-        method: 'GET'
-      });
+      const { data, error } = await supabase.functions.invoke('manage-categories');
       if (error) throw error;
       setCategories(data || []);
     } catch (error) {
@@ -66,7 +64,6 @@ export const CategoriesAdmin = () => {
       const url = editingCategory ? `manage-categories?id=${editingCategory.id}` : 'manage-categories';
       
       const { error } = await supabase.functions.invoke(url, {
-        method,
         body: formData,
       });
       
@@ -94,9 +91,7 @@ export const CategoriesAdmin = () => {
     if (!confirm("Êtes-vous sûr de vouloir supprimer cette catégorie ?")) return;
     
     try {
-      const { error } = await supabase.functions.invoke(`manage-categories?id=${id}`, {
-        method: 'DELETE',
-      });
+      const { error } = await supabase.functions.invoke(`manage-categories?id=${id}`);
       
       if (error) throw error;
       

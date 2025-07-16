@@ -56,9 +56,7 @@ export const RecipesAdmin = () => {
 
   const fetchRecipes = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-recipes', {
-        method: 'GET'
-      });
+      const { data, error } = await supabase.functions.invoke('manage-recipes');
       if (error) throw error;
       setRecipes(Array.isArray(data) ? data : (data?.recipes || []));
     } catch (error) {
@@ -113,9 +111,7 @@ export const RecipesAdmin = () => {
     if (!confirm("Êtes-vous sûr de vouloir supprimer cette recette ?")) return;
     
     try {
-      const { error } = await supabase.functions.invoke(`manage-recipes?id=${id}`, {
-        method: 'DELETE',
-      });
+      const { error } = await supabase.functions.invoke(`manage-recipes?id=${id}`);
       
       if (error) throw error;
       

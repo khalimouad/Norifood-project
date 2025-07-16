@@ -46,9 +46,7 @@ export const CustomersAdmin = () => {
 
   const fetchCustomers = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-customers', {
-        method: 'GET'
-      });
+      const { data, error } = await supabase.functions.invoke('manage-customers');
       if (error) throw error;
       // Handle the response structure - it returns an object with customers array
       const customersData = data?.customers || data || [];
@@ -70,7 +68,6 @@ export const CustomersAdmin = () => {
       const endpoint = editingCustomer ? `manage-customers?id=${editingCustomer.id}` : 'manage-customers';
       
       const { error } = await supabase.functions.invoke(endpoint, {
-        method: editingCustomer ? 'PUT' : 'POST',
         body: formData,
       });
       
@@ -98,9 +95,7 @@ export const CustomersAdmin = () => {
     if (!confirm("Êtes-vous sûr de vouloir supprimer ce client ?")) return;
     
     try {
-      const { error } = await supabase.functions.invoke(`manage-customers?id=${id}`, {
-        method: 'DELETE',
-      });
+      const { error } = await supabase.functions.invoke(`manage-customers?id=${id}`);
       
       if (error) throw error;
       

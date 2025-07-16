@@ -37,9 +37,7 @@ export const OrdersAdmin = () => {
 
   const fetchOrders = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-orders', {
-        method: 'GET'
-      });
+      const { data, error } = await supabase.functions.invoke('manage-orders');
       if (error) throw error;
       setOrders(Array.isArray(data) ? data : (data?.orders || []));
     } catch (error) {

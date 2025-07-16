@@ -55,9 +55,7 @@ export const BannersAdmin = () => {
 
   const fetchBanners = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-banners', {
-        method: 'GET'
-      });
+      const { data, error } = await supabase.functions.invoke('manage-banners');
       if (error) throw error;
       setBanners(Array.isArray(data) ? data : (data?.banners || []));
     } catch (error) {
@@ -105,9 +103,7 @@ export const BannersAdmin = () => {
     if (!confirm("Êtes-vous sûr de vouloir supprimer cette bannière ?")) return;
     
     try {
-      const { error } = await supabase.functions.invoke(`manage-banners?id=${id}`, {
-        method: 'DELETE',
-      });
+      const { error } = await supabase.functions.invoke(`manage-banners?id=${id}`);
       
       if (error) throw error;
       

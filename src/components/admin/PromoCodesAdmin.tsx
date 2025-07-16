@@ -53,9 +53,7 @@ export const PromoCodesAdmin = () => {
 
   const fetchPromoCodes = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-promo-codes', {
-        method: 'GET'
-      });
+      const { data, error } = await supabase.functions.invoke('manage-promo-codes');
       if (error) throw error;
       setPromoCodes(Array.isArray(data) ? data : (data?.promo_codes || []));
     } catch (error) {
@@ -103,9 +101,7 @@ export const PromoCodesAdmin = () => {
     if (!confirm("Êtes-vous sûr de vouloir supprimer ce code promo ?")) return;
     
     try {
-      const { error } = await supabase.functions.invoke(`manage-promo-codes?id=${id}`, {
-        method: 'DELETE',
-      });
+      const { error } = await supabase.functions.invoke(`manage-promo-codes?id=${id}`);
       
       if (error) throw error;
       

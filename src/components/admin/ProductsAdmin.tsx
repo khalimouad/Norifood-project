@@ -61,9 +61,7 @@ export const ProductsAdmin = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-products', {
-        method: 'GET'
-      });
+      const { data, error } = await supabase.functions.invoke('manage-products');
       if (error) throw error;
       
       // Handle paginated response
@@ -88,7 +86,6 @@ export const ProductsAdmin = () => {
       const url = editingProduct ? `manage-products?id=${editingProduct.id}` : 'manage-products';
       
       const { error } = await supabase.functions.invoke(url, {
-        method,
         body: formData,
       });
       
@@ -116,9 +113,7 @@ export const ProductsAdmin = () => {
     if (!confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) return;
     
     try {
-      const { error } = await supabase.functions.invoke(`manage-products?id=${id}`, {
-        method: 'DELETE',
-      });
+      const { error } = await supabase.functions.invoke(`manage-products?id=${id}`);
       
       if (error) throw error;
       
