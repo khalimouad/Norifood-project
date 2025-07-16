@@ -50,7 +50,9 @@ export const CustomersAdmin = () => {
         method: 'GET'
       });
       if (error) throw error;
-      setCustomers(data || []);
+      // Handle the response structure - it returns an object with customers array
+      const customersData = data?.customers || data || [];
+      setCustomers(customersData);
     } catch (error) {
       toast({
         title: "Erreur",
