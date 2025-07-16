@@ -21,6 +21,8 @@ serve(async (req) => {
     const url = new URL(req.url);
     const tagId = url.searchParams.get("id");
 
+    console.log(`[${method}] ${req.url}`);
+
     switch (method) {
       case "GET":
         if (tagId) {
@@ -55,14 +57,37 @@ serve(async (req) => {
         }
 
       case "POST":
-        const newTag = await req.json();
+        const body = await req.text();
+        console.log('Request body:', body);
+        
+        if (!body) {
+          throw new Error("Request body is required");
+        }
+
+        let newTag;
+        try {
+          newTag = JSON.parse(body);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
+        // Auto-generate slug if not provided
+        if (!newTag.slug && newTag.name) {
+          newTag.slug = newTag.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        }
+
         const { data: tag, error: createError } = await supabaseClient
           .from("tags")
           .insert([newTag])
           .select()
           .single();
 
-        if (createError) throw createError;
+        if (createError) {
+          console.error('Error creating tag:', createError);
+          throw createError;
+        }
+        
+        console.log('Tag created successfully');
         return new Response(JSON.stringify(tag), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
@@ -72,7 +97,25 @@ serve(async (req) => {
           throw new Error("Tag ID is required for updates");
         }
         
-        const updatedTag = await req.json();
+        const updateBody = await req.text();
+        console.log('Update body:', updateBody);
+        
+        if (!updateBody) {
+          throw new Error("Request body is required");
+        }
+
+        let updatedTag;
+        try {
+          updatedTag = JSON.parse(updateBody);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
+        // Auto-generate slug if not provided
+        if (!updatedTag.slug && updatedTag.name) {
+          updatedTag.slug = updatedTag.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        }
+
         const { data: updated, error: updateError } = await supabaseClient
           .from("tags")
           .update(updatedTag)
@@ -80,7 +123,12 @@ serve(async (req) => {
           .select()
           .single();
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          console.error('Error updating tag:', updateError);
+          throw updateError;
+        }
+        
+        console.log('Tag updated successfully');
         return new Response(JSON.stringify(updated), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });

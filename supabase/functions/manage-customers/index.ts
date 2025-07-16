@@ -21,6 +21,8 @@ serve(async (req) => {
     const url = new URL(req.url);
     const customerId = url.searchParams.get("id");
 
+    console.log(`[${method}] ${req.url}`);
+
     switch (method) {
       case "GET":
         if (customerId) {
@@ -88,14 +90,32 @@ serve(async (req) => {
         }
 
       case "POST":
-        const newCustomer = await req.json();
+        const body = await req.text();
+        console.log('Request body:', body);
+        
+        if (!body) {
+          throw new Error("Request body is required");
+        }
+
+        let newCustomer;
+        try {
+          newCustomer = JSON.parse(body);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
         const { data: customer, error: createError } = await supabaseClient
           .from("customers")
           .insert([newCustomer])
           .select()
           .single();
 
-        if (createError) throw createError;
+        if (createError) {
+          console.error('Error creating customer:', createError);
+          throw createError;
+        }
+        
+        console.log('Customer created successfully');
         return new Response(JSON.stringify(customer), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
@@ -105,7 +125,20 @@ serve(async (req) => {
           throw new Error("Customer ID is required for updates");
         }
         
-        const updatedCustomer = await req.json();
+        const updateBody = await req.text();
+        console.log('Update body:', updateBody);
+        
+        if (!updateBody) {
+          throw new Error("Request body is required");
+        }
+
+        let updatedCustomer;
+        try {
+          updatedCustomer = JSON.parse(updateBody);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
         const { data: updated, error: updateError } = await supabaseClient
           .from("customers")
           .update(updatedCustomer)
@@ -113,7 +146,12 @@ serve(async (req) => {
           .select()
           .single();
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          console.error('Error updating customer:', updateError);
+          throw updateError;
+        }
+        
+        console.log('Customer updated successfully');
         return new Response(JSON.stringify(updated), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });

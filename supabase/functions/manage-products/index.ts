@@ -21,6 +21,8 @@ serve(async (req) => {
     const url = new URL(req.url);
     const productId = url.searchParams.get("id");
 
+    console.log(`[${method}] ${req.url}`);
+
     switch (method) {
       case "GET":
         if (productId) {
@@ -38,7 +40,12 @@ serve(async (req) => {
             .eq("id", productId)
             .single();
 
-          if (error) throw error;
+          if (error) {
+            console.error('Error fetching product:', error);
+            throw error;
+          }
+          
+          console.log('Product fetched successfully');
           return new Response(JSON.stringify(product), {
             headers: { ...corsHeaders, "Content-Type": "application/json" },
           });
@@ -72,7 +79,12 @@ serve(async (req) => {
           const { data: products, error, count } = await query
             .range((page - 1) * limit, page * limit - 1);
 
-          if (error) throw error;
+          if (error) {
+            console.error('Error fetching products:', error);
+            throw error;
+          }
+          
+          console.log(`Fetched ${products?.length} products`);
           
           return new Response(JSON.stringify({
             products,
@@ -86,14 +98,57 @@ serve(async (req) => {
         }
 
       case "POST":
-        const newProduct = await req.json();
+        const body = await req.text();
+        console.log('Request body:', body);
+        
+        if (!body) {
+          throw new Error("Request body is required");
+        }
+
+        let newProduct;
+        try {
+          newProduct = JSON.parse(body);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
+        // Handle image upload if present
+        if (newProduct.image && newProduct.image.startsWith('data:')) {
+          const imageBuffer = Uint8Array.from(atob(newProduct.image.split(',')[1]), c => c.charCodeAt(0));
+          const fileName = `product_${Date.now()}.jpg`;
+          
+          const { error: uploadError } = await supabaseClient.storage
+            .from('product-images')
+            .upload(fileName, imageBuffer, {
+              contentType: 'image/jpeg'
+            });
+
+          if (uploadError) {
+            console.error('Error uploading image:', uploadError);
+            throw uploadError;
+          }
+
+          // Get the public URL for the uploaded image
+          const { data: publicUrl } = supabaseClient.storage
+            .from('product-images')
+            .getPublicUrl(fileName);
+
+          newProduct.image_url = publicUrl.publicUrl;
+          delete newProduct.image; // Remove the base64 data
+        }
+
         const { data: product, error: createError } = await supabaseClient
           .from("products")
           .insert([newProduct])
           .select()
           .single();
 
-        if (createError) throw createError;
+        if (createError) {
+          console.error('Error creating product:', createError);
+          throw createError;
+        }
+        
+        console.log('Product created successfully');
         return new Response(JSON.stringify(product), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
@@ -103,7 +158,45 @@ serve(async (req) => {
           throw new Error("Product ID is required for updates");
         }
         
-        const updatedProduct = await req.json();
+        const updateBody = await req.text();
+        console.log('Update body:', updateBody);
+        
+        if (!updateBody) {
+          throw new Error("Request body is required");
+        }
+
+        let updatedProduct;
+        try {
+          updatedProduct = JSON.parse(updateBody);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
+        // Handle image upload if present
+        if (updatedProduct.image && updatedProduct.image.startsWith('data:')) {
+          const imageBuffer = Uint8Array.from(atob(updatedProduct.image.split(',')[1]), c => c.charCodeAt(0));
+          const fileName = `product_${productId}_${Date.now()}.jpg`;
+          
+          const { error: uploadError } = await supabaseClient.storage
+            .from('product-images')
+            .upload(fileName, imageBuffer, {
+              contentType: 'image/jpeg'
+            });
+
+          if (uploadError) {
+            console.error('Error uploading image:', uploadError);
+            throw uploadError;
+          }
+
+          // Get the public URL for the uploaded image
+          const { data: publicUrl } = supabaseClient.storage
+            .from('product-images')
+            .getPublicUrl(fileName);
+
+          updatedProduct.image_url = publicUrl.publicUrl;
+          delete updatedProduct.image; // Remove the base64 data
+        }
+
         const { data: updated, error: updateError } = await supabaseClient
           .from("products")
           .update(updatedProduct)
@@ -111,7 +204,12 @@ serve(async (req) => {
           .select()
           .single();
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          console.error('Error updating product:', updateError);
+          throw updateError;
+        }
+        
+        console.log('Product updated successfully');
         return new Response(JSON.stringify(updated), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
@@ -126,15 +224,24 @@ serve(async (req) => {
           .delete()
           .eq("id", productId);
 
-        if (deleteError) throw deleteError;
+        if (deleteError) {
+          console.error('Error deleting product:', deleteError);
+          throw deleteError;
+        }
+        
+        console.log('Product deleted successfully');
         return new Response(JSON.stringify({ success: true }), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
 
       default:
-        return new Response("Method not allowed", { status: 405 });
+        return new Response(JSON.stringify({ error: "Method not allowed" }), { 
+          status: 405,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
     }
   } catch (error) {
+    console.error('Function error:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },

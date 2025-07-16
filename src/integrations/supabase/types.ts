@@ -793,6 +793,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_slug: {
+        Args: { input_text: string }
+        Returns: string
+      }
       is_admin_user: {
         Args: { user_id: string }
         Returns: boolean

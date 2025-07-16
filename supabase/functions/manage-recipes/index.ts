@@ -21,6 +21,8 @@ serve(async (req) => {
     const url = new URL(req.url);
     const recipeId = url.searchParams.get("id");
 
+    console.log(`[${method}] ${req.url}`);
+
     switch (method) {
       case "GET":
         if (recipeId) {
@@ -86,14 +88,37 @@ serve(async (req) => {
         }
 
       case "POST":
-        const newRecipe = await req.json();
+        const body = await req.text();
+        console.log('Request body:', body);
+        
+        if (!body) {
+          throw new Error("Request body is required");
+        }
+
+        let newRecipe;
+        try {
+          newRecipe = JSON.parse(body);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
+        // Auto-generate slug if not provided
+        if (!newRecipe.slug && newRecipe.title) {
+          newRecipe.slug = newRecipe.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        }
+
         const { data: recipe, error: createError } = await supabaseClient
           .from("recipes")
           .insert([newRecipe])
           .select()
           .single();
 
-        if (createError) throw createError;
+        if (createError) {
+          console.error('Error creating recipe:', createError);
+          throw createError;
+        }
+        
+        console.log('Recipe created successfully');
         return new Response(JSON.stringify(recipe), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
@@ -103,7 +128,25 @@ serve(async (req) => {
           throw new Error("Recipe ID is required for updates");
         }
         
-        const updatedRecipe = await req.json();
+        const updateBody = await req.text();
+        console.log('Update body:', updateBody);
+        
+        if (!updateBody) {
+          throw new Error("Request body is required");
+        }
+
+        let updatedRecipe;
+        try {
+          updatedRecipe = JSON.parse(updateBody);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
+        // Auto-generate slug if not provided
+        if (!updatedRecipe.slug && updatedRecipe.title) {
+          updatedRecipe.slug = updatedRecipe.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        }
+
         const { data: updated, error: updateError } = await supabaseClient
           .from("recipes")
           .update(updatedRecipe)
@@ -111,7 +154,12 @@ serve(async (req) => {
           .select()
           .single();
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          console.error('Error updating recipe:', updateError);
+          throw updateError;
+        }
+        
+        console.log('Recipe updated successfully');
         return new Response(JSON.stringify(updated), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });

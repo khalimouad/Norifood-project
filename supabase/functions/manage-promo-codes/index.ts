@@ -22,6 +22,8 @@ serve(async (req) => {
     const promoId = url.searchParams.get("id");
     const validateCode = url.searchParams.get("validate");
 
+    console.log(`[${method}] ${req.url}`);
+
     switch (method) {
       case "GET":
         if (validateCode) {
@@ -83,14 +85,32 @@ serve(async (req) => {
         }
 
       case "POST":
-        const newPromoCode = await req.json();
+        const body = await req.text();
+        console.log('Request body:', body);
+        
+        if (!body) {
+          throw new Error("Request body is required");
+        }
+
+        let newPromoCode;
+        try {
+          newPromoCode = JSON.parse(body);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
         const { data: promoCode, error: createError } = await supabaseClient
           .from("promo_codes")
           .insert([newPromoCode])
           .select()
           .single();
 
-        if (createError) throw createError;
+        if (createError) {
+          console.error('Error creating promo code:', createError);
+          throw createError;
+        }
+        
+        console.log('Promo code created successfully');
         return new Response(JSON.stringify(promoCode), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
@@ -100,7 +120,20 @@ serve(async (req) => {
           throw new Error("Promo code ID is required for updates");
         }
         
-        const updatedPromoCode = await req.json();
+        const updateBody = await req.text();
+        console.log('Update body:', updateBody);
+        
+        if (!updateBody) {
+          throw new Error("Request body is required");
+        }
+
+        let updatedPromoCode;
+        try {
+          updatedPromoCode = JSON.parse(updateBody);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
         const { data: updated, error: updateError } = await supabaseClient
           .from("promo_codes")
           .update(updatedPromoCode)
@@ -108,7 +141,12 @@ serve(async (req) => {
           .select()
           .single();
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          console.error('Error updating promo code:', updateError);
+          throw updateError;
+        }
+        
+        console.log('Promo code updated successfully');
         return new Response(JSON.stringify(updated), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });

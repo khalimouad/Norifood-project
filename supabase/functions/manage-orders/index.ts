@@ -21,6 +21,8 @@ serve(async (req) => {
     const url = new URL(req.url);
     const orderId = url.searchParams.get("id");
 
+    console.log(`[${method}] ${req.url}`);
+
     switch (method) {
       case "GET":
         if (orderId) {
@@ -97,7 +99,20 @@ serve(async (req) => {
           throw new Error("Order ID is required for updates");
         }
         
-        const updatedOrder = await req.json();
+        const updateBody = await req.text();
+        console.log('Update body:', updateBody);
+        
+        if (!updateBody) {
+          throw new Error("Request body is required");
+        }
+
+        let updatedOrder;
+        try {
+          updatedOrder = JSON.parse(updateBody);
+        } catch (e) {
+          throw new Error("Invalid JSON in request body");
+        }
+
         const { data: updated, error: updateError } = await supabaseClient
           .from("orders")
           .update(updatedOrder)
@@ -105,7 +120,12 @@ serve(async (req) => {
           .select()
           .single();
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          console.error('Error updating order:', updateError);
+          throw updateError;
+        }
+        
+        console.log('Order updated successfully');
         return new Response(JSON.stringify(updated), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
