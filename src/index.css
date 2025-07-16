@@ -17,8 +17,8 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 200 25% 10%;
 
-    --primary: 200 90% 20%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 235 100% 49%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 190 60% 50%;
     --secondary-foreground: 0 0% 100%;
@@ -39,12 +39,12 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Classical blue theme colors */
-    --ocean-blue: 220 100% 50%;
-    --ocean-light: 220 70% 60%;
-    --seafoam: 200 50% 70%;
-    --coral: 220 100% 45%;
-    --wave: 220 100% 97%;
-    --deep-blue: 220 100% 25%;
+    --ocean-blue: 235 100% 49%;
+    --ocean-light: 235 100% 65%;
+    --seafoam: 180 100% 50%;
+    --coral: 15 100% 65%;
+    --wave: 235 30% 85%;
+    --deep-blue: 235 100% 35%;
     
     /* Gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));

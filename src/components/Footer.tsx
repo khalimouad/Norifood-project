@@ -77,9 +77,9 @@ export const Footer = () => {
               <span className="text-2xl font-bold">Fresh N'Good</span>
             </div>
             <p className="text-white/80 mb-6 leading-relaxed">
-              Depuis plus de 20 ans, Fresh N'Good vous propose les meilleurs produits de la mer. 
+              Depuis plus de 20 ans, Fresh N'Good vous propose les meilleurs produits de la mer à Marrakech. 
               Notre expertise et notre passion pour la qualité nous permettent de vous garantir 
-              fraîcheur et saveur à chaque commande.
+              fraîcheur et saveur à chaque livraison dans toute la région de Marrakech.
             </p>
             <div className="flex space-x-3">
               <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full hover:bg-seafoam/20 hover:text-seafoam transition-all duration-300">
@@ -128,22 +128,23 @@ export const Footer = () => {
               <div className="flex items-start space-x-3">
                 <Phone className="h-5 w-5 text-seafoam mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-white font-medium">+33 1 23 45 67 89</p>
+                  <p className="text-white font-medium">0608 611 511</p>
+                  <p className="text-white font-medium">0608 411 511</p>
                   <p className="text-white/60 text-sm">Lun-Ven: 8h-18h</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <Mail className="h-5 w-5 text-seafoam mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-white font-medium">contact@freshngood.fr</p>
+                  <p className="text-white font-medium">contact@freshngood.ma</p>
                   <p className="text-white/60 text-sm">Réponse sous 24h</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-seafoam mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-white font-medium">15 Rue du Port</p>
-                  <p className="text-white/60 text-sm">13000 Marseille, France</p>
+                  <p className="text-white font-medium">Imm Assala</p>
+                  <p className="text-white/60 text-sm">Marrakech, Maroc</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">

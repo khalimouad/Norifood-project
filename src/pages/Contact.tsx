@@ -67,7 +67,7 @@ const Contact = () => {
       icon: Phone,
       title: "Téléphone",
       subtitle: "Appelez-nous directement",
-      value: "+212 522 123 456",
+      value: "0608 611 511",
       action: "Appeler",
       available: "7j/7, 8h-20h"
     },
@@ -83,7 +83,7 @@ const Contact = () => {
       icon: MessageSquare,
       title: "WhatsApp",
       subtitle: "Chat en direct",
-      value: "+212 6 12 34 56 78",
+      value: "0608 411 511",
       action: "Chatter",
       available: "En ligne maintenant"
     }
@@ -94,8 +94,8 @@ const Contact = () => {
       icon: MapPin,
       title: "Adresse",
       details: [
-        "123 Avenue Hassan II",
-        "20000 Casablanca",
+        "Imm Assala",
+        "Marrakech",
         "Maroc"
       ]
     },
@@ -112,9 +112,9 @@ const Contact = () => {
       icon: Truck,
       title: "Zones de livraison",
       details: [
-        "Grand Casablanca",
-        "Rabat-Salé-Kénitra",
-        "Livraison express disponible"
+        "Marrakech ville",
+        "Zones avoisinantes",
+        "Livraison rapide 24h"
       ]
     }
   ];
@@ -126,7 +126,7 @@ const Contact = () => {
     },
     {
       question: "Proposez-vous la livraison le jour même ?",
-      answer: "Oui, pour les commandes passées avant 14h dans le Grand Casablanca."
+      answer: "Oui, pour les commandes passées avant 14h à Marrakech."
     },
     {
       question: "Puis-je annuler ma commande ?",
@@ -368,7 +368,7 @@ const Contact = () => {
                 <div className="text-center text-gray-500">
                   <MapPin className="h-16 w-16 mx-auto mb-4" />
                   <p className="text-lg font-medium">Carte Interactive</p>
-                  <p className="text-sm">123 Avenue Hassan II, Casablanca</p>
+                  <p className="text-sm">Imm Assala, Marrakech</p>
                 </div>
               </div>
               <div className="mt-6 text-center">
