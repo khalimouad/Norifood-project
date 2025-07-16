@@ -351,7 +351,7 @@ const Products = () => {
           {/* Products Grid/List */}
           {filteredProducts.length > 0 ? (
             <div className={`${viewMode === "grid" 
-              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              ? "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6"
               : "space-y-4"
             } animate-fade-in`}>
               {filteredProducts.map((product, index) => (
