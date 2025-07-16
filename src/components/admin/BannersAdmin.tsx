@@ -59,7 +59,7 @@ export const BannersAdmin = () => {
         method: 'GET'
       });
       if (error) throw error;
-      setBanners(data || []);
+      setBanners(Array.isArray(data) ? data : (data?.banners || []));
     } catch (error) {
       toast({
         title: "Erreur",

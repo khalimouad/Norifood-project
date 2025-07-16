@@ -31,7 +31,7 @@ export const PaymentsAdmin = () => {
         method: 'GET'
       });
       if (error) throw error;
-      setPayments(data || []);
+      setPayments(Array.isArray(data) ? data : (data?.payments || []));
     } catch (error) {
       toast({
         title: "Erreur",

@@ -60,7 +60,7 @@ export const RecipesAdmin = () => {
         method: 'GET'
       });
       if (error) throw error;
-      setRecipes(data || []);
+      setRecipes(Array.isArray(data) ? data : (data?.recipes || []));
     } catch (error) {
       toast({
         title: "Erreur",

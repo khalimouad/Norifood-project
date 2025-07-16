@@ -57,7 +57,7 @@ export const PromoCodesAdmin = () => {
         method: 'GET'
       });
       if (error) throw error;
-      setPromoCodes(data || []);
+      setPromoCodes(Array.isArray(data) ? data : (data?.promo_codes || []));
     } catch (error) {
       toast({
         title: "Erreur",

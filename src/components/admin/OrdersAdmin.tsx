@@ -41,7 +41,7 @@ export const OrdersAdmin = () => {
         method: 'GET'
       });
       if (error) throw error;
-      setOrders(data || []);
+      setOrders(Array.isArray(data) ? data : (data?.orders || []));
     } catch (error) {
       toast({
         title: "Erreur",
