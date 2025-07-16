@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Search, User, Heart, Menu, Bell } from 'lucide-react';
+import { ShoppingCart, Search, User, Heart, Menu, Bell, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useCart } from '@/hooks/useCart';
+import { useAuth } from '@/hooks/useAuth';
 import logo from '@/assets/logo.png';
 
 export const Header = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const { getTotalItems } = useCart();
+  const { user, signOut } = useAuth();
   const cartCount = getTotalItems();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -80,9 +83,34 @@ export const Header = () => {
               <Button variant="ghost" size="icon" className="text-gray-600 hover:text-ocean">
                 <Heart className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="text-gray-600 hover:text-ocean">
-                <User className="h-5 w-5" />
-              </Button>
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="text-gray-600 hover:text-ocean">
+                      <User className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => navigate('/profile')}>
+                      <User className="mr-2 h-4 w-4" />
+                      Mon Profil
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={signOut}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Se déconnecter
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => navigate('/auth')}
+                  className="text-gray-600 hover:text-ocean"
+                >
+                  <User className="h-5 w-5" />
+                </Button>
+              )}
               <Button variant="ghost" size="icon" className="relative text-gray-600 hover:text-ocean" onClick={() => navigate('/cart')}>
                 <ShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
