@@ -12,7 +12,6 @@ import { useCart } from "@/hooks/useCart";
 import { 
   Plus, 
   Minus, 
-  Heart,
   ArrowLeft,
   Star,
   Truck,
@@ -239,19 +238,14 @@ const ProductDetail = () => {
                   </div>
                 </div>
 
-                <div className="flex gap-4">
-                  <Button
-                    onClick={handleAddToCart}
-                    disabled={!product.stock_quantity || product.stock_quantity <= 0}
-                    className="flex-1"
-                    size="lg"
-                  >
-                    Ajouter au Panier - {(product.base_price * quantity).toFixed(2)} DH
-                  </Button>
-                  <Button variant="outline" size="lg" className="p-3">
-                    <Heart className="h-5 w-5" />
-                  </Button>
-                </div>
+                <Button
+                  onClick={handleAddToCart}
+                  disabled={!product.stock_quantity || product.stock_quantity <= 0}
+                  className="w-full"
+                  size="lg"
+                >
+                  Ajouter au Panier - {(product.base_price * quantity).toFixed(2)} DH
+                </Button>
               </div>
 
               {/* Product Features */}
