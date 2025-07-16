@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Tag, Fish, Waves, Anchor, Shell, Droplet, Flame, Star, Heart, Sparkles, Crown, Gem, Award, Zap, ShoppingCart } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, Tag, Fish, Waves, Anchor, Shell, Droplet, Flame, Star, Heart, Sparkles, Crown, Gem, Award, Zap, ShoppingCart, Apple, Carrot, Leaf, Package, Beef, Sandwich, Soup, UtensilsCrossed } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { CategoryForm } from './CategoryForm';
@@ -23,12 +23,19 @@ interface Category {
 }
 
 const iconMap = {
+  apple: Apple,
+  carrot: Carrot,
+  leaf: Leaf,
   fish: Fish,
   waves: Waves,
   anchor: Anchor,
   shell: Shell,
   droplet: Droplet,
   flame: Flame,
+  package: Package,
+  beef: Beef,
+  soup: Soup,
+  'utensils-crossed': UtensilsCrossed,
   star: Star,
   heart: Heart,
   sparkles: Sparkles,

@@ -22,7 +22,15 @@ import {
   Anchor,
   Shell,
   Droplet,
-  Flame
+  Flame,
+  Apple,
+  Carrot,
+  Leaf,
+  Package,
+  Beef,
+  Sandwich,
+  Soup,
+  UtensilsCrossed
 } from 'lucide-react';
 
 interface Category {
@@ -42,12 +50,19 @@ interface CategoryFormProps {
 }
 
 const iconOptions = [
-  { value: 'fish', label: 'Poisson', icon: Fish },
-  { value: 'waves', label: 'Vagues', icon: Waves },
-  { value: 'anchor', label: 'Ancre', icon: Anchor },
-  { value: 'shell', label: 'Coquillage', icon: Shell },
-  { value: 'droplet', label: 'Goutte', icon: Droplet },
-  { value: 'flame', label: 'Flamme', icon: Flame },
+  { value: 'apple', label: 'Fruits', icon: Apple },
+  { value: 'carrot', label: 'Légumes', icon: Carrot },
+  { value: 'leaf', label: 'Fruits et légumes', icon: Leaf },
+  { value: 'fish', label: 'Filets de poisson', icon: Fish },
+  { value: 'flame', label: 'Poisson fumés', icon: Flame },
+  { value: 'waves', label: 'Poissons frais', icon: Waves },
+  { value: 'package', label: 'Poissons embalés', icon: Package },
+  { value: 'shell', label: 'Fruits de mers', icon: Shell },
+  { value: 'anchor', label: 'Crevettes', icon: Anchor },
+  { value: 'droplet', label: 'Calamars', icon: Droplet },
+  { value: 'beef', label: 'Nuggets', icon: Beef },
+  { value: 'soup', label: 'Pasta', icon: Soup },
+  { value: 'utensils-crossed', label: 'Produits élaborés', icon: UtensilsCrossed },
   { value: 'star', label: 'Étoile', icon: Star },
   { value: 'heart', label: 'Cœur', icon: Heart },
   { value: 'sparkles', label: 'Étincelles', icon: Sparkles },
@@ -76,7 +91,7 @@ export function CategoryForm({ category, onSaved, onCancel }: CategoryFormProps)
         name: category.name || '',
         description: category.description || '',
         image_url: category.image_url || '',
-        icon: category.icon || 'fish',
+        icon: category.icon || 'apple',
         is_active: category.is_active ?? true,
       });
     }
