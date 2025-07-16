@@ -25,42 +25,42 @@ export const Footer = () => {
     <footer className="bg-gradient-to-t from-ocean to-ocean/90 text-white">
       {/* Features Section */}
       <div className="border-b border-white/10">
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="flex items-center space-x-3 justify-center md:justify-start">
+        <div className="container mx-auto px-4 py-6 md:py-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 justify-center md:justify-start text-center md:text-left">
               <div className="p-2 bg-seafoam/20 rounded-full">
-                <Award className="h-6 w-6 text-seafoam" />
+                <Award className="h-5 w-5 md:h-6 md:w-6 text-seafoam" />
               </div>
               <div>
-                <h4 className="font-semibold text-sm">Qualité Premium</h4>
-                <p className="text-xs text-white/70">Produits frais sélectionnés</p>
+                <h4 className="font-semibold text-xs md:text-sm">Qualité Premium</h4>
+                <p className="text-xs text-white/70 hidden md:block">Produits frais sélectionnés</p>
               </div>
             </div>
-            <div className="flex items-center space-x-3 justify-center md:justify-start">
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 justify-center md:justify-start text-center md:text-left">
               <div className="p-2 bg-seafoam/20 rounded-full">
-                <Truck className="h-6 w-6 text-seafoam" />
+                <Truck className="h-5 w-5 md:h-6 md:w-6 text-seafoam" />
               </div>
               <div>
-                <h4 className="font-semibold text-sm">Livraison Rapide</h4>
-                <p className="text-xs text-white/70">Livraison en 24h</p>
+                <h4 className="font-semibold text-xs md:text-sm">Livraison Rapide</h4>
+                <p className="text-xs text-white/70 hidden md:block">Livraison en 24h</p>
               </div>
             </div>
-            <div className="flex items-center space-x-3 justify-center md:justify-start">
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 justify-center md:justify-start text-center md:text-left">
               <div className="p-2 bg-seafoam/20 rounded-full">
-                <Shield className="h-6 w-6 text-seafoam" />
+                <Shield className="h-5 w-5 md:h-6 md:w-6 text-seafoam" />
               </div>
               <div>
-                <h4 className="font-semibold text-sm">Paiement Sécurisé</h4>
-                <p className="text-xs text-white/70">Transaction protégée</p>
+                <h4 className="font-semibold text-xs md:text-sm">Paiement Sécurisé</h4>
+                <p className="text-xs text-white/70 hidden md:block">Transaction protégée</p>
               </div>
             </div>
-            <div className="flex items-center space-x-3 justify-center md:justify-start">
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 justify-center md:justify-start text-center md:text-left">
               <div className="p-2 bg-seafoam/20 rounded-full">
-                <RefreshCw className="h-6 w-6 text-seafoam" />
+                <RefreshCw className="h-5 w-5 md:h-6 md:w-6 text-seafoam" />
               </div>
               <div>
-                <h4 className="font-semibold text-sm">Fraîcheur Garantie</h4>
-                <p className="text-xs text-white/70">Satisfaction assurée</p>
+                <h4 className="font-semibold text-xs md:text-sm">Fraîcheur Garantie</h4>
+                <p className="text-xs text-white/70 hidden md:block">Satisfaction assurée</p>
               </div>
             </div>
           </div>
@@ -68,28 +68,28 @@ export const Footer = () => {
       </div>
 
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 py-8 md:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {/* Company Info */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-6">
-              <Fish className="h-10 w-10 text-seafoam" />
-              <span className="text-2xl font-bold">Fresh N'Good</span>
+          <div className="lg:col-span-1 text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start space-x-2 mb-4 md:mb-6">
+              <Fish className="h-8 w-8 md:h-10 md:w-10 text-seafoam" />
+              <span className="text-xl md:text-2xl font-bold">Fresh N'Good</span>
             </div>
-            <p className="text-white/80 mb-6 leading-relaxed">
+            <p className="text-white/80 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
               Depuis plus de 20 ans, Fresh N'Good vous propose les meilleurs produits de la mer à Marrakech. 
               Notre expertise et notre passion pour la qualité nous permettent de vous garantir 
               fraîcheur et saveur à chaque livraison dans toute la région de Marrakech.
             </p>
-            <div className="flex space-x-3">
-              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full hover:bg-seafoam/20 hover:text-seafoam transition-all duration-300">
-                <Facebook className="h-5 w-5" />
+            <div className="flex justify-center md:justify-start space-x-3">
+              <Button variant="ghost" size="icon" className="h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-seafoam/20 hover:text-seafoam transition-all duration-300">
+                <Facebook className="h-4 w-4 md:h-5 md:w-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full hover:bg-seafoam/20 hover:text-seafoam transition-all duration-300">
-                <Twitter className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-seafoam/20 hover:text-seafoam transition-all duration-300">
+                <Twitter className="h-4 w-4 md:h-5 md:w-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full hover:bg-seafoam/20 hover:text-seafoam transition-all duration-300">
-                <Instagram className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-seafoam/20 hover:text-seafoam transition-all duration-300">
+                <Instagram className="h-4 w-4 md:h-5 md:w-5" />
               </Button>
             </div>
           </div>
