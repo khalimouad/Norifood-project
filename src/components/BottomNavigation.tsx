@@ -39,14 +39,19 @@ export const BottomNavigation = () => {
                 key={item.label}
                 variant="ghost"
                 onClick={() => handleItemClick(item)}
-                className={`flex flex-col items-center gap-1 h-auto py-3 px-2 relative flex-1 rounded-2xl ${
+                className={`flex flex-col items-center gap-1 h-auto py-3 px-2 relative flex-1 rounded-2xl transition-all duration-200 ${
                   isActive 
                     ? 'text-ocean' 
-                    : 'text-gray-500 hover:text-gray-700'
+                    : 'text-gray-500 hover:text-ocean hover:bg-ocean/10'
                 }`}
               >
-                <div className="relative">
+                <div className="relative p-2 rounded-full transition-all duration-200 hover:bg-ocean/20">
                   <item.icon className="h-5 w-5" />
+                  {item.badge && item.badge > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-coral text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {item.badge}
+                    </span>
+                  )}
                 </div>
                 <span className="text-xs font-medium">{item.label}</span>
                 {isActive && (
