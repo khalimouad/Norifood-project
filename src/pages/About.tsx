@@ -224,7 +224,7 @@ const About = () => {
                 <Phone className="h-5 w-5 mr-2" />
                 Nous Appeler
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-ocean">
+              <Button size="lg" variant="outline" className="bg-black border-white text-white hover:bg-white hover:text-ocean">
                 <Mail className="h-5 w-5 mr-2" />
                 Nous Écrire
               </Button>
