@@ -193,7 +193,6 @@ const ProductDetail = () => {
                       <Star key={star} className="h-5 w-5 fill-current" />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-600">(24 avis)</span>
                 </div>
                 <div className="text-3xl font-bold text-ocean mb-4">
                   {product.base_price} DH
@@ -279,21 +278,8 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          {/* Product Details Tabs */}
+          {/* Product Details */}
           <div className="mt-16">
-            <div className="border-b border-gray-200 mb-8">
-              <nav className="-mb-px flex space-x-8">
-                <button className="border-b-2 border-ocean text-ocean font-medium py-4 px-1">
-                  Informations
-                </button>
-                <button className="text-gray-500 hover:text-gray-700 font-medium py-4 px-1">
-                  Avis (24)
-                </button>
-                <button className="text-gray-500 hover:text-gray-700 font-medium py-4 px-1">
-                  Livraison
-                </button>
-              </nav>
-            </div>
 
             <div className="grid md:grid-cols-2 gap-8">
               <div>
