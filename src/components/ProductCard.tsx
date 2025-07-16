@@ -106,39 +106,41 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
           )}
         </div>
         
-        <div className="p-3 md:p-4 space-y-2 md:space-y-3">
+        <div className="p-2 md:p-4 space-y-1.5 md:space-y-3">
           <Link to={`/product/${id}`}>
-            <h3 className="font-semibold text-gray-900 text-sm md:text-base line-clamp-2 hover:text-ocean transition-colors">
+            <h3 className="font-semibold text-gray-900 text-sm md:text-base line-clamp-2 hover:text-ocean transition-colors leading-tight">
               {name}
             </h3>
           </Link>
           
-          <div className="flex items-center gap-2">
-            {discount && (
-              <span className="text-xs text-gray-400 line-through">
-                {price.toFixed(2)} DH
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1 md:gap-2">
+              {discount && (
+                <span className="text-xs text-gray-400 line-through">
+                  {price.toFixed(2)} DH
+                </span>
+              )}
+              <span className="text-base md:text-lg font-bold text-ocean">
+                {discountedPrice.toFixed(2)} DH
               </span>
-            )}
-            <span className="text-sm md:text-lg font-bold text-ocean">
-              {discountedPrice.toFixed(2)} DH
-            </span>
-            <span className="text-xs text-gray-500">
-              / {unitType}
-            </span>
+              <span className="text-xs text-gray-500">
+                / {unitType}
+              </span>
+            </div>
           </div>
           
-          <div className="flex items-center gap-2">
-            <div className="flex items-center bg-gray-50 rounded-full p-1 flex-1 max-w-[100px]">
+          <div className="flex items-center gap-1.5 md:gap-2 pt-1">
+            <div className="flex items-center bg-gray-50 rounded-lg p-0.5 min-w-[85px] md:min-w-[100px]">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => updateQuantity(quantity - 1)}
                 disabled={quantity <= 1 || !inStock}
-                className="h-7 w-7 p-0 rounded-full text-xs"
+                className="h-7 w-7 p-0 rounded-md text-xs hover:bg-white"
               >
                 <Minus className="h-3 w-3" />
               </Button>
-              <span className="flex-1 text-center text-sm font-medium">
+              <span className="flex-1 text-center text-sm font-semibold px-1">
                 {quantity}
               </span>
               <Button
@@ -146,7 +148,7 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
                 size="sm"
                 onClick={() => updateQuantity(quantity + 1)}
                 disabled={!inStock}
-                className="h-7 w-7 p-0 rounded-full text-xs"
+                className="h-7 w-7 p-0 rounded-md text-xs hover:bg-white"
               >
                 <Plus className="h-3 w-3" />
               </Button>
@@ -155,11 +157,12 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
             <Button
               onClick={handleAddToCart}
               disabled={!inStock}
-              className="flex-1 h-8 text-xs"
+              className="flex-1 h-8 md:h-9 text-xs md:text-sm font-medium px-2 md:px-3"
               size="sm"
             >
-              <ShoppingCart className="h-3 w-3 mr-1" />
-              Ajouter
+              <ShoppingCart className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+              <span className="hidden sm:inline">Ajouter</span>
+              <span className="sm:hidden">+</span>
             </Button>
           </div>
         </div>
