@@ -48,6 +48,9 @@ const Products = () => {
         supabase.from("categories").select("*").eq("is_active", true)
       ]);
 
+      console.log("Products loaded:", productsResponse.data?.length);
+      console.log("Categories loaded:", categoriesResponse.data?.length);
+
       if (productsResponse.data) setProducts(productsResponse.data);
       if (categoriesResponse.data) setCategories(categoriesResponse.data);
     } catch (error) {
@@ -69,11 +72,13 @@ const Products = () => {
 
   const filterAndSortProducts = () => {
     let filtered = products;
+    console.log("Filtering products:", products.length, "search term:", searchTerm);
 
     // Filter by search term with flexible matching
     if (searchTerm) {
       const normalizedSearchTerm = normalizeText(searchTerm);
       const searchWords = normalizedSearchTerm.split(' ').filter(word => word.length > 0);
+      console.log("Search words:", searchWords);
       
       filtered = filtered.filter(product => {
         const searchableText = [
@@ -87,13 +92,19 @@ const Products = () => {
         const normalizedText = normalizeText(searchableText);
         
         // Check if all search words are found in the product text
-        return searchWords.every(word => 
+        const matches = searchWords.every(word => 
           normalizedText.includes(word) || 
           // Also check for partial matches at word boundaries
           normalizedText.split(' ').some(textWord => 
             textWord.startsWith(word) || textWord.includes(word)
           )
         );
+        
+        if (matches) {
+          console.log("Product matches:", product.name, "searchable text:", searchableText);
+        }
+        
+        return matches;
       });
     }
 
@@ -115,6 +126,7 @@ const Products = () => {
       }
     });
 
+    console.log("Filtered products:", filtered.length);
     setFilteredProducts(filtered);
   };
 
@@ -126,6 +138,7 @@ const Products = () => {
 
     const suggestions = new Set<string>();
     const normalizedSearchTerm = normalizeText(searchTerm);
+    console.log("Generating suggestions for:", searchTerm, "normalized:", normalizedSearchTerm);
     
     products.forEach(product => {
       const searchableTerms = [
@@ -152,7 +165,9 @@ const Products = () => {
       });
     });
     
-    setSearchSuggestions(Array.from(suggestions).slice(0, 5));
+    const finalSuggestions = Array.from(suggestions).slice(0, 5);
+    console.log("Generated suggestions:", finalSuggestions);
+    setSearchSuggestions(finalSuggestions);
   };
 
   const handleSearchSuggestionClick = (suggestion: string) => {
