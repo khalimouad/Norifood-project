@@ -279,35 +279,35 @@ const Cart = () => {
 
               {/* Delivery Info */}
               <Card className="border-0 shadow-sm">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold text-gray-900 mb-4">
+                <CardContent className="p-4 md:p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 md:mb-4 text-center md:text-left">
                     Informations de Livraison
                   </h3>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:space-y-3 md:grid-cols-1">
+                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-gray-50 sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
                       <div className="flex-shrink-0">
-                        <Truck className="h-5 w-5 text-ocean" />
+                        <Truck className="h-6 w-6 md:h-5 md:w-5 text-ocean" />
                       </div>
                       <div>
-                        <p className="font-medium text-sm">Livraison Express</p>
+                        <p className="font-medium text-sm md:text-sm">Livraison Express</p>
                         <p className="text-xs text-gray-600">Même jour ou 24h</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-gray-50 sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
                       <div className="flex-shrink-0">
-                        <Clock className="h-5 w-5 text-ocean" />
+                        <Clock className="h-6 w-6 md:h-5 md:w-5 text-ocean" />
                       </div>
                       <div>
-                        <p className="font-medium text-sm">Créneau Flexible</p>
+                        <p className="font-medium text-sm md:text-sm">Créneau Flexible</p>
                         <p className="text-xs text-gray-600">Choix de l'heure</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-gray-50 sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
                       <div className="flex-shrink-0">
-                        <Shield className="h-5 w-5 text-ocean" />
+                        <Shield className="h-6 w-6 md:h-5 md:w-5 text-ocean" />
                       </div>
                       <div>
-                        <p className="font-medium text-sm">Fraîcheur Garantie</p>
+                        <p className="font-medium text-sm md:text-sm">Fraîcheur Garantie</p>
                         <p className="text-xs text-gray-600">Chaîne du froid respectée</p>
                       </div>
                     </div>
