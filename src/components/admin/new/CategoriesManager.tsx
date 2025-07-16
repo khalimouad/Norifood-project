@@ -19,6 +19,7 @@ interface Category {
   is_active: boolean;
   image_url: string;
   icon?: string;
+  custom_svg?: string;
   created_at: string;
 }
 
@@ -203,13 +204,18 @@ export function CategoriesManager() {
                 <TableRow key={category.id}>
                   <TableCell>
                     <div className="flex items-center space-x-3">
-                      {category.icon && iconMap[category.icon as keyof typeof iconMap] && (
+                      {category.custom_svg ? (
+                        <div 
+                          className="flex items-center justify-center h-10 w-10 rounded bg-muted text-primary"
+                          dangerouslySetInnerHTML={{ __html: category.custom_svg }}
+                        />
+                      ) : category.icon && iconMap[category.icon as keyof typeof iconMap] ? (
                         <div className="flex items-center justify-center h-10 w-10 rounded bg-muted">
                           {React.createElement(iconMap[category.icon as keyof typeof iconMap], {
                             className: "h-5 w-5 text-primary"
                           })}
                         </div>
-                      )}
+                      ) : null}
                       {category.image_url && (
                         <img
                           src={category.image_url}

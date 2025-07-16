@@ -41,6 +41,7 @@ interface Category {
   is_active: boolean;
   image_url: string;
   icon?: string;
+  custom_svg?: string;
 }
 
 interface CategoryFormProps {
@@ -92,6 +93,7 @@ export function CategoryForm({ category, onSaved, onCancel }: CategoryFormProps)
         description: category.description || '',
         image_url: category.image_url || '',
         icon: category.icon || 'apple',
+        custom_svg: category.custom_svg || '',
         is_active: category.is_active ?? true,
       });
     }
@@ -170,26 +172,69 @@ export function CategoryForm({ category, onSaved, onCancel }: CategoryFormProps)
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="icon">Icône</Label>
-        <Select value={formData.icon} onValueChange={(value) => setFormData({ ...formData, icon: value })}>
+        <Label htmlFor="icon">Type d'icône</Label>
+        <Select value={formData.custom_svg ? 'custom' : 'lucide'} onValueChange={(value) => {
+          if (value === 'custom') {
+            setFormData({ ...formData, icon: '' });
+          } else {
+            setFormData({ ...formData, custom_svg: '', icon: 'apple' });
+          }
+        }}>
           <SelectTrigger>
-            <SelectValue placeholder="Sélectionner une icône" />
+            <SelectValue placeholder="Type d'icône" />
           </SelectTrigger>
           <SelectContent>
-            {iconOptions.map((option) => {
-              const IconComponent = option.icon;
-              return (
-                <SelectItem key={option.value} value={option.value}>
-                  <div className="flex items-center gap-2">
-                    <IconComponent className="h-4 w-4" />
-                    {option.label}
-                  </div>
-                </SelectItem>
-              );
-            })}
+            <SelectItem value="lucide">Icône Lucide</SelectItem>
+            <SelectItem value="custom">SVG personnalisé</SelectItem>
           </SelectContent>
         </Select>
       </div>
+
+      {!formData.custom_svg && (
+        <div className="space-y-2">
+          <Label htmlFor="icon">Icône Lucide</Label>
+          <Select value={formData.icon} onValueChange={(value) => setFormData({ ...formData, icon: value })}>
+            <SelectTrigger>
+              <SelectValue placeholder="Sélectionner une icône" />
+            </SelectTrigger>
+            <SelectContent>
+              {iconOptions.map((option) => {
+                const IconComponent = option.icon;
+                return (
+                  <SelectItem key={option.value} value={option.value}>
+                    <div className="flex items-center gap-2">
+                      <IconComponent className="h-4 w-4" />
+                      {option.label}
+                    </div>
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      {formData.custom_svg && (
+        <div className="space-y-2">
+          <Label htmlFor="custom_svg">Code SVG personnalisé</Label>
+          <textarea
+            id="custom_svg"
+            className="w-full h-32 p-2 border rounded-md font-mono text-sm"
+            value={formData.custom_svg}
+            onChange={(e) => setFormData({ ...formData, custom_svg: e.target.value })}
+            placeholder="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='...'/></svg>"
+          />
+          {formData.custom_svg && (
+            <div className="flex items-center gap-2 p-2 bg-muted rounded">
+              <span className="text-sm text-muted-foreground">Aperçu:</span>
+              <div 
+                className="h-6 w-6 text-primary"
+                dangerouslySetInnerHTML={{ __html: formData.custom_svg }}
+              />
+            </div>
+          )}
+        </div>
+      )}
 
       <ImageUpload
         onImageSelect={(imageData) => setFormData({ ...formData, image_url: imageData })}
