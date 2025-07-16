@@ -143,8 +143,9 @@ export const Footer = () => {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-seafoam mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-white font-medium">Imm Assala</p>
-                  <p className="text-white/60 text-sm">Marrakech, Maroc</p>
+                  <p className="text-white font-medium">Imm. Assala - 50 Gueliz</p>
+                  <p className="text-white font-medium">Bd Mohamed VI</p>
+                  <p className="text-white/60 text-sm">Marrakesh 40000, Maroc</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
@@ -207,6 +208,9 @@ export const Footer = () => {
             </Link>
             <Link to="/terms" className="text-white/60 hover:text-seafoam text-sm transition-colors duration-300">
               Conditions d'utilisation
+            </Link>
+            <Link to="/conditions-de-vente" className="text-white/60 hover:text-seafoam text-sm transition-colors duration-300">
+              Conditions de vente
             </Link>
             <Link to="/shipping" className="text-white/60 hover:text-seafoam text-sm transition-colors duration-300">
               Livraison & Retours

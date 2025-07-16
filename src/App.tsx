@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import TermsOfSale from "./pages/TermsOfSale";
 import Recipes from "./pages/Recipes";
 import Admin from "./pages/Admin";
 import NewAdmin from "./pages/NewAdmin";
@@ -45,6 +46,7 @@ const App = () => (
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
               <Route path="/recipes" element={<Recipes />} />
+              <Route path="/conditions-de-vente" element={<TermsOfSale />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin-new/*" element={<NewAdmin />} />
               <Route path="/admin-new/product/:id" element={<ProductEdit />} />
