@@ -60,19 +60,9 @@ export const CategoriesSidebar = ({ open, onOpenChange }: CategoriesSidebarProps
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="left" className="w-[300px] sm:w-[400px] p-0">
         <SheetHeader className="p-6 pb-4 border-b">
-          <div className="flex items-center justify-between">
-            <SheetTitle className="text-xl font-bold text-gray-900">
-              Nos Catégories
-            </SheetTitle>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onOpenChange(false)}
-              className="h-8 w-8"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
+          <SheetTitle className="text-xl font-bold text-gray-900">
+            Nos Catégories
+          </SheetTitle>
           <p className="text-sm text-gray-600 text-left">
             Découvrez nos produits frais par catégorie
           </p>
