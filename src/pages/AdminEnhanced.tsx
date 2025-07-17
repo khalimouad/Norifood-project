@@ -9,6 +9,13 @@ import { TagsManager } from '@/components/admin/enhanced/TagsManager';
 import { CategoriesManager } from '@/components/admin/enhanced/CategoriesManager';
 import { OrdersManager } from '@/components/admin/enhanced/OrdersManager';
 import { CustomersManager } from '@/components/admin/enhanced/CustomersManager';
+import { PaymentsManager } from '@/components/admin/enhanced/PaymentsManager';
+import { PromoCodesManager } from '@/components/admin/enhanced/PromoCodesManager';
+import { BannersManager } from '@/components/admin/enhanced/BannersManager';
+import { RecipesManager } from '@/components/admin/enhanced/RecipesManager';
+import { SalesAnalytics } from '@/components/admin/enhanced/SalesAnalytics';
+import { RevenueAnalytics } from '@/components/admin/enhanced/RevenueAnalytics';
+import { ActivityAnalytics } from '@/components/admin/enhanced/ActivityAnalytics';
 import { useLocation } from 'react-router-dom';
 
 function AdminBreadcrumb() {
@@ -95,15 +102,15 @@ export default function AdminEnhanced() {
                 <Route path="/tags" element={<TagsManager />} />
                 <Route path="/orders" element={<OrdersManager />} />
                 <Route path="/customers" element={<CustomersManager />} />
-                <Route path="/payments" element={<div className="p-6"><h2 className="text-xl font-semibold">Paiements</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
-                <Route path="/promo-codes" element={<div className="p-6"><h2 className="text-xl font-semibold">Codes Promo</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
-                <Route path="/banners" element={<div className="p-6"><h2 className="text-xl font-semibold">Bannières</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/payments" element={<PaymentsManager />} />
+                <Route path="/promo-codes" element={<PromoCodesManager />} />
+                <Route path="/banners" element={<BannersManager />} />
                 <Route path="/banners/new" element={<div className="p-6"><h2 className="text-xl font-semibold">Nouvelle bannière</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
                 <Route path="/banners/:id" element={<div className="p-6"><h2 className="text-xl font-semibold">Modifier la bannière</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
-                <Route path="/recipes" element={<div className="p-6"><h2 className="text-xl font-semibold">Recettes</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
-                <Route path="/analytics/sales" element={<div className="p-6"><h2 className="text-xl font-semibold">Ventes Analytics</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
-                <Route path="/analytics/revenue" element={<div className="p-6"><h2 className="text-xl font-semibold">Revenus Analytics</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
-                <Route path="/analytics/activity" element={<div className="p-6"><h2 className="text-xl font-semibold">Activité Analytics</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/recipes" element={<RecipesManager />} />
+                <Route path="/analytics/sales" element={<SalesAnalytics />} />
+                <Route path="/analytics/revenue" element={<RevenueAnalytics />} />
+                <Route path="/analytics/activity" element={<ActivityAnalytics />} />
                 <Route path="*" element={<Navigate to="/admin" replace />} />
               </Routes>
             </div>
