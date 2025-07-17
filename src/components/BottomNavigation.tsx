@@ -45,10 +45,10 @@ export const BottomNavigation = () => {
                     : 'text-gray-500 hover:text-ocean hover:bg-ocean/10'
                 }`}
               >
-                <div className="relative p-2 rounded-full transition-all duration-200 hover:bg-ocean/20">
+                <div className="relative">
                   <item.icon className="h-5 w-5" />
                   {item.badge && item.badge > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-coral text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-2 bg-coral text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
                       {item.badge}
                     </span>
                   )}
