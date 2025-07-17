@@ -47,7 +47,7 @@ export const BottomNavigation = () => {
               >
                 <div className="relative">
                   <item.icon className="h-5 w-5" />
-                  {item.badge && item.badge > 0 && (
+                  {item.badge !== undefined && (
                     <span className="absolute -top-2 -right-2 bg-coral text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
                       {item.badge}
                     </span>
