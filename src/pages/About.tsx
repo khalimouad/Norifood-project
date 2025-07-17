@@ -54,19 +54,19 @@ const About = () => {
       name: "Mohamed Alami",
       role: "Fondateur & Directeur",
       experience: "25 ans d'expérience dans la pêche",
-      image: "/placeholder.svg"
+      image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=150&h=150&fit=crop&crop=face"
     },
     {
       name: "Fatima Benali",
       role: "Chef des Achats",
       experience: "Expert en sélection de produits marins",
-      image: "/placeholder.svg"
+      image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=150&h=150&fit=crop&crop=face"
     },
     {
       name: "Omar Tazi",
       role: "Responsable Qualité",
       experience: "Spécialiste en sécurité alimentaire",
-      image: "/placeholder.svg"
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=150&h=150&fit=crop&crop=face"
     }
   ];
 
