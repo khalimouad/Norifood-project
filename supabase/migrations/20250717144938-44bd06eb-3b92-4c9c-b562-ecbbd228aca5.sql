@@ -1,0 +1,11 @@
+-- Update product image URLs for the newly generated images
+UPDATE public.products SET image_url = '/src/assets/anchois.jpg' WHERE slug = 'anchois';
+UPDATE public.products SET image_url = '/src/assets/espadon.jpg' WHERE slug = 'espadon';
+UPDATE public.products SET image_url = '/src/assets/huitres.jpg' WHERE slug = 'huitres';
+UPDATE public.products SET image_url = '/src/assets/moules.jpg' WHERE slug = 'moules';
+UPDATE public.products SET image_url = '/src/assets/chair-crabe.jpg' WHERE slug = 'chair-crabe';
+UPDATE public.products SET image_url = '/src/assets/saint-jacques.jpg' WHERE slug = 'saint-jacques';
+UPDATE public.products SET image_url = '/src/assets/lotte.jpg' WHERE slug = 'lotte';
+UPDATE public.products SET image_url = '/src/assets/sardines.jpg' WHERE slug = 'sardines';
+UPDATE public.products SET image_url = '/src/assets/ananas-congelees.jpg' WHERE slug = 'ananas-congelees';
+UPDATE public.products SET image_url = '/src/assets/thon.jpg' WHERE slug = 'thon';
