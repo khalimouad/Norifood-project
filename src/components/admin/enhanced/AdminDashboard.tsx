@@ -167,7 +167,7 @@ export function AdminDashboard() {
     },
     {
       title: "Chiffre d'affaires",
-      value: `${stats.totalRevenue.toFixed(2)}€`,
+      value: `${stats.totalRevenue.toFixed(2)} MAD`,
       icon: DollarSign,
       color: "text-emerald-600",
       bgColor: "bg-emerald-50",
@@ -371,7 +371,7 @@ export function AdminDashboard() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium">{parseFloat(String(order.total_amount)).toFixed(2)}€</p>
+                    <p className="font-medium">{parseFloat(String(order.total_amount)).toFixed(2)} MAD</p>
                     <Badge variant={order.status === 'pending' ? 'default' : 'secondary'}>
                       {order.status}
                     </Badge>
@@ -407,7 +407,7 @@ export function AdminDashboard() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium">{product.revenue.toFixed(2)}€</p>
+                    <p className="font-medium">{product.revenue.toFixed(2)} MAD</p>
                     <p className="text-xs text-muted-foreground">Revenue</p>
                   </div>
                 </div>
