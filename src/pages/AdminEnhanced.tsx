@@ -20,7 +20,7 @@ function AdminBreadcrumb() {
   const pathSegments = location.pathname.split('/').filter(Boolean);
   
   const breadcrumbMap: { [key: string]: string } = {
-    'admin-enhanced': 'Admin',
+    'admin': 'Admin',
     'products': 'Produits',
     'categories': 'Catégories',
     'orders': 'Commandes',
@@ -107,7 +107,7 @@ export default function AdminEnhanced() {
                 <Route path="/analytics/sales" element={<div>Sales Analytics</div>} />
                 <Route path="/analytics/revenue" element={<div>Revenue Analytics</div>} />
                 <Route path="/analytics/activity" element={<div>Activity Analytics</div>} />
-                <Route path="*" element={<Navigate to="/admin-enhanced" replace />} />
+                <Route path="*" element={<Navigate to="/admin" replace />} />
               </Routes>
             </div>
           </main>

@@ -59,7 +59,7 @@ export function EnhancedProductsManager() {
   };
 
   const handleEdit = (product: Product) => {
-    navigate(`/admin-enhanced/products/${product.id}`);
+    navigate(`/admin/products/${product.id}`);
   };
 
   const handleView = (product: Product) => {
@@ -96,7 +96,7 @@ export function EnhancedProductsManager() {
   };
 
   const handleAdd = () => {
-    navigate('/admin-enhanced/products/new');
+    navigate('/admin/products/new');
   };
 
   const columns = [

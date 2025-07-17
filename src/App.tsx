@@ -60,9 +60,9 @@ const App = () => (
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/shipping" element={<Shipping />} />
-              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/*" element={<AdminEnhanced />} />
               <Route path="/admin-new/*" element={<NewAdmin />} />
-              <Route path="/admin-enhanced/*" element={<AdminEnhanced />} />
+              <Route path="/admin-old/*" element={<Admin />} />
               <Route path="/admin-new/product/:id" element={<ProductEdit />} />
               <Route path="/admin-new/banner/:id" element={<BannerEdit />} />
               <Route path="/admin/product/new" element={<AdminProductForm />} />

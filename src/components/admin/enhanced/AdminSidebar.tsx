@@ -29,24 +29,24 @@ import {
 } from 'lucide-react';
 
 const mainItems = [
-  { title: "Dashboard", url: "/admin-enhanced", icon: BarChart3 },
-  { title: "Produits", url: "/admin-enhanced/products", icon: Package },
-  { title: "Catégories", url: "/admin-enhanced/categories", icon: Tag },
-  { title: "Commandes", url: "/admin-enhanced/orders", icon: ShoppingCart },
-  { title: "Clients", url: "/admin-enhanced/customers", icon: Users },
+  { title: "Dashboard", url: "/admin", icon: BarChart3 },
+  { title: "Produits", url: "/admin/products", icon: Package },
+  { title: "Catégories", url: "/admin/categories", icon: Tag },
+  { title: "Commandes", url: "/admin/orders", icon: ShoppingCart },
+  { title: "Clients", url: "/admin/customers", icon: Users },
 ];
 
 const managementItems = [
-  { title: "Paiements", url: "/admin-enhanced/payments", icon: CreditCard },
-  { title: "Codes Promo", url: "/admin-enhanced/promo-codes", icon: Percent },
-  { title: "Bannières", url: "/admin-enhanced/banners", icon: Image },
-  { title: "Recettes", url: "/admin-enhanced/recipes", icon: ChefHat },
+  { title: "Paiements", url: "/admin/payments", icon: CreditCard },
+  { title: "Codes Promo", url: "/admin/promo-codes", icon: Percent },
+  { title: "Bannières", url: "/admin/banners", icon: Image },
+  { title: "Recettes", url: "/admin/recipes", icon: ChefHat },
 ];
 
 const analyticsItems = [
-  { title: "Ventes", url: "/admin-enhanced/analytics/sales", icon: TrendingUp },
-  { title: "Revenus", url: "/admin-enhanced/analytics/revenue", icon: DollarSign },
-  { title: "Activité", url: "/admin-enhanced/analytics/activity", icon: Clock },
+  { title: "Ventes", url: "/admin/analytics/sales", icon: TrendingUp },
+  { title: "Revenus", url: "/admin/analytics/revenue", icon: DollarSign },
+  { title: "Activité", url: "/admin/analytics/activity", icon: Clock },
 ];
 
 export function AdminSidebar() {
