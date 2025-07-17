@@ -29,6 +29,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import { CartProvider } from "./hooks/useCart";
 import { AuthProvider } from "./hooks/useAuth";
+import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <PWAInstallPrompt />
       <BrowserRouter>
         <AuthProvider>
           <CartProvider>
