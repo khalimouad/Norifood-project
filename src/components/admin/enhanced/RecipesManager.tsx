@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { EnhancedTable } from './EnhancedTable';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { RecipeForm } from '../forms/RecipeForm';
 
 interface Recipe {
   id: string;
@@ -22,6 +23,8 @@ interface Recipe {
 export function RecipesManager() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+  const [formOpen, setFormOpen] = useState(false);
+  const [editingRecipe, setEditingRecipe] = useState<Recipe | undefined>();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -42,6 +45,80 @@ export function RecipesManager() {
       toast({
         title: "Erreur",
         description: "Impossible de charger les recettes",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (values: any) => {
+    try {
+      setLoading(true);
+      
+      if (editingRecipe) {
+        const { error } = await supabase
+          .from('recipes')
+          .update(values)
+          .eq('id', editingRecipe.id);
+        
+        if (error) throw error;
+        
+        toast({
+          title: "Succès",
+          description: "La recette a été mise à jour",
+        });
+      } else {
+        const { error } = await supabase
+          .from('recipes')
+          .insert([values]);
+        
+        if (error) throw error;
+        
+        toast({
+          title: "Succès",
+          description: "La recette a été créée",
+        });
+      }
+      
+      fetchRecipes();
+      setFormOpen(false);
+    } catch (error) {
+      console.error('Error saving recipe:', error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+      setEditingRecipe(undefined);
+    }
+  };
+
+  const handleDelete = async (recipe: Recipe) => {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')) return;
+    
+    try {
+      setLoading(true);
+      const { error } = await supabase
+        .from('recipes')
+        .delete()
+        .eq('id', recipe.id);
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Succès",
+        description: "La recette a été supprimée",
+      });
+      
+      fetchRecipes();
+    } catch (error) {
+      console.error('Error deleting recipe:', error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de la suppression",
         variant: "destructive",
       });
     } finally {
@@ -135,9 +212,24 @@ export function RecipesManager() {
         columns={columns}
         loading={loading}
         onRefresh={fetchRecipes}
-        onAdd={() => console.log('Add recipe')}
+        onAdd={() => setFormOpen(true)}
+        onEdit={(recipe) => {
+          setEditingRecipe(recipe);
+          setFormOpen(true);
+        }}
+        onDelete={handleDelete}
         addButtonText="Nouvelle recette"
         searchPlaceholder="Rechercher par titre..."
+      />
+
+      <RecipeForm
+        open={formOpen}
+        onOpenChange={setFormOpen}
+        onSubmit={handleSubmit}
+        initialData={editingRecipe ? {
+          ...editingRecipe,
+          difficulty: editingRecipe.difficulty as 'easy' | 'medium' | 'hard'
+        } : undefined}
       />
     </div>
   );

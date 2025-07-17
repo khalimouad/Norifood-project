@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { EnhancedTable } from './EnhancedTable';
 import { Button } from '@/components/ui/button';
-import { Plus, Search, Filter, Edit, Trash2, Eye } from 'lucide-react';
+import { Plus, Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { BannerForm } from '../forms/BannerForm';
 
 interface Banner {
   id: string;
@@ -28,6 +29,8 @@ export function BannersManager() {
   const [banners, setBanners] = useState<Banner[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [formOpen, setFormOpen] = useState(false);
+  const [editingBanner, setEditingBanner] = useState<Banner | undefined>();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -138,35 +141,86 @@ export function BannersManager() {
     banner.subtitle?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleSubmit = async (values: any) => {
+    try {
+      setLoading(true);
+      const data = {
+        ...values,
+        start_date: values.start_date.toISOString(),
+        end_date: values.end_date.toISOString(),
+      };
+      
+      if (editingBanner) {
+        const { error } = await supabase
+          .from('banners')
+          .update(data)
+          .eq('id', editingBanner.id);
+        
+        if (error) throw error;
+        
+        toast({
+          title: "Succès",
+          description: "La bannière a été mise à jour",
+        });
+      } else {
+        const { error } = await supabase
+          .from('banners')
+          .insert([data]);
+        
+        if (error) throw error;
+        
+        toast({
+          title: "Succès",
+          description: "La bannière a été créée",
+        });
+      }
+      
+      fetchBanners();
+    } catch (error) {
+      console.error('Error saving banner:', error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+      setEditingBanner(undefined);
+    }
+  };
+
+  const handleDelete = async (banner: Banner) => {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette bannière ?')) return;
+    
+    try {
+      setLoading(true);
+      const { error } = await supabase
+        .from('banners')
+        .delete()
+        .eq('id', banner.id);
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Succès",
+        description: "La bannière a été supprimée",
+      });
+      
+      fetchBanners();
+    } catch (error) {
+      console.error('Error deleting banner:', error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de la suppression",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">Bannières</h2>
-          <p className="text-muted-foreground">Gérer les bannières publicitaires</p>
-        </div>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          Nouvelle bannière
-        </Button>
-      </div>
-
-      <div className="flex items-center gap-4">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Rechercher par titre..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Button variant="outline" size="sm">
-          <Filter className="h-4 w-4 mr-2" />
-          Filtrer
-        </Button>
-      </div>
-
       <EnhancedTable
         title="Bannières"
         description="Gérer les bannières publicitaires"
@@ -174,8 +228,24 @@ export function BannersManager() {
         columns={columns}
         loading={loading}
         onRefresh={fetchBanners}
-        onAdd={() => console.log('Add banner')}
+        onAdd={() => setFormOpen(true)}
+        onEdit={(banner) => {
+          setEditingBanner(banner);
+          setFormOpen(true);
+        }}
+        onDelete={handleDelete}
         addButtonText="Nouvelle bannière"
+      />
+
+      <BannerForm
+        open={formOpen}
+        onOpenChange={setFormOpen}
+        onSubmit={handleSubmit}
+        initialData={editingBanner ? {
+          ...editingBanner,
+          start_date: new Date(editingBanner.start_date),
+          end_date: new Date(editingBanner.end_date),
+        } : undefined}
       />
     </div>
   );

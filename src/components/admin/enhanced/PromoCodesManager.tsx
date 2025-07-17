@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { EnhancedTable } from './EnhancedTable';
 import { Button } from '@/components/ui/button';
-import { Plus, Search, Filter, Edit, Trash2 } from 'lucide-react';
+import { Plus, Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { PromoCodeForm } from '../forms/PromoCodeForm';
 
 interface PromoCode {
   id: string;
@@ -26,6 +27,8 @@ export function PromoCodesManager() {
   const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [formOpen, setFormOpen] = useState(false);
+  const [editingPromoCode, setEditingPromoCode] = useState<PromoCode | undefined>();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -131,35 +134,86 @@ export function PromoCodesManager() {
     promoCode.code.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleSubmit = async (values: any) => {
+    try {
+      setLoading(true);
+      const data = {
+        ...values,
+        valid_from: values.valid_from.toISOString(),
+        valid_until: values.valid_until.toISOString(),
+      };
+      
+      if (editingPromoCode) {
+        const { error } = await supabase
+          .from('promo_codes')
+          .update(data)
+          .eq('id', editingPromoCode.id);
+        
+        if (error) throw error;
+        
+        toast({
+          title: "Succès",
+          description: "Le code promo a été mis à jour",
+        });
+      } else {
+        const { error } = await supabase
+          .from('promo_codes')
+          .insert([{ ...data, used_count: 0 }]);
+        
+        if (error) throw error;
+        
+        toast({
+          title: "Succès",
+          description: "Le code promo a été créé",
+        });
+      }
+      
+      fetchPromoCodes();
+    } catch (error) {
+      console.error('Error saving promo code:', error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+      setEditingPromoCode(undefined);
+    }
+  };
+
+  const handleDelete = async (promoCode: PromoCode) => {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce code promo ?')) return;
+    
+    try {
+      setLoading(true);
+      const { error } = await supabase
+        .from('promo_codes')
+        .delete()
+        .eq('id', promoCode.id);
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Succès",
+        description: "Le code promo a été supprimé",
+      });
+      
+      fetchPromoCodes();
+    } catch (error) {
+      console.error('Error deleting promo code:', error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de la suppression",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">Codes Promo</h2>
-          <p className="text-muted-foreground">Gérer les codes de réduction</p>
-        </div>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          Nouveau code promo
-        </Button>
-      </div>
-
-      <div className="flex items-center gap-4">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Rechercher par nom ou code..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Button variant="outline" size="sm">
-          <Filter className="h-4 w-4 mr-2" />
-          Filtrer
-        </Button>
-      </div>
-
       <EnhancedTable
         title="Codes Promo"
         description="Gérer les codes de réduction"
@@ -167,8 +221,25 @@ export function PromoCodesManager() {
         columns={columns}
         loading={loading}
         onRefresh={fetchPromoCodes}
-        onAdd={() => console.log('Add promo code')}
+        onAdd={() => setFormOpen(true)}
+        onEdit={(code) => {
+          setEditingPromoCode(code);
+          setFormOpen(true);
+        }}
+        onDelete={handleDelete}
         addButtonText="Nouveau code promo"
+      />
+
+      <PromoCodeForm
+        open={formOpen}
+        onOpenChange={setFormOpen}
+        onSubmit={handleSubmit}
+        initialData={editingPromoCode ? {
+          ...editingPromoCode,
+          valid_from: new Date(editingPromoCode.valid_from),
+          valid_until: new Date(editingPromoCode.valid_until),
+          discount_type: editingPromoCode.discount_type as 'fixed' | 'percentage'
+        } : undefined}
       />
     </div>
   );
