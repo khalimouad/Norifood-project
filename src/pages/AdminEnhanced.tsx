@@ -4,6 +4,11 @@ import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { AdminSidebar } from '@/components/admin/enhanced/AdminSidebar';
 import { AdminDashboard } from '@/components/admin/enhanced/AdminDashboard';
 import { EnhancedProductsManager } from '@/components/admin/enhanced/EnhancedProductsManager';
+import { ProductForm } from '@/components/admin/enhanced/ProductForm';
+import { TagsManager } from '@/components/admin/enhanced/TagsManager';
+import { CategoriesManager } from '@/components/admin/enhanced/CategoriesManager';
+import { OrdersManager } from '@/components/admin/enhanced/OrdersManager';
+import { CustomersManager } from '@/components/admin/enhanced/CustomersManager';
 import { useLocation } from 'react-router-dom';
 
 function AdminBreadcrumb() {
@@ -84,11 +89,12 @@ export default function AdminEnhanced() {
               <Routes>
                 <Route path="/" element={<AdminDashboard />} />
                 <Route path="/products" element={<EnhancedProductsManager />} />
-                <Route path="/products/new" element={<div className="p-6"><h2 className="text-xl font-semibold">Nouveau produit</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
-                <Route path="/products/:id" element={<div className="p-6"><h2 className="text-xl font-semibold">Modifier le produit</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
-                <Route path="/categories" element={<div className="p-6"><h2 className="text-xl font-semibold">Catégories</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
-                <Route path="/orders" element={<div className="p-6"><h2 className="text-xl font-semibold">Commandes</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
-                <Route path="/customers" element={<div className="p-6"><h2 className="text-xl font-semibold">Clients</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/products/new" element={<ProductForm />} />
+                <Route path="/products/:id" element={<ProductForm />} />
+                <Route path="/categories" element={<CategoriesManager />} />
+                <Route path="/tags" element={<TagsManager />} />
+                <Route path="/orders" element={<OrdersManager />} />
+                <Route path="/customers" element={<CustomersManager />} />
                 <Route path="/payments" element={<div className="p-6"><h2 className="text-xl font-semibold">Paiements</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
                 <Route path="/promo-codes" element={<div className="p-6"><h2 className="text-xl font-semibold">Codes Promo</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
                 <Route path="/banners" element={<div className="p-6"><h2 className="text-xl font-semibold">Bannières</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />

@@ -32,6 +32,7 @@ const mainItems = [
   { title: "Dashboard", url: "/admin", icon: BarChart3 },
   { title: "Produits", url: "/admin/products", icon: Package },
   { title: "Catégories", url: "/admin/categories", icon: Tag },
+  { title: "Étiquettes", url: "/admin/tags", icon: Tag },
   { title: "Commandes", url: "/admin/orders", icon: ShoppingCart },
   { title: "Clients", url: "/admin/customers", icon: Users },
 ];
