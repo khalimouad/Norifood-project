@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
-import { AppSidebar } from '@/components/AppSidebar';
+import { MobileNavigation } from '@/components/MobileNavigation';
 import logo from '@/assets/logo.png';
 
 interface Product {
@@ -91,8 +91,8 @@ export const Header = () => {
                     <Menu className="h-5 w-5 text-gray-600" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="p-0 w-80">
-                  <AppSidebar />
+                <SheetContent side="left" className="w-80">
+                  <MobileNavigation onClose={() => setSidebarOpen(false)} />
                 </SheetContent>
               </Sheet>
               <Button variant="ghost" size="icon" className="relative" onClick={() => navigate('/cart')}>
