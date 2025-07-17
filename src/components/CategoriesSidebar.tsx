@@ -89,7 +89,7 @@ export const CategoriesSidebar = ({ open, onOpenChange }: CategoriesSidebarProps
           </p>
         </SheetHeader>
 
-        <div className="p-6 space-y-4">
+        <div className="p-6 space-y-4 overflow-y-auto max-h-[calc(100vh-200px)]">
           {loading ? (
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-ocean mx-auto"></div>
