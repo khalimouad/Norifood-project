@@ -132,6 +132,7 @@ export function EnhancedProductsManager() {
     {
       key: 'categories',
       label: 'Catégorie',
+      filterable: true,
       render: (value: any) => (
         <Badge variant="outline">
           {value?.name || 'Aucune'}
@@ -149,6 +150,13 @@ export function EnhancedProductsManager() {
     {
       key: 'unit_type',
       label: 'Unité',
+      filterable: true,
+      filterOptions: [
+        { value: 'kg', label: 'Kilogramme' },
+        { value: 'piece', label: 'Pièce' },
+        { value: 'liter', label: 'Litre' },
+        { value: 'gram', label: 'Gramme' },
+      ],
       render: (value: string) => (
         <Badge variant="outline">{value}</Badge>
       ),
@@ -173,6 +181,11 @@ export function EnhancedProductsManager() {
     {
       key: 'is_active',
       label: 'Statut',
+      filterable: true,
+      filterOptions: [
+        { value: 'true', label: 'Actif' },
+        { value: 'false', label: 'Inactif' },
+      ],
       render: (value: boolean) => (
         <StatusBadge status={value ? 'active' : 'inactive'} />
       ),
@@ -204,6 +217,7 @@ export function EnhancedProductsManager() {
       searchPlaceholder="Rechercher un produit..."
       addButtonText="Nouveau produit"
       emptyMessage="Aucun produit trouvé"
+      exportFileName="produits"
     />
   );
 }

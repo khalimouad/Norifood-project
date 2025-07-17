@@ -20,6 +20,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { 
   Search, 
   Filter, 
@@ -31,13 +38,23 @@ import {
   Edit,
   Trash2,
   RefreshCw,
+  X,
+  FileText,
+  FileSpreadsheet,
 } from 'lucide-react';
 
 interface Column {
   key: string;
   label: string;
   sortable?: boolean;
+  filterable?: boolean;
+  filterType?: 'select' | 'boolean';
+  filterOptions?: { value: string; label: string }[];
   render?: (value: any, row: any) => React.ReactNode;
+}
+
+interface FilterConfig {
+  [key: string]: any;
 }
 
 interface EnhancedTableProps {
@@ -54,6 +71,7 @@ interface EnhancedTableProps {
   searchPlaceholder?: string;
   addButtonText?: string;
   emptyMessage?: string;
+  exportFileName?: string;
 }
 
 export function EnhancedTable({
@@ -70,10 +88,13 @@ export function EnhancedTable({
   searchPlaceholder = "Rechercher...",
   addButtonText = "Ajouter",
   emptyMessage = "Aucune données disponible",
+  exportFileName = "export",
 }: EnhancedTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [filters, setFilters] = useState<FilterConfig>({});
+  const [showFilters, setShowFilters] = useState(false);
 
   const handleSort = (columnKey: string) => {
     if (sortColumn === columnKey) {
@@ -84,13 +105,84 @@ export function EnhancedTable({
     }
   };
 
+  const handleFilterChange = (columnKey: string, value: string) => {
+    setFilters(prev => ({
+      ...prev,
+      [columnKey]: value === 'all' ? undefined : value
+    }));
+  };
+
+  const clearFilters = () => {
+    setFilters({});
+  };
+
+  const exportToCsv = () => {
+    const csvData = sortedData.map(row => {
+      const csvRow: any = {};
+      columns.forEach(column => {
+        csvRow[column.label] = row[column.key];
+      });
+      return csvRow;
+    });
+
+    const csvContent = [
+      columns.map(col => col.label).join(','),
+      ...csvData.map(row => 
+        columns.map(col => {
+          const value = row[col.label];
+          return typeof value === 'string' ? `"${value}"` : value;
+        }).join(',')
+      )
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${exportFileName}.csv`;
+    link.click();
+  };
+
+  const exportToExcel = () => {
+    const excelData = sortedData.map(row => {
+      const excelRow: any = {};
+      columns.forEach(column => {
+        excelRow[column.label] = row[column.key];
+      });
+      return excelRow;
+    });
+
+    // Simple Excel export - in a real app, you'd use a library like xlsx
+    const csvContent = [
+      columns.map(col => col.label).join('\t'),
+      ...excelData.map(row => 
+        columns.map(col => row[col.label]).join('\t')
+      )
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'application/vnd.ms-excel' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${exportFileName}.xls`;
+    link.click();
+  };
+
   const filteredData = data.filter(row => {
+    // Search filter
     const searchValue = searchTerm.toLowerCase();
-    return columns.some(column => {
+    const matchesSearch = !searchTerm || columns.some(column => {
       const value = row[column.key];
       if (value === null || value === undefined) return false;
       return String(value).toLowerCase().includes(searchValue);
     });
+
+    // Column filters
+    const matchesFilters = Object.entries(filters).every(([columnKey, filterValue]) => {
+      if (!filterValue) return true;
+      const rowValue = row[columnKey];
+      return String(rowValue) === String(filterValue);
+    });
+
+    return matchesSearch && matchesFilters;
   });
 
   const sortedData = [...filteredData].sort((a, b) => {
@@ -105,6 +197,16 @@ export function EnhancedTable({
     const comparison = String(aValue).localeCompare(String(bValue));
     return sortDirection === 'asc' ? comparison : -comparison;
   });
+
+  const getFilterOptions = (columnKey: string) => {
+    const uniqueValues = [...new Set(data.map(row => row[columnKey]))];
+    return uniqueValues.map(value => ({
+      value: String(value),
+      label: String(value)
+    }));
+  };
+
+  const activeFiltersCount = Object.values(filters).filter(Boolean).length;
 
   return (
     <Card>
@@ -148,15 +250,89 @@ export function EnhancedTable({
               className="pl-9"
             />
           </div>
-          <Button variant="outline" size="sm">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => setShowFilters(!showFilters)}
+            className="relative"
+          >
             <Filter className="h-4 w-4 mr-2" />
             Filtrer
+            {activeFiltersCount > 0 && (
+              <Badge variant="secondary" className="ml-2 h-5 w-5 rounded-full p-0 text-xs">
+                {activeFiltersCount}
+              </Badge>
+            )}
           </Button>
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-2" />
-            Exporter
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm">
+                <Download className="h-4 w-4 mr-2" />
+                Exporter
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Format d'export</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={exportToCsv}>
+                <FileText className="mr-2 h-4 w-4" />
+                CSV
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={exportToExcel}>
+                <FileSpreadsheet className="mr-2 h-4 w-4" />
+                Excel
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
+
+        {/* Advanced Filters */}
+        {showFilters && (
+          <div className="mb-6 p-4 bg-muted/50 rounded-lg border">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-medium">Filtres avancés</h3>
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="sm" onClick={clearFilters}>
+                  <X className="h-3 w-3 mr-1" />
+                  Réinitialiser
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => setShowFilters(false)}>
+                  <X className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {columns.filter(col => col.filterable).map(column => (
+                <div key={column.key} className="space-y-2">
+                  <label className="text-sm font-medium">{column.label}</label>
+                  <Select
+                    value={filters[column.key] || 'all'}
+                    onValueChange={(value) => handleFilterChange(column.key, value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Tous</SelectItem>
+                      {column.filterOptions ? 
+                        column.filterOptions.map(option => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        )) :
+                        getFilterOptions(column.key).map(option => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))
+                      }
+                    </SelectContent>
+                  </Select>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <Separator className="mb-4" />
 
@@ -172,7 +348,7 @@ export function EnhancedTable({
           <div className="text-center py-12">
             <p className="text-muted-foreground text-lg mb-2">{emptyMessage}</p>
             <p className="text-sm text-muted-foreground">
-              {searchTerm ? 'Essayez de modifier votre recherche' : 'Commencez par ajouter des données'}
+              {searchTerm || activeFiltersCount > 0 ? 'Essayez de modifier votre recherche ou vos filtres' : 'Commencez par ajouter des données'}
             </p>
           </div>
         ) : (
@@ -259,6 +435,7 @@ export function EnhancedTable({
           <div className="mt-4 text-sm text-muted-foreground">
             {sortedData.length} résultat{sortedData.length > 1 ? 's' : ''}
             {searchTerm && ` pour "${searchTerm}"`}
+            {activeFiltersCount > 0 && ` avec ${activeFiltersCount} filtre${activeFiltersCount > 1 ? 's' : ''}`}
           </div>
         )}
       </CardContent>
