@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -8,95 +8,60 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Clock, Users, ChefHat, Search, Star, Filter } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import type { Tables } from '@/integrations/supabase/types';
 import salmonImage from '@/assets/salmon.jpg';
 import shrimpImage from '@/assets/shrimp.jpg';
 import wholeFishImage from '@/assets/whole-fish.jpg';
 
-interface Recipe {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  prepTime: number;
-  cookTime: number;
-  servings: number;
-  difficulty: 'Facile' | 'Moyen' | 'Difficile';
-  category: string;
-  rating: number;
-  featured: boolean;
-}
-
-const recipes: Recipe[] = [
-  {
-    id: '1',
-    title: 'Saumon Grillé aux Herbes',
-    description: 'Un délicieux saumon grillé avec un mélange d\'herbes fraîches et citron',
-    image: salmonImage,
-    prepTime: 15,
-    cookTime: 20,
-    servings: 4,
-    difficulty: 'Facile',
-    category: 'Poisson',
-    rating: 4.8,
-    featured: true
-  },
-  {
-    id: '2',
-    title: 'Crevettes à l\'Ail et Persil',
-    description: 'Crevettes sautées avec ail, persil et huile d\'olive',
-    image: shrimpImage,
-    prepTime: 10,
-    cookTime: 8,
-    servings: 2,
-    difficulty: 'Facile',
-    category: 'Fruits de mer',
-    rating: 4.6,
-    featured: true
-  },
-  {
-    id: '3',
-    title: 'Tajine de Poisson Marocain',
-    description: 'Poisson mijoté aux légumes et épices marocaines traditionnelles',
-    image: wholeFishImage,
-    prepTime: 20,
-    cookTime: 45,
-    servings: 6,
-    difficulty: 'Moyen',
-    category: 'Plat principal',
-    rating: 4.9,
-    featured: false
-  },
-  {
-    id: '4',
-    title: 'Bouillabaisse Traditionnelle',
-    description: 'La célèbre soupe de poisson provençale avec rouille',
-    image: wholeFishImage,
-    prepTime: 30,
-    cookTime: 60,
-    servings: 8,
-    difficulty: 'Difficile',
-    category: 'Soupe',
-    rating: 4.7,
-    featured: false
-  }
-];
+type Recipe = Tables<'recipes'> & {
+  featured_image?: string;
+};
 
 const categories = ['Tous', 'Poisson', 'Fruits de mer', 'Plat principal', 'Soupe', 'Entrée'];
 
 const Recipes = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Tous');
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
+
+  const fetchRecipes = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('recipes')
+        .select('*')
+        .eq('is_published', true)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching recipes:', error);
+        return;
+      }
+
+      setRecipes(data || []);
+    } catch (error) {
+      console.error('Error fetching recipes:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   const filteredRecipes = recipes.filter(recipe => {
     const matchesSearch = recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         recipe.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'Tous' || recipe.category === selectedCategory;
+                         (recipe.description && recipe.description.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesCategory = selectedCategory === 'Tous' || recipe.difficulty === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
-  const featuredRecipes = recipes.filter(recipe => recipe.featured);
+  const featuredRecipes = recipes.filter(recipe => recipe.featured_image);
 
-  const getDifficultyColor = (difficulty: string) => {
+  const getDifficultyColor = (difficulty: string | null) => {
     switch (difficulty) {
       case 'Facile': return 'bg-green-100 text-green-800';
       case 'Moyen': return 'bg-yellow-100 text-yellow-800';
@@ -104,6 +69,26 @@ const Recipes = () => {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main className="pb-20 md:pb-0">
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ocean mx-auto mb-4"></div>
+                <p className="text-gray-600">Chargement des recettes...</p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+        <BottomNavigation />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -161,7 +146,7 @@ const Recipes = () => {
                   <Card key={recipe.id} className="group hover:shadow-xl transition-all duration-300 overflow-hidden">
                     <div className="relative">
                       <img
-                        src={recipe.image}
+                        src={recipe.featured_image || salmonImage}
                         alt={recipe.title}
                         className="w-full h-48 md:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
                       />
@@ -170,7 +155,7 @@ const Recipes = () => {
                       </Badge>
                       <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
                         <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                        <span className="text-sm font-medium">{recipe.rating}</span>
+                        <span className="text-sm font-medium">4.8</span>
                       </div>
                     </div>
                     <CardContent className="p-4 md:p-6">
@@ -184,15 +169,15 @@ const Recipes = () => {
                         <div className="flex items-center gap-4">
                           <div className="flex items-center gap-1">
                             <Clock className="h-4 w-4" />
-                            <span>{recipe.prepTime + recipe.cookTime} min</span>
+                            <span>{(recipe.prep_time || 0) + (recipe.cook_time || 0)} min</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <Users className="h-4 w-4" />
-                            <span>{recipe.servings} pers.</span>
+                            <span>{recipe.servings || 2} pers.</span>
                           </div>
                         </div>
                         <Badge variant="outline" className={getDifficultyColor(recipe.difficulty)}>
-                          {recipe.difficulty}
+                          {recipe.difficulty || 'Facile'}
                         </Badge>
                       </div>
                       <Button className="w-full" size="sm">
@@ -215,18 +200,18 @@ const Recipes = () => {
                 <Card key={recipe.id} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
                   <div className="relative">
                     <img
-                      src={recipe.image}
+                      src={recipe.featured_image || salmonImage}
                       alt={recipe.title}
                       className="w-full h-40 md:h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    {recipe.featured && (
+                    {recipe.featured_image && (
                       <Badge className="absolute top-2 left-2 bg-coral text-white text-xs">
                         Vedette
                       </Badge>
                     )}
                     <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
                       <Star className="h-3 w-3 text-yellow-500 fill-current" />
-                      <span className="text-xs font-medium">{recipe.rating}</span>
+                      <span className="text-xs font-medium">4.8</span>
                     </div>
                   </div>
                   <CardContent className="p-3 md:p-4">
@@ -240,15 +225,15 @@ const Recipes = () => {
                       <div className="flex items-center gap-2">
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
-                          <span>{recipe.prepTime + recipe.cookTime}min</span>
+                          <span>{(recipe.prep_time || 0) + (recipe.cook_time || 0)}min</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Users className="h-3 w-3" />
-                          <span>{recipe.servings}</span>
+                          <span>{recipe.servings || 2}</span>
                         </div>
                       </div>
                       <Badge variant="outline" className={`text-xs ${getDifficultyColor(recipe.difficulty)}`}>
-                        {recipe.difficulty}
+                        {recipe.difficulty || 'Facile'}
                       </Badge>
                     </div>
                     <Button className="w-full" size="sm">
