@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Search, User, Menu, Bell, LogOut } from 'lucide-react';
+import { ShoppingCart, Search, User, Menu, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
+import { AppSidebar } from '@/components/AppSidebar';
 import logo from '@/assets/logo.png';
 
 interface Product {
@@ -23,6 +25,7 @@ interface Product {
 export const Header = () => {
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const { getTotalItems } = useCart();
   const { user, signOut } = useAuth();
@@ -82,10 +85,16 @@ export const Header = () => {
               <img src={logo} alt="Fresh N'Good" className="h-8 w-auto" />
             </Link>
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5 text-gray-600" />
-                <span className="absolute -top-1 -right-1 h-4 w-4 bg-coral rounded-full text-xs text-white flex items-center justify-center">2</span>
-              </Button>
+              <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <Menu className="h-5 w-5 text-gray-600" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="p-0 w-80">
+                  <AppSidebar />
+                </SheetContent>
+              </Sheet>
               <Button variant="ghost" size="icon" className="relative" onClick={() => navigate('/cart')}>
                 <ShoppingCart className="h-5 w-5 text-gray-600" />
                 {cartCount > 0 && (
