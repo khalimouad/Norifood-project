@@ -22,6 +22,7 @@ import Shipping from "./pages/Shipping";
 import Recipes from "./pages/Recipes";
 import Admin from "./pages/Admin";
 import NewAdmin from "./pages/NewAdmin";
+import AdminEnhanced from "./pages/AdminEnhanced";
 import AdminProductForm from "./pages/AdminProductForm";
 import { ProductEdit } from "./components/admin/new/ProductEdit";
 import { BannerEdit } from "./components/admin/new/BannerEdit";
@@ -61,6 +62,7 @@ const App = () => (
               <Route path="/shipping" element={<Shipping />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin-new/*" element={<NewAdmin />} />
+              <Route path="/admin-enhanced/*" element={<AdminEnhanced />} />
               <Route path="/admin-new/product/:id" element={<ProductEdit />} />
               <Route path="/admin-new/banner/:id" element={<BannerEdit />} />
               <Route path="/admin/product/new" element={<AdminProductForm />} />

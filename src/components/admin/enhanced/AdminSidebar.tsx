@@ -1,0 +1,139 @@
+import { useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar";
+import {
+  BarChart3,
+  Package,
+  Users,
+  ShoppingCart,
+  Tag,
+  CreditCard,
+  Percent,
+  Image,
+  ChefHat,
+  Settings,
+  TrendingUp,
+  DollarSign,
+  Clock,
+  AlertCircle,
+} from 'lucide-react';
+
+const mainItems = [
+  { title: "Dashboard", url: "/admin-enhanced", icon: BarChart3 },
+  { title: "Produits", url: "/admin-enhanced/products", icon: Package },
+  { title: "Catégories", url: "/admin-enhanced/categories", icon: Tag },
+  { title: "Commandes", url: "/admin-enhanced/orders", icon: ShoppingCart },
+  { title: "Clients", url: "/admin-enhanced/customers", icon: Users },
+];
+
+const managementItems = [
+  { title: "Paiements", url: "/admin-enhanced/payments", icon: CreditCard },
+  { title: "Codes Promo", url: "/admin-enhanced/promo-codes", icon: Percent },
+  { title: "Bannières", url: "/admin-enhanced/banners", icon: Image },
+  { title: "Recettes", url: "/admin-enhanced/recipes", icon: ChefHat },
+];
+
+const analyticsItems = [
+  { title: "Ventes", url: "/admin-enhanced/analytics/sales", icon: TrendingUp },
+  { title: "Revenus", url: "/admin-enhanced/analytics/revenue", icon: DollarSign },
+  { title: "Activité", url: "/admin-enhanced/analytics/activity", icon: Clock },
+];
+
+export function AdminSidebar() {
+  const { state } = useSidebar();
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const collapsed = state === 'collapsed';
+
+  const isActive = (path: string) => currentPath === path;
+  const isGroupActive = (items: typeof mainItems) => items.some((item) => isActive(item.url));
+  
+  const getNavClass = (path: string) => 
+    isActive(path) 
+      ? "bg-primary/10 text-primary font-medium border-r-2 border-primary" 
+      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground";
+
+  return (
+    <Sidebar className={collapsed ? "w-16" : "w-64"}>
+      <SidebarContent className="bg-card border-r">
+        <div className="p-4 border-b">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <BarChart3 className="h-5 w-5 text-primary-foreground" />
+            </div>
+            {!collapsed && (
+              <div>
+                <h2 className="font-semibold text-sm">Admin Panel</h2>
+                <p className="text-xs text-muted-foreground">Gestion complète</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Principal</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {mainItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink to={item.url} className={getNavClass(item.url)}>
+                      <item.icon className="h-4 w-4" />
+                      {!collapsed && <span>{item.title}</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Gestion</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {managementItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink to={item.url} className={getNavClass(item.url)}>
+                      <item.icon className="h-4 w-4" />
+                      {!collapsed && <span>{item.title}</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Analytics</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {analyticsItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink to={item.url} className={getNavClass(item.url)}>
+                      <item.icon className="h-4 w-4" />
+                      {!collapsed && <span>{item.title}</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  );
+}
