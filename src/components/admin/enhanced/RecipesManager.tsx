@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { EnhancedTable } from './EnhancedTable';
-import { Button } from '@/components/ui/button';
-import { Plus, Search, Filter, Edit, Trash2, Eye } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 
@@ -25,7 +22,6 @@ interface Recipe {
 export function RecipesManager() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -69,7 +65,7 @@ export function RecipesManager() {
     {
       key: 'image',
       label: 'Image',
-      render: (recipe: Recipe) => (
+      render: (value: any, recipe: Recipe) => (
         recipe.featured_image ? (
           <img 
             src={recipe.featured_image} 
@@ -86,7 +82,7 @@ export function RecipesManager() {
     {
       key: 'title',
       label: 'Titre',
-      render: (recipe: Recipe) => (
+      render: (value: any, recipe: Recipe) => (
         <div>
           <div className="font-medium">{recipe.title}</div>
           {recipe.description && (
@@ -100,7 +96,7 @@ export function RecipesManager() {
     {
       key: 'timing',
       label: 'Temps',
-      render: (recipe: Recipe) => (
+      render: (value: any, recipe: Recipe) => (
         <div className="text-sm">
           <div>Préparation: {recipe.prep_time}min</div>
           <div>Cuisson: {recipe.cook_time}min</div>
@@ -110,84 +106,38 @@ export function RecipesManager() {
     {
       key: 'servings',
       label: 'Portions',
-      render: (recipe: Recipe) => (
+      render: (value: any, recipe: Recipe) => (
         <Badge variant="outline">{recipe.servings} pers.</Badge>
       )
     },
     {
       key: 'difficulty',
       label: 'Difficulté',
-      render: (recipe: Recipe) => getDifficultyBadge(recipe.difficulty)
+      render: (value: any, recipe: Recipe) => getDifficultyBadge(recipe.difficulty)
     },
     {
       key: 'status',
       label: 'Statut',
-      render: (recipe: Recipe) => (
+      render: (value: any, recipe: Recipe) => (
         <Badge variant={recipe.is_published ? "default" : "secondary"}>
           {recipe.is_published ? 'Publié' : 'Brouillon'}
         </Badge>
       )
-    },
-    {
-      key: 'actions',
-      label: 'Actions',
-      render: (recipe: Recipe) => (
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm">
-            <Eye className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="sm">
-            <Edit className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="sm">
-            <Trash2 className="h-4 w-4" />
-          </Button>
-        </div>
-      )
     }
   ];
 
-  const filteredRecipes = recipes.filter(recipe =>
-    recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    recipe.description?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">Recettes</h2>
-          <p className="text-muted-foreground">Gérer les recettes culinaires</p>
-        </div>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          Nouvelle recette
-        </Button>
-      </div>
-
-      <div className="flex items-center gap-4">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Rechercher par titre..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Button variant="outline" size="sm">
-          <Filter className="h-4 w-4 mr-2" />
-          Filtrer
-        </Button>
-      </div>
-
       <EnhancedTable
         title="Recettes"
         description="Gérer les recettes culinaires"
-        data={filteredRecipes}
+        data={recipes}
         columns={columns}
         loading={loading}
         onRefresh={fetchRecipes}
+        onAdd={() => console.log('Add recipe')}
+        addButtonText="Nouvelle recette"
+        searchPlaceholder="Rechercher par titre..."
       />
     </div>
   );

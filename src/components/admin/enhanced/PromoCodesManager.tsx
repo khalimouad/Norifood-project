@@ -81,7 +81,7 @@ export function PromoCodesManager() {
     {
       key: 'name',
       label: 'Nom',
-      render: (promoCode: PromoCode) => (
+      render: (value: any, promoCode: PromoCode) => (
         <div>
           <div className="font-medium">{promoCode.name}</div>
           <div className="text-sm text-muted-foreground font-mono">{promoCode.code}</div>
@@ -91,7 +91,7 @@ export function PromoCodesManager() {
     {
       key: 'discount',
       label: 'Remise',
-      render: (promoCode: PromoCode) => (
+      render: (value: any, promoCode: PromoCode) => (
         <span className="font-medium">
           {promoCode.discount_type === 'percentage' ? `${promoCode.discount_value}%` : `${promoCode.discount_value} MAD`}
         </span>
@@ -100,7 +100,7 @@ export function PromoCodesManager() {
     {
       key: 'usage',
       label: 'Utilisation',
-      render: (promoCode: PromoCode) => (
+      render: (value: any, promoCode: PromoCode) => (
         <div className="text-sm">
           <div>{promoCode.used_count} utilisé(s)</div>
           {promoCode.usage_limit && (
@@ -112,7 +112,7 @@ export function PromoCodesManager() {
     {
       key: 'validity',
       label: 'Validité',
-      render: (promoCode: PromoCode) => (
+      render: (value: any, promoCode: PromoCode) => (
         <div className="text-sm">
           <div>Du {new Date(promoCode.valid_from).toLocaleDateString('fr-FR')}</div>
           <div>Au {new Date(promoCode.valid_until).toLocaleDateString('fr-FR')}</div>
@@ -122,21 +122,7 @@ export function PromoCodesManager() {
     {
       key: 'status',
       label: 'Statut',
-      render: (promoCode: PromoCode) => getStatusBadge(promoCode)
-    },
-    {
-      key: 'actions',
-      label: 'Actions',
-      render: (promoCode: PromoCode) => (
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm">
-            <Edit className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="sm">
-            <Trash2 className="h-4 w-4" />
-          </Button>
-        </div>
-      )
+      render: (value: any, promoCode: PromoCode) => getStatusBadge(promoCode)
     }
   ];
 
@@ -181,6 +167,8 @@ export function PromoCodesManager() {
         columns={columns}
         loading={loading}
         onRefresh={fetchPromoCodes}
+        onAdd={() => console.log('Add promo code')}
+        addButtonText="Nouveau code promo"
       />
     </div>
   );

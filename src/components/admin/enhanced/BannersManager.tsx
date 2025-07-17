@@ -79,7 +79,7 @@ export function BannersManager() {
     {
       key: 'image',
       label: 'Aperçu',
-      render: (banner: Banner) => (
+      render: (value: any, banner: Banner) => (
         <img 
           src={banner.image_url} 
           alt={banner.title}
@@ -90,7 +90,7 @@ export function BannersManager() {
     {
       key: 'title',
       label: 'Titre',
-      render: (banner: Banner) => (
+      render: (value: any, banner: Banner) => (
         <div>
           <div className="font-medium">{banner.title}</div>
           {banner.subtitle && (
@@ -102,14 +102,14 @@ export function BannersManager() {
     {
       key: 'position',
       label: 'Position',
-      render: (banner: Banner) => (
+      render: (value: any, banner: Banner) => (
         <Badge variant="outline">{banner.position}</Badge>
       )
     },
     {
       key: 'visibility',
       label: 'Visibilité',
-      render: (banner: Banner) => (
+      render: (value: any, banner: Banner) => (
         <div className="flex gap-1">
           {banner.show_on_desktop && <Badge variant="outline" className="text-xs">Desktop</Badge>}
           {banner.show_on_mobile && <Badge variant="outline" className="text-xs">Mobile</Badge>}
@@ -119,7 +119,7 @@ export function BannersManager() {
     {
       key: 'dates',
       label: 'Période',
-      render: (banner: Banner) => (
+      render: (value: any, banner: Banner) => (
         <div className="text-sm">
           <div>Du {new Date(banner.start_date).toLocaleDateString('fr-FR')}</div>
           <div>Au {new Date(banner.end_date).toLocaleDateString('fr-FR')}</div>
@@ -129,24 +129,7 @@ export function BannersManager() {
     {
       key: 'status',
       label: 'Statut',
-      render: (banner: Banner) => getStatusBadge(banner)
-    },
-    {
-      key: 'actions',
-      label: 'Actions',
-      render: (banner: Banner) => (
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm">
-            <Eye className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="sm">
-            <Edit className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="sm">
-            <Trash2 className="h-4 w-4" />
-          </Button>
-        </div>
-      )
+      render: (value: any, banner: Banner) => getStatusBadge(banner)
     }
   ];
 
@@ -191,6 +174,8 @@ export function BannersManager() {
         columns={columns}
         loading={loading}
         onRefresh={fetchBanners}
+        onAdd={() => console.log('Add banner')}
+        addButtonText="Nouvelle bannière"
       />
     </div>
   );
