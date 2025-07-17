@@ -144,7 +144,7 @@ export function EnhancedProductsManager() {
       label: 'Prix',
       sortable: true,
       render: (value: number) => (
-        <span className="font-medium">{value.toFixed(2)}€</span>
+        <span className="font-medium">{value.toFixed(2)} MAD</span>
       ),
     },
     {
