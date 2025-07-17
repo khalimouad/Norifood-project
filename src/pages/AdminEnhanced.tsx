@@ -4,15 +4,6 @@ import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { AdminSidebar } from '@/components/admin/enhanced/AdminSidebar';
 import { AdminDashboard } from '@/components/admin/enhanced/AdminDashboard';
 import { EnhancedProductsManager } from '@/components/admin/enhanced/EnhancedProductsManager';
-import { CategoriesManager } from '@/components/admin/new/CategoriesManager';
-import { OrdersManager } from '@/components/admin/new/OrdersManager';
-import { CustomersManager } from '@/components/admin/new/CustomersManager';
-import { PaymentsManager } from '@/components/admin/new/PaymentsManager';
-import { PromoCodesManager } from '@/components/admin/new/PromoCodesManager';
-import { BannersManager } from '@/components/admin/new/BannersManager';
-import { RecipesManager } from '@/components/admin/new/RecipesManager';
-import { ProductEdit } from '@/components/admin/new/ProductEdit';
-import { BannerEdit } from '@/components/admin/new/BannerEdit';
 import { useLocation } from 'react-router-dom';
 
 function AdminBreadcrumb() {
@@ -93,20 +84,20 @@ export default function AdminEnhanced() {
               <Routes>
                 <Route path="/" element={<AdminDashboard />} />
                 <Route path="/products" element={<EnhancedProductsManager />} />
-                <Route path="/products/new" element={<ProductEdit />} />
-                <Route path="/products/:id" element={<ProductEdit />} />
-                <Route path="/categories" element={<CategoriesManager />} />
-                <Route path="/orders" element={<OrdersManager />} />
-                <Route path="/customers" element={<CustomersManager />} />
-                <Route path="/payments" element={<PaymentsManager />} />
-                <Route path="/promo-codes" element={<PromoCodesManager />} />
-                <Route path="/banners" element={<BannersManager />} />
-                <Route path="/banners/new" element={<BannerEdit />} />
-                <Route path="/banners/:id" element={<BannerEdit />} />
-                <Route path="/recipes" element={<RecipesManager />} />
-                <Route path="/analytics/sales" element={<div>Sales Analytics</div>} />
-                <Route path="/analytics/revenue" element={<div>Revenue Analytics</div>} />
-                <Route path="/analytics/activity" element={<div>Activity Analytics</div>} />
+                <Route path="/products/new" element={<div className="p-6"><h2 className="text-xl font-semibold">Nouveau produit</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/products/:id" element={<div className="p-6"><h2 className="text-xl font-semibold">Modifier le produit</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/categories" element={<div className="p-6"><h2 className="text-xl font-semibold">Catégories</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/orders" element={<div className="p-6"><h2 className="text-xl font-semibold">Commandes</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/customers" element={<div className="p-6"><h2 className="text-xl font-semibold">Clients</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/payments" element={<div className="p-6"><h2 className="text-xl font-semibold">Paiements</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/promo-codes" element={<div className="p-6"><h2 className="text-xl font-semibold">Codes Promo</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/banners" element={<div className="p-6"><h2 className="text-xl font-semibold">Bannières</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/banners/new" element={<div className="p-6"><h2 className="text-xl font-semibold">Nouvelle bannière</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/banners/:id" element={<div className="p-6"><h2 className="text-xl font-semibold">Modifier la bannière</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/recipes" element={<div className="p-6"><h2 className="text-xl font-semibold">Recettes</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/analytics/sales" element={<div className="p-6"><h2 className="text-xl font-semibold">Ventes Analytics</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/analytics/revenue" element={<div className="p-6"><h2 className="text-xl font-semibold">Revenus Analytics</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
+                <Route path="/analytics/activity" element={<div className="p-6"><h2 className="text-xl font-semibold">Activité Analytics</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
                 <Route path="*" element={<Navigate to="/admin" replace />} />
               </Routes>
             </div>

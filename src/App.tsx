@@ -21,11 +21,8 @@ import Terms from "./pages/Terms";
 import Shipping from "./pages/Shipping";
 import Recipes from "./pages/Recipes";
 import Admin from "./pages/Admin";
-import NewAdmin from "./pages/NewAdmin";
 import AdminEnhanced from "./pages/AdminEnhanced";
 import AdminProductForm from "./pages/AdminProductForm";
-import { ProductEdit } from "./components/admin/new/ProductEdit";
-import { BannerEdit } from "./components/admin/new/BannerEdit";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import { CartProvider } from "./hooks/useCart";
@@ -61,10 +58,7 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="/shipping" element={<Shipping />} />
               <Route path="/admin/*" element={<AdminEnhanced />} />
-              <Route path="/admin-new/*" element={<NewAdmin />} />
               <Route path="/admin-old/*" element={<Admin />} />
-              <Route path="/admin-new/product/:id" element={<ProductEdit />} />
-              <Route path="/admin-new/banner/:id" element={<BannerEdit />} />
               <Route path="/admin/product/new" element={<AdminProductForm />} />
               <Route path="/admin/product/:id" element={<AdminProductForm />} />
               <Route path="/payment-success" element={<PaymentSuccess />} />
