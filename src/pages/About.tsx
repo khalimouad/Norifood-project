@@ -178,36 +178,38 @@ const About = () => {
           </div>
         </div>
 
-        {/* Team Section */}
-        <div className="py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-              Notre Équipe
-            </h2>
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {team.map((member, index) => (
-                <Card key={index} className="text-center border-0 shadow-sm hover:shadow-md transition-shadow">
-                  <CardContent className="p-6">
-                    <img 
-                      src={member.image} 
-                      alt={member.name}
-                      className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-                    />
-                    <h3 className="text-xl font-semibold mb-2 text-gray-900">
-                      {member.name}
-                    </h3>
-                    <p className="text-ocean font-medium mb-2">
-                      {member.role}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      {member.experience}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+        {/* Team Section - Hidden */}
+        {false && (
+          <div className="py-16">
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+                Notre Équipe
+              </h2>
+              <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                {team.map((member, index) => (
+                  <Card key={index} className="text-center border-0 shadow-sm hover:shadow-md transition-shadow">
+                    <CardContent className="p-6">
+                      <img 
+                        src={member.image} 
+                        alt={member.name}
+                        className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                      />
+                      <h3 className="text-xl font-semibold mb-2 text-gray-900">
+                        {member.name}
+                      </h3>
+                      <p className="text-ocean font-medium mb-2">
+                        {member.role}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {member.experience}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Contact CTA */}
         <div className="py-16 bg-gradient-to-r from-ocean to-ocean-light text-white">
