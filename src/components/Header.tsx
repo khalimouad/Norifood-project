@@ -10,6 +10,7 @@ import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { MobileNavigation } from '@/components/MobileNavigation';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 import logo from '@/assets/logo.png';
 
 interface Product {
@@ -103,12 +104,15 @@ export const Header = () => {
               <img src={logo} alt="Fresh N'Good" className="h-8 w-auto" />
             </Link>
             
-            <Button variant="ghost" size="icon" className="relative" onClick={() => handleNavigate('/cart')}>
-              <ShoppingCart className="h-5 w-5 text-gray-600" />
-              {cartCount > 0 && (
-                <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-ocean text-white flex items-center justify-center text-xs font-medium">{cartCount}</div>
-              )}
-            </Button>
+            <div className="flex items-center gap-1">
+              <ThemeToggle variant="icon" className="text-gray-600 hover:text-ocean" />
+              <Button variant="ghost" size="icon" className="relative" onClick={() => handleNavigate('/cart')}>
+                <ShoppingCart className="h-5 w-5 text-gray-600" />
+                {cartCount > 0 && (
+                  <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-ocean text-white flex items-center justify-center text-xs font-medium">{cartCount}</div>
+                )}
+              </Button>
+            </div>
           </div>
           <Button 
             variant="outline" 
@@ -147,6 +151,7 @@ export const Header = () => {
                 </Button>
               </div>
               <div className="flex items-center space-x-4">
+                <ThemeToggle variant="icon" className="text-gray-600 hover:text-ocean" />
                 {user ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>

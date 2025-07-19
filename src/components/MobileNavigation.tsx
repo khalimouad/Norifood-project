@@ -1,5 +1,6 @@
 import { Home, Package, Info, MessageCircle } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const menuItems = [
   { title: 'Accueil', url: '/', icon: Home },
@@ -21,12 +22,15 @@ export function MobileNavigation({ onClose }: MobileNavigationProps) {
           <NavLink
             key={item.title}
             to={item.url}
-            onClick={onClose}
+            onClick={() => {
+              window.scrollTo(0, 0);
+              onClose();
+            }}
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                 isActive
                   ? 'bg-ocean/10 text-ocean font-medium'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800'
               }`
             }
           >
@@ -35,6 +39,13 @@ export function MobileNavigation({ onClose }: MobileNavigationProps) {
           </NavLink>
         ))}
       </nav>
+      
+      <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Thème</span>
+          <ThemeToggle variant="outline" showLabel={false} className="border-gray-200 dark:border-gray-700" />
+        </div>
+      </div>
     </div>
   );
 }

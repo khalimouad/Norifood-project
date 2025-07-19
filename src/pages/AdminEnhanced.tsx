@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useAdminAuth } from '@/hooks/useAdminAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { AdminSidebar } from '@/components/admin/enhanced/AdminSidebar';
 import { AdminDashboard } from '@/components/admin/enhanced/AdminDashboard';
 import { EnhancedProductsManager } from '@/components/admin/enhanced/EnhancedProductsManager';
@@ -17,6 +18,9 @@ import { SalesAnalytics } from '@/components/admin/enhanced/SalesAnalytics';
 import { RevenueAnalytics } from '@/components/admin/enhanced/RevenueAnalytics';
 import { ActivityAnalytics } from '@/components/admin/enhanced/ActivityAnalytics';
 import { useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { LogOut, ExternalLink } from 'lucide-react';
 
 function AdminBreadcrumb() {
   const location = useLocation();
@@ -55,6 +59,7 @@ function AdminBreadcrumb() {
 
 export default function AdminEnhanced() {
   const { isAdmin, loading } = useAdminAuth();
+  const { signOut } = useAuth();
 
   if (loading) {
     return (
@@ -84,9 +89,25 @@ export default function AdminEnhanced() {
               <AdminBreadcrumb />
             </div>
             <div className="flex items-center gap-2">
-              <div className="text-sm text-muted-foreground">
-                Connecté en tant qu'administrateur
-              </div>
+              <ThemeToggle variant="icon" />
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => window.open('/', '_blank')}
+                className="hidden md:flex items-center gap-2"
+              >
+                <ExternalLink className="h-4 w-4" />
+                Voir le site
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={signOut}
+                className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+              >
+                <LogOut className="h-4 w-4" />
+                <span className="hidden md:inline">Déconnexion</span>
+              </Button>
             </div>
           </header>
 
