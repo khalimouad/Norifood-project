@@ -78,7 +78,7 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
         
         <div className="p-2 md:p-4 space-y-1.5 md:space-y-3">
           <Link to={`/product/${id}`}>
-            <h3 className="font-semibold text-gray-900 text-sm md:text-base line-clamp-2 hover:text-ocean transition-colors leading-tight">
+            <h3 className="font-semibold text-foreground text-sm md:text-base line-clamp-2 hover:text-primary transition-colors leading-tight">
               {name}
             </h3>
           </Link>
@@ -86,27 +86,27 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1 md:gap-2">
               {discount && (
-                <span className="text-xs text-gray-400 line-through">
+                <span className="text-xs text-muted-foreground line-through">
                   {price.toFixed(2)} DH
                 </span>
               )}
-              <span className="text-base md:text-lg font-bold text-ocean">
+              <span className="text-base md:text-lg font-bold text-primary">
                 {discountedPrice.toFixed(2)} DH
               </span>
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-muted-foreground">
                 / {unitType}
               </span>
             </div>
           </div>
           
           <div className="flex items-center gap-1.5 md:gap-2 pt-1">
-            <div className="flex items-center bg-gray-50 rounded-lg p-0.5 min-w-[85px] md:min-w-[100px]">
+            <div className="flex items-center bg-muted rounded-lg p-0.5 min-w-[85px] md:min-w-[100px]">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => updateQuantity(quantity - 1)}
                 disabled={quantity <= 1 || !inStock}
-                className="h-7 w-7 p-0 rounded-md text-xs hover:bg-white"
+                className="h-7 w-7 p-0 rounded-md text-xs hover:bg-background"
               >
                 <Minus className="h-3 w-3" />
               </Button>
@@ -118,7 +118,7 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
                 size="sm"
                 onClick={() => updateQuantity(quantity + 1)}
                 disabled={!inStock}
-                className="h-7 w-7 p-0 rounded-md text-xs hover:bg-white"
+                className="h-7 w-7 p-0 rounded-md text-xs hover:bg-background"
               >
                 <Plus className="h-3 w-3" />
               </Button>
