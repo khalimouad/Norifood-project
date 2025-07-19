@@ -78,41 +78,41 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 222 25% 8%;
+    --foreground: 210 20% 92%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 222 20% 10%;
+    --card-foreground: 210 20% 92%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 222 20% 10%;
+    --popover-foreground: 210 20% 92%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 235 85% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 222 15% 15%;
+    --secondary-foreground: 210 20% 85%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 222 15% 12%;
+    --muted-foreground: 215 15% 70%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 235 70% 55%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 222 15% 18%;
+    --input: 222 15% 18%;
+    --ring: 235 85% 60%;
 
     /* Dark mode ocean theme colors */
-    --ocean-blue: 235 100% 65%;
-    --ocean-light: 235 100% 75%;
-    --seafoam: 180 100% 60%;
-    --coral: 15 100% 70%;
-    --wave: 235 30% 25%;
-    --deep-blue: 235 100% 45%;
+    --ocean-blue: 235 85% 60%;
+    --ocean-light: 235 70% 70%;
+    --seafoam: 180 85% 55%;
+    --coral: 15 85% 65%;
+    --wave: 222 15% 20%;
+    --deep-blue: 235 90% 50%;
     
     /* Dark mode gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));
@@ -120,9 +120,9 @@ All colors MUST be HSL.
     --gradient-wave: linear-gradient(180deg, hsl(var(--wave)), hsl(var(--background)));
     
     /* Dark mode shadows */
-    --shadow-ocean: 0 4px 20px -2px hsl(var(--ocean-blue) / 0.25);
-    --shadow-float: 0 8px 25px -5px hsl(var(--ocean-blue) / 0.3);
-    --shadow-deep: 0 12px 35px -10px hsl(var(--deep-blue) / 0.4);
+    --shadow-ocean: 0 4px 20px -2px hsl(var(--ocean-blue) / 0.3);
+    --shadow-float: 0 8px 25px -5px hsl(var(--ocean-blue) / 0.4);
+    --shadow-deep: 0 12px 35px -10px hsl(var(--deep-blue) / 0.5);
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
