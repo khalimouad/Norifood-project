@@ -38,18 +38,20 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
-    /* Classical blue theme colors */
+    /* Ocean theme colors */
     --ocean-blue: 235 100% 49%;
     --ocean-light: 235 100% 65%;
     --seafoam: 180 100% 50%;
     --coral: 15 100% 65%;
     --wave: 235 30% 85%;
     --deep-blue: 235 100% 35%;
+    --footer-dark: 235 100% 25%;
     
     /* Gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));
     --gradient-seafoam: linear-gradient(135deg, hsl(var(--seafoam)), hsl(var(--ocean-light)));
     --gradient-wave: linear-gradient(180deg, hsl(var(--wave)), hsl(var(--background)));
+    --gradient-footer: linear-gradient(135deg, hsl(var(--footer-dark)), hsl(var(--deep-blue)));
     
     /* Shadows */
     --shadow-ocean: 0 4px 20px -2px hsl(var(--ocean-blue) / 0.15);
@@ -113,11 +115,13 @@ All colors MUST be HSL.
     --coral: 15 80% 68%;
     --wave: 220 12% 22%;
     --deep-blue: 235 80% 55%;
+    --footer-dark: 220 30% 8%;
     
     /* Dark mode gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));
     --gradient-seafoam: linear-gradient(135deg, hsl(var(--seafoam)), hsl(var(--ocean-light)));
     --gradient-wave: linear-gradient(180deg, hsl(var(--wave)), hsl(var(--background)));
+    --gradient-footer: linear-gradient(135deg, hsl(var(--footer-dark)), hsl(var(--deep-blue)));
     
     /* Dark mode shadows */
     --shadow-ocean: 0 4px 20px -2px hsl(var(--ocean-blue) / 0.35);

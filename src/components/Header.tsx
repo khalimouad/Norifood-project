@@ -85,14 +85,14 @@ export const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100">
+      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-border">
         {/* Mobile Header */}
         <div className="block md:hidden px-4 py-3">
           <div className="flex items-center justify-between mb-3">
             <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
-                  <Menu className="h-5 w-5 text-gray-600" />
+                  <Menu className="h-5 w-5 text-foreground" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-80">
@@ -105,21 +105,21 @@ export const Header = () => {
             </Link>
             
             <div className="flex items-center gap-1">
-              <ThemeToggle variant="icon" className="text-gray-600 hover:text-ocean" />
+              <ThemeToggle variant="icon" className="text-muted-foreground hover:text-primary" />
               <Button variant="ghost" size="icon" className="relative" onClick={() => handleNavigate('/cart')}>
-                <ShoppingCart className="h-5 w-5 text-gray-600" />
+                <ShoppingCart className="h-5 w-5 text-foreground" />
                 {cartCount > 0 && (
-                  <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-ocean text-white flex items-center justify-center text-xs font-medium">{cartCount}</div>
+                  <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-medium">{cartCount}</div>
                 )}
               </Button>
             </div>
           </div>
           <Button 
             variant="outline" 
-            className="w-full justify-start text-left font-normal bg-gray-50 border-0"
+            className="w-full justify-start text-left font-normal bg-muted border-0"
             onClick={() => setSearchOpen(true)}
           >
-            <Search className="mr-2 h-4 w-4 text-gray-400" />
+            <Search className="mr-2 h-4 w-4 text-muted-foreground" />
             Rechercher des produits...
           </Button>
         </div>
@@ -132,18 +132,18 @@ export const Header = () => {
                 <img src={logo} alt="Fresh N'Good" className="h-10 w-auto" />
               </Link>
               <nav className="hidden lg:flex items-center space-x-8">
-                <Link to="/" className="text-gray-700 hover:text-ocean transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Accueil</Link>
-                <Link to="/products" className="text-gray-700 hover:text-ocean transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Produits</Link>
-                <Link to="/about" className="text-gray-700 hover:text-ocean transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>À Propos</Link>
-                <Link to="/contact" className="text-gray-700 hover:text-ocean transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Contact</Link>
+                <Link to="/" className="text-foreground hover:text-primary transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Accueil</Link>
+                <Link to="/products" className="text-foreground hover:text-primary transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Produits</Link>
+                <Link to="/about" className="text-foreground hover:text-primary transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>À Propos</Link>
+                <Link to="/contact" className="text-foreground hover:text-primary transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Contact</Link>
               </nav>
               <div className="flex-1 max-w-md mx-8">
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start text-left font-normal bg-gray-50 border-0"
+                  className="w-full justify-start text-left font-normal bg-muted border-0"
                   onClick={() => setSearchOpen(true)}
                 >
-                  <Search className="mr-2 h-4 w-4 text-gray-400" />
+                  <Search className="mr-2 h-4 w-4 text-muted-foreground" />
                   Rechercher des produits...
                   <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                     <span className="text-xs">⌘</span>K
@@ -151,11 +151,11 @@ export const Header = () => {
                 </Button>
               </div>
               <div className="flex items-center space-x-4">
-                <ThemeToggle variant="icon" className="text-gray-600 hover:text-ocean" />
+                <ThemeToggle variant="icon" className="text-muted-foreground hover:text-primary" />
                 {user ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="text-gray-600 hover:text-ocean">
+                      <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary">
                         <User className="h-5 w-5" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -175,15 +175,15 @@ export const Header = () => {
                     variant="ghost" 
                     size="icon" 
                     onClick={() => handleNavigate('/auth')}
-                    className="text-gray-600 hover:text-ocean"
+                    className="text-muted-foreground hover:text-primary"
                   >
                     <User className="h-5 w-5" />
                   </Button>
                 )}
-                <Button variant="ghost" size="icon" className="relative text-gray-600 hover:text-ocean" onClick={() => handleNavigate('/cart')}>
+                <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-primary" onClick={() => handleNavigate('/cart')}>
                   <ShoppingCart className="h-5 w-5" />
                   {cartCount > 0 && (
-                    <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-ocean text-white flex items-center justify-center text-xs font-medium">{cartCount}</div>
+                    <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-medium">{cartCount}</div>
                   )}
                 </Button>
               </div>
@@ -213,7 +213,7 @@ export const Header = () => {
                 onSelect={() => handleProductSelect(product)}
                 className="flex items-center gap-3 p-3"
               >
-                <div className="w-12 h-12 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
+                <div className="w-12 h-12 bg-muted rounded-lg flex-shrink-0 overflow-hidden">
                   {product.image_url ? (
                     <img 
                       src={product.image_url} 
@@ -222,13 +222,13 @@ export const Header = () => {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <Search className="h-5 w-5 text-gray-400" />
+                      <Search className="h-5 w-5 text-muted-foreground" />
                     </div>
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-900 truncate">{product.name}</p>
-                  <p className="text-sm text-gray-500">{product.base_price} MAD/{product.unit_type}</p>
+                  <p className="font-medium text-foreground truncate">{product.name}</p>
+                  <p className="text-sm text-muted-foreground">{product.base_price} MAD/{product.unit_type}</p>
                 </div>
               </CommandItem>
             ))}

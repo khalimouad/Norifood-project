@@ -22,7 +22,7 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-gradient-to-t from-ocean to-ocean/90 text-white">
+    <footer className="bg-gradient-to-b from-footer-dark to-deep-blue text-white">
       {/* Features Section */}
       <div className="border-b border-white/10">
         <div className="container mx-auto px-4 py-6 md:py-8">
