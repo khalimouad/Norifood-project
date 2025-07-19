@@ -64,15 +64,22 @@ export const Header = () => {
   }, []);
 
   const handleProductSelect = (product: Product) => {
+    window.scrollTo(0, 0);
     navigate(`/product/${product.id}`);
     setSearchOpen(false);
   };
 
   const handleSearchSubmit = (searchTerm: string) => {
     if (searchTerm.trim()) {
+      window.scrollTo(0, 0);
       navigate(`/products?search=${encodeURIComponent(searchTerm.trim())}`);
       setSearchOpen(false);
     }
+  };
+
+  const handleNavigate = (path: string) => {
+    window.scrollTo(0, 0);
+    navigate(path);
   };
 
   return (
@@ -92,11 +99,11 @@ export const Header = () => {
               </SheetContent>
             </Sheet>
             
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2" onClick={() => window.scrollTo(0, 0)}>
               <img src={logo} alt="Fresh N'Good" className="h-8 w-auto" />
             </Link>
             
-            <Button variant="ghost" size="icon" className="relative" onClick={() => navigate('/cart')}>
+            <Button variant="ghost" size="icon" className="relative" onClick={() => handleNavigate('/cart')}>
               <ShoppingCart className="h-5 w-5 text-gray-600" />
               {cartCount > 0 && (
                 <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-ocean text-white flex items-center justify-center text-xs font-medium">{cartCount}</div>
@@ -117,14 +124,14 @@ export const Header = () => {
         <div className="hidden md:block">
           <div className="container mx-auto px-8 py-4">
             <div className="flex items-center justify-between">
-              <Link to="/" className="flex items-center space-x-3">
+              <Link to="/" className="flex items-center space-x-3" onClick={() => window.scrollTo(0, 0)}>
                 <img src={logo} alt="Fresh N'Good" className="h-10 w-auto" />
               </Link>
               <nav className="hidden lg:flex items-center space-x-8">
-                <Link to="/" className="text-gray-700 hover:text-ocean transition-colors font-medium">Accueil</Link>
-                <Link to="/products" className="text-gray-700 hover:text-ocean transition-colors font-medium">Produits</Link>
-                <Link to="/about" className="text-gray-700 hover:text-ocean transition-colors font-medium">À Propos</Link>
-                <Link to="/contact" className="text-gray-700 hover:text-ocean transition-colors font-medium">Contact</Link>
+                <Link to="/" className="text-gray-700 hover:text-ocean transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Accueil</Link>
+                <Link to="/products" className="text-gray-700 hover:text-ocean transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Produits</Link>
+                <Link to="/about" className="text-gray-700 hover:text-ocean transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>À Propos</Link>
+                <Link to="/contact" className="text-gray-700 hover:text-ocean transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Contact</Link>
               </nav>
               <div className="flex-1 max-w-md mx-8">
                 <Button 
@@ -148,7 +155,7 @@ export const Header = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => navigate('/profile')}>
+                      <DropdownMenuItem onClick={() => handleNavigate('/profile')}>
                         <User className="mr-2 h-4 w-4" />
                         Mon Profil
                       </DropdownMenuItem>
@@ -162,13 +169,13 @@ export const Header = () => {
                   <Button 
                     variant="ghost" 
                     size="icon" 
-                    onClick={() => navigate('/auth')}
+                    onClick={() => handleNavigate('/auth')}
                     className="text-gray-600 hover:text-ocean"
                   >
                     <User className="h-5 w-5" />
                   </Button>
                 )}
-                <Button variant="ghost" size="icon" className="relative text-gray-600 hover:text-ocean" onClick={() => navigate('/cart')}>
+                <Button variant="ghost" size="icon" className="relative text-gray-600 hover:text-ocean" onClick={() => handleNavigate('/cart')}>
                   <ShoppingCart className="h-5 w-5" />
                   {cartCount > 0 && (
                     <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-ocean text-white flex items-center justify-center text-xs font-medium">{cartCount}</div>

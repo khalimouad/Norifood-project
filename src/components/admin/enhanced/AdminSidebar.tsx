@@ -88,7 +88,7 @@ export function AdminSidebar() {
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <NavLink to={item.url} className={getNavClass(item.url)}>
+                    <NavLink to={item.url} className={getNavClass(item.url)} onClick={() => window.scrollTo(0, 0)}>
                       <item.icon className="h-4 w-4" />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
@@ -106,7 +106,7 @@ export function AdminSidebar() {
               {managementItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <NavLink to={item.url} className={getNavClass(item.url)}>
+                    <NavLink to={item.url} className={getNavClass(item.url)} onClick={() => window.scrollTo(0, 0)}>
                       <item.icon className="h-4 w-4" />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
@@ -124,7 +124,7 @@ export function AdminSidebar() {
               {analyticsItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <NavLink to={item.url} className={getNavClass(item.url)}>
+                    <NavLink to={item.url} className={getNavClass(item.url)} onClick={() => window.scrollTo(0, 0)}>
                       <item.icon className="h-4 w-4" />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
