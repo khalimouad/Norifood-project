@@ -188,12 +188,12 @@ const Products = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-background">
         <Header />
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ocean mx-auto mb-4"></div>
-            <p className="text-gray-600">Chargement des produits...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Chargement des produits...</p>
           </div>
         </div>
         <Footer />
@@ -203,16 +203,16 @@ const Products = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       <main className="pb-20 md:pb-0">
         {/* Hero Section */}
-        <div className="bg-gradient-to-r from-ocean to-ocean-light text-white py-16">
+        <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-16">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Nos Produits Frais
             </h1>
-            <p className="text-xl mb-8 text-white/90">
+            <p className="text-xl mb-8 text-primary-foreground/90">
               Découvrez notre sélection de poissons et fruits de mer de qualité premium
             </p>
           </div>
@@ -222,7 +222,7 @@ const Products = () => {
         <div className="container mx-auto px-4 py-8">
           {isMobile ? (
             /* Mobile Filter Drawer */
-            <div className="bg-white rounded-lg shadow-sm border p-4 mb-8">
+            <div className="bg-card rounded-lg shadow-sm border p-4 mb-8">
               <div className="flex items-center gap-3 mb-4">
                 <Drawer open={filterDrawerOpen} onOpenChange={setFilterDrawerOpen}>
                   <DrawerTrigger asChild>
@@ -289,7 +289,7 @@ const Products = () => {
                 </Drawer>
 
                 {/* View Mode Toggle */}
-                <div className="flex bg-gray-100 rounded-md p-1 ml-auto">
+                <div className="flex bg-muted rounded-md p-1 ml-auto">
                   <Button
                     variant={viewMode === "grid" ? "default" : "ghost"}
                     size="sm"
@@ -311,7 +311,7 @@ const Products = () => {
 
               {/* Search */}
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   placeholder="Rechercher un produit..."
                   value={searchTerm}
@@ -321,7 +321,7 @@ const Products = () => {
                   }}
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                  className="pl-10 transition-all duration-200 focus:ring-2 focus:ring-ocean/20"
+                  className="pl-10 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                   autoComplete="off"
                 />
                 {searchTerm && (
@@ -330,7 +330,7 @@ const Products = () => {
                       setSearchTerm("");
                       setShowSuggestions(false);
                     }}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   >
                     ×
                   </button>
@@ -338,15 +338,15 @@ const Products = () => {
                 
                 {/* Search Suggestions */}
                 {showSuggestions && searchSuggestions.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 max-h-48 overflow-y-auto">
+                  <div className="absolute top-full left-0 right-0 bg-popover border border-border rounded-lg shadow-lg mt-1 z-50 max-h-48 overflow-y-auto">
                     {searchSuggestions.map((suggestion, index) => (
                       <button
                         key={index}
                         onClick={() => handleSearchSuggestionClick(suggestion)}
-                        className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors flex items-center gap-2"
+                        className="w-full px-4 py-2 text-left hover:bg-accent transition-colors flex items-center gap-2"
                       >
-                        <Search className="h-4 w-4 text-gray-400" />
-                        <span className="text-gray-700">{suggestion}</span>
+                        <Search className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-foreground">{suggestion}</span>
                       </button>
                     ))}
                   </div>
@@ -356,7 +356,7 @@ const Products = () => {
               {/* Active Filters */}
               {(searchTerm || selectedCategory !== "all") && (
                 <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t">
-                  <span className="text-sm text-gray-600">Filtres actifs:</span>
+                  <span className="text-sm text-muted-foreground">Filtres actifs:</span>
                   {searchTerm && (
                     <Badge variant="secondary" className="gap-1">
                       Recherche: "{searchTerm}"
@@ -374,12 +374,12 @@ const Products = () => {
             </div>
           ) : (
             /* Desktop Filters */
-            <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
+            <div className="bg-card rounded-lg shadow-sm border p-6 mb-8">
               <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
                 <div className="flex-1 flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
                   {/* Search */}
                   <div className="relative flex-1 min-w-0">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                     <Input
                       placeholder="Rechercher un produit..."
                       value={searchTerm}
@@ -389,7 +389,7 @@ const Products = () => {
                       }}
                       onFocus={() => setShowSuggestions(true)}
                       onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                      className="pl-10 transition-all duration-200 focus:ring-2 focus:ring-ocean/20"
+                      className="pl-10 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                       autoComplete="off"
                     />
                     {searchTerm && (
@@ -398,7 +398,7 @@ const Products = () => {
                           setSearchTerm("");
                           setShowSuggestions(false);
                         }}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                         className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                       >
                         ×
                       </button>
@@ -406,15 +406,15 @@ const Products = () => {
                     
                     {/* Search Suggestions */}
                     {showSuggestions && searchSuggestions.length > 0 && (
-                      <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 max-h-48 overflow-y-auto">
+                      <div className="absolute top-full left-0 right-0 bg-popover border border-border rounded-lg shadow-lg mt-1 z-50 max-h-48 overflow-y-auto">
                         {searchSuggestions.map((suggestion, index) => (
                           <button
                             key={index}
                             onClick={() => handleSearchSuggestionClick(suggestion)}
-                            className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors flex items-center gap-2"
+                            className="w-full px-4 py-2 text-left hover:bg-accent transition-colors flex items-center gap-2"
                           >
-                            <Search className="h-4 w-4 text-gray-400" />
-                            <span className="text-gray-700">{suggestion}</span>
+                            <Search className="h-4 w-4 text-muted-foreground" />
+                            <span className="text-foreground">{suggestion}</span>
                           </button>
                         ))}
                       </div>
@@ -451,7 +451,7 @@ const Products = () => {
 
                 <div className="flex items-center gap-2">
                   {/* View Mode Toggle */}
-                  <div className="flex bg-gray-100 rounded-md p-1">
+                  <div className="flex bg-muted rounded-md p-1">
                     <Button
                       variant={viewMode === "grid" ? "default" : "ghost"}
                       size="sm"
@@ -482,7 +482,7 @@ const Products = () => {
               {/* Active Filters */}
               {(searchTerm || selectedCategory !== "all") && (
                 <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t">
-                  <span className="text-sm text-gray-600">Filtres actifs:</span>
+                  <span className="text-sm text-muted-foreground">Filtres actifs:</span>
                   {searchTerm && (
                     <Badge variant="secondary" className="gap-1">
                       Recherche: "{searchTerm}"
@@ -502,7 +502,7 @@ const Products = () => {
 
           {/* Results Count */}
           <div className="flex justify-between items-center mb-6">
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               {filteredProducts.length} produit{filteredProducts.length !== 1 ? "s" : ""} trouvé{filteredProducts.length !== 1 ? "s" : ""}
             </p>
           </div>
@@ -534,13 +534,13 @@ const Products = () => {
             </div>
           ) : (
             <div className="text-center py-16">
-              <div className="text-gray-400 mb-4">
+              <div className="text-muted-foreground mb-4">
                 <Filter className="h-16 w-16 mx-auto mb-4" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-semibold text-foreground mb-2">
                 Aucun produit trouvé
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-muted-foreground mb-6">
                 Essayez de modifier vos critères de recherche
               </p>
               <Button onClick={clearFilters} variant="outline">
