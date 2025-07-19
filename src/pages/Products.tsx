@@ -8,9 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Search, Filter, Grid, List } from "lucide-react";
+import { Search, Filter, Grid, List, ChevronDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type Product = Tables<"products">;
 type Category = Tables<"categories">;
@@ -27,6 +29,8 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     fetchData();
@@ -216,84 +220,76 @@ const Products = () => {
 
         {/* Filters and Search */}
         <div className="container mx-auto px-4 py-8">
-          <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
-            <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-              <div className="flex-1 flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                {/* Search */}
-                <div className="relative flex-1 min-w-0">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                  <Input
-                    placeholder="Rechercher un produit..."
-                    value={searchTerm}
-                    onChange={(e) => {
-                      setSearchTerm(e.target.value);
-                      setShowSuggestions(true);
-                    }}
-                    onFocus={() => setShowSuggestions(true)}
-                    onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                    className="pl-10 transition-all duration-200 focus:ring-2 focus:ring-ocean/20"
-                    autoComplete="off"
-                  />
-                  {searchTerm && (
-                    <button
-                      onClick={() => {
-                        setSearchTerm("");
-                        setShowSuggestions(false);
-                      }}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      ×
-                    </button>
-                  )}
-                  
-                  {/* Search Suggestions */}
-                  {showSuggestions && searchSuggestions.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 max-h-48 overflow-y-auto">
-                      {searchSuggestions.map((suggestion, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleSearchSuggestionClick(suggestion)}
-                          className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors flex items-center gap-2"
+          {isMobile ? (
+            /* Mobile Filter Drawer */
+            <div className="bg-white rounded-lg shadow-sm border p-4 mb-8">
+              <div className="flex items-center gap-3 mb-4">
+                <Drawer open={filterDrawerOpen} onOpenChange={setFilterDrawerOpen}>
+                  <DrawerTrigger asChild>
+                    <Button variant="outline" className="flex items-center gap-2">
+                      <Filter className="h-4 w-4" />
+                      Filtres
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DrawerTrigger>
+                  <DrawerContent>
+                    <DrawerHeader>
+                      <DrawerTitle>Filtres</DrawerTitle>
+                    </DrawerHeader>
+                    <div className="p-4 space-y-4">
+                      {/* Category Filter */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Catégorie</label>
+                        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Catégorie" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">Toutes les catégories</SelectItem>
+                            {categories.map((category) => (
+                              <SelectItem key={category.id} value={category.id}>
+                                {category.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Sort */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Trier par</label>
+                        <Select value={sortBy} onValueChange={setSortBy}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Trier par" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="name">Nom A-Z</SelectItem>
+                            <SelectItem value="price-low">Prix croissant</SelectItem>
+                            <SelectItem value="price-high">Prix décroissant</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Apply and Clear */}
+                      <div className="flex gap-3 pt-4">
+                        <Button 
+                          onClick={() => setFilterDrawerOpen(false)} 
+                          className="flex-1"
                         >
-                          <Search className="h-4 w-4 text-gray-400" />
-                          <span className="text-gray-700">{suggestion}</span>
-                        </button>
-                      ))}
+                          Appliquer
+                        </Button>
+                        {(searchTerm || selectedCategory !== "all" || sortBy !== "name") && (
+                          <Button variant="outline" onClick={clearFilters} className="flex-1">
+                            Effacer
+                          </Button>
+                        )}
+                      </div>
                     </div>
-                  )}
-                </div>
+                  </DrawerContent>
+                </Drawer>
 
-                {/* Category Filter */}
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="w-full sm:w-48">
-                    <SelectValue placeholder="Catégorie" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Toutes les catégories</SelectItem>
-                    {categories.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                {/* Sort */}
-                <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-full sm:w-48">
-                    <SelectValue placeholder="Trier par" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="name">Nom A-Z</SelectItem>
-                    <SelectItem value="price-low">Prix croissant</SelectItem>
-                    <SelectItem value="price-high">Prix décroissant</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex items-center gap-2">
                 {/* View Mode Toggle */}
-                <div className="flex bg-gray-100 rounded-md p-1">
+                <div className="flex bg-gray-100 rounded-md p-1 ml-auto">
                   <Button
                     variant={viewMode === "grid" ? "default" : "ghost"}
                     size="sm"
@@ -311,35 +307,198 @@ const Products = () => {
                     <List className="h-4 w-4" />
                   </Button>
                 </div>
-
-                {/* Clear Filters */}
-                {(searchTerm || selectedCategory !== "all" || sortBy !== "name") && (
-                  <Button variant="outline" onClick={clearFilters}>
-                    Effacer les filtres
-                  </Button>
-                )}
               </div>
-            </div>
 
-            {/* Active Filters */}
-            {(searchTerm || selectedCategory !== "all") && (
-              <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t">
-                <span className="text-sm text-gray-600">Filtres actifs:</span>
+              {/* Search */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  placeholder="Rechercher un produit..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setShowSuggestions(true);
+                  }}
+                  onFocus={() => setShowSuggestions(true)}
+                  onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                  className="pl-10 transition-all duration-200 focus:ring-2 focus:ring-ocean/20"
+                  autoComplete="off"
+                />
                 {searchTerm && (
-                  <Badge variant="secondary" className="gap-1">
-                    Recherche: "{searchTerm}"
-                    <button onClick={() => setSearchTerm("")} className="ml-1 hover:text-red-600">×</button>
-                  </Badge>
+                  <button
+                    onClick={() => {
+                      setSearchTerm("");
+                      setShowSuggestions(false);
+                    }}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    ×
+                  </button>
                 )}
-                {selectedCategory !== "all" && (
-                  <Badge variant="secondary" className="gap-1">
-                    {categories.find(c => c.id === selectedCategory)?.name}
-                    <button onClick={() => setSelectedCategory("all")} className="ml-1 hover:text-red-600">×</button>
-                  </Badge>
+                
+                {/* Search Suggestions */}
+                {showSuggestions && searchSuggestions.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 max-h-48 overflow-y-auto">
+                    {searchSuggestions.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleSearchSuggestionClick(suggestion)}
+                        className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors flex items-center gap-2"
+                      >
+                        <Search className="h-4 w-4 text-gray-400" />
+                        <span className="text-gray-700">{suggestion}</span>
+                      </button>
+                    ))}
+                  </div>
                 )}
               </div>
-            )}
-          </div>
+
+              {/* Active Filters */}
+              {(searchTerm || selectedCategory !== "all") && (
+                <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t">
+                  <span className="text-sm text-gray-600">Filtres actifs:</span>
+                  {searchTerm && (
+                    <Badge variant="secondary" className="gap-1">
+                      Recherche: "{searchTerm}"
+                      <button onClick={() => setSearchTerm("")} className="ml-1 hover:text-red-600">×</button>
+                    </Badge>
+                  )}
+                  {selectedCategory !== "all" && (
+                    <Badge variant="secondary" className="gap-1">
+                      {categories.find(c => c.id === selectedCategory)?.name}
+                      <button onClick={() => setSelectedCategory("all")} className="ml-1 hover:text-red-600">×</button>
+                    </Badge>
+                  )}
+                </div>
+              )}
+            </div>
+          ) : (
+            /* Desktop Filters */
+            <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
+              <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+                <div className="flex-1 flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                  {/* Search */}
+                  <div className="relative flex-1 min-w-0">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                    <Input
+                      placeholder="Rechercher un produit..."
+                      value={searchTerm}
+                      onChange={(e) => {
+                        setSearchTerm(e.target.value);
+                        setShowSuggestions(true);
+                      }}
+                      onFocus={() => setShowSuggestions(true)}
+                      onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                      className="pl-10 transition-all duration-200 focus:ring-2 focus:ring-ocean/20"
+                      autoComplete="off"
+                    />
+                    {searchTerm && (
+                      <button
+                        onClick={() => {
+                          setSearchTerm("");
+                          setShowSuggestions(false);
+                        }}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                      >
+                        ×
+                      </button>
+                    )}
+                    
+                    {/* Search Suggestions */}
+                    {showSuggestions && searchSuggestions.length > 0 && (
+                      <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 max-h-48 overflow-y-auto">
+                        {searchSuggestions.map((suggestion, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleSearchSuggestionClick(suggestion)}
+                            className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors flex items-center gap-2"
+                          >
+                            <Search className="h-4 w-4 text-gray-400" />
+                            <span className="text-gray-700">{suggestion}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Category Filter */}
+                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                    <SelectTrigger className="w-full sm:w-48">
+                      <SelectValue placeholder="Catégorie" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Toutes les catégories</SelectItem>
+                      {categories.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  {/* Sort */}
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="w-full sm:w-48">
+                      <SelectValue placeholder="Trier par" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="name">Nom A-Z</SelectItem>
+                      <SelectItem value="price-low">Prix croissant</SelectItem>
+                      <SelectItem value="price-high">Prix décroissant</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {/* View Mode Toggle */}
+                  <div className="flex bg-gray-100 rounded-md p-1">
+                    <Button
+                      variant={viewMode === "grid" ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setViewMode("grid")}
+                      className="h-8 w-8 p-0"
+                    >
+                      <Grid className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant={viewMode === "list" ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setViewMode("list")}
+                      className="h-8 w-8 p-0"
+                    >
+                      <List className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  {/* Clear Filters */}
+                  {(searchTerm || selectedCategory !== "all" || sortBy !== "name") && (
+                    <Button variant="outline" onClick={clearFilters}>
+                      Effacer les filtres
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Active Filters */}
+              {(searchTerm || selectedCategory !== "all") && (
+                <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t">
+                  <span className="text-sm text-gray-600">Filtres actifs:</span>
+                  {searchTerm && (
+                    <Badge variant="secondary" className="gap-1">
+                      Recherche: "{searchTerm}"
+                      <button onClick={() => setSearchTerm("")} className="ml-1 hover:text-red-600">×</button>
+                    </Badge>
+                  )}
+                  {selectedCategory !== "all" && (
+                    <Badge variant="secondary" className="gap-1">
+                      {categories.find(c => c.id === selectedCategory)?.name}
+                      <button onClick={() => setSelectedCategory("all")} className="ml-1 hover:text-red-600">×</button>
+                    </Badge>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Results Count */}
           <div className="flex justify-between items-center mb-6">

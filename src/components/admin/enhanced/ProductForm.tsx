@@ -88,25 +88,31 @@ export function ProductForm() {
 
   const fetchProduct = async () => {
     try {
-      const { data: product, error } = await supabase
+      // First get the product
+      const { data: product, error: productError } = await supabase
         .from('products')
-        .select(`
-          *,
-          product_tags (
-            tag_id
-          )
-        `)
+        .select('*')
         .eq('id', id)
         .single();
 
-      if (error) throw error;
+      if (productError) throw productError;
+
+      // Then get the product tags separately
+      const { data: productTags, error: tagsError } = await supabase
+        .from('product_tags')
+        .select('tag_id')
+        .eq('product_id', id);
+
+      if (tagsError) {
+        console.error('Error fetching product tags:', tagsError);
+      }
 
       if (product) {
         reset({
           ...product,
           images: product.images || []
         });
-        setSelectedTags(product.product_tags?.map((pt: any) => pt.tag_id) || []);
+        setSelectedTags(productTags?.map((pt) => pt.tag_id) || []);
       }
     } catch (error) {
       console.error('Error fetching product:', error);

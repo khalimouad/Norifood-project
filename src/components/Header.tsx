@@ -81,27 +81,27 @@ export const Header = () => {
         {/* Mobile Header */}
         <div className="block md:hidden px-4 py-3">
           <div className="flex items-center justify-between mb-3">
+            <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-5 w-5 text-gray-600" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-80">
+                <MobileNavigation onClose={() => setSidebarOpen(false)} />
+              </SheetContent>
+            </Sheet>
+            
             <Link to="/" className="flex items-center space-x-2">
               <img src={logo} alt="Fresh N'Good" className="h-8 w-auto" />
             </Link>
-            <div className="flex items-center space-x-2">
-              <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Menu className="h-5 w-5 text-gray-600" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left" className="w-80">
-                  <MobileNavigation onClose={() => setSidebarOpen(false)} />
-                </SheetContent>
-              </Sheet>
-              <Button variant="ghost" size="icon" className="relative" onClick={() => navigate('/cart')}>
-                <ShoppingCart className="h-5 w-5 text-gray-600" />
-                {cartCount > 0 && (
-                  <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-ocean text-white flex items-center justify-center text-xs font-medium">{cartCount}</div>
-                )}
-              </Button>
-            </div>
+            
+            <Button variant="ghost" size="icon" className="relative" onClick={() => navigate('/cart')}>
+              <ShoppingCart className="h-5 w-5 text-gray-600" />
+              {cartCount > 0 && (
+                <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-ocean text-white flex items-center justify-center text-xs font-medium">{cartCount}</div>
+              )}
+            </Button>
           </div>
           <Button 
             variant="outline" 
