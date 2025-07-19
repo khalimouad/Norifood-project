@@ -71,7 +71,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       <main className="pb-20 md:pb-0">
         {/* Hero Section */}
@@ -92,7 +92,7 @@ const About = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="py-16 bg-gray-50">
+        <div className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
@@ -100,8 +100,8 @@ const About = () => {
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-ocean/10 rounded-full mb-4">
                     <stat.icon className="h-8 w-8 text-ocean" />
                   </div>
-                  <div className="text-3xl font-bold text-ocean mb-2">{stat.value}</div>
-                  <div className="text-gray-600">{stat.label}</div>
+                  <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
+                  <div className="text-muted-foreground">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -112,26 +112,26 @@ const About = () => {
         <div className="py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
                 Notre Histoire
               </h2>
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                  <h3 className="text-2xl font-semibold mb-6 text-ocean">
+                  <h3 className="text-2xl font-semibold mb-6 text-primary">
                     Une Passion Familiale
                   </h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
                     Fresh N'Good a été fondée en 1999 par Mohamed Alami, un passionné de la mer 
                     qui a grandi dans une famille de pêcheurs à Casablanca. Avec plus de 25 ans 
                     d'expérience, nous avons développé un réseau de confiance avec les meilleurs 
                     pêcheurs locaux.
                   </p>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
                     Notre mission est simple : vous offrir des produits de la mer d'une fraîcheur 
                     exceptionnelle, directement de l'océan à votre table. Nous croyons que la 
                     qualité ne doit jamais être compromise.
                   </p>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed">
                     Aujourd'hui, Fresh N'Good est devenu une référence au Maroc pour les produits 
                     de la mer premium, servant plus de 10 000 clients satisfaits à travers le pays.
                   </p>
@@ -144,7 +144,7 @@ const About = () => {
                   />
                   <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-lg shadow-lg">
                     <div className="text-2xl font-bold text-ocean">1999</div>
-                    <div className="text-sm text-gray-600">Année de création</div>
+                    <div className="text-sm text-muted-foreground">Année de création</div>
                   </div>
                 </div>
               </div>
@@ -153,9 +153,9 @@ const About = () => {
         </div>
 
         {/* Our Values */}
-        <div className="py-16 bg-gray-50">
+        <div className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
               Nos Valeurs
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -165,10 +165,10 @@ const About = () => {
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-ocean/10 rounded-full mb-4">
                       <value.icon className="h-8 w-8 text-ocean" />
                     </div>
-                    <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                    <h3 className="text-xl font-semibold mb-3 text-foreground">
                       {value.title}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed">
                       {value.description}
                     </p>
                   </CardContent>
