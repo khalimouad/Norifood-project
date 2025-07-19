@@ -44,11 +44,11 @@ export const FeaturedProducts = () => {
 
   if (loading) {
     return (
-      <section className="py-8 md:py-16 bg-white">
+      <section className="py-8 md:py-16 bg-background">
         <div className="container mx-auto px-4 md:px-8">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ocean mx-auto"></div>
-            <p className="mt-4 text-gray-600">Chargement des produits vedettes...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-muted-foreground">Chargement des produits vedettes...</p>
           </div>
         </div>
       </section>
@@ -56,13 +56,13 @@ export const FeaturedProducts = () => {
   }
 
   return (
-    <section className="py-8 md:py-16 bg-white">
+    <section className="py-8 md:py-16 bg-background">
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-6 md:mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 md:mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2 md:mb-4">
             Produits Vedettes
           </h2>
-          <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
             Découvrez notre sélection des produits les plus frais
           </p>
         </div>
@@ -87,7 +87,7 @@ export const FeaturedProducts = () => {
 
             <div className="text-center mt-8 md:mt-12">
               <Link to="/products">
-                <Button className="bg-ocean hover:bg-ocean/90 text-white px-6 py-3 rounded-full font-medium">
+                <Button className="px-6 py-3 rounded-full font-medium">
                   Voir Tous les Produits
                 </Button>
               </Link>
@@ -95,7 +95,7 @@ export const FeaturedProducts = () => {
           </>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-600">Aucun produit vedette disponible pour le moment.</p>
+            <p className="text-muted-foreground">Aucun produit vedette disponible pour le moment.</p>
           </div>
         )}
       </div>
