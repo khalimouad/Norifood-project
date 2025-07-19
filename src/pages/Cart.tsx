@@ -68,17 +68,17 @@ const Cart = () => {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-background">
         <Header />
         <main className="pb-20 md:pb-0">
           <div className="container mx-auto px-4 py-16">
             <div className="text-center max-w-md mx-auto">
               <div className="mb-8">
-                <ShoppingBag className="h-24 w-24 mx-auto text-gray-300 mb-4" />
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                <ShoppingBag className="h-24 w-24 mx-auto text-muted-foreground mb-4" />
+                <h1 className="text-3xl font-bold text-foreground mb-4">
                   Votre Panier est Vide
                 </h1>
-                <p className="text-gray-600 mb-8">
+                <p className="text-muted-foreground mb-8">
                   Découvrez nos produits frais et commencez vos achats
                 </p>
               </div>
@@ -98,19 +98,19 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       <main className="pb-20 md:pb-0">
         {/* Header */}
-        <div className="bg-gray-50 py-8">
+        <div className="bg-muted py-8">
           <div className="container mx-auto px-4">
             <div className="flex items-center gap-3 mb-4">
-              <ShoppingBag className="h-8 w-8 text-ocean" />
-              <h1 className="text-3xl font-bold text-gray-900">
+              <ShoppingBag className="h-8 w-8 text-primary" />
+              <h1 className="text-3xl font-bold text-foreground">
                 Mon Panier
               </h1>
             </div>
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               {items.length} article{items.length > 1 ? "s" : ""} dans votre panier
             </p>
           </div>
@@ -132,14 +132,14 @@ const Cart = () => {
                       <div className="flex-1 min-w-0 space-y-3">
                         <div className="flex justify-between items-start">
                           <div>
-                            <h3 className="font-semibold text-gray-900 text-lg mb-1">
+                            <h3 className="font-semibold text-foreground text-lg mb-1">
                               {item.name}
                             </h3>
                             <div className="flex items-center gap-2">
-                              <span className="text-xl font-bold text-ocean">
+                              <span className="text-xl font-bold text-primary">
                                 {item.price} DH
                               </span>
-                              <span className="text-sm text-gray-500">
+                              <span className="text-sm text-muted-foreground">
                                 / {item.unitType}
                               </span>
                             </div>
@@ -148,19 +148,19 @@ const Cart = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleRemoveItem(item.id)}
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0 flex-shrink-0"
+                            className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8 p-0 flex-shrink-0"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
                         
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-2">
+                          <div className="flex items-center gap-3 bg-muted rounded-lg p-2">
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                              className="h-8 w-8 p-0 border-0 bg-white shadow-sm"
+                              className="h-8 w-8 p-0 border-0 bg-background shadow-sm"
                             >
                               <Minus className="h-4 w-4" />
                             </Button>
@@ -171,14 +171,14 @@ const Cart = () => {
                               variant="outline"
                               size="sm"
                               onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                              className="h-8 w-8 p-0 border-0 bg-white shadow-sm"
+                              className="h-8 w-8 p-0 border-0 bg-background shadow-sm"
                             >
                               <Plus className="h-4 w-4" />
                             </Button>
                           </div>
                           <div className="text-right">
-                            <p className="text-sm text-gray-500 mb-1">Total</p>
-                            <span className="font-bold text-2xl text-ocean">
+                            <p className="text-sm text-muted-foreground mb-1">Total</p>
+                            <span className="font-bold text-2xl text-primary">
                               {(item.price * item.quantity).toFixed(2)} DH
                             </span>
                           </div>
@@ -192,21 +192,21 @@ const Cart = () => {
               {/* Promo Code */}
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-6">
-                  <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Tag className="h-5 w-5 text-ocean" />
+                  <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <Tag className="h-5 w-5 text-primary" />
                     Code Promo
                   </h3>
                   {appliedPromo ? (
-                    <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+                    <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800">
                       <div>
-                        <p className="font-medium text-green-800">Code appliqué: {appliedPromo}</p>
-                        <p className="text-sm text-green-600">10% de réduction</p>
+                        <p className="font-medium text-green-800 dark:text-green-300">Code appliqué: {appliedPromo}</p>
+                        <p className="text-sm text-green-600 dark:text-green-400">10% de réduction</p>
                       </div>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => setAppliedPromo(null)}
-                        className="text-green-600 hover:text-green-700"
+                        className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300"
                       >
                         Retirer
                       </Button>
@@ -241,7 +241,7 @@ const Cart = () => {
                       <span>{subtotal.toFixed(2)} DH</span>
                     </div>
                     {discount > 0 && (
-                      <div className="flex justify-between text-green-600">
+                      <div className="flex justify-between text-green-600 dark:text-green-400">
                         <span>Réduction (FRESH10)</span>
                         <span>-{discount.toFixed(2)} DH</span>
                       </div>
@@ -251,7 +251,7 @@ const Cart = () => {
                       <span>{deliveryFee === 0 ? "Gratuite" : `${deliveryFee} DH`}</span>
                     </div>
                     {subtotal < 200 && (
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-muted-foreground">
                         Livraison gratuite à partir de 200 DH
                       </p>
                     )}
@@ -280,35 +280,35 @@ const Cart = () => {
               {/* Delivery Info */}
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-4 md:p-6">
-                  <h3 className="font-semibold text-gray-900 mb-3 md:mb-4 text-center md:text-left">
+                  <h3 className="font-semibold text-foreground mb-3 md:mb-4 text-center md:text-left">
                     Informations de Livraison
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:space-y-3 md:grid-cols-1">
-                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-gray-50 sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
+                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-muted sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
                       <div className="flex-shrink-0">
-                        <Truck className="h-6 w-6 md:h-5 md:w-5 text-ocean" />
+                        <Truck className="h-6 w-6 md:h-5 md:w-5 text-primary" />
                       </div>
                       <div>
                         <p className="font-medium text-sm md:text-sm">Livraison Express</p>
-                        <p className="text-xs text-gray-600">Même jour ou 24h</p>
+                        <p className="text-xs text-muted-foreground">Même jour ou 24h</p>
                       </div>
                     </div>
-                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-gray-50 sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
+                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-muted sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
                       <div className="flex-shrink-0">
-                        <Clock className="h-6 w-6 md:h-5 md:w-5 text-ocean" />
+                        <Clock className="h-6 w-6 md:h-5 md:w-5 text-primary" />
                       </div>
                       <div>
                         <p className="font-medium text-sm md:text-sm">Créneau Flexible</p>
-                        <p className="text-xs text-gray-600">Choix de l'heure</p>
+                        <p className="text-xs text-muted-foreground">Choix de l'heure</p>
                       </div>
                     </div>
-                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-gray-50 sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
+                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-muted sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
                       <div className="flex-shrink-0">
-                        <Shield className="h-6 w-6 md:h-5 md:w-5 text-ocean" />
+                        <Shield className="h-6 w-6 md:h-5 md:w-5 text-primary" />
                       </div>
                       <div>
                         <p className="font-medium text-sm md:text-sm">Fraîcheur Garantie</p>
-                        <p className="text-xs text-gray-600">Chaîne du froid respectée</p>
+                        <p className="text-xs text-muted-foreground">Chaîne du froid respectée</p>
                       </div>
                     </div>
                   </div>
@@ -318,16 +318,16 @@ const Cart = () => {
               {/* Trust Indicators */}
               <div className="text-center space-y-2">
                 <div className="flex justify-center gap-4">
-                  <Badge variant="outline" className="text-green-600 border-green-600">
+                  <Badge variant="outline" className="text-green-600 dark:text-green-400 border-green-600 dark:border-green-400">
                     <Shield className="h-3 w-3 mr-1" />
                     Paiement Sécurisé
                   </Badge>
-                  <Badge variant="outline" className="text-blue-600 border-blue-600">
+                  <Badge variant="outline" className="text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400">
                     <Truck className="h-3 w-3 mr-1" />
                     Livraison Rapide
                   </Badge>
                 </div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   Satisfait ou remboursé sous 24h
                 </p>
               </div>
