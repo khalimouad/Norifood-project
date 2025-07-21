@@ -3,15 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Truck, Package, RefreshCw, Clock, MapPin, Phone, Mail, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 export default function Shipping() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-pearl to-white py-12">
+  return <div className="min-h-screen bg-gradient-to-br from-pearl to-white py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="mb-6">
             <Link to="/">
-              <Button variant="ghost" className="text-ocean hover:bg-ocean/10">
+              <Button variant="ghost" className="text-ocean bg-slate-950 hover:bg-slate-800">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Retour à l'accueil
               </Button>
@@ -235,6 +233,5 @@ export default function Shipping() {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
