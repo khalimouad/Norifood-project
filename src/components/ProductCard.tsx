@@ -6,7 +6,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useCart } from '@/hooks/useCart';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
-
 interface ProductCardProps {
   id: string;
   name: string;
@@ -18,12 +17,24 @@ interface ProductCardProps {
   featured?: boolean;
   discount?: number;
 }
-
-const ProductCard = ({ id, name, description, price, image, unitType, inStock = true, featured = false, discount }: ProductCardProps) => {
+const ProductCard = ({
+  id,
+  name,
+  description,
+  price,
+  image,
+  unitType,
+  inStock = true,
+  featured = false,
+  discount
+}: ProductCardProps) => {
   const [quantity, setQuantity] = useState(1);
-  const { addItem } = useCart();
-  const { toast } = useToast();
-
+  const {
+    addItem
+  } = useCart();
+  const {
+    toast
+  } = useToast();
   const handleAddToCart = () => {
     addItem({
       id,
@@ -32,48 +43,32 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
       image,
       unitType: unitType as string
     });
-    
     toast({
       title: "Produit ajouté !",
       description: `${quantity} ${unitType} de ${name} ajouté(s) au panier`
     });
   };
-
   const updateQuantity = (newQuantity: number) => {
     if (newQuantity >= 1) {
       setQuantity(newQuantity);
     }
   };
-
-
   const discountedPrice = discount ? price * (1 - discount / 100) : price;
-
-  return (
-    <Card className="group hover:shadow-lg transition-all duration-300 border-0 shadow-sm">
+  return <Card className="group hover:shadow-lg transition-all duration-300 border-0 shadow-sm">
       <CardContent className="p-0">
         <div className="relative group overflow-hidden rounded-lg">
           <Link to={`/product/${id}`}>
-            <img 
-              src={image} 
-              alt={name}
-              className="w-full h-32 md:h-48 object-cover transition-transform group-hover:scale-105"
-            />
+            <img src={image} alt={name} className="w-full h-32 md:h-48 object-cover transition-transform group-hover:scale-105" />
           </Link>
-          {discount && (
-            <Badge className="absolute top-2 left-2 bg-coral text-white">
+          {discount && <Badge className="absolute top-2 left-2 bg-coral text-white">
               -{discount}%
-            </Badge>
-          )}
-          {featured && (
-            <Badge className="absolute top-2 right-2 bg-ocean text-white">
+            </Badge>}
+          {featured && <Badge className="absolute top-2 right-2 bg-ocean text-white">
               Vedette
-            </Badge>
-          )}
-          {!inStock && (
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            </Badge>}
+          {!inStock && <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <Badge variant="destructive">Rupture de Stock</Badge>
-            </div>
-          )}
+            </div>}
         </div>
         
         <div className="p-2 md:p-4 space-y-1.5 md:space-y-3">
@@ -85,11 +80,9 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
           
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1 md:gap-2">
-              {discount && (
-                <span className="text-xs text-muted-foreground line-through">
+              {discount && <span className="text-xs text-muted-foreground line-through">
                   {price.toFixed(2)} DH
-                </span>
-              )}
+                </span>}
               <span className="text-base md:text-lg font-bold text-primary">
                 {discountedPrice.toFixed(2)} DH
               </span>
@@ -101,35 +94,18 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
           
           <div className="flex items-center gap-1.5 md:gap-2 pt-1">
             <div className="flex items-center bg-muted rounded-lg p-0.5 min-w-[85px] md:min-w-[100px]">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => updateQuantity(quantity - 1)}
-                disabled={quantity <= 1 || !inStock}
-                className="h-7 w-7 p-0 rounded-md text-xs hover:bg-background"
-              >
+              <Button variant="ghost" size="sm" onClick={() => updateQuantity(quantity - 1)} disabled={quantity <= 1 || !inStock} className="h-7 w-7 p-0 rounded-md text-xs hover:bg-background">
                 <Minus className="h-3 w-3" />
               </Button>
               <span className="flex-1 text-center text-sm font-semibold px-1">
                 {quantity}
               </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => updateQuantity(quantity + 1)}
-                disabled={!inStock}
-                className="h-7 w-7 p-0 rounded-md text-xs hover:bg-background"
-              >
+              <Button variant="ghost" size="sm" onClick={() => updateQuantity(quantity + 1)} disabled={!inStock} className="h-7 w-7 p-0 rounded-md text-xs hover:bg-background">
                 <Plus className="h-3 w-3" />
               </Button>
             </div>
             
-            <Button
-              onClick={handleAddToCart}
-              disabled={!inStock}
-              className="flex-1 h-8 md:h-9 text-xs md:text-sm font-medium px-2 md:px-3"
-              size="sm"
-            >
+            <Button onClick={handleAddToCart} disabled={!inStock} size="sm" className="flex-1 h-8 md:h-9 text-xs md:text-sm font-medium px-2 md:px-3 text-slate-50 bg-blue-600 hover:bg-blue-500">
               <ShoppingCart className="h-3 w-3 md:h-4 md:w-4 mr-1" />
               <span className="hidden sm:inline">Ajouter</span>
               <span className="sm:hidden">+</span>
@@ -137,8 +113,6 @@ const ProductCard = ({ id, name, description, price, image, unitType, inStock = 
           </div>
         </div>
       </CardContent>
-    </Card>
-  );
+    </Card>;
 };
-
 export { ProductCard };
