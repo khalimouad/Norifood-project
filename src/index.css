@@ -17,35 +17,35 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 200 25% 10%;
 
-    --primary: 235 100% 49%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 190 60% 50%;
+    --secondary: 213 90% 70%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 190 20% 95%;
-    --muted-foreground: 200 15% 45%;
+    --muted: 215 20% 95%;
+    --muted-foreground: 215 15% 45%;
 
-    --accent: 180 65% 55%;
+    --accent: 213 90% 65%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 190 30% 85%;
-    --input: 190 30% 85%;
-    --ring: 200 90% 20%;
+    --border: 215 30% 85%;
+    --input: 215 30% 85%;
+    --ring: 217 91% 60%;
 
     --radius: 0.75rem;
 
     /* Ocean theme colors */
-    --ocean-blue: 235 100% 49%;
-    --ocean-light: 235 100% 65%;
-    --seafoam: 180 100% 50%;
+    --ocean-blue: 217 91% 60%;
+    --ocean-light: 213 90% 70%;
+    --seafoam: 199 89% 48%;
     --coral: 15 100% 65%;
-    --wave: 235 30% 85%;
-    --deep-blue: 235 100% 35%;
-    --footer-dark: 235 100% 25%;
+    --wave: 215 30% 85%;
+    --deep-blue: 217 91% 45%;
+    --footer-dark: 217 91% 30%;
     
     /* Gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));
@@ -89,7 +89,7 @@ All colors MUST be HSL.
     --popover: 220 15% 12%;
     --popover-foreground: 210 15% 92%;
 
-    --primary: 235 75% 65%;
+    --primary: 213 90% 70%;
     --primary-foreground: 220 20% 9%;
 
     --secondary: 220 12% 16%;
@@ -98,7 +98,7 @@ All colors MUST be HSL.
     --muted: 220 12% 14%;
     --muted-foreground: 215 12% 72%;
 
-    --accent: 180 70% 60%;
+    --accent: 199 89% 60%;
     --accent-foreground: 220 20% 9%;
 
     --destructive: 0 65% 60%;
@@ -106,15 +106,15 @@ All colors MUST be HSL.
 
     --border: 220 12% 20%;
     --input: 220 12% 16%;
-    --ring: 235 75% 65%;
+    --ring: 213 90% 70%;
 
     /* Dark mode ocean theme colors */
-    --ocean-blue: 235 75% 65%;
-    --ocean-light: 235 60% 75%;
-    --seafoam: 180 70% 60%;
+    --ocean-blue: 213 90% 70%;
+    --ocean-light: 213 85% 75%;
+    --seafoam: 199 89% 60%;
     --coral: 15 80% 68%;
     --wave: 220 12% 22%;
-    --deep-blue: 235 80% 55%;
+    --deep-blue: 213 90% 55%;
     --footer-dark: 220 30% 8%;
     
     /* Dark mode gradients */
