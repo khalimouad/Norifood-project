@@ -5,26 +5,24 @@ import { Separator } from '@/components/ui/separator';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-
 export const Footer = () => {
   const [email, setEmail] = useState('');
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
       toast({
         title: "Merci pour votre inscription !",
-        description: "Vous recevrez bientôt nos dernières actualités.",
+        description: "Vous recevrez bientôt nos dernières actualités."
       });
       setEmail('');
     }
   };
-
-  return (
-    <footer className="bg-primary text-primary-foreground">
+  return <footer className="text-primary-foreground bg-blue-600">
       {/* Features Section */}
-      <div className="border-b border-white/10">
+      <div className="border-b border-white/10 bg-blue-700">
         <div className="container mx-auto px-4 py-6 md:py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 justify-center md:justify-start text-center md:text-left">
@@ -167,20 +165,11 @@ export const Footer = () => {
               et conseils de préparation.
             </p>
             <form onSubmit={handleNewsletterSubmit} className="space-y-3">
-              <Input
-                type="email"
-                placeholder="Votre adresse email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/60 
-                         focus:border-seafoam focus:ring-seafoam/20 transition-all duration-300"
-              />
-              <Button 
-                type="submit"
-                className="w-full bg-gradient-to-r from-seafoam to-seafoam/80 hover:from-seafoam/90 
+              <Input type="email" placeholder="Votre adresse email" value={email} onChange={e => setEmail(e.target.value)} className="bg-white/10 border-white/20 text-white placeholder:text-white/60 
+                         focus:border-seafoam focus:ring-seafoam/20 transition-all duration-300" />
+              <Button type="submit" className="w-full bg-gradient-to-r from-seafoam to-seafoam/80 hover:from-seafoam/90 
                          hover:to-seafoam/70 text-white font-semibold py-2.5 transition-all duration-300 
-                         transform hover:scale-105"
-              >
+                         transform hover:scale-105">
                 S'abonner
               </Button>
             </form>
@@ -221,6 +210,5 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
