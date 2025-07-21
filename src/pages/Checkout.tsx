@@ -157,15 +157,15 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       <main className="pb-20 md:pb-0">
-        <div className="bg-gray-50 py-8">
+        <div className="bg-muted py-8">
           <div className="container mx-auto px-4">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-foreground mb-2">
               Finaliser ma Commande
             </h1>
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               Quelques informations pour livrer votre commande
             </p>
           </div>
@@ -180,7 +180,7 @@ const Checkout = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Mail className="h-5 w-5 text-ocean" />
+                      <Mail className="h-5 w-5 text-primary" />
                       Informations de Contact
                     </CardTitle>
                   </CardHeader>
@@ -232,7 +232,7 @@ const Checkout = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <MapPin className="h-5 w-5 text-ocean" />
+                      <MapPin className="h-5 w-5 text-primary" />
                       Adresse de Livraison
                     </CardTitle>
                   </CardHeader>
@@ -274,7 +274,7 @@ const Checkout = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Clock className="h-5 w-5 text-ocean" />
+                      <Clock className="h-5 w-5 text-primary" />
                       Options de Livraison
                     </CardTitle>
                   </CardHeader>
@@ -294,7 +294,7 @@ const Checkout = () => {
                         <Label htmlFor="deliveryTime">Créneau horaire</Label>
                         <select
                           id="deliveryTime"
-                          className="w-full p-2 border border-gray-300 rounded-md"
+                          className="w-full p-2 border border-border rounded-md bg-background text-foreground"
                           value={formData.deliveryTime}
                           onChange={(e) => handleInputChange("deliveryTime", e.target.value)}
                         >
@@ -321,57 +321,57 @@ const Checkout = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <CreditCard className="h-5 w-5 text-ocean" />
+                      <CreditCard className="h-5 w-5 text-primary" />
                       Méthode de Paiement
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                      <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-muted">
                         <input
                           type="radio"
                           name="payment"
                           value="cmi"
                           checked={formData.paymentMethod === "cmi"}
                           onChange={(e) => handleInputChange("paymentMethod", e.target.value)}
-                          className="text-ocean"
+                          className="text-primary"
                         />
-                        <Shield className="h-5 w-5 text-ocean" />
+                        <Shield className="h-5 w-5 text-primary" />
                         <div>
                           <p className="font-medium">CMI Paiement</p>
-                          <p className="text-sm text-gray-600">Paiement sécurisé par CMI Maroc</p>
+                          <p className="text-sm text-muted-foreground">Paiement sécurisé par CMI Maroc</p>
                         </div>
                         <Badge className="ml-auto bg-blue-100 text-blue-800">Recommandé</Badge>
                       </label>
-                      <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                      <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-muted">
                         <input
                           type="radio"
                           name="payment"
                           value="card"
                           checked={formData.paymentMethod === "card"}
                           onChange={(e) => handleInputChange("paymentMethod", e.target.value)}
-                          className="text-ocean"
+                          className="text-primary"
                         />
-                        <CreditCard className="h-5 w-5 text-ocean" />
+                        <CreditCard className="h-5 w-5 text-primary" />
                         <div>
                           <p className="font-medium">Carte bancaire</p>
-                          <p className="text-sm text-gray-600">Visa, Mastercard, American Express</p>
+                          <p className="text-sm text-muted-foreground">Visa, Mastercard, American Express</p>
                         </div>
                         <Badge className="ml-auto bg-green-100 text-green-800">Sécurisé</Badge>
                       </label>
-                      <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                      <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-muted">
                         <input
                           type="radio"
                           name="payment"
                           value="cash"
                           checked={formData.paymentMethod === "cash"}
                           onChange={(e) => handleInputChange("paymentMethod", e.target.value)}
-                          className="text-ocean"
+                          className="text-primary"
                         />
-                        <Truck className="h-5 w-5 text-ocean" />
+                        <Truck className="h-5 w-5 text-primary" />
                         <div>
                           <p className="font-medium">Paiement à la livraison</p>
-                          <p className="text-sm text-gray-600">Espèces ou carte</p>
+                          <p className="text-sm text-muted-foreground">Espèces ou carte</p>
                         </div>
                       </label>
                     </div>
@@ -390,7 +390,7 @@ const Checkout = () => {
                       <div key={item.id} className="flex justify-between items-start">
                         <div className="flex-1">
                           <p className="font-medium text-sm">{item.name}</p>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-muted-foreground">
                             {item.quantity} × {item.price} DH
                           </p>
                         </div>
@@ -428,7 +428,7 @@ const Checkout = () => {
                 >
                   {loading ? (
                     <div className="flex items-center gap-2">
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground"></div>
                       Traitement...
                     </div>
                   ) : (
@@ -446,7 +446,7 @@ const Checkout = () => {
                       Paiement Sécurisé
                     </Badge>
                   </div>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     Vos données sont protégées et chiffrées
                   </p>
                 </div>
