@@ -135,7 +135,7 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       <main className="pb-20 md:pb-0">
         {/* Hero Section */}
@@ -162,9 +162,9 @@ const Contact = () => {
         </div>
 
         {/* Contact Methods */}
-        <div className="py-16 bg-gray-50">
+        <div className="py-16 bg-muted">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
+            <h2 className="text-3xl font-bold text-center mb-12 text-foreground">
               Plusieurs Moyens de Nous Joindre
             </h2>
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -174,12 +174,12 @@ const Contact = () => {
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-ocean/10 rounded-full mb-4">
                       <method.icon className="h-8 w-8 text-ocean" />
                     </div>
-                    <h3 className="text-xl font-semibold mb-2 text-gray-900">
+                    <h3 className="text-xl font-semibold mb-2 text-foreground">
                       {method.title}
                     </h3>
-                    <p className="text-gray-600 mb-3">{method.subtitle}</p>
+                    <p className="text-muted-foreground mb-3">{method.subtitle}</p>
                     <p className="font-medium text-ocean mb-3">{method.value}</p>
-                    <Badge variant="outline" className="mb-4 text-green-600 border-green-600">
+                    <Badge variant="outline" className="mb-4 text-emerald-600 border-emerald-600">
                       {method.available}
                     </Badge>
                     <div>
@@ -200,13 +200,13 @@ const Contact = () => {
             <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
               {/* Contact Form */}
               <div>
-                <h2 className="text-3xl font-bold mb-6 text-gray-900">
+                <h2 className="text-3xl font-bold mb-6 text-foreground">
                   Envoyez-nous un Message
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                         Nom complet *
                       </label>
                       <Input
@@ -220,7 +220,7 @@ const Contact = () => {
                       />
                     </div>
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
                         Téléphone
                       </label>
                       <Input
@@ -235,7 +235,7 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
                       Email *
                     </label>
                     <Input
@@ -250,7 +250,7 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
                       Sujet *
                     </label>
                     <Input
@@ -265,7 +265,7 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
                       Message *
                     </label>
                     <Textarea
@@ -300,7 +300,7 @@ const Contact = () => {
               {/* Contact Info */}
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-3xl font-bold mb-6 text-gray-900">
+                  <h2 className="text-3xl font-bold mb-6 text-foreground">
                     Informations de Contact
                   </h2>
                   <div className="space-y-6">
@@ -314,11 +314,11 @@ const Contact = () => {
                               </div>
                             </div>
                             <div>
-                              <h3 className="font-semibold text-gray-900 mb-2">
+                              <h3 className="font-semibold text-foreground mb-2">
                                 {info.title}
                               </h3>
                               {info.details.map((detail, idx) => (
-                                <p key={idx} className="text-gray-600">
+                                <p key={idx} className="text-muted-foreground">
                                   {detail}
                                 </p>
                               ))}
@@ -332,7 +332,7 @@ const Contact = () => {
 
                 {/* FAQ */}
                 <div>
-                  <h3 className="text-2xl font-bold mb-6 text-gray-900">
+                  <h3 className="text-2xl font-bold mb-6 text-foreground">
                     Questions Fréquentes
                   </h3>
                   <div className="space-y-4">
@@ -344,7 +344,7 @@ const Contact = () => {
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="pt-0">
-                          <p className="text-gray-600 text-sm">
+                          <p className="text-muted-foreground text-sm">
                             {faq.answer}
                           </p>
                         </CardContent>
@@ -358,14 +358,14 @@ const Contact = () => {
         </div>
 
         {/* Map Section */}
-        <div className="py-16 bg-gray-50">
+        <div className="py-16 bg-muted">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
+            <h2 className="text-3xl font-bold text-center mb-12 text-foreground">
               Notre Emplacement
             </h2>
             <div className="max-w-4xl mx-auto">
-              <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
-                <div className="text-center text-gray-500">
+              <div className="bg-muted rounded-lg h-96 flex items-center justify-center">
+                <div className="text-center text-muted-foreground">
                   <MapPin className="h-16 w-16 mx-auto mb-4" />
                   <p className="text-lg font-medium">Carte Interactive</p>
                   <p className="text-sm">Imm Assala, Marrakech</p>
