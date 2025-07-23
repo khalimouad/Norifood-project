@@ -87,12 +87,12 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-background">
         <Header />
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ocean mx-auto mb-4"></div>
-            <p className="text-gray-600">Chargement du produit...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Chargement du produit...</p>
           </div>
         </div>
         <Footer />
@@ -103,10 +103,10 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-background">
         <Header />
         <div className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Produit non trouvé</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">Produit non trouvé</h1>
           <Link to="/products">
             <Button>Retour aux produits</Button>
           </Link>
@@ -120,17 +120,17 @@ const ProductDetail = () => {
   const images = product.images || [product.image_url || "/placeholder.svg"];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       <main className="pb-20 md:pb-0">
         {/* Breadcrumb */}
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Link to="/" className="hover:text-ocean">Accueil</Link>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Link to="/" className="hover:text-primary">Accueil</Link>
             <span>/</span>
-            <Link to="/products" className="hover:text-ocean">Produits</Link>
+            <Link to="/products" className="hover:text-primary">Produits</Link>
             <span>/</span>
-            <span className="text-gray-900">{product.name}</span>
+            <span className="text-foreground">{product.name}</span>
           </div>
         </div>
 
@@ -138,7 +138,7 @@ const ProductDetail = () => {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Product Images */}
             <div className="space-y-4">
-              <div className="aspect-square rounded-lg overflow-hidden bg-gray-50">
+              <div className="aspect-square rounded-lg overflow-hidden bg-muted/50">
                 <img
                   src={images[selectedImage]}
                   alt={product.name}
@@ -151,8 +151,8 @@ const ProductDetail = () => {
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`aspect-square rounded-lg overflow-hidden border-2 ${
-                        selectedImage === index ? "border-ocean" : "border-gray-200"
+                      className={`aspect-square rounded-lg overflow-hidden border-2 transition-colors ${
+                        selectedImage === index ? "border-primary" : "border-border"
                       }`}
                     >
                       <img
@@ -171,20 +171,20 @@ const ProductDetail = () => {
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   {product.featured && (
-                    <Badge className="bg-coral text-white">Produit Vedette</Badge>
+                    <Badge className="bg-accent text-accent-foreground">Produit Vedette</Badge>
                   )}
                   {product.stock_quantity && product.stock_quantity > 0 ? (
-                    <Badge variant="outline" className="text-green-600 border-green-600">
+                    <Badge variant="outline" className="text-green-600 border-green-600 dark:text-green-400 dark:border-green-400">
                       <Check className="h-3 w-3 mr-1" />
                       En Stock
                     </Badge>
                   ) : (
-                    <Badge variant="outline" className="text-red-600 border-red-600">
+                    <Badge variant="outline" className="text-red-600 border-red-600 dark:text-red-400 dark:border-red-400">
                       Rupture de Stock
                     </Badge>
                   )}
                 </div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                <h1 className="text-3xl font-bold text-foreground mb-4">
                   {product.name}
                 </h1>
                 <div className="flex items-center gap-2 mb-4">
@@ -194,9 +194,9 @@ const ProductDetail = () => {
                     ))}
                   </div>
                 </div>
-                <div className="text-3xl font-bold text-ocean mb-4">
+                <div className="text-3xl font-bold text-primary mb-4">
                   {product.base_price} DH
-                  <span className="text-lg font-normal text-gray-600 ml-2">
+                  <span className="text-lg font-normal text-muted-foreground ml-2">
                     / {product.unit_type}
                   </span>
                 </div>
@@ -204,15 +204,15 @@ const ProductDetail = () => {
 
               {product.description && (
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Description</h3>
-                  <p className="text-gray-600">{product.description}</p>
+                  <h3 className="font-semibold text-foreground mb-2">Description</h3>
+                  <p className="text-muted-foreground">{product.description}</p>
                 </div>
               )}
 
               {/* Quantity Selector */}
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <span className="font-medium text-gray-900">Quantité:</span>
+                  <span className="font-medium text-foreground">Quantité:</span>
                   <div className="flex items-center gap-2">
                     <Button
                       variant="outline"
@@ -223,7 +223,7 @@ const ProductDetail = () => {
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    <span className="min-w-[3rem] text-center font-medium text-lg">
+                    <span className="min-w-[3rem] text-center font-medium text-lg text-foreground">
                       {quantity}
                     </span>
                     <Button
@@ -248,28 +248,28 @@ const ProductDetail = () => {
               </div>
 
               {/* Product Features */}
-              <Card className="border-0 bg-gray-50">
+              <Card className="border-0 bg-muted/50">
                 <CardContent className="p-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="flex items-center gap-3">
-                      <Truck className="h-5 w-5 text-ocean flex-shrink-0" />
+                      <Truck className="h-5 w-5 text-primary flex-shrink-0" />
                       <div>
                         <p className="font-medium text-sm">Livraison Express</p>
-                        <p className="text-xs text-gray-600">Même jour ou 24h</p>
+                        <p className="text-xs text-muted-foreground">Même jour ou 24h</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Shield className="h-5 w-5 text-ocean flex-shrink-0" />
+                      <Shield className="h-5 w-5 text-primary flex-shrink-0" />
                       <div>
                         <p className="font-medium text-sm">Fraîcheur Garantie</p>
-                        <p className="text-xs text-gray-600">Chaîne du froid</p>
+                        <p className="text-xs text-muted-foreground">Chaîne du froid</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-ocean flex-shrink-0" />
+                      <Clock className="h-5 w-5 text-primary flex-shrink-0" />
                       <div>
                         <p className="font-medium text-sm">Préparation Express</p>
-                        <p className="text-xs text-gray-600">Prêt en 2h</p>
+                        <p className="text-xs text-muted-foreground">Prêt en 2h</p>
                       </div>
                     </div>
                   </div>
@@ -287,26 +287,26 @@ const ProductDetail = () => {
                 <div className="space-y-3 text-sm">
                   {product.product_type && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Type:</span>
-                      <span className="font-medium">{product.product_type}</span>
+                      <span className="text-muted-foreground">Type:</span>
+                      <span className="font-medium text-foreground">{product.product_type}</span>
                     </div>
                   )}
                   {product.origin && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Origine:</span>
-                      <span className="font-medium">{product.origin}</span>
+                      <span className="text-muted-foreground">Origine:</span>
+                      <span className="font-medium text-foreground">{product.origin}</span>
                     </div>
                   )}
                   {product.storage_conditions && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Conservation:</span>
-                      <span className="font-medium">{product.storage_conditions}</span>
+                      <span className="text-muted-foreground">Conservation:</span>
+                      <span className="font-medium text-foreground">{product.storage_conditions}</span>
                     </div>
                   )}
                   {product.shelf_life && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Durée de conservation:</span>
-                      <span className="font-medium">{product.shelf_life}</span>
+                      <span className="text-muted-foreground">Durée de conservation:</span>
+                      <span className="font-medium text-foreground">{product.shelf_life}</span>
                     </div>
                   )}
                 </div>
@@ -314,11 +314,11 @@ const ProductDetail = () => {
               <div>
                 <h3 className="font-bold text-lg mb-4">Conseils de Préparation</h3>
                 {product.preparation_tips ? (
-                  <div className="text-sm text-gray-600 whitespace-pre-line">
+                  <div className="text-sm text-muted-foreground whitespace-pre-line">
                     {product.preparation_tips}
                   </div>
                 ) : (
-                  <ul className="space-y-2 text-sm text-gray-600">
+                  <ul className="space-y-2 text-sm text-muted-foreground">
                     <li>• Sortir du réfrigérateur 15 minutes avant cuisson</li>
                     <li>• Cuisson recommandée: grillé, poêlé ou au four</li>
                     <li>• Température interne: 63°C</li>
