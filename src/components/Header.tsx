@@ -28,9 +28,45 @@ export const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const { getTotalItems } = useCart();
   const { user, signOut } = useAuth();
   const cartCount = getTotalItems();
+
+  const normalizeText = (text: string) => {
+    return text
+      .toLowerCase()
+      .normalize('NFD') // Decompose accented characters
+      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+      .replace(/[^a-z0-9\s]/g, '') // Keep only letters, numbers, and spaces
+      .replace(/\s+/g, ' ') // Normalize whitespace
+      .trim();
+  };
+
+  const calculateRelevanceScore = (product: Product, searchWords: string[]) => {
+    const name = normalizeText(product.name || '');
+    const description = normalizeText(product.description || '');
+    
+    let score = 0;
+    
+    searchWords.forEach(word => {
+      if (word.length < 2) return; // Skip single characters
+      
+      // Exact name match gets highest score
+      if (name === word) score += 100;
+      // Name starts with search word
+      else if (name.startsWith(word)) score += 80;
+      // Name contains word at word boundary (exact word match)
+      else if (name.split(' ').includes(word)) score += 60;
+      // Name contains word but only if it's at least 3 characters to avoid false positives
+      else if (word.length >= 3 && name.includes(word)) score += 30;
+      
+      // Description exact word matches
+      if (description.split(' ').includes(word)) score += 20;
+    });
+    
+    return score;
+  };
 
   // Load products for search
   useEffect(() => {
@@ -193,9 +229,17 @@ export const Header = () => {
       </header>
 
       {/* Search Command Dialog */}
-      <CommandDialog open={searchOpen} onOpenChange={setSearchOpen}>
+      <CommandDialog 
+        open={searchOpen} 
+        onOpenChange={(open) => {
+          setSearchOpen(open);
+          if (!open) setSearchTerm('');
+        }}
+      >
         <CommandInput 
           placeholder="Rechercher des produits..." 
+          value={searchTerm}
+          onValueChange={setSearchTerm}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.defaultPrevented) {
               const value = e.currentTarget.value;
@@ -203,35 +247,57 @@ export const Header = () => {
             }
           }}
         />
-        <CommandList>
+        <CommandList className="max-h-[400px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <CommandEmpty>Aucun produit trouvé.</CommandEmpty>
           <CommandGroup heading="Produits">
-            {products.map((product) => (
-              <CommandItem
-                key={product.id}
-                value={`${product.name} ${product.description || ''}`}
-                onSelect={() => handleProductSelect(product)}
-                className="flex items-center gap-3 p-3"
-              >
-                <div className="w-12 h-12 bg-muted rounded-lg flex-shrink-0 overflow-hidden">
-                  {product.image_url ? (
-                    <img 
-                      src={product.image_url} 
-                      alt={product.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Search className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-foreground truncate">{product.name}</p>
-                  <p className="text-sm text-muted-foreground">{product.base_price} MAD/{product.unit_type}</p>
-                </div>
-              </CommandItem>
-            ))}
+            {(() => {
+              // Filter products based on search term using the same logic as Products page
+              const filteredProducts = searchTerm ? (() => {
+                const normalizedSearchTerm = normalizeText(searchTerm);
+                const searchWords = normalizedSearchTerm.split(' ').filter(word => word.length > 1);
+                
+                if (searchWords.length === 0) return [];
+                
+                const productsWithScores = products.map(product => ({
+                  product,
+                  score: calculateRelevanceScore(product, searchWords)
+                })).filter(item => item.score > 0);
+                
+                productsWithScores.sort((a, b) => {
+                  if (b.score !== a.score) return b.score - a.score;
+                  return a.product.name.localeCompare(b.product.name);
+                });
+                
+                return productsWithScores.slice(0, 10).map(item => item.product);
+              })() : products.slice(0, 10);
+              
+              return filteredProducts.map((product) => (
+                <CommandItem
+                  key={product.id}
+                  value={`${product.name} ${product.description || ''}`}
+                  onSelect={() => handleProductSelect(product)}
+                  className="flex items-center gap-3 p-3"
+                >
+                  <div className="w-12 h-12 bg-muted rounded-lg flex-shrink-0 overflow-hidden">
+                    {product.image_url ? (
+                      <img 
+                        src={product.image_url} 
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Search className="h-5 w-5 text-muted-foreground" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-foreground truncate">{product.name}</p>
+                    <p className="text-sm text-muted-foreground">{product.base_price} MAD/{product.unit_type}</p>
+                  </div>
+                </CommandItem>
+              ));
+            })()}
           </CommandGroup>
         </CommandList>
       </CommandDialog>
