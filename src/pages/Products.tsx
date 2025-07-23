@@ -59,28 +59,73 @@ const Products = () => {
     .replace(/\s+/g, ' ') // Normalize whitespace
     .trim();
   };
+
+  const calculateRelevanceScore = (product: Product, searchWords: string[]) => {
+    const name = normalizeText(product.name || '');
+    const description = normalizeText(product.description || '');
+    const productType = normalizeText(product.product_type || '');
+    const origin = normalizeText(product.origin || '');
+    
+    let score = 0;
+    
+    searchWords.forEach(word => {
+      if (word.length < 2) return; // Skip single characters
+      
+      // Exact name match gets highest score
+      if (name === word) score += 100;
+      // Name starts with search word
+      else if (name.startsWith(word)) score += 80;
+      // Name contains word at word boundary (exact word match)
+      else if (name.split(' ').includes(word)) score += 60;
+      // Name contains word but only if it's at least 3 characters to avoid false positives
+      else if (word.length >= 3 && name.includes(word)) score += 30;
+      
+      // Product type exact matches
+      if (productType === word) score += 50;
+      else if (productType.split(' ').includes(word)) score += 25;
+      
+      // Description exact word matches
+      if (description.split(' ').includes(word)) score += 20;
+      
+      // Origin matches
+      if (origin.split(' ').includes(word)) score += 15;
+    });
+    
+    return score;
+  };
+
   const filterAndSortProducts = () => {
     let filtered = products;
     console.log("Filtering products:", products.length, "search term:", searchTerm);
 
-    // Filter by search term with flexible matching
+    // Filter by search term with improved relevance matching
     if (searchTerm) {
       const normalizedSearchTerm = normalizeText(searchTerm);
-      const searchWords = normalizedSearchTerm.split(' ').filter(word => word.length > 0);
+      const searchWords = normalizedSearchTerm.split(' ').filter(word => word.length > 1); // Ignore single characters
       console.log("Search words:", searchWords);
-      filtered = filtered.filter(product => {
-        const searchableText = [product.name || '', product.description || '', product.product_type || '', product.origin || '', product.unit_type || ''].join(' ');
-        const normalizedText = normalizeText(searchableText);
-
-        // Check if all search words are found in the product text
-        const matches = searchWords.every(word => normalizedText.includes(word) ||
-        // Also check for partial matches at word boundaries
-        normalizedText.split(' ').some(textWord => textWord.startsWith(word) || textWord.includes(word)));
-        if (matches) {
-          console.log("Product matches:", product.name, "searchable text:", searchableText);
-        }
-        return matches;
-      });
+      
+      if (searchWords.length > 0) {
+        // Calculate relevance scores and filter out products with score 0
+        const productsWithScores = products.map(product => ({
+          product,
+          score: calculateRelevanceScore(product, searchWords)
+        })).filter(item => item.score > 0);
+        
+        // Sort by relevance score (highest first), then by name
+        productsWithScores.sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score;
+          return a.product.name.localeCompare(b.product.name);
+        });
+        
+        filtered = productsWithScores.map(item => item.product);
+        
+        console.log("Top matching products:", productsWithScores.slice(0, 3).map(p => ({
+          name: p.product.name,
+          score: p.score
+        })));
+      } else {
+        filtered = []; // No valid search words
+      }
     }
 
     // Filter by category
