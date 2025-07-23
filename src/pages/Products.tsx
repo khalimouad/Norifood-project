@@ -123,9 +123,8 @@ const Products = () => {
           name: p.product.name,
           score: p.score
         })));
-      } else {
-        filtered = []; // No valid search words
       }
+      // If no valid search words, keep all products (don't filter by search)
     }
 
     // Filter by category
