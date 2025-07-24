@@ -135,12 +135,17 @@ const Cart = () => {
                             <h3 className="font-semibold text-foreground text-lg mb-1">
                               {item.name}
                             </h3>
+                            {item.weight && (
+                              <p className="text-sm text-muted-foreground mb-1">
+                                Poids: {item.weight}kg
+                              </p>
+                            )}
                             <div className="flex items-center gap-2">
                               <span className="text-xl font-bold text-primary">
                                 {item.price} DH
                               </span>
                               <span className="text-sm text-muted-foreground">
-                                / {item.unitType}
+                                / {item.weight ? `pièce (${item.weight}kg)` : item.unitType}
                               </span>
                             </div>
                           </div>

@@ -469,9 +469,35 @@ const AdminProductForm = () => {
           <Card>
             <CardHeader>
               <CardTitle>Variations de Produit (Pièces Individuelles)</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Ajoutez des variations pour permettre aux clients de choisir entre différentes pièces individuelles avec leur propre poids et prix.
+              </p>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
+                {/* Quick Add Buttons */}
+                <div className="p-4 bg-muted/50 rounded-lg">
+                  <Label className="text-sm font-medium mb-2 block">Ajout Rapide par Poids:</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {[0.5, 1, 1.5, 2, 2.5, 3].map((weight) => (
+                      <Button
+                        key={weight}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setVariationForm({ 
+                          ...variationForm, 
+                          weight_kg: weight,
+                          name: `Pièce de ${weight}kg`,
+                          price: Math.round(formData.base_price * weight * 100) / 100
+                        })}
+                      >
+                        {weight}kg
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Add/Edit Variation Form */}
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 border rounded">
                   <div>
@@ -500,7 +526,14 @@ const AdminProductForm = () => {
                       type="number"
                       step="0.01"
                       value={variationForm.weight_kg}
-                      onChange={(e) => setVariationForm({ ...variationForm, weight_kg: parseFloat(e.target.value) })}
+                      onChange={(e) => {
+                        const weight = parseFloat(e.target.value);
+                        setVariationForm({ 
+                          ...variationForm, 
+                          weight_kg: weight,
+                          price: Math.round(formData.base_price * weight * 100) / 100
+                        });
+                      }}
                     />
                   </div>
                   <div>
@@ -517,6 +550,7 @@ const AdminProductForm = () => {
                       type="button"
                       onClick={handleAddVariation}
                       className="w-full"
+                      disabled={!variationForm.name || !variationForm.weight_kg || !variationForm.price}
                     >
                       {editingVariation ? <Edit className="h-4 w-4 mr-2" /> : <Plus className="h-4 w-4 mr-2" />}
                       {editingVariation ? 'Modifier' : 'Ajouter'}

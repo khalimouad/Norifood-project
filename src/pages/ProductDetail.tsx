@@ -23,10 +23,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
 
 type Product = Tables<"products">;
+type ProductVariation = Tables<"product_variations">;
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
+  const [variations, setVariations] = useState<ProductVariation[]>([]);
+  const [selectedVariation, setSelectedVariation] = useState<ProductVariation | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -46,10 +49,36 @@ const ProductDetail = () => {
         .select("*")
         .eq("id", productId)
         .eq("is_active", true)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
+      if (!data) {
+        toast({
+          title: "Produit introuvable",
+          description: "Ce produit n'existe pas ou n'est plus disponible",
+          variant: "destructive"
+        });
+        return;
+      }
+      
       setProduct(data);
+      
+      // Fetch variations
+      const { data: variationsData, error: variationsError } = await supabase
+        .from("product_variations")
+        .select("*")
+        .eq("product_id", productId)
+        .eq("is_active", true)
+        .order("price", { ascending: true });
+
+      if (variationsError) throw variationsError;
+      setVariations(variationsData || []);
+      
+      // Auto-select first variation if available
+      if (variationsData && variationsData.length > 0) {
+        setSelectedVariation(variationsData[0]);
+      }
+      
     } catch (error) {
       console.error("Error fetching product:", error);
       toast({
@@ -65,17 +94,24 @@ const ProductDetail = () => {
   const handleAddToCart = () => {
     if (!product) return;
     
+    const finalPrice = selectedVariation ? selectedVariation.price : product.base_price;
+    const finalWeight = selectedVariation ? selectedVariation.weight_kg : null;
+    const itemId = selectedVariation ? `${product.id}-${selectedVariation.id}` : product.id;
+    const itemName = selectedVariation ? `${product.name} - ${selectedVariation.name}` : product.name;
+    
     addItem({
-      id: product.id,
-      name: product.name,
-      price: product.base_price,
+      id: itemId,
+      name: itemName,
+      price: finalPrice,
       image: product.image_url || "/placeholder.svg",
-      unitType: product.unit_type as string
+      unitType: product.unit_type as string,
+      variationId: selectedVariation?.id,
+      weight: finalWeight || undefined
     });
 
     toast({
       title: "Produit ajouté !",
-      description: `${quantity} ${product.unit_type} de ${product.name} ajouté(s) au panier`
+      description: `${quantity} ${selectedVariation ? `pièce de ${finalWeight}kg` : product.unit_type} de ${itemName} ajouté(s) au panier`
     });
   };
 
@@ -195,9 +231,9 @@ const ProductDetail = () => {
                   </div>
                 </div>
                 <div className="text-3xl font-bold text-primary mb-4">
-                  {product.base_price} DH
+                  {selectedVariation ? selectedVariation.price : product.base_price} DH
                   <span className="text-lg font-normal text-muted-foreground ml-2">
-                    / {product.unit_type}
+                    {selectedVariation ? `/ pièce (${selectedVariation.weight_kg}kg)` : `/ ${product.unit_type}`}
                   </span>
                 </div>
               </div>
@@ -206,6 +242,41 @@ const ProductDetail = () => {
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">Description</h3>
                   <p className="text-muted-foreground">{product.description}</p>
+                </div>
+              )}
+
+              {/* Product Variations */}
+              {variations.length > 0 && (
+                <div>
+                  <h3 className="font-semibold text-foreground mb-3">Choisir une pièce:</h3>
+                  <div className="grid gap-3">
+                    {variations.map((variation) => (
+                      <div
+                        key={variation.id}
+                        onClick={() => setSelectedVariation(variation)}
+                        className={`p-4 border rounded-lg cursor-pointer transition-all hover:border-primary ${
+                          selectedVariation?.id === variation.id
+                            ? "border-primary bg-primary/5"
+                            : "border-border"
+                        }`}
+                      >
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <p className="font-medium text-foreground">{variation.name}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {variation.weight_kg}kg • Stock: {variation.stock_quantity}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-bold text-primary">{variation.price} DH</p>
+                            <p className="text-xs text-muted-foreground">
+                              {(variation.price / variation.weight_kg!).toFixed(2)} DH/kg
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
@@ -239,11 +310,15 @@ const ProductDetail = () => {
 
                 <Button
                   onClick={handleAddToCart}
-                  disabled={!product.stock_quantity || product.stock_quantity <= 0}
+                  disabled={
+                    selectedVariation 
+                      ? !selectedVariation.stock_quantity || selectedVariation.stock_quantity <= 0
+                      : !product.stock_quantity || product.stock_quantity <= 0
+                  }
                   className="w-full"
                   size="lg"
                 >
-                  Ajouter au Panier - {(product.base_price * quantity).toFixed(2)} DH
+                  Ajouter au Panier - {((selectedVariation ? selectedVariation.price : product.base_price) * quantity).toFixed(2)} DH
                 </Button>
               </div>
 

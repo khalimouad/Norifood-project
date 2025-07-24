@@ -7,6 +7,8 @@ interface CartItem {
   quantity: number;
   image: string;
   unitType: string;
+  variationId?: string;
+  weight?: number;
 }
 
 interface CartContextType {
