@@ -11,7 +11,7 @@ import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { X, Upload, Save, ArrowLeft } from 'lucide-react';
+import { X, Upload, Save, ArrowLeft, Plus, Trash2 } from 'lucide-react';
 
 interface ProductFormData {
   name: string;
@@ -24,6 +24,7 @@ interface ProductFormData {
   category_id?: string;
   is_active: boolean;
   featured: boolean;
+  has_variations: boolean;
   image_url?: string;
   images: string[];
   origin?: string;
@@ -56,10 +57,13 @@ export function ProductForm() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   
+  const [variations, setVariations] = useState<any[]>([]);
+  
   const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<ProductFormData>({
     defaultValues: {
       is_active: true,
       featured: false,
+      has_variations: false,
       base_price: 0,
       stock_quantity: 0,
       min_order_quantity: 1,
@@ -107,12 +111,24 @@ export function ProductForm() {
         console.error('Error fetching product tags:', tagsError);
       }
 
+      // Get product variations
+      const { data: productVariations, error: variationsError } = await supabase
+        .from('product_variations')
+        .select('*')
+        .eq('product_id', id);
+
+      if (variationsError) {
+        console.error('Error fetching product variations:', variationsError);
+      }
+
       if (product) {
         reset({
           ...product,
+          has_variations: (productVariations?.length || 0) > 0,
           images: product.images || []
         });
         setSelectedTags(productTags?.map((pt) => pt.tag_id) || []);
+        setVariations(productVariations || []);
       }
     } catch (error) {
       console.error('Error fetching product:', error);
@@ -196,6 +212,27 @@ export function ProductForm() {
           }));
           
           await supabase.from('product_tags').insert(tagInserts);
+        }
+
+        // Handle variations
+        if (data.has_variations && variations.length > 0) {
+          // Remove existing variations
+          await supabase.from('product_variations').delete().eq('product_id', productId);
+          
+          // Add new variations
+          const variationInserts = variations.map(variation => ({
+            product_id: productId,
+            name: variation.name,
+            price: variation.price,
+            weight_kg: variation.weight_kg,
+            stock_quantity: variation.stock_quantity,
+            is_active: variation.is_active
+          }));
+          
+          await supabase.from('product_variations').insert(variationInserts);
+        } else if (!data.has_variations) {
+          // Remove all variations if has_variations is disabled
+          await supabase.from('product_variations').delete().eq('product_id', productId);
         }
       }
 
@@ -451,6 +488,159 @@ export function ProductForm() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Variations Management - Only show when has_variations is enabled */}
+            {watch('has_variations') && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Variantes du produit</CardTitle>
+                  <CardDescription>Gérez les différentes variantes de ce produit</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-medium">Variantes</h4>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setVariations([...variations, { 
+                        name: '', 
+                        price: watch('base_price') || 0, 
+                        weight_kg: 1, 
+                        stock_quantity: 0,
+                        is_active: true 
+                      }])}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Ajouter une variante
+                    </Button>
+                  </div>
+
+                  {/* Quick Add Buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const basePrice = watch('base_price') || 0;
+                        const newVariations = [
+                          { name: '250g', weight_kg: 0.25, price: basePrice * 0.25, stock_quantity: 0, is_active: true },
+                          { name: '500g', weight_kg: 0.5, price: basePrice * 0.5, stock_quantity: 0, is_active: true },
+                          { name: '1kg', weight_kg: 1, price: basePrice, stock_quantity: 0, is_active: true },
+                          { name: '2kg', weight_kg: 2, price: basePrice * 2, stock_quantity: 0, is_active: true }
+                        ];
+                        setVariations(newVariations);
+                      }}
+                    >
+                      Variantes de poids
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const basePrice = watch('base_price') || 0;
+                        const newVariations = [
+                          { name: '1 pièce', weight_kg: 1, price: basePrice, stock_quantity: 0, is_active: true },
+                          { name: '3 pièces', weight_kg: 3, price: basePrice * 2.8, stock_quantity: 0, is_active: true },
+                          { name: '5 pièces', weight_kg: 5, price: basePrice * 4.5, stock_quantity: 0, is_active: true },
+                          { name: '10 pièces', weight_kg: 10, price: basePrice * 8.5, stock_quantity: 0, is_active: true }
+                        ];
+                        setVariations(newVariations);
+                      }}
+                    >
+                      Variantes par pièces
+                    </Button>
+                  </div>
+
+                  {/* Variations List */}
+                  <div className="space-y-3">
+                    {variations.map((variation, index) => (
+                      <div key={index} className="border rounded p-3 space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium text-sm">Variante {index + 1}</span>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setVariations(variations.filter((_, i) => i !== index))}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <Label className="text-xs">Nom</Label>
+                            <Input
+                              value={variation.name}
+                              onChange={(e) => {
+                                const newVariations = [...variations];
+                                newVariations[index].name = e.target.value;
+                                setVariations(newVariations);
+                              }}
+                              placeholder="Ex: 500g"
+                              className="h-8"
+                            />
+                          </div>
+                          <div>
+                            <Label className="text-xs">Poids (kg)</Label>
+                            <Input
+                              type="number"
+                              step="0.01"
+                              value={variation.weight_kg}
+                              onChange={(e) => {
+                                const newVariations = [...variations];
+                                newVariations[index].weight_kg = parseFloat(e.target.value) || 0;
+                                setVariations(newVariations);
+                              }}
+                              className="h-8"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <Label className="text-xs">Prix (MAD)</Label>
+                            <Input
+                              type="number"
+                              step="0.01"
+                              value={variation.price}
+                              onChange={(e) => {
+                                const newVariations = [...variations];
+                                newVariations[index].price = parseFloat(e.target.value) || 0;
+                                setVariations(newVariations);
+                              }}
+                              className="h-8"
+                            />
+                          </div>
+                          <div>
+                            <Label className="text-xs">Stock</Label>
+                            <Input
+                              type="number"
+                              value={variation.stock_quantity}
+                              onChange={(e) => {
+                                const newVariations = [...variations];
+                                newVariations[index].stock_quantity = parseInt(e.target.value) || 0;
+                                setVariations(newVariations);
+                              }}
+                              className="h-8"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {variations.length === 0 && (
+                    <div className="text-center py-8 text-muted-foreground">
+                      Aucune variante ajoutée. Utilisez les boutons ci-dessus pour ajouter des variantes.
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           {/* Sidebar */}
@@ -476,6 +666,15 @@ export function ProductForm() {
                     id="featured"
                     checked={watch('featured')}
                     onCheckedChange={(checked) => setValue('featured', checked)}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="has_variations">Produit avec variantes</Label>
+                  <Switch
+                    id="has_variations"
+                    checked={watch('has_variations')}
+                    onCheckedChange={(checked) => setValue('has_variations', checked)}
                   />
                 </div>
               </CardContent>
