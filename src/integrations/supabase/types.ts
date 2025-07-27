@@ -337,6 +337,8 @@ export type Database = {
           delivery_address: string
           delivery_date: string | null
           delivery_fee: number | null
+          delivery_latitude: number | null
+          delivery_longitude: number | null
           delivery_phone: string
           delivery_time_slot: string | null
           guest_address: string | null
@@ -358,6 +360,8 @@ export type Database = {
           delivery_address: string
           delivery_date?: string | null
           delivery_fee?: number | null
+          delivery_latitude?: number | null
+          delivery_longitude?: number | null
           delivery_phone: string
           delivery_time_slot?: string | null
           guest_address?: string | null
@@ -379,6 +383,8 @@ export type Database = {
           delivery_address?: string
           delivery_date?: string | null
           delivery_fee?: number | null
+          delivery_latitude?: number | null
+          delivery_longitude?: number | null
           delivery_phone?: string
           delivery_time_slot?: string | null
           guest_address?: string | null

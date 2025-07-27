@@ -8,7 +8,7 @@ import { MapPin, Search, Check } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface AddressMapSelectorProps {
-  onAddressSelect: (address: string, city: string, postalCode?: string) => void;
+  onAddressSelect: (address: string, city: string, postalCode?: string, latitude?: number, longitude?: number) => void;
   initialAddress?: string;
 }
 
@@ -21,6 +21,7 @@ export const AddressMapSelector: React.FC<AddressMapSelectorProps> = ({
   const marker = useRef<mapboxgl.Marker | null>(null);
   const [mapboxToken, setMapboxToken] = useState('');
   const [selectedAddress, setSelectedAddress] = useState(initialAddress);
+  const [selectedCoordinates, setSelectedCoordinates] = useState<{lat: number, lng: number} | null>(null);
   const [isMapVisible, setIsMapVisible] = useState(false);
 
   // Initialize map when token is provided
@@ -77,6 +78,7 @@ export const AddressMapSelector: React.FC<AddressMapSelectorProps> = ({
           }
           
           setSelectedAddress(address);
+          setSelectedCoordinates({ lat, lng });
           toast.success('Adresse sélectionnée sur la carte');
         }
       } catch (error) {
@@ -91,12 +93,12 @@ export const AddressMapSelector: React.FC<AddressMapSelectorProps> = ({
   }, [mapboxToken]);
 
   const handleConfirmAddress = () => {
-    if (selectedAddress) {
+    if (selectedAddress && selectedCoordinates) {
       // Extract basic city and postal code from the address string
       const addressParts = selectedAddress.split(',');
       const city = addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '';
       
-      onAddressSelect(selectedAddress, city);
+      onAddressSelect(selectedAddress, city, undefined, selectedCoordinates.lat, selectedCoordinates.lng);
       setIsMapVisible(false);
       toast.success('Adresse confirmée');
     }

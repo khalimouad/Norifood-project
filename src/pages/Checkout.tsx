@@ -43,7 +43,9 @@ const Checkout = () => {
     deliveryDate: "",
     deliveryTime: "",
     notes: "",
-    paymentMethod: "cmi"
+    paymentMethod: "cmi",
+    latitude: null as number | null,
+    longitude: null as number | null
   });
 
   const [loading, setLoading] = useState(false);
@@ -56,12 +58,14 @@ const Checkout = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleAddressSelect = (address: string, city: string, postalCode?: string) => {
+  const handleAddressSelect = (address: string, city: string, postalCode?: string, latitude?: number, longitude?: number) => {
     setFormData(prev => ({
       ...prev,
       address,
       city,
-      postalCode: postalCode || prev.postalCode
+      postalCode: postalCode || prev.postalCode,
+      latitude: latitude || prev.latitude,
+      longitude: longitude || prev.longitude
     }));
   };
 
@@ -122,7 +126,11 @@ const Checkout = () => {
           orderId,
           items,
           formData,
-          total
+          total,
+          coordinates: { 
+            latitude: formData.latitude, 
+            longitude: formData.longitude 
+          }
         }));
         
         // Redirect to CMI payment page
