@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/useCart";
 import { useAuth } from "@/hooks/useAuth";
+import { AddressMapSelector } from "@/components/AddressMapSelector";
 import { 
   CreditCard, 
   MapPin, 
@@ -53,6 +54,15 @@ const Checkout = () => {
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleAddressSelect = (address: string, city: string, postalCode?: string) => {
+    setFormData(prev => ({
+      ...prev,
+      address,
+      city,
+      postalCode: postalCode || prev.postalCode
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -237,6 +247,11 @@ const Checkout = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
+                    <AddressMapSelector
+                      onAddressSelect={handleAddressSelect}
+                      initialAddress={formData.address}
+                    />
+                    
                     <div>
                       <Label htmlFor="address">Adresse complète *</Label>
                       <Input
