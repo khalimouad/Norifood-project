@@ -119,7 +119,7 @@ export const Hero = () => {
           {/* Banner Carousel - Shows first on mobile, right on desktop */}
           <div className="order-1 lg:order-2 relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-primary/30 to-blue-600/20 rounded-2xl blur-xl -z-10"></div>
-            <div className="relative bg-background/5 backdrop-blur-sm rounded-2xl p-2 shadow-2xl shadow-blue-500/25">
+            <div className="relative rounded-2xl p-2">
               {loading ? (
                 <div className="bg-card rounded-xl shadow-lg h-64 animate-pulse"></div>
               ) : banners.length > 0 ? (
@@ -128,7 +128,8 @@ export const Hero = () => {
                     <CarouselContent>
                       {banners.map((banner) => (
                         <CarouselItem key={banner.id}>
-                          <div className="bg-card rounded-xl shadow-lg overflow-hidden">
+                           <div className="bg-card/95 backdrop-blur-sm rounded-xl shadow-2xl shadow-blue-500/25 overflow-hidden relative">
+                             <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-transparent to-blue-600/10 rounded-xl -z-10"></div>
                             <img 
                               src={banner.image_url} 
                               alt={banner.title} 
