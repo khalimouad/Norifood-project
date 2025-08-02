@@ -11,7 +11,7 @@ import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { X, Upload, Save, ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { X, Upload, Save, ArrowLeft, Plus, Trash2, Tag } from 'lucide-react';
 
 interface ProductFormData {
   name: string;
@@ -27,6 +27,7 @@ interface ProductFormData {
   has_variations: boolean;
   image_url?: string;
   images: string[];
+  keywords: string[];
   origin?: string;
   product_type?: string;
   shelf_life?: string;
@@ -55,6 +56,7 @@ export function ProductForm() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [keywordInput, setKeywordInput] = useState('');
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   
   const [variations, setVariations] = useState<any[]>([]);
@@ -68,7 +70,8 @@ export function ProductForm() {
       stock_quantity: 0,
       min_order_quantity: 1,
       unit_type: 'kg',
-      images: []
+      images: [],
+      keywords: []
     }
   });
 
@@ -274,6 +277,28 @@ export function ProductForm() {
     setValue('images', newImages);
   };
 
+  const addKeyword = () => {
+    if (keywordInput.trim()) {
+      const currentKeywords = watch('keywords') || [];
+      if (!currentKeywords.includes(keywordInput.trim())) {
+        setValue('keywords', [...currentKeywords, keywordInput.trim()]);
+        setKeywordInput('');
+      }
+    }
+  };
+
+  const removeKeyword = (keywordToRemove: string) => {
+    const currentKeywords = watch('keywords') || [];
+    setValue('keywords', currentKeywords.filter(keyword => keyword !== keywordToRemove));
+  };
+
+  const handleKeywordKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addKeyword();
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
@@ -339,6 +364,49 @@ export function ProductForm() {
                     placeholder="Description détaillée du produit"
                     rows={3}
                   />
+                </div>
+
+                {/* Keywords Section */}
+                <div className="space-y-2">
+                  <Label>Mots-clés pour la recherche</Label>
+                  <div className="space-y-2">
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Ajouter un mot-clé..."
+                        value={keywordInput}
+                        onChange={(e) => setKeywordInput(e.target.value)}
+                        onKeyPress={handleKeywordKeyPress}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={addKeyword}
+                        disabled={!keywordInput.trim()}
+                      >
+                        <Tag className="h-4 w-4 mr-1" />
+                        Ajouter
+                      </Button>
+                    </div>
+                    {watch('keywords')?.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {watch('keywords')?.map((keyword, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="text-xs cursor-pointer hover:bg-destructive hover:text-destructive-foreground"
+                            onClick={() => removeKeyword(keyword)}
+                          >
+                            {keyword}
+                            <X className="h-3 w-3 ml-1" />
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                    <p className="text-xs text-muted-foreground">
+                      Ajoutez des mots-clés qui aideront les clients à trouver ce produit lors de leurs recherches
+                    </p>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
