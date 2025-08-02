@@ -1,34 +1,31 @@
 project_id = "fxqeczayzxuvewncpaod"
 
 [functions.manage-products]
-verify_jwt = false
+verify_jwt = true
 
 [functions.manage-categories]
-verify_jwt = false
+verify_jwt = true
 
 [functions.manage-tags]
-verify_jwt = false
+verify_jwt = true
 
 [functions.cmi-payment]
 verify_jwt = false
 
 [functions.manage-orders]
-verify_jwt = false
+verify_jwt = true
 
 [functions.manage-customers]
-verify_jwt = false
+verify_jwt = true
 
 [functions.manage-promo-codes]
-verify_jwt = false
+verify_jwt = true
 
 [functions.manage-recipes]
-verify_jwt = false
+verify_jwt = true
 
 [functions.manage-banners]
-verify_jwt = false
+verify_jwt = true
 
 [functions.manage-payments]
-verify_jwt = false
-
-[functions.cmi-payment]
-verify_jwt = false
+verify_jwt = true

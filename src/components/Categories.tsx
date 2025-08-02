@@ -108,12 +108,7 @@ export const Categories = () => {
                 <CardContent className="p-4 text-center">
                   <div className="mb-3 flex justify-center">
                     <div className="p-3 bg-ocean/10 rounded-full group-hover:bg-ocean/20 transition-colors">
-                      {category.custom_svg ? (
-                        <div 
-                          className="h-8 w-8 text-ocean"
-                          dangerouslySetInnerHTML={{ __html: category.custom_svg }}
-                        />
-                      ) : IconComponent ? (
+                      {IconComponent ? (
                         <IconComponent className="h-8 w-8 text-ocean" />
                       ) : (
                         <Fish className="h-8 w-8 text-ocean" />
