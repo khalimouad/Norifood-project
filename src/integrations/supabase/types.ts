@@ -543,6 +543,7 @@ export type Database = {
           image_url: string | null
           images: string[] | null
           is_active: boolean | null
+          keywords: string[] | null
           max_order_quantity: number | null
           min_order_quantity: number | null
           name: string
@@ -567,6 +568,7 @@ export type Database = {
           image_url?: string | null
           images?: string[] | null
           is_active?: boolean | null
+          keywords?: string[] | null
           max_order_quantity?: number | null
           min_order_quantity?: number | null
           name: string
@@ -591,6 +593,7 @@ export type Database = {
           image_url?: string | null
           images?: string[] | null
           is_active?: boolean | null
+          keywords?: string[] | null
           max_order_quantity?: number | null
           min_order_quantity?: number | null
           name?: string

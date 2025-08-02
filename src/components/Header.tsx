@@ -21,6 +21,7 @@ interface Product {
   base_price: number;
   unit_type: string;
   description: string | null;
+  keywords: string[] | null;
 }
 
 export const Header = () => {
@@ -46,6 +47,7 @@ export const Header = () => {
   const calculateRelevanceScore = (product: Product, searchWords: string[]) => {
     const name = normalizeText(product.name || '');
     const description = normalizeText(product.description || '');
+    const keywords = product.keywords || [];
     
     let score = 0;
     
@@ -63,6 +65,13 @@ export const Header = () => {
       
       // Description exact word matches
       if (description.split(' ').includes(word)) score += 20;
+      
+      // Keywords get high score for exact matches
+      keywords.forEach(keyword => {
+        const normalizedKeyword = normalizeText(keyword);
+        if (normalizedKeyword === word) score += 70; // High score for exact keyword match
+        else if (normalizedKeyword.includes(word) && word.length >= 3) score += 40; // Partial keyword match
+      });
     });
     
     return score;
@@ -74,7 +83,7 @@ export const Header = () => {
       try {
         const { data } = await supabase
           .from('products')
-          .select('id, name, image_url, slug, base_price, unit_type, description')
+          .select('id, name, image_url, slug, base_price, unit_type, description, keywords')
           .eq('is_active', true)
           .limit(100);
         
