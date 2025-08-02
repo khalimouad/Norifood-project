@@ -58,8 +58,14 @@ export const Hero = () => {
   };
 
   return (
-    <section className="bg-background py-8 md:py-16">
-      <div className="container mx-auto px-4 md:px-8">
+    <section className="relative bg-background py-8 md:py-16 overflow-hidden">
+      {/* Blue glow background effects */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-primary/10 to-blue-600/5"></div>
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-primary/30 rounded-full blur-3xl"></div>
+      <div className="absolute top-1/2 left-0 w-64 h-64 bg-blue-600/15 rounded-full blur-2xl"></div>
+      
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Text Content - Shows second on mobile, left on desktop */}
           <div className="order-2 lg:order-1 text-center lg:text-left space-y-4 md:space-y-6">
@@ -118,8 +124,7 @@ export const Hero = () => {
 
           {/* Banner Carousel - Shows first on mobile, right on desktop */}
           <div className="order-1 lg:order-2 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-primary/30 to-blue-600/20 rounded-2xl blur-xl -z-10"></div>
-            <div className="relative rounded-2xl p-2">
+            <div className="relative rounded-2xl">
               {loading ? (
                 <div className="bg-card rounded-xl shadow-lg h-64 animate-pulse"></div>
               ) : banners.length > 0 ? (
@@ -129,24 +134,23 @@ export const Hero = () => {
                       {banners.map((banner) => (
                         <CarouselItem key={banner.id}>
                            <div className="bg-card/95 backdrop-blur-sm rounded-xl shadow-2xl shadow-blue-500/25 overflow-hidden relative">
-                             <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-transparent to-blue-600/10 rounded-xl -z-10"></div>
-                            <img 
-                              src={banner.image_url} 
-                              alt={banner.title} 
-                              className="w-full h-48 md:h-64 object-cover" 
-                            />
-                            <div className="p-4">
-                              <h3 className="font-semibold text-lg mb-2">{banner.title}</h3>
-                              {banner.subtitle && (
-                                <p className="text-muted-foreground text-sm mb-3">{banner.subtitle}</p>
-                              )}
-                              {banner.button_text && banner.link_url && (
-                                <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
-                                  <a href={banner.link_url}>{banner.button_text}</a>
-                                </Button>
-                              )}
-                            </div>
-                          </div>
+                             <img 
+                               src={banner.image_url} 
+                               alt={banner.title} 
+                               className="w-full h-48 md:h-64 object-cover" 
+                             />
+                             <div className="p-4">
+                               <h3 className="font-semibold text-lg mb-2">{banner.title}</h3>
+                               {banner.subtitle && (
+                                 <p className="text-muted-foreground text-sm mb-3">{banner.subtitle}</p>
+                               )}
+                               {banner.button_text && banner.link_url && (
+                                 <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
+                                   <a href={banner.link_url}>{banner.button_text}</a>
+                                 </Button>
+                               )}
+                             </div>
+                           </div>
                         </CarouselItem>
                       ))}
                     </CarouselContent>
@@ -181,6 +185,9 @@ export const Hero = () => {
           </div>
         </div>
       </div>
+      
+      {/* Bottom shadow/glow effect */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-blue-500/10 via-primary/5 to-transparent pointer-events-none"></div>
     </section>
   );
 };
