@@ -118,62 +118,65 @@ export const Hero = () => {
 
           {/* Banner Carousel - Shows first on mobile, right on desktop */}
           <div className="order-1 lg:order-2 relative">
-            {loading ? (
-              <div className="bg-card rounded-xl shadow-lg h-64 animate-pulse"></div>
-            ) : banners.length > 0 ? (
-              <div className="space-y-4">
-                <Carousel setApi={setApi} className="w-full">
-                  <CarouselContent>
-                    {banners.map((banner) => (
-                      <CarouselItem key={banner.id}>
-                        <div className="bg-card rounded-xl shadow-lg overflow-hidden">
-                          <img 
-                            src={banner.image_url} 
-                            alt={banner.title} 
-                            className="w-full h-48 md:h-64 object-cover" 
-                          />
-                          <div className="p-4">
-                            <h3 className="font-semibold text-lg mb-2">{banner.title}</h3>
-                            {banner.subtitle && (
-                              <p className="text-muted-foreground text-sm mb-3">{banner.subtitle}</p>
-                            )}
-                            {banner.button_text && banner.link_url && (
-                              <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
-                                <a href={banner.link_url}>{banner.button_text}</a>
-                              </Button>
-                            )}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-primary/30 to-blue-600/20 rounded-2xl blur-xl -z-10"></div>
+            <div className="relative bg-background/5 backdrop-blur-sm rounded-2xl p-2 shadow-2xl shadow-blue-500/25">
+              {loading ? (
+                <div className="bg-card rounded-xl shadow-lg h-64 animate-pulse"></div>
+              ) : banners.length > 0 ? (
+                <div className="space-y-4">
+                  <Carousel setApi={setApi} className="w-full">
+                    <CarouselContent>
+                      {banners.map((banner) => (
+                        <CarouselItem key={banner.id}>
+                          <div className="bg-card rounded-xl shadow-lg overflow-hidden">
+                            <img 
+                              src={banner.image_url} 
+                              alt={banner.title} 
+                              className="w-full h-48 md:h-64 object-cover" 
+                            />
+                            <div className="p-4">
+                              <h3 className="font-semibold text-lg mb-2">{banner.title}</h3>
+                              {banner.subtitle && (
+                                <p className="text-muted-foreground text-sm mb-3">{banner.subtitle}</p>
+                              )}
+                              {banner.button_text && banner.link_url && (
+                                <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
+                                  <a href={banner.link_url}>{banner.button_text}</a>
+                                </Button>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                </Carousel>
-                
-                {/* Modern Dot Navigation */}
-                {banners.length > 1 && (
-                  <div className="flex justify-center items-center gap-2">
-                    <div className="flex items-center gap-1 bg-background/50 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg">
-                      {banners.map((_, index) => (
-                        <button
-                          key={index}
-                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                            index === current 
-                              ? 'bg-primary w-6' 
-                              : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                          }`}
-                          onClick={() => api?.scrollTo(index)}
-                          aria-label={`Go to slide ${index + 1}`}
-                        />
+                        </CarouselItem>
                       ))}
+                    </CarouselContent>
+                  </Carousel>
+                  
+                  {/* Modern Dot Navigation */}
+                  {banners.length > 1 && (
+                    <div className="flex justify-center items-center gap-2">
+                      <div className="flex items-center gap-1 bg-background/50 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg shadow-blue-400/30">
+                        {banners.map((_, index) => (
+                          <button
+                            key={index}
+                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                              index === current 
+                                ? 'bg-primary w-6 shadow-lg shadow-primary/50' 
+                                : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                            }`}
+                            onClick={() => api?.scrollTo(index)}
+                            aria-label={`Go to slide ${index + 1}`}
+                          />
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="bg-card rounded-xl shadow-lg p-8 text-center">
-                <p className="text-muted-foreground">Aucune bannière disponible</p>
-              </div>
-            )}
+                  )}
+                </div>
+              ) : (
+                <div className="bg-card rounded-xl shadow-lg p-8 text-center">
+                  <p className="text-muted-foreground">Aucune bannière disponible</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
