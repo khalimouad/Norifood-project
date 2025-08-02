@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Timer, Star, Award } from 'lucide-react';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselApi } from '@/components/ui/carousel';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -20,10 +20,24 @@ interface Banner {
 export const Hero = () => {
   const [banners, setBanners] = useState<Banner[]>([]);
   const [loading, setLoading] = useState(true);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     fetchBanners();
   }, []);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   const fetchBanners = async () => {
     try {
@@ -107,34 +121,54 @@ export const Hero = () => {
             {loading ? (
               <div className="bg-card rounded-xl shadow-lg h-64 animate-pulse"></div>
             ) : banners.length > 0 ? (
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {banners.map((banner) => (
-                    <CarouselItem key={banner.id}>
-                      <div className="bg-card rounded-xl shadow-lg overflow-hidden">
-                        <img 
-                          src={banner.image_url} 
-                          alt={banner.title} 
-                          className="w-full h-48 md:h-64 object-cover" 
-                        />
-                        <div className="p-4">
-                          <h3 className="font-semibold text-lg mb-2">{banner.title}</h3>
-                          {banner.subtitle && (
-                            <p className="text-muted-foreground text-sm mb-3">{banner.subtitle}</p>
-                          )}
-                          {banner.button_text && banner.link_url && (
-                            <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
-                              <a href={banner.link_url}>{banner.button_text}</a>
-                            </Button>
-                          )}
+              <div className="space-y-4">
+                <Carousel setApi={setApi} className="w-full">
+                  <CarouselContent>
+                    {banners.map((banner) => (
+                      <CarouselItem key={banner.id}>
+                        <div className="bg-card rounded-xl shadow-lg overflow-hidden">
+                          <img 
+                            src={banner.image_url} 
+                            alt={banner.title} 
+                            className="w-full h-48 md:h-64 object-cover" 
+                          />
+                          <div className="p-4">
+                            <h3 className="font-semibold text-lg mb-2">{banner.title}</h3>
+                            {banner.subtitle && (
+                              <p className="text-muted-foreground text-sm mb-3">{banner.subtitle}</p>
+                            )}
+                            {banner.button_text && banner.link_url && (
+                              <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
+                                <a href={banner.link_url}>{banner.button_text}</a>
+                              </Button>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-2" />
-                <CarouselNext className="right-2" />
-              </Carousel>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
+                
+                {/* Modern Dot Navigation */}
+                {banners.length > 1 && (
+                  <div className="flex justify-center items-center gap-2">
+                    <div className="flex items-center gap-1 bg-background/50 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg">
+                      {banners.map((_, index) => (
+                        <button
+                          key={index}
+                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                            index === current 
+                              ? 'bg-primary w-6' 
+                              : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                          }`}
+                          onClick={() => api?.scrollTo(index)}
+                          aria-label={`Go to slide ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
               <div className="bg-card rounded-xl shadow-lg p-8 text-center">
                 <p className="text-muted-foreground">Aucune bannière disponible</p>
