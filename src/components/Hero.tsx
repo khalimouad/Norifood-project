@@ -59,11 +59,15 @@ export const Hero = () => {
 
   return (
     <section className="relative bg-white py-8 md:py-16 overflow-hidden">
-      {/* Subtle white background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50/30 via-white to-gray-100/20"></div>
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-gray-100/40 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-slate-50/60 rounded-full blur-2xl"></div>
-      <div className="absolute top-1/2 right-0 w-64 h-64 bg-gray-50/50 rounded-full blur-xl"></div>
+      {/* Awesome glowing blue blobs background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-10 left-1/4 w-64 h-64 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-1/4 w-80 h-80 bg-primary/40 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-0 w-56 h-56 bg-blue-400/25 rounded-full blur-2xl opacity-70"></div>
+        <div className="absolute top-0 right-0 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl animate-pulse delay-500"></div>
+        <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-primary/35 rounded-full blur-2xl opacity-80"></div>
+        <div className="absolute top-1/3 right-1/3 w-40 h-40 bg-blue-300/30 rounded-full blur-xl animate-pulse delay-1500"></div>
+      </div>
       
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
