@@ -94,13 +94,13 @@ const ProductCard = ({
           
           <div className="flex items-center gap-1.5 md:gap-2 pt-1">
             <div className="flex items-center bg-muted rounded-lg p-0.5 min-w-[85px] md:min-w-[100px]">
-              <Button variant="ghost" size="sm" onClick={() => updateQuantity(quantity - 1)} disabled={quantity <= 1 || !inStock} className="h-7 w-7 p-0 rounded-md text-xs hover:bg-background">
+              <Button variant="ghost" size="sm" onClick={() => updateQuantity(quantity - 1)} disabled={quantity <= 1 || !inStock} className="h-7 w-7 p-0 rounded-md text-xs hover:bg-primary hover:text-primary-foreground">
                 <Minus className="h-3 w-3" />
               </Button>
               <span className="flex-1 text-center text-sm font-semibold px-1">
                 {quantity}
               </span>
-              <Button variant="ghost" size="sm" onClick={() => updateQuantity(quantity + 1)} disabled={!inStock} className="h-7 w-7 p-0 rounded-md text-xs hover:bg-background">
+              <Button variant="ghost" size="sm" onClick={() => updateQuantity(quantity + 1)} disabled={!inStock} className="h-7 w-7 p-0 rounded-md text-xs hover:bg-primary hover:text-primary-foreground">
                 <Plus className="h-3 w-3" />
               </Button>
             </div>
