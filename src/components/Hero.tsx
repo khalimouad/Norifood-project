@@ -1,11 +1,48 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Timer, Star, Award } from 'lucide-react';
-import heroImage from '@/assets/hero-seafood.jpg';
-import salmonImage from '@/assets/salmon.jpg';
-import shrimpImage from '@/assets/shrimp.jpg';
-import wholeFishImage from '@/assets/whole-fish.jpg';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+
+interface Banner {
+  id: string;
+  title: string;
+  subtitle: string | null;
+  image_url: string;
+  mobile_image_url: string | null;
+  link_url: string | null;
+  button_text: string | null;
+  is_active: boolean;
+  show_on_desktop: boolean;
+  show_on_mobile: boolean;
+}
 
 export const Hero = () => {
+  const [banners, setBanners] = useState<Banner[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchBanners();
+  }, []);
+
+  const fetchBanners = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('banners')
+        .select('*')
+        .eq('is_active', true)
+        .eq('show_on_desktop', true)
+        .order('position', { ascending: true });
+
+      if (error) throw error;
+      setBanners(data || []);
+    } catch (error) {
+      console.error('Error fetching banners:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="bg-background py-8 md:py-16">
       <div className="container mx-auto px-4 md:px-8">
@@ -65,40 +102,44 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Right Image Cards */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-4">
-              <div className="bg-card rounded-xl shadow-lg overflow-hidden">
-                <img src={salmonImage} alt="Saumon" className="w-full h-32 object-cover" />
-                <div className="p-3">
-                  <h3 className="font-semibold text-sm mb-1">Saumon Frais</h3>
-                  <p className="text-xs text-muted-foreground">À partir de 249 DH/kg</p>
-                </div>
+          {/* Banner Carousel */}
+          <div className="relative">
+            {loading ? (
+              <div className="bg-card rounded-xl shadow-lg h-64 animate-pulse"></div>
+            ) : banners.length > 0 ? (
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {banners.map((banner) => (
+                    <CarouselItem key={banner.id}>
+                      <div className="bg-card rounded-xl shadow-lg overflow-hidden">
+                        <img 
+                          src={banner.image_url} 
+                          alt={banner.title} 
+                          className="w-full h-48 md:h-64 object-cover" 
+                        />
+                        <div className="p-4">
+                          <h3 className="font-semibold text-lg mb-2">{banner.title}</h3>
+                          {banner.subtitle && (
+                            <p className="text-muted-foreground text-sm mb-3">{banner.subtitle}</p>
+                          )}
+                          {banner.button_text && banner.link_url && (
+                            <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
+                              <a href={banner.link_url}>{banner.button_text}</a>
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-2" />
+                <CarouselNext className="right-2" />
+              </Carousel>
+            ) : (
+              <div className="bg-card rounded-xl shadow-lg p-8 text-center">
+                <p className="text-muted-foreground">Aucune bannière disponible</p>
               </div>
-              <div className="bg-card rounded-xl shadow-lg overflow-hidden">
-                <img src={wholeFishImage} alt="Poisson entier" className="w-full h-32 object-cover" />
-                <div className="p-3">
-                  <h3 className="font-semibold text-sm mb-1">Poisson Entier</h3>
-                  <p className="text-xs text-muted-foreground">À partir de 189 DH/kg</p>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-4 mt-8">
-              <div className="bg-card rounded-xl shadow-lg overflow-hidden">
-                <img src={shrimpImage} alt="Crevettes" className="w-full h-32 object-cover" />
-                <div className="p-3">
-                  <h3 className="font-semibold text-sm mb-1">Crevettes</h3>
-                  <p className="text-xs text-muted-foreground">À partir de 329 DH/kg</p>
-                </div>
-              </div>
-              <div className="bg-gradient-to-br from-primary to-primary/80 rounded-xl p-4 text-primary-foreground">
-                <h3 className="font-bold text-sm mb-2">Offre Spéciale</h3>
-                <p className="text-xs mb-2">-20% sur votre première commande</p>
-                <Button size="sm" className="bg-background text-foreground hover:bg-background/80 text-xs px-3 py-1">
-                  Profiter
-                </Button>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
