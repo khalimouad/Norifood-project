@@ -176,12 +176,12 @@ export const Header = () => {
               <div className="flex-1 max-w-md mx-8">
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start text-left font-normal bg-muted border-0"
+                  className="w-full justify-start text-left font-normal bg-background/60 backdrop-blur-sm border border-border/50 rounded-xl shadow-sm hover:shadow-md hover:bg-background/80 transition-all duration-200 py-3 px-4"
                   onClick={() => setSearchOpen(true)}
                 >
-                  <Search className="mr-2 h-4 w-4 text-muted-foreground" />
-                  Rechercher des produits...
-                  <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                  <Search className="mr-3 h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">Rechercher des produits...</span>
+                  <kbd className="ml-auto pointer-events-none inline-flex h-6 select-none items-center gap-1 rounded-lg bg-muted/80 px-2 font-mono text-[11px] font-medium text-muted-foreground border border-border/40">
                     <span className="text-xs">⌘</span>K
                   </kbd>
                 </Button>
