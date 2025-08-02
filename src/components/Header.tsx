@@ -276,7 +276,7 @@ export const Header = () => {
                   key={product.id}
                   value={`${product.name} ${product.description || ''}`}
                   onSelect={() => handleProductSelect(product)}
-                  className="flex items-center gap-3 p-3"
+                  className="flex items-center gap-3 p-3 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer"
                 >
                   <div className="w-12 h-12 bg-muted rounded-lg flex-shrink-0 overflow-hidden">
                     {product.image_url ? (
