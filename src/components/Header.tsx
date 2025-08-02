@@ -292,8 +292,8 @@ export const Header = () => {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-foreground truncate">{product.name}</p>
-                    <p className="text-sm text-muted-foreground">{product.base_price} MAD/{product.unit_type}</p>
+                    <p className="font-medium text-foreground hover:text-white truncate">{product.name}</p>
+                    <p className="text-sm text-muted-foreground hover:text-white/80">{product.base_price} MAD/{product.unit_type}</p>
                   </div>
                 </CommandItem>
               ));
