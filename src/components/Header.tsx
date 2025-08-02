@@ -276,7 +276,7 @@ export const Header = () => {
                   key={product.id}
                   value={`${product.name} ${product.description || ''}`}
                   onSelect={() => handleProductSelect(product)}
-                  className="flex items-center gap-3 p-3 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer"
+                  className="flex items-center gap-3 p-3 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer group"
                 >
                   <div className="w-12 h-12 bg-muted rounded-lg flex-shrink-0 overflow-hidden">
                     {product.image_url ? (
@@ -287,13 +287,13 @@ export const Header = () => {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <Search className="h-5 w-5 text-muted-foreground" />
+                        <Search className="h-5 w-5 text-muted-foreground group-hover:text-white" />
                       </div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-foreground hover:text-white truncate">{product.name}</p>
-                    <p className="text-sm text-muted-foreground hover:text-white/80">{product.base_price} MAD/{product.unit_type}</p>
+                    <p className="font-medium text-foreground group-hover:text-white truncate">{product.name}</p>
+                    <p className="text-sm text-muted-foreground group-hover:text-white/80">{product.base_price} MAD/{product.unit_type}</p>
                   </div>
                 </CommandItem>
               ));
