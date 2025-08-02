@@ -121,7 +121,15 @@ export const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-border">
+      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-border relative overflow-hidden">
+        {/* Blue glowing blobs background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-2 left-1/4 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl animate-pulse"></div>
+          <div className="absolute top-0 right-1/3 w-24 h-24 bg-primary/30 rounded-full blur-xl opacity-60"></div>
+          <div className="absolute -top-4 right-0 w-40 h-40 bg-blue-400/15 rounded-full blur-3xl"></div>
+          <div className="absolute top-1 left-0 w-28 h-28 bg-blue-600/25 rounded-full blur-2xl opacity-80"></div>
+          <div className="absolute top-3 left-3/4 w-20 h-20 bg-primary/20 rounded-full blur-xl animate-pulse delay-1000"></div>
+        </div>
         {/* Mobile Header */}
         <div className="block md:hidden px-4 py-3">
           <div className="flex items-center justify-between mb-3">
