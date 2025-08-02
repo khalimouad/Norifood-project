@@ -58,12 +58,12 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative bg-background py-8 md:py-16 overflow-hidden">
-      {/* Blue glow background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-primary/10 to-blue-600/5"></div>
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-primary/30 rounded-full blur-3xl"></div>
-      <div className="absolute top-1/2 left-0 w-64 h-64 bg-blue-600/15 rounded-full blur-2xl"></div>
+    <section className="relative bg-white py-8 md:py-16 overflow-hidden">
+      {/* Subtle white background effects */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-50/30 via-white to-gray-100/20"></div>
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-gray-100/40 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-slate-50/60 rounded-full blur-2xl"></div>
+      <div className="absolute top-1/2 right-0 w-64 h-64 bg-gray-50/50 rounded-full blur-xl"></div>
       
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -133,7 +133,7 @@ export const Hero = () => {
                     <CarouselContent>
                       {banners.map((banner) => (
                         <CarouselItem key={banner.id}>
-                           <div className="bg-card/95 backdrop-blur-sm rounded-xl shadow-2xl shadow-blue-500/25 overflow-hidden relative">
+                           <div className="bg-white rounded-xl shadow-lg overflow-hidden relative">
                              <img 
                                src={banner.image_url} 
                                alt={banner.title} 
@@ -186,8 +186,8 @@ export const Hero = () => {
         </div>
       </div>
       
-      {/* Bottom shadow/glow effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-blue-500/10 via-primary/5 to-transparent pointer-events-none"></div>
+      {/* Bottom subtle shadow effect */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-100/20 via-gray-50/10 to-transparent pointer-events-none"></div>
     </section>
   );
 };
