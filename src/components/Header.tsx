@@ -121,7 +121,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-border">
+      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
         {/* Mobile Header */}
         <div className="block md:hidden px-4 py-3">
           <div className="flex items-center justify-between mb-3">
