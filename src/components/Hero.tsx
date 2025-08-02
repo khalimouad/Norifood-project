@@ -61,8 +61,8 @@ export const Hero = () => {
     <section className="bg-background py-8 md:py-16">
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          {/* Left Content */}
-          <div className="text-center lg:text-left space-y-4 md:space-y-6">
+          {/* Text Content - Shows second on mobile, left on desktop */}
+          <div className="order-2 lg:order-1 text-center lg:text-left space-y-4 md:space-y-6">
             <h1 className="text-2xl md:text-5xl font-bold text-foreground leading-tight">
               Produits de la Mer
               <span className="block text-primary text-xl md:text-4xl mt-1 md:mt-2">Frais Quotidiennement</span>
@@ -116,8 +116,8 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Banner Carousel */}
-          <div className="relative">
+          {/* Banner Carousel - Shows first on mobile, right on desktop */}
+          <div className="order-1 lg:order-2 relative">
             {loading ? (
               <div className="bg-card rounded-xl shadow-lg h-64 animate-pulse"></div>
             ) : banners.length > 0 ? (
