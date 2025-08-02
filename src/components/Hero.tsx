@@ -58,15 +58,15 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative bg-white py-8 md:py-16 overflow-hidden">
-      {/* Awesome glowing blue blobs background */}
+    <section className="relative py-8 md:py-16 overflow-hidden">
+      {/* Awesome glowing blue blobs background - contained within hero */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-1/4 w-64 h-64 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-1/4 w-80 h-80 bg-primary/40 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-0 w-56 h-56 bg-blue-400/25 rounded-full blur-2xl opacity-70"></div>
-        <div className="absolute top-0 right-0 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl animate-pulse delay-500"></div>
-        <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-primary/35 rounded-full blur-2xl opacity-80"></div>
-        <div className="absolute top-1/3 right-1/3 w-40 h-40 bg-blue-300/30 rounded-full blur-xl animate-pulse delay-1500"></div>
+        <div className="absolute top-16 left-1/4 w-48 h-48 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-24 right-1/4 w-56 h-56 bg-primary/40 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-8 w-40 h-40 bg-blue-400/25 rounded-full blur-2xl opacity-70"></div>
+        <div className="absolute top-8 right-8 w-52 h-52 bg-blue-600/20 rounded-full blur-3xl animate-pulse delay-500"></div>
+        <div className="absolute bottom-8 left-1/3 w-36 h-36 bg-primary/35 rounded-full blur-2xl opacity-80"></div>
+        <div className="absolute top-1/3 right-1/3 w-32 h-32 bg-blue-300/30 rounded-full blur-xl animate-pulse delay-1500"></div>
       </div>
       
       <div className="container mx-auto px-4 md:px-8 relative z-10">
