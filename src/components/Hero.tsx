@@ -58,15 +58,15 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative py-8 md:py-16 overflow-hidden">
-      {/* Awesome glowing blue blobs background - contained within hero */}
+    <section className="relative py-8 md:py-16 overflow-hidden bg-gradient-to-br from-background via-background to-muted/10 dark:from-background dark:via-slate-950 dark:to-slate-900/20">
+      {/* Enhanced glowing blobs background with dark mode support */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-16 left-1/4 w-48 h-48 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-24 right-1/4 w-56 h-56 bg-primary/40 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-8 w-40 h-40 bg-blue-400/25 rounded-full blur-2xl opacity-70"></div>
-        <div className="absolute top-8 right-8 w-52 h-52 bg-blue-600/20 rounded-full blur-3xl animate-pulse delay-500"></div>
-        <div className="absolute bottom-8 left-1/3 w-36 h-36 bg-primary/35 rounded-full blur-2xl opacity-80"></div>
-        <div className="absolute top-1/3 right-1/3 w-32 h-32 bg-blue-300/30 rounded-full blur-xl animate-pulse delay-1500"></div>
+        <div className="absolute top-16 left-1/4 w-48 h-48 bg-blue-500/20 dark:bg-blue-400/15 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-24 right-1/4 w-56 h-56 bg-primary/25 dark:bg-primary/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-8 w-40 h-40 bg-blue-400/15 dark:bg-blue-300/10 rounded-full blur-2xl opacity-70"></div>
+        <div className="absolute top-8 right-8 w-52 h-52 bg-blue-600/15 dark:bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
+        <div className="absolute bottom-8 left-1/3 w-36 h-36 bg-primary/20 dark:bg-primary/12 rounded-full blur-2xl opacity-80"></div>
+        <div className="absolute top-1/3 right-1/3 w-32 h-32 bg-blue-300/20 dark:bg-blue-200/10 rounded-full blur-xl animate-pulse delay-1500"></div>
       </div>
       
       <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -137,23 +137,23 @@ export const Hero = () => {
                     <CarouselContent>
                       {banners.map((banner) => (
                         <CarouselItem key={banner.id}>
-                           <div className="bg-white rounded-xl shadow-lg overflow-hidden relative">
-                             <img 
-                               src={banner.image_url} 
-                               alt={banner.title} 
-                               className="w-full h-48 md:h-64 object-cover" 
-                             />
-                             <div className="p-4">
-                               <h3 className="font-semibold text-lg mb-2">{banner.title}</h3>
-                               {banner.subtitle && (
-                                 <p className="text-muted-foreground text-sm mb-3">{banner.subtitle}</p>
-                               )}
-                               {banner.button_text && banner.link_url && (
-                                 <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
-                                   <a href={banner.link_url}>{banner.button_text}</a>
-                                 </Button>
-                               )}
-                             </div>
+                           <div className="bg-card border border-border/50 dark:bg-slate-800/50 dark:border-slate-700/50 rounded-xl shadow-lg overflow-hidden relative backdrop-blur-sm">
+                              <img 
+                                src={banner.image_url} 
+                                alt={banner.title} 
+                                className="w-full h-48 md:h-64 object-cover" 
+                              />
+                              <div className="p-4 bg-card/95 dark:bg-slate-800/95 backdrop-blur-sm">
+                                <h3 className="font-semibold text-lg mb-2 text-foreground">{banner.title}</h3>
+                                {banner.subtitle && (
+                                  <p className="text-muted-foreground text-sm mb-3">{banner.subtitle}</p>
+                                )}
+                                {banner.button_text && banner.link_url && (
+                                  <Button asChild size="sm" className="bg-primary hover:bg-primary/90 shadow-md">
+                                    <a href={banner.link_url}>{banner.button_text}</a>
+                                  </Button>
+                                )}
+                              </div>
                            </div>
                         </CarouselItem>
                       ))}
@@ -163,7 +163,7 @@ export const Hero = () => {
                   {/* Modern Dot Navigation */}
                   {banners.length > 1 && (
                     <div className="flex justify-center items-center gap-2">
-                      <div className="flex items-center gap-1 bg-background/50 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg shadow-blue-400/30">
+                      <div className="flex items-center gap-1 bg-background/70 dark:bg-slate-800/70 backdrop-blur-md rounded-full px-3 py-2 shadow-lg shadow-primary/20 border border-border/20 dark:border-slate-700/50">
                         {banners.map((_, index) => (
                           <button
                             key={index}
@@ -181,7 +181,7 @@ export const Hero = () => {
                   )}
                 </div>
               ) : (
-                <div className="bg-card rounded-xl shadow-lg p-8 text-center">
+                <div className="bg-card dark:bg-slate-800/50 border border-border/50 dark:border-slate-700/50 rounded-xl shadow-lg p-8 text-center backdrop-blur-sm">
                   <p className="text-muted-foreground">Aucune bannière disponible</p>
                 </div>
               )}
@@ -191,7 +191,7 @@ export const Hero = () => {
       </div>
       
       {/* Bottom subtle shadow effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-100/20 via-gray-50/10 to-transparent pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-muted/10 via-background/5 to-transparent dark:from-slate-900/20 dark:via-slate-950/10 dark:to-transparent pointer-events-none"></div>
     </section>
   );
 };
