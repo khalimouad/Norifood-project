@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Search, User, Menu, LogOut } from 'lucide-react';
+import { ShoppingCart, Search, User, Menu, LogOut, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -201,6 +201,15 @@ export const Header = () => {
                 </Button>
               </div>
               <div className="flex items-center space-x-4">
+                <a 
+                  href="https://wa.me/212608611511" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white transition-colors text-sm font-medium"
+                >
+                  <Phone className="h-4 w-4" />
+                  <span className="hidden xl:inline">0608 611 511</span>
+                </a>
                 <ThemeToggle variant="icon" className="text-muted-foreground hover:text-primary" />
                 {user ? (
                   <DropdownMenu>
