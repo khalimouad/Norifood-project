@@ -11,7 +11,9 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { MobileNavigation } from '@/components/MobileNavigation';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
-import logo from '@/assets/logo.png';
+import { useTheme } from 'next-themes';
+import logoLight from '/lovable-uploads/138d38ef-a9f7-457f-ad50-d38fa1e38e18.png';
+import logoDark from '/lovable-uploads/95e558af-028f-4fb7-967a-ccf2a8ae9b54.png';
 
 interface Product {
   id: string;
@@ -32,7 +34,10 @@ export const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { getTotalItems } = useCart();
   const { user, signOut } = useAuth();
+  const { theme } = useTheme();
   const cartCount = getTotalItems();
+
+  const currentLogo = theme === 'dark' ? logoDark : logoLight;
 
   const normalizeText = (text: string) => {
     return text
@@ -146,7 +151,7 @@ export const Header = () => {
             </Sheet>
             
             <Link to="/" className="flex items-center space-x-2" onClick={() => window.scrollTo(0, 0)}>
-              <img src={logo} alt="Fresh N'Good" className="h-8 w-auto" />
+              <img src={currentLogo} alt="Fresh N'Good" className="h-8 w-auto" />
             </Link>
             
             <div className="flex items-center gap-1">
@@ -174,7 +179,7 @@ export const Header = () => {
           <div className="container mx-auto px-8 py-4">
             <div className="flex items-center justify-between">
               <Link to="/" className="flex items-center space-x-3" onClick={() => window.scrollTo(0, 0)}>
-                <img src={logo} alt="Fresh N'Good" className="h-10 w-auto" />
+                <img src={currentLogo} alt="Fresh N'Good" className="h-10 w-auto" />
               </Link>
               <nav className="hidden lg:flex items-center space-x-8">
                 <Link to="/" className="text-foreground hover:text-primary transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Accueil</Link>
