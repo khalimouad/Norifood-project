@@ -29,6 +29,7 @@ import PaymentCancel from "./pages/PaymentCancel";
 import { CartProvider } from "./hooks/useCart";
 import { AuthProvider } from "./hooks/useAuth";
 import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
         <Sonner />
         <PWAInstallPrompt />
         <BrowserRouter>
+          <ScrollToTop />
           <AuthProvider>
             <CartProvider>
                 <Routes>
