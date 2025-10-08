@@ -47,9 +47,9 @@ serve(async (req) => {
 
     console.log('Starting bulk product image update...');
 
-    // Map of product name patterns to image URLs
+    // Map of product name patterns to image URLs (using real photos from internet)
     const imageMapping = [
-      { pattern: 'Burger de poisson', image: '/src/assets/burger-poisson.jpg' },
+      { pattern: 'Burger de poisson', image: '/src/assets/burger-poisson-real.jpg' },
       { pattern: 'Carcasses de crevette', image: '/src/assets/carcasses-crevette.jpg' },
       { pattern: 'Carcasses de poissons', image: '/src/assets/carcasses-poissons.jpg' },
       { pattern: 'Cartes-cadeaux', image: '/src/assets/carte-cadeau.jpg' },
@@ -58,11 +58,12 @@ serve(async (req) => {
       { pattern: 'Chicken nuggets', image: '/src/assets/chicken-nuggets.jpg' },
       { pattern: 'Coeur de filet saumon fumé', image: '/src/assets/coeur-saumon-fume.jpg' },
       { pattern: 'Coeur de saumon fumé', image: '/src/assets/coeur-saumon-fume.jpg' },
-      { pattern: 'Couteau', image: '/src/assets/couteau.jpg' },
+      { pattern: 'Couteau', image: '/src/assets/clams-real.jpg' },
+      { pattern: 'Palourde', image: '/src/assets/clams-real.jpg' },
       { pattern: 'Filet panés', image: '/src/assets/filet-pane.jpg' },
       { pattern: 'Nuggets de poisson', image: '/src/assets/filet-pane.jpg' },
-      { pattern: 'Fraises congelées', image: '/src/assets/fraises-congelees-extra.jpg' },
-      { pattern: 'Mangue Congelées', image: '/src/assets/mangue-congelee.jpg' },
+      { pattern: 'Fraises congelées', image: '/src/assets/fraises-congelees-real.jpg' },
+      { pattern: 'Mangue Congelées', image: '/src/assets/mangue-congelee-real.jpg' },
       { pattern: 'Saumon Norvège', image: '/src/assets/saumon-norvege.jpg' },
     ];
 
