@@ -6,6 +6,7 @@ import { EnhancedTable, StatusBadge } from './EnhancedTable';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Eye, Edit, Trash2, Star, Package } from 'lucide-react';
+import { BulkImageUpdate } from '@/components/admin/BulkImageUpdate';
 
 interface Product {
   id: string;
@@ -203,21 +204,25 @@ export function EnhancedProductsManager() {
   ];
 
   return (
-    <EnhancedTable
-      title="Gestion des produits"
-      description="Gérez votre catalogue de produits"
-      columns={columns}
-      data={products}
-      loading={loading}
-      onAdd={handleAdd}
-      onEdit={handleEdit}
-      onView={handleView}
-      onDelete={handleDelete}
-      onRefresh={fetchProducts}
-      searchPlaceholder="Rechercher un produit..."
-      addButtonText="Nouveau produit"
-      emptyMessage="Aucun produit trouvé"
-      exportFileName="produits"
-    />
+    <div className="space-y-6">
+      <BulkImageUpdate />
+      
+      <EnhancedTable
+        title="Gestion des produits"
+        description="Gérez votre catalogue de produits"
+        columns={columns}
+        data={products}
+        loading={loading}
+        onAdd={handleAdd}
+        onEdit={handleEdit}
+        onView={handleView}
+        onDelete={handleDelete}
+        onRefresh={fetchProducts}
+        searchPlaceholder="Rechercher un produit..."
+        addButtonText="Nouveau produit"
+        emptyMessage="Aucun produit trouvé"
+        exportFileName="produits"
+      />
+    </div>
   );
 }
