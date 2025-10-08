@@ -58,134 +58,130 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative py-8 md:py-16 overflow-hidden bg-gradient-to-br from-background via-background to-muted/10 dark:from-background dark:via-slate-950 dark:to-slate-900/20">
+    <section className="relative py-6 md:py-12 lg:py-16 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 dark:from-background dark:via-slate-950 dark:to-primary/10">
       {/* Enhanced glowing blobs background with dark mode support */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-16 left-1/4 w-48 h-48 bg-blue-500/20 dark:bg-blue-400/15 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-24 right-1/4 w-56 h-56 bg-primary/25 dark:bg-primary/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-8 w-40 h-40 bg-blue-400/15 dark:bg-blue-300/10 rounded-full blur-2xl opacity-70"></div>
-        <div className="absolute top-8 right-8 w-52 h-52 bg-blue-600/15 dark:bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
-        <div className="absolute bottom-8 left-1/3 w-36 h-36 bg-primary/20 dark:bg-primary/12 rounded-full blur-2xl opacity-80"></div>
-        <div className="absolute top-1/3 right-1/3 w-32 h-32 bg-blue-300/20 dark:bg-blue-200/10 rounded-full blur-xl animate-pulse delay-1500"></div>
+        <div className="absolute top-16 left-1/4 w-48 h-48 bg-primary/15 dark:bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-24 right-1/4 w-56 h-56 bg-primary/20 dark:bg-primary/12 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-8 w-40 h-40 bg-accent/15 dark:bg-accent/10 rounded-full blur-2xl opacity-70"></div>
+        <div className="absolute top-8 right-8 w-52 h-52 bg-primary/12 dark:bg-primary/8 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
       
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
           {/* Text Content - Shows second on mobile, left on desktop */}
-          <div className="order-2 lg:order-1 text-center lg:text-left space-y-4 md:space-y-6">
-            <h1 className="hidden lg:block text-2xl md:text-5xl font-bold text-foreground leading-tight">
+          <div className="order-2 lg:order-1 text-center lg:text-left space-y-3 md:space-y-5">
+            <h1 className="hidden lg:block text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
               Produits de la Mer
-              <span className="block text-primary text-xl md:text-4xl mt-1 md:mt-2">Frais Quotidiennement</span>
+              <span className="block text-primary text-2xl md:text-3xl lg:text-4xl mt-2">Frais Quotidiennement</span>
             </h1>
-            <p className="hidden lg:block text-muted-foreground text-base md:text-lg max-w-lg mx-auto lg:mx-0 px-4 md:px-0">
+            <p className="hidden lg:block text-muted-foreground text-base md:text-lg max-w-lg">
               Poissons et fruits de mer de qualité premium, de l'océan à votre table avec fraîcheur garantie.
             </p>
             
-            <div className="hidden lg:flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start px-4 md:px-0">
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium text-sm md:text-base">
+            <div className="hidden lg:flex flex-wrap gap-3 md:gap-4">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all">
                 Commander Maintenant
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary/10 px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium text-sm md:text-base">
+              <Button variant="outline" className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium transition-all">
                 Nos Promotions
               </Button>
             </div>
 
-            {/* Features - Condensed for mobile */}
-            <div className="flex justify-center lg:justify-start gap-4 md:gap-8 px-2 md:px-0">
-              <div className="flex items-center space-x-1.5 md:space-x-2">
-                <div className="bg-primary/10 p-1.5 md:p-2 rounded-full">
-                  <Timer className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+            {/* Features - Mobile friendly */}
+            <div className="grid grid-cols-3 gap-3 md:flex md:gap-6 lg:gap-8 pt-2">
+              <div className="flex flex-col md:flex-row items-center gap-2 md:gap-2">
+                <div className="bg-primary/10 p-2 md:p-2.5 rounded-xl shrink-0">
+                  <Timer className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                 </div>
-                <div className="hidden md:block">
-                  <p className="font-semibold text-sm">Livraison Rapide</p>
-                  <p className="text-xs text-muted-foreground">Même jour</p>
+                <div className="text-center md:text-left">
+                  <p className="font-semibold text-xs md:text-sm">Livraison</p>
+                  <p className="text-[10px] md:text-xs text-muted-foreground">Rapide</p>
                 </div>
-                <p className="font-semibold text-xs md:hidden">Rapide</p>
               </div>
-              <div className="flex items-center space-x-1.5 md:space-x-2">
-                <div className="bg-primary/10 p-1.5 md:p-2 rounded-full">
-                  <Star className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+              <div className="flex flex-col md:flex-row items-center gap-2 md:gap-2">
+                <div className="bg-primary/10 p-2 md:p-2.5 rounded-xl shrink-0">
+                  <Star className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                 </div>
-                <div className="hidden md:block">
-                  <p className="font-semibold text-sm">Fraîcheur</p>
-                  <p className="text-xs text-muted-foreground">Garantie</p>
+                <div className="text-center md:text-left">
+                  <p className="font-semibold text-xs md:text-sm">Fraîcheur</p>
+                  <p className="text-[10px] md:text-xs text-muted-foreground">Garantie</p>
                 </div>
-                <p className="font-semibold text-xs md:hidden">Frais</p>
               </div>
-              <div className="flex items-center space-x-1.5 md:space-x-2">
-                <div className="bg-primary/10 p-1.5 md:p-2 rounded-full">
-                  <Award className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+              <div className="flex flex-col md:flex-row items-center gap-2 md:gap-2">
+                <div className="bg-primary/10 p-2 md:p-2.5 rounded-xl shrink-0">
+                  <Award className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                 </div>
-                <div className="hidden md:block">
-                  <p className="font-semibold text-sm">Qualité</p>
-                  <p className="text-xs text-muted-foreground">Premium</p>
+                <div className="text-center md:text-left">
+                  <p className="font-semibold text-xs md:text-sm">Qualité</p>
+                  <p className="text-[10px] md:text-xs text-muted-foreground">Premium</p>
                 </div>
-                <p className="font-semibold text-xs md:hidden">Premium</p>
               </div>
             </div>
           </div>
 
           {/* Banner Carousel - Shows first on mobile, right on desktop */}
-          <div className="order-1 lg:order-2 relative">
-            <div className="relative rounded-2xl">
-              {loading ? (
-                <div className="bg-card rounded-xl shadow-lg h-64 animate-pulse"></div>
-              ) : banners.length > 0 ? (
-                <div className="space-y-4">
-                  <Carousel setApi={setApi} className="w-full">
-                    <CarouselContent>
-                      {banners.map((banner) => (
-                        <CarouselItem key={banner.id}>
-                           <div className="bg-card border border-border/50 dark:bg-slate-800/50 dark:border-slate-700/50 rounded-xl shadow-lg overflow-hidden relative backdrop-blur-sm">
+          <div className="order-1 lg:order-2">
+            {loading ? (
+              <div className="bg-muted/30 rounded-2xl h-56 md:h-72 lg:h-80 animate-pulse"></div>
+            ) : banners.length > 0 ? (
+              <div className="space-y-3 md:space-y-4">
+                <Carousel setApi={setApi} className="w-full" opts={{ loop: true }}>
+                  <CarouselContent>
+                    {banners.map((banner) => (
+                      <CarouselItem key={banner.id}>
+                         <div className="bg-card/50 backdrop-blur-sm border border-border/40 rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl hover:border-primary/30 transition-all duration-300">
+                            <div className="relative overflow-hidden">
                               <img 
                                 src={banner.image_url} 
                                 alt={banner.title} 
-                                className="w-full h-48 md:h-64 object-cover" 
+                                className="w-full h-44 md:h-56 lg:h-72 object-cover transition-transform duration-500 group-hover:scale-105" 
                               />
-                              <div className="p-4 bg-card/95 dark:bg-slate-800/95 backdrop-blur-sm">
-                                <h3 className="font-semibold text-lg mb-2 text-foreground">{banner.title}</h3>
-                                {banner.subtitle && (
-                                  <p className="text-muted-foreground text-sm mb-3">{banner.subtitle}</p>
-                                )}
-                                {banner.button_text && banner.link_url && (
-                                  <Button asChild size="sm" className="bg-primary hover:bg-primary/90 shadow-md">
-                                    <a href={banner.link_url}>{banner.button_text}</a>
-                                  </Button>
-                                )}
-                              </div>
-                           </div>
-                        </CarouselItem>
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                            </div>
+                            <div className="p-4 md:p-5 bg-card/95 backdrop-blur-sm">
+                              <h3 className="font-bold text-base md:text-lg lg:text-xl mb-1 md:mb-2 text-foreground line-clamp-1">{banner.title}</h3>
+                              {banner.subtitle && (
+                                <p className="text-muted-foreground text-xs md:text-sm mb-3 line-clamp-2">{banner.subtitle}</p>
+                              )}
+                              {banner.button_text && banner.link_url && (
+                                <Button asChild size="sm" className="bg-primary hover:bg-primary/90 shadow-md hover:shadow-lg transition-all text-xs md:text-sm">
+                                  <a href={banner.link_url}>{banner.button_text}</a>
+                                </Button>
+                              )}
+                            </div>
+                         </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
+                
+                {/* Modern Dot Navigation */}
+                {banners.length > 1 && (
+                  <div className="flex justify-center">
+                    <div className="inline-flex items-center gap-1.5 bg-background/80 backdrop-blur-lg rounded-full px-3 py-2 shadow-lg border border-border/40">
+                      {banners.map((_, index) => (
+                        <button
+                          key={index}
+                          className={`rounded-full transition-all duration-300 ${
+                            index === current 
+                              ? 'bg-primary w-6 h-2 shadow-md shadow-primary/40' 
+                              : 'bg-muted-foreground/30 hover:bg-muted-foreground/50 w-2 h-2'
+                          }`}
+                          onClick={() => api?.scrollTo(index)}
+                          aria-label={`Go to slide ${index + 1}`}
+                        />
                       ))}
-                    </CarouselContent>
-                  </Carousel>
-                  
-                  {/* Modern Dot Navigation */}
-                  {banners.length > 1 && (
-                    <div className="flex justify-center items-center gap-2">
-                      <div className="flex items-center gap-1 bg-background/70 dark:bg-slate-800/70 backdrop-blur-md rounded-full px-3 py-2 shadow-lg shadow-primary/20 border border-border/20 dark:border-slate-700/50">
-                        {banners.map((_, index) => (
-                          <button
-                            key={index}
-                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                              index === current 
-                                ? 'bg-primary w-6 shadow-lg shadow-primary/50' 
-                                : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                            }`}
-                            onClick={() => api?.scrollTo(index)}
-                            aria-label={`Go to slide ${index + 1}`}
-                          />
-                        ))}
-                      </div>
                     </div>
-                  )}
-                </div>
-              ) : (
-                <div className="bg-card dark:bg-slate-800/50 border border-border/50 dark:border-slate-700/50 rounded-xl shadow-lg p-8 text-center backdrop-blur-sm">
-                  <p className="text-muted-foreground">Aucune bannière disponible</p>
-                </div>
-              )}
-            </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="bg-card/50 border border-border/40 rounded-2xl shadow-lg p-8 text-center">
+                <p className="text-muted-foreground">Aucune bannière disponible</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -135,43 +135,47 @@ export const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80">
         {/* Mobile Header */}
-        <div className="block md:hidden px-4 py-3">
-          <div className="flex items-center justify-between mb-3">
+        <div className="block md:hidden">
+          <div className="flex items-center justify-between px-4 py-3 gap-3">
             <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-5 w-5 text-foreground" />
+                <Button variant="ghost" size="icon" className="shrink-0 hover:bg-primary/10">
+                  <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-80">
+              <SheetContent side="left" className="w-80 p-0">
                 <MobileNavigation onClose={() => setSidebarOpen(false)} />
               </SheetContent>
             </Sheet>
             
-            <Link to="/" className="flex items-center space-x-2" onClick={() => window.scrollTo(0, 0)}>
-              <img src={currentLogo} alt="Fresh N'Good" className="h-8 w-auto" />
+            <Link to="/" className="flex-1 flex justify-center" onClick={() => window.scrollTo(0, 0)}>
+              <img src={currentLogo} alt="Fresh N'Good" className="h-9 w-auto" />
             </Link>
             
-            <div className="flex items-center gap-1">
-              <ThemeToggle variant="icon" className="text-muted-foreground hover:text-primary" />
-              <Button variant="ghost" size="icon" className="relative" onClick={() => handleNavigate('/cart')}>
-                <ShoppingCart className="h-5 w-5 text-foreground" />
+            <div className="flex items-center gap-1 shrink-0">
+              <ThemeToggle variant="icon" className="hover:bg-muted" />
+              <Button variant="ghost" size="icon" className="relative hover:bg-primary/10" onClick={() => handleNavigate('/cart')}>
+                <ShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
-                  <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-medium">{cartCount}</div>
+                  <Badge className="absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-0 px-1 text-xs font-semibold bg-primary border-2 border-background">{cartCount}</Badge>
                 )}
               </Button>
             </div>
           </div>
-          <Button 
-            variant="outline" 
-            className="w-full justify-start text-left font-normal bg-muted border-0"
-            onClick={() => setSearchOpen(true)}
-          >
-            <Search className="mr-2 h-4 w-4 text-muted-foreground" />
-            Rechercher des produits...
-          </Button>
+          
+          {/* Mobile Search */}
+          <div className="px-4 pb-3">
+            <Button 
+              variant="outline" 
+              className="w-full justify-start text-left font-normal h-10 bg-muted/50 border-border/50 hover:bg-muted hover:border-border"
+              onClick={() => setSearchOpen(true)}
+            >
+              <Search className="mr-2 h-4 w-4 text-muted-foreground shrink-0" />
+              <span className="text-muted-foreground text-sm truncate">Rechercher...</span>
+            </Button>
+          </div>
         </div>
 
         {/* Desktop Header */}
