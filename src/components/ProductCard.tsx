@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useCart } from '@/hooks/useCart';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
+import placeholderImage from '@/assets/placeholder-product.jpg';
 interface ProductCardProps {
   id: string;
   name: string;
@@ -58,7 +59,7 @@ const ProductCard = ({
       <CardContent className="p-0">
         <div className="relative group overflow-hidden rounded-lg">
           <Link to={`/product/${id}`}>
-            <img src={image} alt={name} className="w-full h-32 md:h-48 object-cover transition-transform group-hover:scale-105" />
+            <img src={image || placeholderImage} alt={name} className="w-full h-32 md:h-48 object-cover transition-transform group-hover:scale-105" />
           </Link>
           {discount && <Badge className="absolute top-2 left-2 bg-coral text-white">
               -{discount}%
