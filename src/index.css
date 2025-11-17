@@ -34,18 +34,18 @@ All colors MUST be HSL.
 
     --border: 215 30% 85%;
     --input: 215 30% 85%;
-    --ring: 217 91% 60%;
+    --ring: 240 100% 50%;
 
     --radius: 0.75rem;
 
     /* Ocean theme colors */
-    --ocean-blue: 217 91% 60%;
-    --ocean-light: 213 90% 70%;
-    --seafoam: 199 89% 48%;
+    --ocean-blue: 240 100% 50%;
+    --ocean-light: 240 100% 60%;
+    --seafoam: 240 100% 70%;
     --coral: 15 100% 65%;
-    --wave: 215 30% 85%;
-    --deep-blue: 217 91% 45%;
-    --footer-dark: 217 91% 30%;
+    --wave: 240 30% 85%;
+    --deep-blue: 240 100% 40%;
+    --footer-dark: 240 100% 25%;
     
     /* Gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));
@@ -114,16 +114,16 @@ All colors MUST be HSL.
 
     --border: 220 12% 20%;
     --input: 220 12% 16%;
-    --ring: 213 90% 70%;
+    --ring: 240 100% 60%;
 
     /* Dark mode ocean theme colors */
-    --ocean-blue: 213 90% 70%;
-    --ocean-light: 213 85% 75%;
-    --seafoam: 199 89% 60%;
+    --ocean-blue: 240 100% 60%;
+    --ocean-light: 240 100% 70%;
+    --seafoam: 240 100% 75%;
     --coral: 15 80% 68%;
-    --wave: 220 12% 22%;
-    --deep-blue: 213 90% 55%;
-    --footer-dark: 220 30% 8%;
+    --wave: 240 12% 22%;
+    --deep-blue: 240 100% 50%;
+    --footer-dark: 240 30% 15%;
     
     /* Dark mode gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));
