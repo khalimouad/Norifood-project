@@ -3,7 +3,11 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { EnhancedTable, StatusBadge } from './EnhancedTable';
 import { Badge } from '@/components/ui/badge';
-import { User, Mail, Phone, MapPin, Calendar, ShoppingCart } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Calendar, ShoppingCart, Plus } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface CustomerData {
   id: string;
@@ -28,6 +32,18 @@ interface CustomerData {
 export function CustomersManager() {
   const [customers, setCustomers] = useState<CustomerData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    password: '',
+    address: '',
+    city: '',
+    postal_code: '',
+  });
+  const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -213,6 +229,56 @@ export function CustomersManager() {
     },
   ];
 
+  const handleCreateCustomer = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.email || !formData.password || !formData.phone) {
+      toast({
+        title: "Erreur",
+        description: "Email, téléphone et mot de passe sont requis",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+
+      const { data, error } = await supabase.functions.invoke('create-customer-with-auth', {
+        body: formData
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Client créé",
+        description: "Le client a été créé avec succès",
+      });
+
+      setDialogOpen(false);
+      setFormData({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        password: '',
+        address: '',
+        city: '',
+        postal_code: '',
+      });
+      fetchCustomers();
+    } catch (error: any) {
+      console.error('Error creating customer:', error);
+      toast({
+        title: "Erreur",
+        description: error.message || "Impossible de créer le client",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   // Custom actions for customers
   const handleEdit = (customer: CustomerData) => {
     // For now, just toggle status - could expand to full edit form
@@ -221,9 +287,134 @@ export function CustomersManager() {
 
   return (
     <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold">Gestion des clients</h2>
+          <p className="text-muted-foreground">Gérez votre base de clients</p>
+        </div>
+        
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              Nouveau client
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Créer un nouveau client</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleCreateCustomer} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="first_name">Prénom</Label>
+                  <Input
+                    id="first_name"
+                    value={formData.first_name}
+                    onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+                    placeholder="Prénom"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="last_name">Nom</Label>
+                  <Input
+                    id="last_name"
+                    value={formData.last_name}
+                    onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+                    placeholder="Nom"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email">Email *</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="email@exemple.com"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phone">Téléphone *</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  placeholder="+212 6XX XXX XXX"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="password">Mot de passe *</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  placeholder="Minimum 6 caractères"
+                  minLength={6}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="address">Adresse</Label>
+                <Input
+                  id="address"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  placeholder="Adresse complète"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="city">Ville</Label>
+                  <Input
+                    id="city"
+                    value={formData.city}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    placeholder="Ville"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="postal_code">Code postal</Label>
+                  <Input
+                    id="postal_code"
+                    value={formData.postal_code}
+                    onChange={(e) => setFormData({ ...formData, postal_code: e.target.value })}
+                    placeholder="Code postal"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setDialogOpen(false)}
+                  disabled={submitting}
+                >
+                  Annuler
+                </Button>
+                <Button type="submit" disabled={submitting}>
+                  {submitting ? 'Création...' : 'Créer le client'}
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </div>
+
       <EnhancedTable
-        title="Gestion des clients"
-        description="Gérez votre base de clients"
+        title=""
+        description=""
         columns={columns}
         data={customers}
         loading={loading}
