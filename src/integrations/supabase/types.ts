@@ -233,6 +233,39 @@ export type Database = {
         }
         Relationships: []
       }
+      cmi_config: {
+        Row: {
+          created_at: string | null
+          gateway_url: string
+          id: string
+          is_active: boolean | null
+          merchant_id: string
+          merchant_key: string
+          test_mode: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          gateway_url?: string
+          id?: string
+          is_active?: boolean | null
+          merchant_id: string
+          merchant_key: string
+          test_mode?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          gateway_url?: string
+          id?: string
+          is_active?: boolean | null
+          merchant_id?: string
+          merchant_key?: string
+          test_mode?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       customers: {
         Row: {
           address: string | null

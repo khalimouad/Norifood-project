@@ -14,6 +14,7 @@ import { PaymentsManager } from '@/components/admin/enhanced/PaymentsManager';
 import { PromoCodesManager } from '@/components/admin/enhanced/PromoCodesManager';
 import { BannersManager } from '@/components/admin/enhanced/BannersManager';
 import { RecipesManager } from '@/components/admin/enhanced/RecipesManager';
+import { CMIConfigManager } from '@/components/admin/enhanced/CMIConfigManager';
 import AdminRecipeForm from '@/pages/AdminRecipeForm';
 import { SalesAnalytics } from '@/components/admin/enhanced/SalesAnalytics';
 import { RevenueAnalytics } from '@/components/admin/enhanced/RevenueAnalytics';
@@ -37,6 +38,7 @@ function AdminBreadcrumb() {
     'promo-codes': 'Codes Promo',
     'banners': 'Bannières',
     'recipes': 'Recettes',
+    'cmi-config': 'Configuration CMI',
     'analytics': 'Analytics',
     'sales': 'Ventes',
     'revenue': 'Revenus',
@@ -132,6 +134,7 @@ export default function AdminEnhanced() {
                 <Route path="/recipes" element={<RecipesManager />} />
                 <Route path="/recipes/new" element={<AdminRecipeForm />} />
                 <Route path="/recipes/:id" element={<AdminRecipeForm />} />
+                <Route path="/cmi-config" element={<CMIConfigManager />} />
                 <Route path="/analytics/sales" element={<SalesAnalytics />} />
                 <Route path="/analytics/revenue" element={<RevenueAnalytics />} />
                 <Route path="/analytics/activity" element={<ActivityAnalytics />} />
