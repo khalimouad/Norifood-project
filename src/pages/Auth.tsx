@@ -102,8 +102,13 @@ const Auth = () => {
     event.preventDefault();
     setLoading(true);
 
+    // Convert local format (0666666666) to international format (+212666666666)
+    const internationalPhone = phoneNumber.startsWith('0') 
+      ? `+212${phoneNumber.substring(1)}` 
+      : `+212${phoneNumber}`;
+
     const { error } = await supabase.auth.signInWithOtp({
-      phone: phoneNumber,
+      phone: internationalPhone,
     });
 
     if (error) {
@@ -127,8 +132,13 @@ const Auth = () => {
     event.preventDefault();
     setLoading(true);
 
+    // Convert local format to international format for verification
+    const internationalPhone = phoneNumber.startsWith('0') 
+      ? `+212${phoneNumber.substring(1)}` 
+      : `+212${phoneNumber}`;
+
     const { error } = await supabase.auth.verifyOtp({
-      phone: phoneNumber,
+      phone: internationalPhone,
       token: otp,
       type: 'sms',
     });
@@ -274,22 +284,34 @@ const Auth = () => {
                 <form onSubmit={handleSendOTP} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="phone">Numéro de téléphone</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="+212 6XX XXX XXX"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      required
-                    />
+                    <div className="flex gap-2">
+                      <div className="flex items-center px-3 border border-input rounded-md bg-muted text-muted-foreground">
+                        +212
+                      </div>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="0666666666"
+                        value={phoneNumber}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\D/g, '');
+                          if (value.length <= 10) {
+                            setPhoneNumber(value);
+                          }
+                        }}
+                        maxLength={10}
+                        required
+                        className="flex-1"
+                      />
+                    </div>
                     <p className="text-xs text-muted-foreground">
-                      Format international requis (ex: +212...)
+                      Format: 0666666666 (10 chiffres)
                     </p>
                   </div>
                   <Button
                     type="submit"
                     className="w-full"
-                    disabled={loading}
+                    disabled={loading || phoneNumber.length !== 10}
                   >
                     {loading ? 'Envoi...' : 'Envoyer le code'}
                   </Button>
