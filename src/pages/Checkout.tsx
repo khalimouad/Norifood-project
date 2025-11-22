@@ -436,22 +436,6 @@ const Checkout = () => {
                         <input
                           type="radio"
                           name="payment"
-                          value="card"
-                          checked={formData.paymentMethod === "card"}
-                          onChange={(e) => handleInputChange("paymentMethod", e.target.value)}
-                          className="text-primary"
-                        />
-                        <CreditCard className="h-5 w-5 text-primary" />
-                        <div>
-                          <p className="font-medium">Carte bancaire</p>
-                          <p className="text-sm text-muted-foreground">Visa, Mastercard, American Express</p>
-                        </div>
-                        <Badge className="ml-auto bg-green-100 text-green-800">Sécurisé</Badge>
-                      </label>
-                      <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-muted">
-                        <input
-                          type="radio"
-                          name="payment"
                           value="cash"
                           checked={formData.paymentMethod === "cash"}
                           onChange={(e) => handleInputChange("paymentMethod", e.target.value)}

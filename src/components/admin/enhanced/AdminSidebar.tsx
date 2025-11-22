@@ -26,6 +26,7 @@ import {
   DollarSign,
   Clock,
   AlertCircle,
+  Shield,
 } from 'lucide-react';
 
 const mainItems = [
@@ -42,6 +43,7 @@ const managementItems = [
   { title: "Codes Promo", url: "/admin/promo-codes", icon: Percent },
   { title: "Bannières", url: "/admin/banners", icon: Image },
   { title: "Recettes", url: "/admin/recipes", icon: ChefHat },
+  { title: "Config CMI", url: "/admin/cmi-config", icon: Shield },
 ];
 
 const analyticsItems = [
