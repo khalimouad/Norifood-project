@@ -232,10 +232,20 @@ export function CustomersManager() {
   const handleCreateCustomer = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.email || !formData.password || !formData.phone) {
+    // Validate: at least one of email or phone is required
+    if (!formData.email && !formData.phone) {
       toast({
         title: "Erreur",
-        description: "Email, téléphone et mot de passe sont requis",
+        description: "Email ou téléphone est requis",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!formData.password) {
+      toast({
+        title: "Erreur",
+        description: "Le mot de passe est requis",
         variant: "destructive",
       });
       return;
@@ -327,27 +337,29 @@ export function CustomersManager() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email *</Label>
+                <Label htmlFor="email">Email {!formData.phone && '*'}</Label>
                 <Input
                   id="email"
                   type="email"
-                  required
+                  required={!formData.phone}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="email@exemple.com"
                 />
+                <p className="text-xs text-muted-foreground">Email ou téléphone requis</p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">Téléphone *</Label>
+                <Label htmlFor="phone">Téléphone {!formData.email && '*'}</Label>
                 <Input
                   id="phone"
                   type="tel"
-                  required
+                  required={!formData.email}
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="+212 6XX XXX XXX"
                 />
+                <p className="text-xs text-muted-foreground">Email ou téléphone requis</p>
               </div>
 
               <div className="space-y-2">
