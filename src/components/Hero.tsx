@@ -58,7 +58,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative py-6 md:py-12 lg:py-16 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 dark:from-background dark:via-slate-950 dark:to-primary/10">
+    <section className="relative py-6 md:py-12 lg:py-16 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 dark:from-background dark:via-gray-950 dark:to-primary/10">
       {/* Enhanced glowing blobs background with dark mode support */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-16 left-1/4 w-48 h-48 bg-primary/15 dark:bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
@@ -187,7 +187,7 @@ export const Hero = () => {
       </div>
       
       {/* Bottom subtle shadow effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-muted/10 via-background/5 to-transparent dark:from-slate-900/20 dark:via-slate-950/10 dark:to-transparent pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-muted/10 via-background/5 to-transparent dark:from-gray-950/30 dark:via-gray-950/15 dark:to-transparent pointer-events-none"></div>
     </section>
   );
 };
