@@ -211,26 +211,27 @@ export function EnhancedTable({
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex-1">
             <CardTitle className="text-xl">{title}</CardTitle>
             {description && (
               <CardDescription className="mt-1">{description}</CardDescription>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             {onRefresh && (
               <Button 
                 variant="outline" 
                 size="sm" 
                 onClick={onRefresh}
                 disabled={loading}
+                className="flex-1 sm:flex-none"
               >
                 <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
               </Button>
             )}
             {onAdd && (
-              <Button onClick={onAdd} size="sm">
+              <Button onClick={onAdd} size="sm" className="flex-1 sm:flex-none">
                 <Plus className="h-4 w-4 mr-2" />
                 {addButtonText}
               </Button>
@@ -240,7 +241,7 @@ export function EnhancedTable({
       </CardHeader>
       <CardContent>
         {/* Search and Filter Bar */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-4 mb-6">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
@@ -250,40 +251,42 @@ export function EnhancedTable({
               className="pl-9"
             />
           </div>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => setShowFilters(!showFilters)}
-            className="relative"
-          >
-            <Filter className="h-4 w-4 mr-2" />
-            Filtrer
-            {activeFiltersCount > 0 && (
-              <Badge variant="secondary" className="ml-2 h-5 w-5 rounded-full p-0 text-xs">
-                {activeFiltersCount}
-              </Badge>
-            )}
-          </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                <Download className="h-4 w-4 mr-2" />
-                Exporter
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Format d'export</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={exportToCsv}>
-                <FileText className="mr-2 h-4 w-4" />
-                CSV
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={exportToExcel}>
-                <FileSpreadsheet className="mr-2 h-4 w-4" />
-                Excel
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => setShowFilters(!showFilters)}
+              className="relative flex-1 md:flex-none"
+            >
+              <Filter className="h-4 w-4 md:mr-2" />
+              <span className="md:inline">Filtrer</span>
+              {activeFiltersCount > 0 && (
+                <Badge variant="secondary" className="ml-2 h-5 w-5 rounded-full p-0 text-xs">
+                  {activeFiltersCount}
+                </Badge>
+              )}
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="flex-1 md:flex-none">
+                  <Download className="h-4 w-4 md:mr-2" />
+                  <span className="hidden md:inline">Exporter</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Format d'export</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={exportToCsv}>
+                  <FileText className="mr-2 h-4 w-4" />
+                  CSV
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={exportToExcel}>
+                  <FileSpreadsheet className="mr-2 h-4 w-4" />
+                  Excel
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
 
         {/* Advanced Filters */}
@@ -352,82 +355,147 @@ export function EnhancedTable({
             </p>
           </div>
         ) : (
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableHead key={column.key} className="font-medium">
-                      {column.sortable ? (
-                        <Button
-                          variant="ghost"
-                          onClick={() => handleSort(column.key)}
-                          className="h-8 px-2 hover:bg-transparent"
-                        >
-                          {column.label}
-                          <ArrowUpDown className="ml-2 h-4 w-4" />
-                        </Button>
-                      ) : (
-                        column.label
-                      )}
-                    </TableHead>
-                  ))}
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {sortedData.map((row, index) => (
-                  <TableRow key={row.id || index} className="hover:bg-muted/50">
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden md:block rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
                     {columns.map((column) => (
-                      <TableCell key={column.key}>
-                        {column.render 
-                          ? column.render(row[column.key], row)
-                          : row[column.key]
-                        }
-                      </TableCell>
-                    ))}
-                    <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" className="h-8 w-8 p-0">
-                            <MoreHorizontal className="h-4 w-4" />
+                      <TableHead key={column.key} className="font-medium">
+                        {column.sortable ? (
+                          <Button
+                            variant="ghost"
+                            onClick={() => handleSort(column.key)}
+                            className="h-8 px-2 hover:bg-transparent"
+                          >
+                            {column.label}
+                            <ArrowUpDown className="ml-2 h-4 w-4" />
                           </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-48">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          {onView && (
-                            <DropdownMenuItem onClick={() => onView(row)}>
-                              <Eye className="mr-2 h-4 w-4" />
-                              Voir
-                            </DropdownMenuItem>
-                          )}
-                          {onEdit && (
-                            <DropdownMenuItem onClick={() => onEdit(row)}>
-                              <Edit className="mr-2 h-4 w-4" />
-                              Modifier
-                            </DropdownMenuItem>
-                          )}
-                          {onDelete && (
-                            <>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem 
-                                onClick={() => onDelete(row)}
-                                className="text-red-600 focus:text-red-600"
-                              >
-                                <Trash2 className="mr-2 h-4 w-4" />
-                                Supprimer
-                              </DropdownMenuItem>
-                            </>
-                          )}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
+                        ) : (
+                          column.label
+                        )}
+                      </TableHead>
+                    ))}
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+                </TableHeader>
+                <TableBody>
+                  {sortedData.map((row, index) => (
+                    <TableRow key={row.id || index} className="hover:bg-muted/50">
+                      {columns.map((column) => (
+                        <TableCell key={column.key}>
+                          {column.render 
+                            ? column.render(row[column.key], row)
+                            : row[column.key]
+                          }
+                        </TableCell>
+                      ))}
+                      <TableCell className="text-right">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            {onView && (
+                              <DropdownMenuItem onClick={() => onView(row)}>
+                                <Eye className="mr-2 h-4 w-4" />
+                                Voir
+                              </DropdownMenuItem>
+                            )}
+                            {onEdit && (
+                              <DropdownMenuItem onClick={() => onEdit(row)}>
+                                <Edit className="mr-2 h-4 w-4" />
+                                Modifier
+                              </DropdownMenuItem>
+                            )}
+                            {onDelete && (
+                              <>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem 
+                                  onClick={() => onDelete(row)}
+                                  className="text-red-600 focus:text-red-600"
+                                >
+                                  <Trash2 className="mr-2 h-4 w-4" />
+                                  Supprimer
+                                </DropdownMenuItem>
+                              </>
+                            )}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-3">
+              {sortedData.map((row, index) => (
+                <Card key={row.id || index} className="overflow-hidden">
+                  <CardContent className="p-4">
+                    <div className="space-y-3">
+                      {columns.map((column) => (
+                        <div key={column.key} className="flex justify-between items-start gap-2">
+                          <span className="text-sm font-medium text-muted-foreground min-w-[100px]">
+                            {column.label}
+                          </span>
+                          <div className="text-sm text-right flex-1">
+                            {column.render 
+                              ? column.render(row[column.key], row)
+                              : row[column.key]
+                            }
+                          </div>
+                        </div>
+                      ))}
+                      
+                      <Separator className="my-2" />
+                      
+                      <div className="flex gap-2">
+                        {onView && (
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => onView(row)}
+                            className="flex-1"
+                          >
+                            <Eye className="h-4 w-4 mr-1" />
+                            Voir
+                          </Button>
+                        )}
+                        {onEdit && (
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => onEdit(row)}
+                            className="flex-1"
+                          >
+                            <Edit className="h-4 w-4 mr-1" />
+                            Modifier
+                          </Button>
+                        )}
+                        {onDelete && (
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => onDelete(row)}
+                            className="text-red-600 hover:text-red-700"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </>
         )}
 
         {/* Results Count */}

@@ -67,7 +67,7 @@ export function AdminSidebar() {
       : "text-muted-foreground hover:bg-muted/50 hover:text-foreground";
 
   return (
-    <Sidebar className={collapsed ? "w-16" : "w-64"}>
+    <Sidebar className={`${collapsed ? "w-16" : "w-64"} hidden md:flex`}>
       <SidebarContent className="bg-card border-r">
         <div className="p-4 border-b">
           <div className="flex items-center gap-2">
