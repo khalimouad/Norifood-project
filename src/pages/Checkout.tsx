@@ -58,7 +58,43 @@ const Checkout = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  // Marrakech city center coordinates
+  const MARRAKECH_CENTER = { lat: 31.6295, lng: -7.9811 };
+  const MAX_DELIVERY_RADIUS_KM = 10;
+
+  // Calculate distance between two coordinates using Haversine formula
+  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+    const R = 6371; // Earth's radius in kilometers
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  };
+
   const handleAddressSelect = (address: string, city: string, postalCode?: string, latitude?: number, longitude?: number) => {
+    // Validate delivery zone if coordinates are provided
+    if (latitude && longitude) {
+      const distance = calculateDistance(
+        MARRAKECH_CENTER.lat,
+        MARRAKECH_CENTER.lng,
+        latitude,
+        longitude
+      );
+
+      if (distance > MAX_DELIVERY_RADIUS_KM) {
+        toast({
+          title: "Zone de livraison non disponible",
+          description: `Désolé, nous ne livrons que dans un rayon de ${MAX_DELIVERY_RADIUS_KM}km autour de Marrakech. Cette adresse est à ${distance.toFixed(1)}km.`,
+          variant: "destructive"
+        });
+        return;
+      }
+    }
+
     setFormData(prev => ({
       ...prev,
       address,
@@ -71,6 +107,33 @@ const Checkout = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Final validation: check if coordinates are within delivery zone
+    if (formData.latitude && formData.longitude) {
+      const distance = calculateDistance(
+        MARRAKECH_CENTER.lat,
+        MARRAKECH_CENTER.lng,
+        formData.latitude,
+        formData.longitude
+      );
+
+      if (distance > MAX_DELIVERY_RADIUS_KM) {
+        toast({
+          title: "Zone de livraison non disponible",
+          description: `Nous ne livrons que dans un rayon de ${MAX_DELIVERY_RADIUS_KM}km autour de Marrakech. Veuillez sélectionner une autre adresse.`,
+          variant: "destructive"
+        });
+        return;
+      }
+    } else {
+      toast({
+        title: "Adresse invalide",
+        description: "Veuillez sélectionner une adresse valide sur la carte.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -253,6 +316,9 @@ const Checkout = () => {
                       <MapPin className="h-5 w-5 text-primary" />
                       Adresse de Livraison
                     </CardTitle>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      Nous livrons uniquement dans un rayon de {MAX_DELIVERY_RADIUS_KM}km autour de Marrakech
+                    </p>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <AddressMapSelector
