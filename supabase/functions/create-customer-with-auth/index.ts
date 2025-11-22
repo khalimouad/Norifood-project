@@ -19,18 +19,36 @@ serve(async (req) => {
   try {
     const { email, password, first_name, last_name, phone, address, city, postal_code } = await req.json();
 
+    // Validate: at least one of email or phone is required
+    if (!email && !phone) {
+      throw new Error('Either email or phone number is required');
+    }
+
+    if (!password) {
+      throw new Error('Password is required');
+    }
+
     console.log('Creating customer with auth user:', { email, phone });
 
-    // Create auth user with password
-    const { data: authData, error: authError } = await supabaseClient.auth.admin.createUser({
-      email,
+    // Prepare auth user creation payload
+    const authPayload: any = {
       password,
       email_confirm: true,
       user_metadata: {
         first_name,
         last_name,
       }
-    });
+    };
+
+    // If email is provided, use it; otherwise use phone
+    if (email) {
+      authPayload.email = email;
+    } else if (phone) {
+      authPayload.phone = phone;
+    }
+
+    // Create auth user with password
+    const { data: authData, error: authError } = await supabaseClient.auth.admin.createUser(authPayload);
 
     if (authError) {
       console.error('Auth user creation error:', authError);
