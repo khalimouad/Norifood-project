@@ -3,6 +3,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { useAuth } from '@/hooks/useAuth';
 import { AdminSidebar } from '@/components/admin/enhanced/AdminSidebar';
+import { MobileAdminNav } from '@/components/admin/MobileAdminNav';
 import { AdminDashboard } from '@/components/admin/enhanced/AdminDashboard';
 import { EnhancedProductsManager } from '@/components/admin/enhanced/EnhancedProductsManager';
 import { ProductForm } from '@/components/admin/enhanced/ProductForm';
@@ -87,20 +88,21 @@ export default function AdminEnhanced() {
         <div className="flex-1 flex flex-col">
           {/* Header */}
           <header className="h-14 flex items-center justify-between border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4">
-            <div className="flex items-center gap-4">
-              <SidebarTrigger />
+            <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
+              <MobileAdminNav />
+              <SidebarTrigger className="hidden md:flex" />
               <AdminBreadcrumb />
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 md:gap-2">
               <ThemeToggle variant="icon" />
               <Button 
                 variant="outline" 
                 size="sm" 
                 onClick={() => window.open('/', '_blank')}
-                className="hidden md:flex items-center gap-2"
+                className="hidden sm:flex items-center gap-2"
               >
                 <ExternalLink className="h-4 w-4" />
-                Voir le site
+                <span className="hidden lg:inline">Voir le site</span>
               </Button>
               <Button 
                 variant="ghost" 
@@ -109,14 +111,14 @@ export default function AdminEnhanced() {
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
               >
                 <LogOut className="h-4 w-4" />
-                <span className="hidden md:inline">Déconnexion</span>
+                <span className="hidden sm:inline">Déconnexion</span>
               </Button>
             </div>
           </header>
 
           {/* Main Content */}
           <main className="flex-1 overflow-auto">
-            <div className="container mx-auto py-6">
+            <div className="container mx-auto py-4 md:py-6 px-4">
               <Routes>
                 <Route path="/" element={<AdminDashboard />} />
                 <Route path="/products" element={<EnhancedProductsManager />} />
