@@ -12,6 +12,7 @@ serve(async (req) => {
   }
 
   try {
+    // Create client with user's JWT for regular operations
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
@@ -22,7 +23,7 @@ serve(async (req) => {
       }
     );
 
-    // Check if user is admin
+    // Get user from JWT
     const { data: { user } } = await supabaseClient.auth.getUser();
     if (!user) {
       return new Response(
@@ -31,7 +32,13 @@ serve(async (req) => {
       );
     }
 
-    const { data: adminUser, error: adminError } = await supabaseClient
+    // Use service role key to check admin status (bypasses RLS)
+    const supabaseAdmin = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+
+    const { data: adminUser, error: adminError } = await supabaseAdmin
       .from('admin_users')
       .select('*')
       .eq('id', user.id)
