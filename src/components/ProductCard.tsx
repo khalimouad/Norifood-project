@@ -106,7 +106,7 @@ const ProductCard = ({
               </Button>
             </div>
             
-            <Button onClick={handleAddToCart} disabled={!inStock} size="sm" className="flex-1 h-8 md:h-9 text-xs md:text-sm font-medium px-2 md:px-3 text-slate-50 bg-blue-600 hover:bg-blue-500">
+            <Button onClick={handleAddToCart} disabled={!inStock} size="sm" variant="cart" className="flex-1 h-8 md:h-9 text-xs md:text-sm font-medium px-2 md:px-3">
               <ShoppingCart className="h-3 w-3 md:h-4 md:w-4 mr-1" />
               <span className="hidden sm:inline">Ajouter</span>
               <span className="sm:hidden">+</span>

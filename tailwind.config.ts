@@ -70,7 +70,8 @@ export default {
 				seafoam: 'hsl(var(--seafoam))',
 				coral: 'hsl(var(--coral))',
 				wave: 'hsl(var(--wave))',
-				gold: 'hsl(var(--gold))'
+				gold: 'hsl(var(--gold))',
+				'cart-blue': 'hsl(var(--cart-blue))'
 			},
 			backgroundImage: {
 				'gradient-ocean': 'var(--gradient-ocean)',
