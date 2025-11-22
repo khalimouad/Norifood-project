@@ -90,32 +90,32 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 220 20% 9%;
+    --background: 220 20% 16%;
     --foreground: 210 15% 95%;
 
-    --card: 220 15% 12%;
+    --card: 220 15% 18%;
     --card-foreground: 210 15% 92%;
 
-    --popover: 220 15% 12%;
+    --popover: 220 15% 18%;
     --popover-foreground: 210 15% 92%;
 
     --primary: 240 100% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 12% 16%;
+    --secondary: 220 12% 22%;
     --secondary-foreground: 210 15% 88%;
 
-    --muted: 220 12% 14%;
+    --muted: 220 12% 20%;
     --muted-foreground: 215 12% 72%;
 
     --accent: 199 89% 60%;
-    --accent-foreground: 220 20% 9%;
+    --accent-foreground: 220 20% 16%;
 
     --destructive: 0 65% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 12% 20%;
-    --input: 220 12% 16%;
+    --border: 220 12% 25%;
+    --input: 220 12% 22%;
     --ring: 240 100% 60%;
 
     /* Dark mode ocean theme colors */
@@ -123,9 +123,9 @@ All colors MUST be HSL.
     --ocean-light: 240 100% 70%;
     --seafoam: 240 100% 75%;
     --coral: 15 80% 68%;
-    --wave: 240 12% 22%;
+    --wave: 240 12% 28%;
     --deep-blue: 240 100% 50%;
-    --footer-dark: 240 30% 15%;
+    --footer-dark: 240 30% 20%;
     --gold: 45 100% 60%;
     --cart-blue: 240 100% 50%;
     
