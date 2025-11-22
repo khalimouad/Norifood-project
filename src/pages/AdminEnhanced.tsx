@@ -14,6 +14,7 @@ import { PaymentsManager } from '@/components/admin/enhanced/PaymentsManager';
 import { PromoCodesManager } from '@/components/admin/enhanced/PromoCodesManager';
 import { BannersManager } from '@/components/admin/enhanced/BannersManager';
 import { RecipesManager } from '@/components/admin/enhanced/RecipesManager';
+import AdminRecipeForm from '@/pages/AdminRecipeForm';
 import { SalesAnalytics } from '@/components/admin/enhanced/SalesAnalytics';
 import { RevenueAnalytics } from '@/components/admin/enhanced/RevenueAnalytics';
 import { ActivityAnalytics } from '@/components/admin/enhanced/ActivityAnalytics';
@@ -129,6 +130,8 @@ export default function AdminEnhanced() {
                 <Route path="/banners/new" element={<div className="p-6"><h2 className="text-xl font-semibold">Nouvelle bannière</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
                 <Route path="/banners/:id" element={<div className="p-6"><h2 className="text-xl font-semibold">Modifier la bannière</h2><p className="text-muted-foreground">Fonctionnalité en développement</p></div>} />
                 <Route path="/recipes" element={<RecipesManager />} />
+                <Route path="/recipes/new" element={<AdminRecipeForm />} />
+                <Route path="/recipes/:id" element={<AdminRecipeForm />} />
                 <Route path="/analytics/sales" element={<SalesAnalytics />} />
                 <Route path="/analytics/revenue" element={<RevenueAnalytics />} />
                 <Route path="/analytics/activity" element={<ActivityAnalytics />} />
