@@ -291,7 +291,7 @@ const Auth = () => {
                       <Input
                         id="phone"
                         type="tel"
-                        placeholder="0666666666"
+                        placeholder="0xxxxxxxxx"
                         value={phoneNumber}
                         onChange={(e) => {
                           const value = e.target.value.replace(/\D/g, '');
@@ -305,7 +305,7 @@ const Auth = () => {
                       />
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Format: 0666666666 (10 chiffres)
+                      Format: 0xxxxxxxxx (10 chiffres)
                     </p>
                   </div>
                   <Button
