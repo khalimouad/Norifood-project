@@ -21,6 +21,7 @@ const buttonVariants = cva(
         ocean: "bg-ocean text-white hover:bg-ocean/90 shadow-ocean",
         seafoam: "bg-seafoam text-white hover:bg-seafoam/90 shadow-ocean",
         coral: "bg-coral text-white hover:bg-coral/90 shadow-ocean",
+        cart: "bg-cart-blue text-white hover:bg-cart-blue/90 shadow-ocean",
       },
       size: {
         default: "h-10 px-4 py-2",

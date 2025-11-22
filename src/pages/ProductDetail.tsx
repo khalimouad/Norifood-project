@@ -317,6 +317,7 @@ const ProductDetail = () => {
                   }
                   className="w-full"
                   size="lg"
+                  variant="cart"
                 >
                   Ajouter au Panier - {((selectedVariation ? selectedVariation.price : product.base_price) * quantity).toFixed(2)} DH
                 </Button>

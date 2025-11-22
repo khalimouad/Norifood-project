@@ -47,6 +47,7 @@ All colors MUST be HSL.
     --deep-blue: 240 100% 40%;
     --footer-dark: 240 100% 25%;
     --gold: 45 100% 55%;
+    --cart-blue: 240 100% 50%;
     
     /* Gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));
@@ -126,6 +127,7 @@ All colors MUST be HSL.
     --deep-blue: 240 100% 50%;
     --footer-dark: 240 30% 15%;
     --gold: 45 100% 60%;
+    --cart-blue: 240 100% 50%;
     
     /* Dark mode gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));
