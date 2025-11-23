@@ -87,7 +87,7 @@ export default function AdminEnhanced() {
         
         <div className="flex-1 flex flex-col">
           {/* Header */}
-          <header className="h-14 flex items-center justify-between border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4">
+          <header className="sticky top-0 z-50 h-14 flex items-center justify-between border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4">
             <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
               <MobileAdminNav />
               <SidebarTrigger className="hidden md:flex" />
