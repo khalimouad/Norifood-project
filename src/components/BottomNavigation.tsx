@@ -31,7 +31,7 @@ export const BottomNavigation = () => {
   return (
     <>
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 safe-area-bottom block md:hidden rounded-t-3xl">
-        <div className="flex items-center justify-around py-2 px-2">
+        <div className="flex items-center justify-around py-1 px-2">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path || (item.action === 'categories' && categoriesSidebarOpen);
             return (
@@ -39,14 +39,14 @@ export const BottomNavigation = () => {
                 key={item.label}
                 variant="ghost"
                 onClick={() => handleItemClick(item)}
-                className={`flex flex-col items-center gap-1 h-auto py-3 px-2 relative flex-1 rounded-2xl transition-all duration-200 ${
+                className={`flex flex-col items-center gap-0.5 h-auto py-1.5 px-2 relative flex-1 rounded-2xl transition-all duration-200 ${
                   isActive 
                     ? 'text-ocean' 
                     : 'text-gray-500 hover:text-ocean hover:bg-ocean/10'
                 }`}
               >
                 <div className="relative">
-                  <item.icon className="h-5 w-5" />
+                  <item.icon className="h-4 w-4" />
                   {item.badge !== undefined && (
                     <span className="absolute -top-2 -right-2 bg-coral text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
                       {item.badge}
