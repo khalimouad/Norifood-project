@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => ({
         name: 'Fresh N\'Good - Produits de la Mer Frais',
         short_name: 'Fresh N\'Good',
         description: 'Poissons et fruits de mer de qualité premium, de l\'océan à votre table avec fraîcheur garantie',
-        theme_color: '#0ea5e9',
+        theme_color: '#e0f2fe',
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait',
