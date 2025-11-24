@@ -41,6 +41,14 @@ export const AddressMapSelector: React.FC<AddressMapSelectorProps> = ({
         zoom: 12,
       });
 
+      // Wait for map to load before adding controls
+      map.current.on('load', () => {
+        if (!map.current) return;
+        
+        // Resize map to ensure it fills container
+        map.current.resize();
+      });
+
     // Add navigation controls
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
