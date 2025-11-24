@@ -19,7 +19,7 @@ export const AddressMapSelector: React.FC<AddressMapSelectorProps> = ({
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const marker = useRef<mapboxgl.Marker | null>(null);
-  const [mapboxToken, setMapboxToken] = useState('');
+  const [mapboxToken] = useState('pk.eyJ1Ijoia2hhbGltb3VhZCIsImEiOiJjbTlncW1jOW4wZTYyMmtxdHVvZ3dkcGw2In0.EEHLGF5ypO1t2FRgcu-nLg');
   const [selectedAddress, setSelectedAddress] = useState(initialAddress);
   const [selectedCoordinates, setSelectedCoordinates] = useState<{lat: number, lng: number} | null>(null);
   const [isMapVisible, setIsMapVisible] = useState(false);
@@ -170,82 +170,64 @@ export const AddressMapSelector: React.FC<AddressMapSelectorProps> = ({
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {!mapboxToken ? (
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              Pour utiliser la carte, veuillez entrer votre token Mapbox :
-            </p>
-            <Input
-              placeholder="Token Mapbox (pk.xxx...)"
-              value={mapboxToken}
-              onChange={(e) => setMapboxToken(e.target.value)}
-            />
-            <p className="text-xs text-muted-foreground">
-              Obtenez votre token gratuit sur <a href="https://mapbox.com" target="_blank" rel="noopener noreferrer" className="text-primary underline">mapbox.com</a>
-            </p>
-          </div>
-        ) : (
-          <>
+        <div className="flex gap-2">
+          <Input
+            placeholder="Rechercher une adresse..."
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                searchAddress(e.currentTarget.value);
+              }
+            }}
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => {
+              const input = document.querySelector('input[placeholder="Rechercher une adresse..."]') as HTMLInputElement;
+              if (input) searchAddress(input.value);
+            }}
+          >
+            <Search className="h-4 w-4" />
+          </Button>
+        </div>
+        
+        <div 
+          ref={mapContainer} 
+          className="w-full h-[300px] rounded-lg border overflow-hidden"
+        />
+        
+        {selectedAddress && (
+          <div className="space-y-3">
+            <div className="p-3 bg-muted rounded-lg">
+              <p className="text-sm text-muted-foreground">Adresse sélectionnée :</p>
+              <p className="text-sm font-medium">{selectedAddress}</p>
+            </div>
+            
             <div className="flex gap-2">
-              <Input
-                placeholder="Rechercher une adresse..."
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    searchAddress(e.currentTarget.value);
-                  }
-                }}
-              />
+              <Button
+                type="button"
+                onClick={handleConfirmAddress}
+                className="flex-1 flex items-center gap-2"
+              >
+                <Check className="h-4 w-4" />
+                Confirmer cette adresse
+              </Button>
               <Button
                 type="button"
                 variant="outline"
-                size="icon"
-                onClick={() => {
-                  const input = document.querySelector('input[placeholder="Rechercher une adresse..."]') as HTMLInputElement;
-                  if (input) searchAddress(input.value);
-                }}
+                onClick={() => setIsMapVisible(false)}
               >
-                <Search className="h-4 w-4" />
+                Annuler
               </Button>
             </div>
-            
-            <div 
-              ref={mapContainer} 
-              className="w-full h-[300px] rounded-lg border overflow-hidden"
-            />
-            
-            {selectedAddress && (
-              <div className="space-y-3">
-                <div className="p-3 bg-muted rounded-lg">
-                  <p className="text-sm text-muted-foreground">Adresse sélectionnée :</p>
-                  <p className="text-sm font-medium">{selectedAddress}</p>
-                </div>
-                
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    onClick={handleConfirmAddress}
-                    className="flex-1 flex items-center gap-2"
-                  >
-                    <Check className="h-4 w-4" />
-                    Confirmer cette adresse
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setIsMapVisible(false)}
-                  >
-                    Annuler
-                  </Button>
-                </div>
-              </div>
-            )}
-            
-            <p className="text-xs text-muted-foreground">
-              Cliquez sur la carte pour sélectionner une adresse précise
-            </p>
-          </>
+          </div>
         )}
+        
+        <p className="text-xs text-muted-foreground">
+          Cliquez sur la carte pour sélectionner une adresse précise
+        </p>
       </CardContent>
     </Card>
   );
