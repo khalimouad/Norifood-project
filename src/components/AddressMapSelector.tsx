@@ -24,18 +24,22 @@ export const AddressMapSelector: React.FC<AddressMapSelectorProps> = ({
   const [selectedCoordinates, setSelectedCoordinates] = useState<{lat: number, lng: number} | null>(null);
   const [isMapVisible, setIsMapVisible] = useState(false);
 
-  // Initialize map when token is provided
+  // Initialize map when token is provided and map is visible
   useEffect(() => {
-    if (!mapContainer.current || !mapboxToken) return;
+    if (!mapContainer.current || !mapboxToken || !isMapVisible) return;
 
     mapboxgl.accessToken = mapboxToken;
     
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [-7.6166, 33.5731], // Casablanca, Morocco default
-      zoom: 12,
-    });
+    // Small delay to ensure container is rendered
+    const timer = setTimeout(() => {
+      if (!mapContainer.current) return;
+      
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [-7.6166, 33.5731], // Casablanca, Morocco default
+        zoom: 12,
+      });
 
     // Add navigation controls
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
@@ -87,10 +91,16 @@ export const AddressMapSelector: React.FC<AddressMapSelectorProps> = ({
       }
     });
 
+      return () => {
+        map.current?.remove();
+      };
+    }, 100);
+
     return () => {
+      clearTimeout(timer);
       map.current?.remove();
     };
-  }, [mapboxToken]);
+  }, [mapboxToken, isMapVisible]);
 
   const handleConfirmAddress = () => {
     if (selectedAddress && selectedCoordinates) {
