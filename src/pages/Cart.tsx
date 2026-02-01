@@ -23,10 +23,19 @@ import {
 } from "lucide-react";
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, getTotalItems, getTotalPrice } = useCart();
+  const { items, updateQuantity, removeItem, clearCart, getTotalItems, getTotalPrice } = useCart();
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
   const { toast } = useToast();
+
+  const handleClearCart = () => {
+    clearCart();
+    setAppliedPromo(null);
+    toast({
+      title: "Panier vidé",
+      description: "Tous les produits ont été retirés de votre panier",
+    });
+  };
 
   const handleUpdateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) {
@@ -101,14 +110,24 @@ const Cart = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pb-20 md:pb-0">
-        {/* Header */}
         <div className="bg-muted py-8">
           <div className="container mx-auto px-4">
-            <div className="flex items-center gap-3 mb-4">
-              <ShoppingBag className="h-8 w-8 text-primary" />
-              <h1 className="text-3xl font-bold text-foreground">
-                Mon Panier
-              </h1>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <ShoppingBag className="h-8 w-8 text-primary" />
+                <h1 className="text-3xl font-bold text-foreground">
+                  Mon Panier
+                </h1>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleClearCart}
+                className="text-destructive hover:text-destructive hover:bg-destructive/10"
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Vider le panier
+              </Button>
             </div>
             <p className="text-muted-foreground">
               {items.length} article{items.length > 1 ? "s" : ""} dans votre panier
