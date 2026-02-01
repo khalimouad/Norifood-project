@@ -4,23 +4,18 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/useCart";
-import { 
-  Plus, 
-  Minus, 
-  ArrowLeft,
-  Star,
-  Truck,
-  Shield,
-  Clock,
-  Check
-} from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
+
+// Product components
+import { ProductImageGallery } from "@/components/product/ProductImageGallery";
+import { ProductInfo } from "@/components/product/ProductInfo";
+import { ProductVariations } from "@/components/product/ProductVariations";
+import { ProductFeatures } from "@/components/product/ProductFeatures";
+import { RelatedProducts } from "@/components/product/RelatedProducts";
 
 type Product = Tables<"products">;
 type ProductVariation = Tables<"product_variations">;
@@ -173,70 +168,16 @@ const ProductDetail = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Product Images */}
-            <div className="space-y-4">
-              <div className="aspect-square rounded-lg overflow-hidden bg-muted/50">
-                <img
-                  src={images[selectedImage]}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {images.length > 1 && (
-                <div className="grid grid-cols-4 gap-2">
-                  {images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImage(index)}
-                      className={`aspect-square rounded-lg overflow-hidden border-2 transition-colors ${
-                        selectedImage === index ? "border-primary" : "border-border"
-                      }`}
-                    >
-                      <img
-                        src={image}
-                        alt={`${product.name} ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <ProductImageGallery
+              images={images}
+              productName={product.name}
+              selectedImage={selectedImage}
+              onSelectImage={setSelectedImage}
+            />
 
             {/* Product Info */}
             <div className="space-y-6">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  {product.featured && (
-                    <Badge className="bg-accent text-accent-foreground">Produit Vedette</Badge>
-                  )}
-                  {product.stock_quantity && product.stock_quantity > 0 ? (
-                    <Badge variant="outline" className="text-green-600 border-green-600 dark:text-green-400 dark:border-green-400">
-                      <Check className="h-3 w-3 mr-1" />
-                      En Stock
-                    </Badge>
-                  ) : (
-                    <Badge variant="outline" className="text-red-600 border-red-600 dark:text-red-400 dark:border-red-400">
-                      Rupture de Stock
-                    </Badge>
-                  )}
-                </div>
-                <h1 className="text-3xl font-bold text-foreground mb-4">
-                  {product.name}
-                </h1>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex text-yellow-400">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="h-5 w-5 fill-current" />
-                    ))}
-                  </div>
-                </div>
-                <div className="text-3xl font-bold text-primary mb-4">
-                  {selectedVariation ? selectedVariation.price : product.base_price} DH
-                  <span className="text-lg font-normal text-muted-foreground ml-2">
-                    {selectedVariation ? `/ pièce (${selectedVariation.weight_kg}kg)` : `/ ${product.unit_type}`}
-                  </span>
-                </div>
-              </div>
+              <ProductInfo product={product} selectedVariation={selectedVariation} />
 
               {product.description && (
                 <div>
@@ -246,39 +187,11 @@ const ProductDetail = () => {
               )}
 
               {/* Product Variations */}
-              {variations.length > 0 && (
-                <div>
-                  <h3 className="font-semibold text-foreground mb-3">Choisir une pièce:</h3>
-                  <div className="grid gap-3">
-                    {variations.map((variation) => (
-                      <div
-                        key={variation.id}
-                        onClick={() => setSelectedVariation(variation)}
-                        className={`p-4 border rounded-lg cursor-pointer transition-all hover:border-primary ${
-                          selectedVariation?.id === variation.id
-                            ? "border-primary bg-primary/5"
-                            : "border-border"
-                        }`}
-                      >
-                        <div className="flex justify-between items-center">
-                          <div>
-                            <p className="font-medium text-foreground">{variation.name}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {variation.weight_kg}kg • Stock: {variation.stock_quantity}
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-bold text-primary">{variation.price} DH</p>
-                            <p className="text-xs text-muted-foreground">
-                              {(variation.price / variation.weight_kg!).toFixed(2)} DH/kg
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              <ProductVariations
+                variations={variations}
+                selectedVariation={selectedVariation}
+                onSelectVariation={setSelectedVariation}
+              />
 
               {/* Quantity Selector */}
               <div className="space-y-4">
@@ -324,39 +237,12 @@ const ProductDetail = () => {
               </div>
 
               {/* Product Features */}
-              <Card className="border-0 bg-muted/50">
-                <CardContent className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="flex items-center gap-3">
-                      <Truck className="h-5 w-5 text-primary flex-shrink-0" />
-                      <div>
-                        <p className="font-medium text-sm">Livraison Express</p>
-                        <p className="text-xs text-muted-foreground">Même jour ou 24h</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Shield className="h-5 w-5 text-primary flex-shrink-0" />
-                      <div>
-                        <p className="font-medium text-sm">Fraîcheur Garantie</p>
-                        <p className="text-xs text-muted-foreground">Chaîne du froid</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-primary flex-shrink-0" />
-                      <div>
-                        <p className="font-medium text-sm">Préparation Express</p>
-                        <p className="text-xs text-muted-foreground">Prêt en 2h</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <ProductFeatures />
             </div>
           </div>
 
           {/* Product Details */}
           <div className="mt-16">
-
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="font-bold text-lg mb-4">Détails du Produit</h3>
@@ -404,6 +290,12 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
+
+          {/* Related Products */}
+          <RelatedProducts 
+            currentProductId={product.id} 
+            categoryId={product.category_id} 
+          />
         </div>
       </main>
       <Footer />
