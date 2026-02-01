@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { ProductGridSkeleton } from "@/components/skeletons/ProductCardSkeleton";
 type Product = Tables<"products">;
 type Category = Tables<"categories">;
 const Products = () => {
@@ -188,17 +189,29 @@ const Products = () => {
     setShowSuggestions(false);
   };
   if (loading) {
-    return <div className="min-h-screen bg-background">
+    return (
+      <div className="min-h-screen bg-background">
         <Header />
-        <div className="flex items-center justify-center h-96">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Chargement des produits...</p>
+        <main className="pb-20 md:pb-0">
+          {/* Hero Section Skeleton */}
+          <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-16">
+            <div className="container mx-auto px-4 text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-slate-50">
+                Nos Produits Frais
+              </h1>
+              <p className="text-xl mb-8 text-slate-50">
+                Découvrez notre sélection de poissons et fruits de mer de qualité premium
+              </p>
+            </div>
           </div>
-        </div>
+          <div className="container mx-auto px-4 py-8">
+            <ProductGridSkeleton count={8} />
+          </div>
+        </main>
         <Footer />
         <BottomNavigation />
-      </div>;
+      </div>
+    );
   }
   return <div className="min-h-screen bg-background">
       <Header />

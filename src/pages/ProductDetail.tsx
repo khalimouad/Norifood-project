@@ -16,6 +16,7 @@ import { ProductInfo } from "@/components/product/ProductInfo";
 import { ProductVariations } from "@/components/product/ProductVariations";
 import { ProductFeatures } from "@/components/product/ProductFeatures";
 import { RelatedProducts } from "@/components/product/RelatedProducts";
+import { ProductDetailSkeleton } from "@/components/skeletons/ProductDetailSkeleton";
 
 type Product = Tables<"products">;
 type ProductVariation = Tables<"product_variations">;
@@ -120,12 +121,9 @@ const ProductDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="flex items-center justify-center h-96">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Chargement du produit...</p>
-          </div>
-        </div>
+        <main className="pb-20 md:pb-0">
+          <ProductDetailSkeleton />
+        </main>
         <Footer />
         <BottomNavigation />
       </div>
