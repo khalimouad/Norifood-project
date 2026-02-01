@@ -4,6 +4,8 @@ import { ProductCard } from './ProductCard';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { ProductGridSkeleton } from './skeletons/ProductCardSkeleton';
+
 interface Product {
   id: string;
   name: string;
@@ -15,18 +17,24 @@ interface Product {
   featured: boolean;
   stock_quantity: number;
 }
+
 export const FeaturedProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     fetchFeaturedProducts();
   }, []);
+
   const fetchFeaturedProducts = async () => {
     try {
-      const {
-        data,
-        error
-      } = await supabase.from('products').select('*').eq('featured', true).eq('is_active', true).limit(8);
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('featured', true)
+        .eq('is_active', true)
+        .limit(8);
+
       if (error) throw error;
       setProducts(data || []);
     } catch (error) {
@@ -35,15 +43,23 @@ export const FeaturedProducts = () => {
       setLoading(false);
     }
   };
+
   if (loading) {
-    return <section className="py-8 md:py-16 bg-background">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-muted-foreground">Chargement des produits vedettes...</p>
+    return (
+      <section className="py-8 md:py-12 lg:py-16 bg-background">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+          <div className="text-center mb-6 md:mb-10 lg:mb-12 space-y-2 md:space-y-3">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+              Produits Vedettes
+            </h2>
+            <p className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-2xl mx-auto px-4">
+              Découvrez notre sélection des produits les plus frais
+            </p>
           </div>
+          <ProductGridSkeleton count={8} />
         </div>
-      </section>;
+      </section>
+    );
   }
   return <section className="py-8 md:py-12 lg:py-16 bg-background">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">

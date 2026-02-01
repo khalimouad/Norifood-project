@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Fish, Waves, Apple, Carrot, Leaf, Anchor, Shell, Droplet, Flame, Package, Beef, Soup, UtensilsCrossed, Star, Heart, Sparkles, Crown, Gem, Award, Zap, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { CategoryGridSkeleton } from './skeletons/CategorySkeleton';
 
 interface Category {
   id: string;
@@ -73,12 +74,17 @@ export const Categories = () => {
 
   if (loading) {
     return (
-      <section className="py-8 md:py-16 bg-gray-50">
+      <section className="py-8 md:py-16 bg-muted/50">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ocean mx-auto"></div>
-            <p className="mt-4 text-gray-600">Chargement des catégories...</p>
+          <div className="text-center mb-6 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2 md:mb-4">
+              Nos Catégories
+            </h2>
+            <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
+              Découvrez nos produits frais organisés par catégorie
+            </p>
           </div>
+          <CategoryGridSkeleton count={6} />
         </div>
       </section>
     );
