@@ -63,23 +63,37 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				ocean: {
-					DEFAULT: 'hsl(var(--ocean-blue))',
-					light: 'hsl(var(--ocean-light))',
-					deep: 'hsl(var(--deep-blue))'
+					DEFAULT: 'hsl(var(--glovo-purple))',
+					light: 'hsl(var(--glovo-purple-light))',
+					deep: 'hsl(var(--deep-purple))'
 				},
-				seafoam: 'hsl(var(--seafoam))',
-				coral: 'hsl(var(--coral))',
+				glovo: {
+					DEFAULT: 'hsl(var(--glovo-purple))',
+					orange: 'hsl(var(--glovo-orange))',
+					orangeLight: 'hsl(var(--glovo-orange-light))',
+					green: 'hsl(var(--glovo-green))',
+					greenLight: 'hsl(var(--glovo-green-light))',
+					purple: 'hsl(var(--glovo-purple))',
+					purpleLight: 'hsl(var(--glovo-purple-light))',
+					pink: 'hsl(var(--glovo-pink))',
+					light: 'hsl(var(--glovo-purple-light))',
+					deep: 'hsl(var(--deep-purple))'
+				},
+				seafoam: 'hsl(var(--glovo-green))',
+				coral: 'hsl(var(--glovo-orange))',
 				wave: 'hsl(var(--wave))',
 				gold: 'hsl(var(--gold))',
-				'cart-blue': 'hsl(var(--cart-blue))'
+				'cart-purple': 'hsl(var(--cart-purple))'
 			},
 			backgroundImage: {
-				'gradient-ocean': 'var(--gradient-ocean)',
-				'gradient-seafoam': 'var(--gradient-seafoam)',
-				'gradient-wave': 'var(--gradient-wave)'
+				'gradient-glovo': 'var(--gradient-glovo)',
+				'gradient-glovo-green': 'var(--gradient-glovo-green)',
+				'gradient-glovo-alt': 'var(--gradient-glovo-alt)',
+				'gradient-wave': 'var(--gradient-wave)',
+				'gradient-hero': 'var(--gradient-hero)'
 			},
 			boxShadow: {
-				'ocean': 'var(--shadow-ocean)',
+				'glovo': 'var(--shadow-glovo)',
 				'float': 'var(--shadow-float)',
 				'deep': 'var(--shadow-deep)'
 			},

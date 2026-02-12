@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Search, User, Menu, LogOut, Phone } from 'lucide-react';
+import { ShoppingCart, Search, User, Menu, LogOut, Phone, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -135,17 +135,17 @@ export const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80">
+      <header className="sticky top-0 z-50 w-full glass border-b border-border/40">
         {/* Mobile Header */}
         <div className="block md:hidden">
           <div className="flex items-center justify-between px-4 py-3 gap-3">
             <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="shrink-0 hover:bg-primary/10">
+                <Button variant="ghost" size="icon" className="shrink-0 hover:bg-primary/10 btn-bounce focus-ring">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-80 p-0">
+              <SheetContent side="left" className="w-80 p-0 glass-card">
                 <MobileNavigation onClose={() => setSidebarOpen(false)} />
               </SheetContent>
             </Sheet>
@@ -156,10 +156,17 @@ export const Header = () => {
             
             <div className="flex items-center gap-1 shrink-0">
               <ThemeToggle variant="icon" className="hover:bg-muted" />
-              <Button variant="ghost" size="icon" className="relative hover:bg-primary/10" onClick={() => handleNavigate('/cart')}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative hover:bg-glovo-purple/10 icon-bounce focus-ring"
+                onClick={() => handleNavigate('/cart')}
+              >
                 <ShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-0 px-1 text-xs font-semibold bg-primary border-2 border-background">{cartCount}</Badge>
+                  <Badge className="absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-0 px-1 text-xs font-semibold glovo-glow bg-glovo-orange text-white border-2 border-background">
+                    {cartCount}
+                  </Badge>
                 )}
               </Button>
             </div>
@@ -169,7 +176,7 @@ export const Header = () => {
           <div className="px-4 pb-3">
             <Button 
               variant="outline" 
-              className="w-full justify-start text-left font-normal h-10 bg-muted/50 border-border/50 hover:bg-muted hover:border-border"
+              className="w-full justify-start text-left font-normal h-10 glass-card hover-lift focus-ring"
               onClick={() => setSearchOpen(true)}
             >
               <Search className="mr-2 h-4 w-4 text-muted-foreground shrink-0" />
@@ -180,21 +187,37 @@ export const Header = () => {
 
         {/* Desktop Header */}
         <div className="hidden md:block">
-          <div className="container mx-auto px-8 py-4">
+          <div className="container mx-auto px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
-              <Link to="/" className="flex items-center space-x-3" onClick={() => window.scrollTo(0, 0)}>
-                <img src={currentLogo} alt="Fresh N'Good" className="h-10 w-auto" />
+              <Link to="/" className="flex items-center space-x-3 hover-lift focus-ring" onClick={() => window.scrollTo(0, 0)}>
+                <div className="relative">
+                  <img src={currentLogo} alt="Fresh N'Good" className="h-10 w-auto" />
+                  <Sparkles className="absolute -top-1 -right-2 h-4 w-4 text-primary" />
+                </div>
               </Link>
-              <nav className="hidden lg:flex items-center space-x-8">
-                <Link to="/" className="text-foreground hover:text-primary transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Accueil</Link>
-                <Link to="/products" className="text-foreground hover:text-primary transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Produits</Link>
-                <Link to="/about" className="text-foreground hover:text-primary transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>À Propos</Link>
-                <Link to="/contact" className="text-foreground hover:text-primary transition-colors font-medium" onClick={() => window.scrollTo(0, 0)}>Contact</Link>
+              
+              <nav className="hidden lg:flex items-center space-x-1">
+                {[
+                  { path: '/', label: 'Accueil' },
+                  { path: '/products', label: 'Produits' },
+                  { path: '/about', label: 'À Propos' },
+                  { path: '/contact', label: 'Contact' },
+                ].map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="relative px-4 py-2 text-foreground hover:text-glovo-purple font-medium transition-all duration-300 rounded-xl hover:bg-glovo-purple/10 focus-ring"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </nav>
+              
               <div className="flex-1 max-w-md mx-8">
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start text-left font-normal bg-background/60 backdrop-blur-sm border border-border/50 rounded-xl shadow-sm hover:shadow-md hover:bg-background/80 transition-all duration-200 py-3 px-4"
+                  className="w-full justify-start text-left font-normal glass-card hover-lift focus-ring py-3 px-4"
                   onClick={() => setSearchOpen(true)}
                 >
                   <Search className="mr-3 h-4 w-4 text-muted-foreground" />
@@ -204,49 +227,60 @@ export const Header = () => {
                   </kbd>
                 </Button>
               </div>
-              <div className="flex items-center space-x-4">
-                <a 
-                  href="https://wa.me/212608611511" 
-                  target="_blank" 
+              
+              <div className="flex items-center space-x-2">
+                <a
+                  href="https://wa.me/212608611511"
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white transition-colors text-sm font-medium"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-glovo-green to-emerald-600 hover:from-glovo-green/90 hover:to-emerald-600/90 text-white transition-all duration-300 text-sm font-medium shadow-lg hover:shadow-xl hover-lift focus-ring"
                 >
                   <Phone className="h-4 w-4" />
                   <span className="hidden xl:inline">0608 611 511</span>
                 </a>
-                <ThemeToggle variant="icon" className="text-muted-foreground hover:text-primary" />
+
+                <ThemeToggle variant="icon" className="text-muted-foreground hover:text-glovo-purple focus-ring" />
+
                 {user ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary">
+                      <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-glovo-purple icon-bounce focus-ring">
                         <User className="h-5 w-5" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => handleNavigate('/profile')}>
+                    <DropdownMenuContent align="end" className="glass-card">
+                      <DropdownMenuItem onClick={() => handleNavigate('/profile')} className="cursor-pointer hover-lift">
                         <User className="mr-2 h-4 w-4" />
                         Mon Profil
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={signOut}>
+                      <DropdownMenuItem onClick={signOut} className="cursor-pointer hover-lift text-destructive">
                         <LogOut className="mr-2 h-4 w-4" />
                         Se déconnecter
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => handleNavigate('/auth')}
-                    className="text-muted-foreground hover:text-primary"
+                    className="text-muted-foreground hover:text-glovo-purple icon-bounce focus-ring"
                   >
                     <User className="h-5 w-5" />
                   </Button>
                 )}
-                <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-primary" onClick={() => handleNavigate('/cart')}>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative text-muted-foreground hover:text-glovo-purple icon-bounce focus-ring"
+                  onClick={() => handleNavigate('/cart')}
+                >
                   <ShoppingCart className="h-5 w-5" />
                   {cartCount > 0 && (
-                    <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-medium">{cartCount}</div>
+                    <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-glovo-orange text-white flex items-center justify-center text-xs font-medium glovo-glow">
+                      {cartCount}
+                    </div>
                   )}
                 </Button>
               </div>
@@ -255,7 +289,7 @@ export const Header = () => {
         </div>
       </header>
 
-      {/* Search Command Dialog */}
+      {/* Search Command Dialog with glass-morphism */}
       <CommandDialog 
         open={searchOpen} 
         onOpenChange={(open) => {
@@ -273,8 +307,9 @@ export const Header = () => {
               handleSearchSubmit(value);
             }
           }}
+          className="focus-ring"
         />
-        <CommandList className="max-h-[400px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <CommandList className="max-h-[400px] overflow-y-auto custom-scrollbar [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <CommandEmpty>Aucun produit trouvé.</CommandEmpty>
           <CommandGroup heading="Produits">
             {(() => {
@@ -303,14 +338,14 @@ export const Header = () => {
                   key={product.id}
                   value={`${product.name} ${product.description || ''}`}
                   onSelect={() => handleProductSelect(product)}
-                  className="flex items-center gap-3 p-3 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer group"
+                  className="flex items-center gap-3 p-3 hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer group rounded-xl mx-2 my-1 hover-lift focus-ring"
                 >
-                  <div className="w-12 h-12 bg-muted rounded-lg flex-shrink-0 overflow-hidden">
+                  <div className="w-12 h-12 bg-muted rounded-xl flex-shrink-0 overflow-hidden shadow-md">
                     {product.image_url ? (
                       <img 
                         src={product.image_url} 
                         alt={product.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">

@@ -79,7 +79,7 @@ export const FeaturedProducts = () => {
 
             <div className="text-center mt-8 md:mt-10 lg:mt-12">
               <Link to="/products">
-                <Button className="px-6 md:px-8 py-3 md:py-3.5 rounded-full font-medium bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all">
+                <Button className="px-6 md:px-8 py-3 md:py-3.5 rounded-full font-medium bg-gradient-to-r from-glovo-purple to-glovo-orange text-white shadow-lg shadow-glovo-purple/20 hover:shadow-xl hover:shadow-glovo-purple/30 transition-all button-press">
                   Voir Tous les Produits
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

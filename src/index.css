@@ -8,57 +8,61 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 30% 96%;
-    --foreground: 220 25% 10%;
+    --background: 0 0% 98%;
+    --foreground: 240 10% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 200 25% 10%;
+    --card-foreground: 240 10% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 200 25% 10%;
+    --popover-foreground: 240 10% 10%;
 
-    --primary: 240 100% 50%;
+    --primary: 280 75% 55%; /* Glovo Purple */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 213 90% 70%;
+    --secondary: 25 95% 55%; /* Glovo Orange */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 215 20% 95%;
-    --muted-foreground: 215 15% 45%;
+    --muted: 240 10% 96%;
+    --muted-foreground: 240 5% 45%;
 
-    --accent: 213 90% 65%;
+    --accent: 150 75% 45%; /* Glovo Green */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 215 30% 85%;
-    --input: 215 30% 85%;
-    --ring: 240 100% 50%;
+    --border: 240 10% 90%;
+    --input: 240 10% 90%;
+    --ring: 280 75% 55%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Ocean theme colors */
-    --ocean-blue: 240 100% 50%;
-    --ocean-light: 240 100% 60%;
-    --seafoam: 240 100% 70%;
-    --coral: 15 100% 65%;
-    --wave: 240 30% 85%;
-    --deep-blue: 240 100% 40%;
-    --footer-dark: 240 100% 25%;
+    /* Glovo theme colors */
+    --glovo-purple: 280 75% 55%;
+    --glovo-purple-light: 280 75% 65%;
+    --glovo-orange: 25 95% 55%;
+    --glovo-orange-light: 25 95% 65%;
+    --glovo-green: 150 75% 45%;
+    --glovo-green-light: 150 75% 55%;
+    --glovo-pink: 330 80% 55%;
+    --wave: 280 20% 96%;
+    --deep-purple: 280 75% 40%;
+    --footer-dark: 280 30% 20%;
     --gold: 45 100% 55%;
-    --cart-blue: 240 100% 50%;
+    --cart-purple: 280 75% 55%;
     
     /* Gradients */
-    --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));
-    --gradient-seafoam: linear-gradient(135deg, hsl(var(--seafoam)), hsl(var(--ocean-light)));
+    --gradient-glovo: linear-gradient(135deg, hsl(var(--glovo-purple)), hsl(var(--glovo-orange)));
+    --gradient-glovo-green: linear-gradient(135deg, hsl(var(--glovo-green)), hsl(var(--glovo-purple-light)));
     --gradient-wave: linear-gradient(180deg, hsl(var(--wave)), hsl(var(--background)));
-    --gradient-footer: linear-gradient(135deg, hsl(var(--footer-dark)), hsl(var(--deep-blue)));
-    
+    --gradient-footer: linear-gradient(135deg, hsl(var(--footer-dark)), hsl(var(--deep-purple)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--glovo-purple) 0%), hsl(var(--glovo-orange) 50%), hsl(var(--glovo-green) 100%));
+
     /* Shadows */
-    --shadow-ocean: 0 4px 20px -2px hsl(var(--ocean-blue) / 0.15);
-    --shadow-float: 0 8px 25px -5px hsl(var(--ocean-blue) / 0.2);
-    --shadow-deep: 0 12px 35px -10px hsl(var(--deep-blue) / 0.3);
+    --shadow-glovo: 0 4px 20px -2px hsl(var(--glovo-purple) / 0.15);
+    --shadow-float: 0 8px 25px -5px hsl(var(--glovo-purple) / 0.2);
+    --shadow-deep: 0 12px 35px -10px hsl(var(--deep-purple) / 0.3);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -90,55 +94,59 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 220 70% 1%;
-    --foreground: 210 15% 95%;
+    --background: 240 10% 5%;
+    --foreground: 240 5% 95%;
 
-    --card: 220 15% 18%;
-    --card-foreground: 210 15% 92%;
+    --card: 240 10% 12%;
+    --card-foreground: 240 5% 92%;
 
-    --popover: 220 15% 18%;
-    --popover-foreground: 210 15% 92%;
+    --popover: 240 10% 12%;
+    --popover-foreground: 240 5% 92%;
 
-    --primary: 240 100% 60%;
+    --primary: 280 75% 65%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 12% 22%;
-    --secondary-foreground: 210 15% 88%;
+    --secondary: 240 10% 22%;
+    --secondary-foreground: 240 5% 88%;
 
-    --muted: 220 12% 20%;
-    --muted-foreground: 215 12% 72%;
+    --muted: 240 10% 20%;
+    --muted-foreground: 240 5% 72%;
 
-    --accent: 199 89% 60%;
-    --accent-foreground: 220 20% 16%;
+    --accent: 150 75% 55%;
+    --accent-foreground: 240 20% 16%;
 
     --destructive: 0 65% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 12% 25%;
-    --input: 220 12% 22%;
-    --ring: 240 100% 60%;
+    --border: 240 10% 25%;
+    --input: 240 10% 22%;
+    --ring: 280 75% 65%;
 
-    /* Dark mode ocean theme colors */
-    --ocean-blue: 240 100% 60%;
-    --ocean-light: 240 100% 70%;
-    --seafoam: 240 100% 75%;
-    --coral: 15 80% 68%;
-    --wave: 240 12% 28%;
-    --deep-blue: 240 100% 50%;
-    --footer-dark: 240 30% 20%;
+    /* Dark mode Glovo theme colors */
+    --glovo-purple: 280 75% 65%;
+    --glovo-purple-light: 280 75% 75%;
+    --glovo-orange: 25 95% 65%;
+    --glovo-orange-light: 25 95% 75%;
+    --glovo-green: 150 75% 55%;
+    --glovo-green-light: 150 75% 65%;
+    --glovo-pink: 330 80% 65%;
+    --wave: 280 15% 28%;
+    --deep-purple: 280 75% 50%;
+    --footer-dark: 280 30% 15%;
     --gold: 45 100% 60%;
-    --cart-blue: 240 100% 50%;
-    
+    --cart-purple: 280 75% 65%;
+
     /* Dark mode gradients */
-    --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--ocean-light)));
-    --gradient-seafoam: linear-gradient(135deg, hsl(var(--seafoam)), hsl(var(--ocean-light)));
+    --gradient-glovo: linear-gradient(135deg, hsl(var(--glovo-purple)), hsl(var(--glovo-orange)));
+    --gradient-glovo-green: linear-gradient(135deg, hsl(var(--glovo-green)), hsl(var(--glovo-purple-light)));
     --gradient-wave: linear-gradient(180deg, hsl(var(--wave)), hsl(var(--background)));
-    --gradient-footer: linear-gradient(135deg, hsl(var(--footer-dark)), hsl(var(--deep-blue)));
-    
+    --gradient-footer: linear-gradient(135deg, hsl(var(--footer-dark)), hsl(var(--deep-purple)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--glovo-purple) 0%), hsl(var(--glovo-orange) 50%), hsl(var(--glovo-green) 100%));
+
     /* Dark mode shadows */
-    --shadow-ocean: 0 4px 20px -2px hsl(var(--ocean-blue) / 0.35);
-    --shadow-float: 0 8px 25px -5px hsl(var(--ocean-blue) / 0.4);
-    --shadow-deep: 0 12px 35px -10px hsl(var(--deep-blue) / 0.5);
+    --shadow-glovo: 0 4px 20px -2px hsl(var(--glovo-purple) / 0.35);
+    --shadow-float: 0 8px 25px -5px hsl(var(--glovo-purple) / 0.4);
+    --shadow-deep: 0 12px 35px -10px hsl(var(--deep-purple) / 0.5);
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;

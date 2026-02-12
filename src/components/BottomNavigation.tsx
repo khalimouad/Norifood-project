@@ -1,4 +1,4 @@
-import { Home, Grid3X3, ShoppingBag, BookOpen, User } from 'lucide-react';
+import { Home, Search, ShoppingBag, User, Utensils } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
@@ -10,12 +10,12 @@ export const BottomNavigation = () => {
   const location = useLocation();
   const { getTotalItems } = useCart();
   const [categoriesSidebarOpen, setCategoriesSidebarOpen] = useState(false);
-  
+
   const navItems = [
     { icon: Home, label: 'Accueil', path: '/', action: 'navigate' },
-    { icon: Grid3X3, label: 'Catégories', path: '/products', action: 'categories' },
+    { icon: Search, label: 'Recherche', path: '/products', action: 'navigate' },
     { icon: ShoppingBag, label: 'Panier', path: '/cart', badge: getTotalItems(), action: 'navigate' },
-    { icon: BookOpen, label: 'Recettes', path: '/recipes', action: 'navigate' },
+    { icon: Utensils, label: 'Recettes', path: '/recipes', action: 'navigate' },
     { icon: User, label: 'Profil', path: '/profile', action: 'navigate' },
   ];
 
@@ -30,8 +30,11 @@ export const BottomNavigation = () => {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 safe-area-bottom block md:hidden rounded-t-3xl">
-        <div className="flex items-center justify-around py-1 px-2">
+      <div className="fixed bottom-0 left-0 right-0 z-50 bottom-nav-glass safe-area-bottom block md:hidden rounded-t-3xl">
+        {/* Glow effect at the top */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-1 bg-gradient-to-r from-transparent via-glovo-purple to-transparent rounded-full opacity-50"></div>
+
+        <div className="flex items-center justify-around py-2 px-3">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path || (item.action === 'categories' && categoriesSidebarOpen);
             return (
@@ -39,33 +42,38 @@ export const BottomNavigation = () => {
                 key={item.label}
                 variant="ghost"
                 onClick={() => handleItemClick(item)}
-                className={`flex flex-col items-center gap-0.5 h-auto py-1.5 px-2 relative flex-1 rounded-2xl transition-all duration-200 ${
-                  isActive 
-                    ? 'text-ocean' 
-                    : 'text-gray-500 hover:text-ocean hover:bg-ocean/10'
+                className={`flex flex-col items-center gap-1 h-auto py-3 px-4 relative flex-1 rounded-2xl transition-all duration-300 button-press focus-ring ${
+                  isActive
+                    ? 'text-white bg-gradient-to-br from-glovo-purple to-glovo-orange shadow-glovo'
+                    : 'text-muted-foreground hover:text-glovo-purple hover:bg-glovo-purple/5'
                 }`}
               >
                 <div className="relative">
-                  <item.icon className="h-4 w-4" />
-                  {item.badge !== undefined && (
-                    <span className="absolute -top-2 -right-2 bg-coral text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                  <item.icon className={`h-5 w-5 transition-all duration-300 ${isActive ? 'scale-110' : ''}`} />
+                  {item.badge !== undefined && item.badge > 0 && (
+                    <span className="absolute -top-2.5 -right-2.5 bg-gradient-to-r from-glovo-orange to-glovo-pink text-white text-[10px] rounded-full h-4 min-w-4 px-1 flex items-center justify-center font-bold shadow-lg glovo-glow">
                       {item.badge}
                     </span>
                   )}
                 </div>
-                <span className="text-xs font-medium">{item.label}</span>
+                <span className={`text-[10px] font-medium transition-all duration-300 ${isActive ? 'font-bold' : ''}`}>
+                  {item.label}
+                </span>
                 {isActive && (
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-ocean rounded-full"></div>
+                  <div className="absolute -bottom-0.5 left-1/2 transform -translate-x-1/2 w-4 h-1 bg-white rounded-full shadow-sm"></div>
                 )}
               </Button>
             );
           })}
         </div>
+
+        {/* Safe area for iPhone X+ */}
+        <div className="safe-area-bottom h-0"></div>
       </div>
-      
-      <CategoriesSidebar 
-        open={categoriesSidebarOpen} 
-        onOpenChange={setCategoriesSidebarOpen} 
+
+      <CategoriesSidebar
+        open={categoriesSidebarOpen}
+        onOpenChange={setCategoriesSidebarOpen}
       />
     </>
   );
