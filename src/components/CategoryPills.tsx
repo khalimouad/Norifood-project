@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import {
   Fish,
-  Shrimp,
-  Crab,
   Shell,
   Waves,
   UtensilsCrossed,
@@ -25,8 +23,8 @@ interface CategoryPillsProps {
 
 const categoryIcons: Record<string, any> = {
   'fish': Fish,
-  'seafood': Shrimp,
-  'crustaceans': Crab,
+  'seafood': Fish,
+  'crustaceans': Shell,
   'shellfish': Shell,
   'fresh': Waves,
   'recipes': UtensilsCrossed,
@@ -36,8 +34,8 @@ const categoryIcons: Record<string, any> = {
 const getCategoryIcon = (categoryName: string) => {
   const lowerName = categoryName.toLowerCase();
   if (lowerName.includes('poisson') || lowerName.includes('fish')) return Fish;
-  if (lowerName.includes('crevette') || lowerName.includes('shrimp')) return Shrimp;
-  if (lowerName.includes('crabe') || lowerName.includes('crab')) return Crab;
+  if (lowerName.includes('crevette') || lowerName.includes('shrimp')) return Fish;
+  if (lowerName.includes('crabe') || lowerName.includes('crab')) return Shell;
   if (lowerName.includes('coquillage') || lowerName.includes('shell')) return Shell;
   if (lowerName.includes('frai') || lowerName.includes('fresh')) return Waves;
   return Star;
