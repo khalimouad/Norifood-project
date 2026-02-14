@@ -19,15 +19,23 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: npm ci
+          command: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            npm ci
 
       - run:
           name: Build project
-          command: npm run build
+          command: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            npm run build
 
       - run:
           name: Setup Capacitor
           command: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             npm install -g @capacitor/cli@6.0.0
             npm install @capacitor/android
 
@@ -39,6 +47,8 @@ jobs:
       - run:
           name: Add Android platform
           command: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             npx cap add android
             npx cap sync android
 
