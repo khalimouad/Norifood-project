@@ -1,0 +1,68 @@
+version: 2.1
+
+jobs:
+  build-apk:
+    docker:
+      - image: cimg/android:2024.01
+    resource_class: large
+    steps:
+      - checkout
+
+      - run:
+          name: Setup Node.js
+          command: |
+            nvm install 18
+            nvm use 18
+
+      - run:
+          name: Install dependencies
+          command: npm ci
+
+      - run:
+          name: Build project
+          command: npm run build
+
+      - run:
+          name: Setup Capacitor
+          command: |
+            npm install -g @capacitor/cli@6.0.0
+            npm install @capacitor/android
+
+      - run:
+          name: Configure Capacitor
+          command: |
+            echo '{ "appId": "app.lovable.freshngood", "appName": "Fresh N Good", "webDir": "dist" }' > capacitor.config.json
+
+      - run:
+          name: Add Android platform
+          command: |
+            npx cap add android
+            npx cap sync android
+
+      - run:
+          name: Build APK (Debug)
+          command: |
+            cd android
+            chmod +x gradlew
+            ./gradlew assembleDebug
+
+      - run:
+          name: Build APK (Release)
+          command: |
+            cd android
+            chmod +x gradlew
+            ./gradlew assembleRelease
+
+      - store_artifacts:
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          destination: app-debug.apk
+
+      - store_artifacts:
+          path: android/app/build/outputs/apk/release/app-release-unsigned.apk
+          destination: app-release.apk
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-apk
