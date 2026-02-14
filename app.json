@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Fresh N'Good",
+    "slug": "freshngood",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./favicon.png",
+    "splash": {
+      "image": "./favicon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#8B5CF6"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.lovable.freshngood"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./favicon.png",
+        "backgroundColor": "#8B5CF6"
+      },
+      "package": "app.lovable.freshngood",
+      "versionCode": 1,
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ]
+    },
+    "web": {
+      "favicon": "./favicon.png"
+    },
+    "plugins": [],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "freshngood"
+      }
+    }
+  }
+}
