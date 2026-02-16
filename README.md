@@ -1,73 +1,51 @@
-# Welcome to your Lovable project
+# Fresh N'Good - Produits de la Mer Frais
 
-## Project info
+Application e-commerce B2C pour la vente de produits de la mer frais au Maroc.
 
-**URL**: https://lovable.dev/projects/9623f480-e5ef-4dff-b6d1-d3373e5af8ab
+## 🚀 Stack Technique
 
-## How can I edit this code?
+- **Frontend:** React, TypeScript, Vite
+- **UI:** Tailwind CSS, shadcn/ui
+- **Backend:** Supabase (Base de données locale)
+- **Mobile:** Capacitor (Android/iOS)
 
-There are several ways of editing your application.
+## 🛠️ Développement
 
-**Use Lovable**
+```bash
+# Installation des dépendances
+npm install
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9623f480-e5ef-4dff-b6d1-d3373e5af8ab) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Démarrer le serveur de développement
 npm run dev
+
+# Build production
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+## 📱 Mobile (Capacitor)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+# Ajouter Android
+npx cap add android
 
-**Use GitHub Codespaces**
+# Sync après build
+npx cap sync
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Ouvrir dans Android Studio
+npx cap open android
+```
 
-## What technologies are used for this project?
+## 🌐 URLs
 
-This project is built with:
+- **App:** http://46.225.55.151:8081
+- **Supabase API:** http://46.225.55.151:8000
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📊 Objectifs Business
 
-## How can I deploy this project?
+- **CA mensuel:** 300K MAD
+- **Fonds de roulement:** 30K MAD/jour
+- **Marché cible:** B2C Maroc
 
-Simply open [Lovable](https://lovable.dev/projects/9623f480-e5ef-4dff-b6d1-d3373e5af8ab) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Conçu avec ❤️ pour les amateurs de produits frais

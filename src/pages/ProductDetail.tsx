@@ -146,7 +146,10 @@ const ProductDetail = () => {
     );
   }
 
-  const images = product.images || [product.image_url || "/placeholder.svg"];
+  // Properly handle empty images array
+  const images = (product.images && product.images.length > 0) 
+    ? product.images 
+    : [product.image_url || "/placeholder.svg"];
 
   return (
     <div className="min-h-screen bg-background">

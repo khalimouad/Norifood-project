@@ -15,14 +15,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "app.lovable.freshngood"
+      "bundleIdentifier": "ma.freshngood.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./favicon.png",
         "backgroundColor": "#8B5CF6"
       },
-      "package": "app.lovable.freshngood",
+      "package": "ma.freshngood.app",
       "versionCode": 1,
       "permissions": [
         "INTERNET",

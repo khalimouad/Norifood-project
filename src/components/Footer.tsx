@@ -1,214 +1,173 @@
-import { Fish, Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Award, Truck, Shield, RefreshCw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
+import { Phone, Mail, MapPin, Instagram, Award, Truck, Shield, RefreshCw, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import { motion } from 'framer-motion';
+
 export const Footer = () => {
-  const [email, setEmail] = useState('');
-  const {
-    toast
-  } = useToast();
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      toast({
-        title: "Merci pour votre inscription !",
-        description: "Vous recevrez bientôt nos dernières actualités."
-      });
-      setEmail('');
-    }
-  };
-  return <footer className="text-primary-foreground bg-blue-600">
-      {/* Features Section */}
-      <div className="border-b border-white/10 bg-blue-700">
-        <div className="container mx-auto px-4 py-6 md:py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 justify-center md:justify-start text-center md:text-left">
-              <div className="p-2 bg-gold/20 rounded-full">
-                <Award className="h-5 w-5 md:h-6 md:w-6 text-gold" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-xs md:text-sm text-gold">Qualité Premium</h4>
-                <p className="text-xs text-white/90 hidden md:block">Produits frais sélectionnés</p>
-              </div>
+  return (
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 text-white">
+      {/* Mobile App Style Bottom Features - Fixed at bottom on mobile */}
+      <div className="bg-gradient-to-r from-glovo-purple via-glovo-orange to-glovo-green p-4">
+        <div className="grid grid-cols-4 gap-2">
+          <motion.div 
+            className="flex flex-col items-center text-white"
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
+              <Award className="h-5 w-5" />
             </div>
-            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 justify-center md:justify-start text-center md:text-left">
-              <div className="p-2 bg-gold/20 rounded-full">
-                <Truck className="h-5 w-5 md:h-6 md:w-6 text-gold" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-xs md:text-sm text-gold">Livraison Rapide</h4>
-                <p className="text-xs text-white/90 hidden md:block">Livraison en 24h</p>
-              </div>
+            <span className="text-[10px] font-medium text-center">Qualité</span>
+          </motion.div>
+          
+          <motion.div 
+            className="flex flex-col items-center text-white"
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
+              <Truck className="h-5 w-5" />
             </div>
-            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 justify-center md:justify-start text-center md:text-left">
-              <div className="p-2 bg-gold/20 rounded-full">
-                <Shield className="h-5 w-5 md:h-6 md:w-6 text-gold" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-xs md:text-sm text-gold">Paiement Sécurisé</h4>
-                <p className="text-xs text-white/90 hidden md:block">Transaction protégée</p>
-              </div>
+            <span className="text-[10px] font-medium text-center">Livraison</span>
+          </motion.div>
+          
+          <motion.div 
+            className="flex flex-col items-center text-white"
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
+              <Shield className="h-5 w-5" />
             </div>
-            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 justify-center md:justify-start text-center md:text-left">
-              <div className="p-2 bg-gold/20 rounded-full">
-                <RefreshCw className="h-5 w-5 md:h-6 md:w-6 text-gold" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-xs md:text-sm text-gold">Fraîcheur Garantie</h4>
-                <p className="text-xs text-white/90 hidden md:block">Satisfaction assurée</p>
-              </div>
+            <span className="text-[10px] font-medium text-center">Sécurisé</span>
+          </motion.div>
+          
+          <motion.div 
+            className="flex flex-col items-center text-white"
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
+              <RefreshCw className="h-5 w-5" />
             </div>
-          </div>
+            <span className="text-[10px] font-medium text-center">Fraîcheur</span>
+          </motion.div>
         </div>
       </div>
 
-      {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-8 md:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {/* Company Info */}
-          <div className="lg:col-span-1 text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start space-x-2 mb-4 md:mb-6">
-              <Fish className="h-8 w-8 md:h-10 md:w-10 text-seafoam" />
-              <span className="text-xl md:text-2xl font-bold">Fresh N'Good</span>
+      {/* Main Footer - Mobile App Style */}
+      <div className="container mx-auto px-4 py-6 md:py-8">
+        {/* Contact Section - Mobile First */}
+        <div className="space-y-4 mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-full flex items-center justify-center shrink-0">
+              <Phone className="h-5 w-5 text-white" />
             </div>
-            <p className="text-white/80 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
-              Depuis plus de 20 ans, Fresh N'Good vous propose les meilleurs produits de la mer à Marrakech. 
-              Notre expertise et notre passion pour la qualité nous permettent de vous garantir 
-              fraîcheur et saveur à chaque livraison dans toute la région de Marrakech.
-            </p>
-            <div className="flex justify-center md:justify-start space-x-3">
-              <Button variant="ghost" size="icon" className="h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-gold/20 hover:text-gold transition-all duration-300">
-                <Facebook className="h-4 w-4 md:h-5 md:w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-gold/20 hover:text-gold transition-all duration-300">
-                <Twitter className="h-4 w-4 md:h-5 md:w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-gold/20 hover:text-gold transition-all duration-300">
-                <Instagram className="h-4 w-4 md:h-5 md:w-5" />
-              </Button>
+            <div className="flex-1">
+              <p className="font-semibold text-sm">Commandez par téléphone</p>
+              <p className="text-gray-400 text-xs">0608 611 511 • 0608 411 511</p>
             </div>
+            <a href="tel:0608611511" className="px-4 py-2 bg-glovo-purple rounded-full text-white text-sm font-medium">
+              Appeler
+            </a>
           </div>
 
-          {/* Navigation Links */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-glovo-orange to-glovo-green rounded-full flex items-center justify-center shrink-0">
+              <MessageCircle className="h-5 w-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-sm">WhatsApp</p>
+              <p className="text-gray-400 text-xs">Réponse rapide garantie</p>
+            </div>
+            <a href="https://wa.me/212608611511" className="px-4 py-2 bg-green-500 rounded-full text-white text-sm font-medium">
+              Chat
+            </a>
+          </div>
+        </div>
+
+        {/* Quick Links - Mobile App Style */}
+        <div className="grid grid-cols-2 gap-3 mb-6 md:hidden">
+          <Link to="/products" className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+            <p className="font-medium text-sm">Nos Produits</p>
+            <p className="text-gray-400 text-xs">Poissons & Fruits de mer</p>
+          </Link>
+          <Link to="/about" className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+            <p className="font-medium text-sm">À Propos</p>
+            <p className="text-gray-400 text-xs">Notre histoire</p>
+          </Link>
+          <Link to="/faq" className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+            <p className="font-medium text-sm">FAQ</p>
+            <p className="text-gray-400 text-xs">Questions fréquentes</p>
+          </Link>
+          <Link to="/contact" className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+            <p className="font-medium text-sm">Contact</p>
+            <p className="text-gray-400 text-xs">Nous joindre</p>
+          </Link>
+        </div>
+
+        {/* Desktop Links */}
+        <div className="hidden md:grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="font-bold text-lg mb-6 text-gold">Navigation</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link to="/" className="text-white/90 hover:text-gold transition-colors duration-300 flex items-center group">
-                  <span className="group-hover:translate-x-1 transition-transform duration-300">Accueil</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/products" className="text-white/90 hover:text-gold transition-colors duration-300 flex items-center group">
-                  <span className="group-hover:translate-x-1 transition-transform duration-300">Nos Produits</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-white/90 hover:text-gold transition-colors duration-300 flex items-center group">
-                  <span className="group-hover:translate-x-1 transition-transform duration-300">À Propos</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-white/90 hover:text-gold transition-colors duration-300 flex items-center group">
-                  <span className="group-hover:translate-x-1 transition-transform duration-300">Contact</span>
-                </Link>
-              </li>
+            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">Navigation</h3>
+            <ul className="space-y-2">
+              <li><Link to="/" className="text-gray-400 hover:text-white transition-colors text-sm">Accueil</Link></li>
+              <li><Link to="/products" className="text-gray-400 hover:text-white transition-colors text-sm">Nos Produits</Link></li>
+              <li><Link to="/about" className="text-gray-400 hover:text-white transition-colors text-sm">À Propos</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">Contact</Link></li>
             </ul>
           </div>
-
-          {/* Contact Info */}
+          
           <div>
-            <h3 className="font-bold text-lg mb-6 text-gold">Nous Contacter</h3>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <Phone className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-white font-medium">0608 611 511</p>
-                  <p className="text-white font-medium">0608 411 511</p>
-                  <p className="text-white/70 text-sm">Lun-Ven: 8h-18h</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <Mail className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-white font-medium">contact@freshngood.ma</p>
-                  <p className="text-white/70 text-sm">Réponse sous 24h</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-white font-medium">Imm. Assala - 50 Gueliz</p>
-                  <p className="text-white font-medium">Bd Mohamed VI</p>
-                  <p className="text-white/70 text-sm">Marrakesh 40000, Maroc</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <Clock className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-white font-medium">Horaires d'ouverture</p>
-                  <p className="text-white/70 text-sm">Lun-Sam: 6h-20h</p>
-                  <p className="text-white/70 text-sm">Dim: 8h-18h</p>
-                </div>
+            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-orange to-glovo-green bg-clip-text text-transparent">Informations</h3>
+            <ul className="space-y-2">
+              <li><Link to="/faq" className="text-gray-400 hover:text-white transition-colors text-sm">FAQ</Link></li>
+              <li><Link to="/shipping" className="text-gray-400 hover:text-white transition-colors text-sm">Livraison</Link></li>
+              <li><Link to="/conditions-de-vente" className="text-gray-400 hover:text-white transition-colors text-sm">Conditions</Link></li>
+              <li><Link to="/privacy" className="text-gray-400 hover:text-white transition-colors text-sm">Confidentialité</Link></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">Adresse</h3>
+            <div className="space-y-2 text-sm text-gray-400">
+              <p>Imm. Assala - 50 Gueliz</p>
+              <p>Bd Mohamed VI</p>
+              <p>Marrakech 40000, Maroc</p>
+              <div className="flex items-center gap-2 mt-3">
+                <Mail className="h-4 w-4 text-glovo-purple" />
+                <span>contact@freshngood.ma</span>
               </div>
             </div>
           </div>
-
-          {/* Newsletter */}
+          
           <div>
-            <h3 className="font-bold text-lg mb-6 text-gold">Newsletter</h3>
-            <p className="text-white/90 mb-6 leading-relaxed">
-              Inscrivez-vous pour recevoir nos dernières actualités, promotions exclusives 
-              et conseils de préparation.
-            </p>
-            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
-              <Input type="email" placeholder="Votre adresse email" value={email} onChange={e => setEmail(e.target.value)} className="bg-white/10 border-white/20 text-white placeholder:text-white/60 
-                         focus:border-gold focus:ring-gold/20 transition-all duration-300" />
-              <Button type="submit" className="w-full bg-gold hover:bg-gold/90 
-                         text-blue-900 font-semibold py-2.5 transition-all duration-300 
-                         transform hover:scale-105">
-                S'abonner
-              </Button>
-            </form>
-            <p className="text-white/70 text-xs mt-3">
-              Vous pouvez vous désabonner à tout moment.
-            </p>
+            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-orange to-glovo-green bg-clip-text text-transparent">Horaires</h3>
+            <div className="space-y-2 text-sm text-gray-400">
+              <p>Lun - Sam: 6h - 20h</p>
+              <p>Dimanche: 8h - 18h</p>
+              <p className="text-glovo-purple font-medium mt-3">Livraison 7j/7</p>
+            </div>
           </div>
         </div>
 
-        <Separator className="my-10 bg-white/20" />
-
-        {/* Bottom Section */}
-        <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
-          <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6">
-            <p className="text-white/90 text-sm">
-              © 2024 Fresh N'Good. Tous droits réservés.
-            </p>
-            <p className="text-white/70 text-xs">
-              Conçu avec ❤️ pour les amateurs de produits frais
-            </p>
+        {/* Social & Copyright */}
+        <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-white/10">
+          <div className="flex items-center gap-3 mb-4 md:mb-0">
+            <div className="w-8 h-8 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">F</span>
+            </div>
+            <div>
+              <p className="font-bold text-sm">Fresh N'Good</p>
+              <p className="text-gray-400 text-xs">© 2024 • Produits de la Mer</p>
+            </div>
           </div>
-          <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
-            <Link to="/privacy" className="text-white/90 hover:text-gold text-sm transition-colors duration-300">
-              Politique de confidentialité
-            </Link>
-            <Link to="/terms" className="text-white/90 hover:text-gold text-sm transition-colors duration-300">
-              Conditions d'utilisation
-            </Link>
-            <Link to="/conditions-de-vente" className="text-white/90 hover:text-gold text-sm transition-colors duration-300">
-              Conditions de vente
-            </Link>
-            <Link to="/shipping" className="text-white/90 hover:text-gold text-sm transition-colors duration-300">
-              Livraison & Retours
-            </Link>
-            <Link to="/faq" className="text-white/90 hover:text-gold text-sm transition-colors duration-300">
-              FAQ
-            </Link>
+
+          <div className="flex items-center gap-3">
+            <a href="https://instagram.com" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-glovo-purple hover:to-glovo-orange transition-all">
+              <Instagram className="h-5 w-5" />
+            </a>
+            <a href="https://facebook.com" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-glovo-purple hover:to-glovo-orange transition-all">
+              <span className="text-lg font-bold">f</span>
+            </a>
           </div>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
