@@ -9,6 +9,18 @@ jobs:
       - checkout
 
       - run:
+          name: Setup Java 21
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y wget apt-transport-https
+            wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add -
+            sudo add-apt-repository 'deb https://apt.corretto.aws stable main'
+            sudo apt-get update
+            sudo apt-get install -y java-21-amazon-corretto-jdk
+            echo 'export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto' >> $BASH_ENV
+            echo 'export PATH=$JAVA_HOME/bin:$PATH' >> $BASH_ENV
+
+      - run:
           name: Setup Node.js
           command: |
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
