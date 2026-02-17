@@ -39,9 +39,8 @@ jobs:
             echo '{ "appId": "app.lovable.freshngood", "appName": "Fresh N Good", "webDir": "dist" }' > capacitor.config.json
 
       - run:
-          name: Add Android platform
+          name: Sync Android platform
           command: |
-            npx cap add android
             npx cap sync android
 
       - run:
