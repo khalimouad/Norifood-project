@@ -8,63 +8,63 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Fresh N'Good — Ocean-inspired seafood palette */
-    --background: 200 30% 98%;
-    --foreground: 205 45% 12%;
+    /* Fresh N'Good — Classic fishmonger palette (navy + coral + ice blue) */
+    --background: 210 30% 98%;
+    --foreground: 215 45% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 205 45% 12%;
+    --card-foreground: 215 45% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 205 45% 12%;
+    --popover-foreground: 215 45% 12%;
 
-    --primary: 195 85% 32%; /* Deep ocean teal */
+    --primary: 212 75% 24%; /* Deep maritime navy */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 10 85% 62%; /* Warm coral */
+    --secondary: 8 78% 58%; /* Salmon coral */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 200 25% 95%;
-    --muted-foreground: 205 15% 42%;
+    --muted: 210 25% 95%;
+    --muted-foreground: 215 15% 42%;
 
-    --accent: 172 68% 42%; /* Fresh seafoam */
+    --accent: 198 90% 50%; /* Fishmonger ice blue */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 78% 58%;
+    --destructive: 0 78% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 200 20% 88%;
-    --input: 200 20% 90%;
-    --ring: 195 85% 32%;
+    --border: 210 22% 88%;
+    --input: 210 22% 90%;
+    --ring: 212 75% 24%;
 
     --radius: 1rem;
 
-    /* Ocean theme tokens (kept under `--glovo-*` names for compatibility) */
-    --glovo-purple: 195 85% 32%;       /* ocean — primary brand */
-    --glovo-purple-light: 195 70% 48%; /* ocean light */
-    --glovo-orange: 10 85% 62%;        /* coral — warm accent */
-    --glovo-orange-light: 12 90% 72%;  /* coral light */
-    --glovo-green: 172 68% 42%;        /* seafoam — freshness */
-    --glovo-green-light: 172 60% 55%;  /* seafoam light */
-    --glovo-pink: 340 78% 62%;         /* reef — highlight */
-    --wave: 195 40% 96%;               /* sea foam wash */
-    --deep-purple: 200 95% 18%;        /* deep sea */
-    --footer-dark: 205 55% 12%;        /* midnight ocean */
+    /* Seafood brand tokens (kept under `--glovo-*` names for compatibility) */
+    --glovo-purple: 212 75% 24%;       /* navy — primary brand */
+    --glovo-purple-light: 212 60% 42%; /* navy light */
+    --glovo-orange: 8 78% 58%;         /* coral — warm accent */
+    --glovo-orange-light: 10 85% 70%;  /* coral light */
+    --glovo-green: 198 90% 50%;        /* ice blue — freshness */
+    --glovo-green-light: 198 82% 65%;  /* ice light */
+    --glovo-pink: 345 82% 58%;         /* sale red */
+    --wave: 200 45% 96%;               /* icy wash */
+    --deep-purple: 215 85% 12%;        /* midnight sea */
+    --footer-dark: 215 70% 10%;        /* fisherman's night */
     --gold: 42 95% 58%;                /* buoy gold */
-    --cart-purple: 195 85% 32%;
+    --cart-purple: 212 75% 24%;
 
-    /* Gradients — ocean depth to sunset over water */
+    /* Gradients — dawn over a fish market */
     --gradient-glovo: linear-gradient(135deg, hsl(var(--glovo-purple)), hsl(var(--glovo-orange)));
     --gradient-glovo-green: linear-gradient(135deg, hsl(var(--glovo-green)), hsl(var(--glovo-purple-light)));
     --gradient-glovo-alt: linear-gradient(135deg, hsl(var(--glovo-purple-light)), hsl(var(--glovo-green)));
     --gradient-wave: linear-gradient(180deg, hsl(var(--wave)), hsl(var(--background)));
     --gradient-footer: linear-gradient(135deg, hsl(var(--footer-dark)), hsl(var(--deep-purple)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--glovo-purple)) 0%, hsl(var(--glovo-green)) 55%, hsl(var(--glovo-orange)) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--glovo-purple)) 0%, hsl(var(--glovo-green)) 50%, hsl(var(--glovo-orange)) 100%);
 
-    /* Shadows — tinted with ocean blue */
-    --shadow-glovo: 0 4px 20px -2px hsl(var(--glovo-purple) / 0.18);
-    --shadow-float: 0 10px 30px -6px hsl(var(--glovo-purple) / 0.22);
-    --shadow-deep: 0 16px 40px -12px hsl(var(--deep-purple) / 0.32);
+    /* Shadows — tinted navy */
+    --shadow-glovo: 0 4px 20px -2px hsl(var(--glovo-purple) / 0.20);
+    --shadow-float: 0 10px 30px -6px hsl(var(--glovo-purple) / 0.25);
+    --shadow-deep: 0 16px 40px -12px hsl(var(--deep-purple) / 0.35);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -96,48 +96,48 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Fresh N'Good — Deep sea night */
-    --background: 205 45% 6%;
-    --foreground: 195 20% 95%;
+    /* Fresh N'Good — Fisherman's night */
+    --background: 215 50% 6%;
+    --foreground: 210 20% 95%;
 
-    --card: 205 40% 11%;
-    --card-foreground: 195 15% 92%;
+    --card: 215 42% 11%;
+    --card-foreground: 210 15% 92%;
 
-    --popover: 205 40% 11%;
-    --popover-foreground: 195 15% 92%;
+    --popover: 215 42% 11%;
+    --popover-foreground: 210 15% 92%;
 
-    --primary: 188 80% 52%;
-    --primary-foreground: 205 45% 6%;
+    --primary: 210 85% 62%;
+    --primary-foreground: 215 50% 6%;
 
-    --secondary: 205 30% 20%;
-    --secondary-foreground: 195 15% 90%;
+    --secondary: 215 30% 20%;
+    --secondary-foreground: 210 15% 90%;
 
-    --muted: 205 30% 18%;
-    --muted-foreground: 200 15% 70%;
+    --muted: 215 30% 18%;
+    --muted-foreground: 210 15% 70%;
 
-    --accent: 172 70% 55%;
-    --accent-foreground: 205 45% 8%;
+    --accent: 198 92% 60%;
+    --accent-foreground: 215 50% 8%;
 
-    --destructive: 0 65% 60%;
+    --destructive: 0 70% 62%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 205 30% 22%;
-    --input: 205 30% 20%;
-    --ring: 188 80% 52%;
+    --border: 215 30% 22%;
+    --input: 215 30% 20%;
+    --ring: 210 85% 62%;
 
-    /* Dark mode ocean tokens */
-    --glovo-purple: 188 80% 52%;       /* bright reef teal */
-    --glovo-purple-light: 188 85% 65%;
-    --glovo-orange: 10 90% 70%;        /* warm coral glow */
-    --glovo-orange-light: 12 95% 78%;
-    --glovo-green: 172 70% 55%;        /* bright seafoam */
-    --glovo-green-light: 172 75% 68%;
-    --glovo-pink: 340 85% 70%;
-    --wave: 205 30% 22%;
-    --deep-purple: 195 85% 38%;
-    --footer-dark: 205 55% 8%;
+    /* Dark mode fishmonger tokens */
+    --glovo-purple: 210 85% 62%;       /* bright navy */
+    --glovo-purple-light: 210 90% 72%;
+    --glovo-orange: 8 85% 68%;         /* warm coral glow */
+    --glovo-orange-light: 10 90% 76%;
+    --glovo-green: 198 92% 60%;        /* bright ice blue */
+    --glovo-green-light: 198 85% 72%;
+    --glovo-pink: 345 88% 68%;
+    --wave: 215 30% 22%;
+    --deep-purple: 212 85% 32%;
+    --footer-dark: 215 70% 7%;
     --gold: 42 95% 62%;
-    --cart-purple: 188 80% 52%;
+    --cart-purple: 210 85% 62%;
 
     /* Dark mode gradients */
     --gradient-glovo: linear-gradient(135deg, hsl(var(--glovo-purple)), hsl(var(--glovo-orange)));
