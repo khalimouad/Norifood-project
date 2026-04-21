@@ -73,15 +73,15 @@ const ProductCard = ({
             </div>
           </Link>
 
-          {/* Glovo-style badges */}
+          {/* Badges */}
           <div className="absolute top-2 left-2 flex flex-col gap-1.5">
             {discount && (
-              <Badge className="bg-gradient-to-r from-glovo-orange to-glovo-pink text-white shadow-md hover-lift font-bold text-xs px-2.5 py-1">
+              <Badge className="bg-gradient-to-r from-glovo-orange to-glovo-pink text-white shadow-lg shadow-glovo-orange/30 font-bold text-xs px-2.5 py-1 ring-1 ring-white/40">
                 -{discount}%
               </Badge>
             )}
             {featured && (
-              <Badge className="bg-gradient-to-r from-glovo-purple to-glovo-orange text-white shadow-md hover-lift font-bold text-xs px-2.5 py-1">
+              <Badge className="bg-gradient-to-r from-glovo-purple to-glovo-green text-white shadow-lg shadow-glovo-purple/30 font-bold text-xs px-2.5 py-1 ring-1 ring-white/40">
                 <Star className="h-3 w-3 mr-1 fill-current" />
                 Top
               </Badge>
@@ -124,10 +124,10 @@ const ProductCard = ({
                 </span>
               )}
               <div className="flex items-baseline gap-0.5">
-                <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">
+                <span className="text-lg md:text-xl font-extrabold text-glovo-purple">
                   {discountedPrice.toFixed(2)}
                 </span>
-                <span className="text-xs text-muted-foreground font-medium">DH</span>
+                <span className="text-xs text-muted-foreground font-semibold">DH</span>
               </div>
             </div>
             <span className="text-xs text-muted-foreground">/ {unitType}</span>

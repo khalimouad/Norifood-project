@@ -8,61 +8,63 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 10%;
+    /* Fresh N'Good — Ocean-inspired seafood palette */
+    --background: 200 30% 98%;
+    --foreground: 205 45% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 10%;
+    --card-foreground: 205 45% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 10%;
+    --popover-foreground: 205 45% 12%;
 
-    --primary: 280 75% 55%; /* Glovo Purple */
+    --primary: 195 85% 32%; /* Deep ocean teal */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 25 95% 55%; /* Glovo Orange */
+    --secondary: 10 85% 62%; /* Warm coral */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 240 10% 96%;
-    --muted-foreground: 240 5% 45%;
+    --muted: 200 25% 95%;
+    --muted-foreground: 205 15% 42%;
 
-    --accent: 150 75% 45%; /* Glovo Green */
+    --accent: 172 68% 42%; /* Fresh seafoam */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 78% 58%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 240 10% 90%;
-    --input: 240 10% 90%;
-    --ring: 280 75% 55%;
+    --border: 200 20% 88%;
+    --input: 200 20% 90%;
+    --ring: 195 85% 32%;
 
     --radius: 1rem;
 
-    /* Glovo theme colors */
-    --glovo-purple: 280 75% 55%;
-    --glovo-purple-light: 280 75% 65%;
-    --glovo-orange: 25 95% 55%;
-    --glovo-orange-light: 25 95% 65%;
-    --glovo-green: 150 75% 45%;
-    --glovo-green-light: 150 75% 55%;
-    --glovo-pink: 330 80% 55%;
-    --wave: 280 20% 96%;
-    --deep-purple: 280 75% 40%;
-    --footer-dark: 280 30% 20%;
-    --gold: 45 100% 55%;
-    --cart-purple: 280 75% 55%;
-    
-    /* Gradients */
+    /* Ocean theme tokens (kept under `--glovo-*` names for compatibility) */
+    --glovo-purple: 195 85% 32%;       /* ocean — primary brand */
+    --glovo-purple-light: 195 70% 48%; /* ocean light */
+    --glovo-orange: 10 85% 62%;        /* coral — warm accent */
+    --glovo-orange-light: 12 90% 72%;  /* coral light */
+    --glovo-green: 172 68% 42%;        /* seafoam — freshness */
+    --glovo-green-light: 172 60% 55%;  /* seafoam light */
+    --glovo-pink: 340 78% 62%;         /* reef — highlight */
+    --wave: 195 40% 96%;               /* sea foam wash */
+    --deep-purple: 200 95% 18%;        /* deep sea */
+    --footer-dark: 205 55% 12%;        /* midnight ocean */
+    --gold: 42 95% 58%;                /* buoy gold */
+    --cart-purple: 195 85% 32%;
+
+    /* Gradients — ocean depth to sunset over water */
     --gradient-glovo: linear-gradient(135deg, hsl(var(--glovo-purple)), hsl(var(--glovo-orange)));
     --gradient-glovo-green: linear-gradient(135deg, hsl(var(--glovo-green)), hsl(var(--glovo-purple-light)));
+    --gradient-glovo-alt: linear-gradient(135deg, hsl(var(--glovo-purple-light)), hsl(var(--glovo-green)));
     --gradient-wave: linear-gradient(180deg, hsl(var(--wave)), hsl(var(--background)));
     --gradient-footer: linear-gradient(135deg, hsl(var(--footer-dark)), hsl(var(--deep-purple)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--glovo-purple) 0%), hsl(var(--glovo-orange) 50%), hsl(var(--glovo-green) 100%));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--glovo-purple)) 0%, hsl(var(--glovo-green)) 55%, hsl(var(--glovo-orange)) 100%);
 
-    /* Shadows */
-    --shadow-glovo: 0 4px 20px -2px hsl(var(--glovo-purple) / 0.15);
-    --shadow-float: 0 8px 25px -5px hsl(var(--glovo-purple) / 0.2);
-    --shadow-deep: 0 12px 35px -10px hsl(var(--deep-purple) / 0.3);
+    /* Shadows — tinted with ocean blue */
+    --shadow-glovo: 0 4px 20px -2px hsl(var(--glovo-purple) / 0.18);
+    --shadow-float: 0 10px 30px -6px hsl(var(--glovo-purple) / 0.22);
+    --shadow-deep: 0 16px 40px -12px hsl(var(--deep-purple) / 0.32);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -94,59 +96,61 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 240 10% 5%;
-    --foreground: 240 5% 95%;
+    /* Fresh N'Good — Deep sea night */
+    --background: 205 45% 6%;
+    --foreground: 195 20% 95%;
 
-    --card: 240 10% 12%;
-    --card-foreground: 240 5% 92%;
+    --card: 205 40% 11%;
+    --card-foreground: 195 15% 92%;
 
-    --popover: 240 10% 12%;
-    --popover-foreground: 240 5% 92%;
+    --popover: 205 40% 11%;
+    --popover-foreground: 195 15% 92%;
 
-    --primary: 280 75% 65%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 188 80% 52%;
+    --primary-foreground: 205 45% 6%;
 
-    --secondary: 240 10% 22%;
-    --secondary-foreground: 240 5% 88%;
+    --secondary: 205 30% 20%;
+    --secondary-foreground: 195 15% 90%;
 
-    --muted: 240 10% 20%;
-    --muted-foreground: 240 5% 72%;
+    --muted: 205 30% 18%;
+    --muted-foreground: 200 15% 70%;
 
-    --accent: 150 75% 55%;
-    --accent-foreground: 240 20% 16%;
+    --accent: 172 70% 55%;
+    --accent-foreground: 205 45% 8%;
 
     --destructive: 0 65% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 10% 25%;
-    --input: 240 10% 22%;
-    --ring: 280 75% 65%;
+    --border: 205 30% 22%;
+    --input: 205 30% 20%;
+    --ring: 188 80% 52%;
 
-    /* Dark mode Glovo theme colors */
-    --glovo-purple: 280 75% 65%;
-    --glovo-purple-light: 280 75% 75%;
-    --glovo-orange: 25 95% 65%;
-    --glovo-orange-light: 25 95% 75%;
-    --glovo-green: 150 75% 55%;
-    --glovo-green-light: 150 75% 65%;
-    --glovo-pink: 330 80% 65%;
-    --wave: 280 15% 28%;
-    --deep-purple: 280 75% 50%;
-    --footer-dark: 280 30% 15%;
-    --gold: 45 100% 60%;
-    --cart-purple: 280 75% 65%;
+    /* Dark mode ocean tokens */
+    --glovo-purple: 188 80% 52%;       /* bright reef teal */
+    --glovo-purple-light: 188 85% 65%;
+    --glovo-orange: 10 90% 70%;        /* warm coral glow */
+    --glovo-orange-light: 12 95% 78%;
+    --glovo-green: 172 70% 55%;        /* bright seafoam */
+    --glovo-green-light: 172 75% 68%;
+    --glovo-pink: 340 85% 70%;
+    --wave: 205 30% 22%;
+    --deep-purple: 195 85% 38%;
+    --footer-dark: 205 55% 8%;
+    --gold: 42 95% 62%;
+    --cart-purple: 188 80% 52%;
 
     /* Dark mode gradients */
     --gradient-glovo: linear-gradient(135deg, hsl(var(--glovo-purple)), hsl(var(--glovo-orange)));
     --gradient-glovo-green: linear-gradient(135deg, hsl(var(--glovo-green)), hsl(var(--glovo-purple-light)));
+    --gradient-glovo-alt: linear-gradient(135deg, hsl(var(--glovo-purple-light)), hsl(var(--glovo-green)));
     --gradient-wave: linear-gradient(180deg, hsl(var(--wave)), hsl(var(--background)));
     --gradient-footer: linear-gradient(135deg, hsl(var(--footer-dark)), hsl(var(--deep-purple)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--glovo-purple) 0%), hsl(var(--glovo-orange) 50%), hsl(var(--glovo-green) 100%));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--glovo-purple)) 0%, hsl(var(--glovo-green)) 55%, hsl(var(--glovo-orange)) 100%);
 
     /* Dark mode shadows */
-    --shadow-glovo: 0 4px 20px -2px hsl(var(--glovo-purple) / 0.35);
-    --shadow-float: 0 8px 25px -5px hsl(var(--glovo-purple) / 0.4);
-    --shadow-deep: 0 12px 35px -10px hsl(var(--deep-purple) / 0.5);
+    --shadow-glovo: 0 4px 20px -2px hsl(var(--glovo-purple) / 0.4);
+    --shadow-float: 0 10px 32px -6px hsl(var(--glovo-purple) / 0.45);
+    --shadow-deep: 0 16px 44px -12px hsl(var(--deep-purple) / 0.55);
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;

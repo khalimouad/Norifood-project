@@ -1,52 +1,33 @@
-import { Phone, Mail, MapPin, Instagram, Award, Truck, Shield, RefreshCw, MessageCircle } from 'lucide-react';
+import { Phone, Mail, Instagram, Award, Truck, ShieldCheck, Waves, MessageCircle, Fish } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 export const Footer = () => {
+  const trustItems = [
+    { icon: Award, label: 'Qualité' },
+    { icon: Truck, label: 'Livraison' },
+    { icon: ShieldCheck, label: 'Sécurisé' },
+    { icon: Waves, label: 'Fraîcheur' },
+  ];
+
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 text-white">
-      {/* Mobile App Style Bottom Features - Fixed at bottom on mobile */}
-      <div className="bg-gradient-to-r from-glovo-purple via-glovo-orange to-glovo-green p-4">
-        <div className="grid grid-cols-4 gap-2">
-          <motion.div 
-            className="flex flex-col items-center text-white"
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
-              <Award className="h-5 w-5" />
-            </div>
-            <span className="text-[10px] font-medium text-center">Qualité</span>
-          </motion.div>
-          
-          <motion.div 
-            className="flex flex-col items-center text-white"
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
-              <Truck className="h-5 w-5" />
-            </div>
-            <span className="text-[10px] font-medium text-center">Livraison</span>
-          </motion.div>
-          
-          <motion.div 
-            className="flex flex-col items-center text-white"
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
-              <Shield className="h-5 w-5" />
-            </div>
-            <span className="text-[10px] font-medium text-center">Sécurisé</span>
-          </motion.div>
-          
-          <motion.div 
-            className="flex flex-col items-center text-white"
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
-              <RefreshCw className="h-5 w-5" />
-            </div>
-            <span className="text-[10px] font-medium text-center">Fraîcheur</span>
-          </motion.div>
+    <footer className="bg-gradient-to-br from-[hsl(var(--footer-dark))] via-[hsl(var(--deep-purple))] to-[hsl(var(--footer-dark))] text-white">
+      {/* Trust strip with brand gradient */}
+      <div className="relative bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange p-4 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.18),transparent_60%)] pointer-events-none"></div>
+        <div className="relative grid grid-cols-4 gap-2">
+          {trustItems.map(({ icon: Icon, label }) => (
+            <motion.div
+              key={label}
+              className="flex flex-col items-center text-white"
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="w-11 h-11 bg-white/20 rounded-2xl flex items-center justify-center mb-1.5 backdrop-blur-sm ring-1 ring-white/30">
+                <Icon className="h-5 w-5" />
+              </div>
+              <span className="text-[10px] font-semibold text-center tracking-wide">{label}</span>
+            </motion.div>
+          ))}
         </div>
       </div>
 
@@ -149,12 +130,12 @@ export const Footer = () => {
         {/* Social & Copyright */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-white/10">
           <div className="flex items-center gap-3 mb-4 md:mb-0">
-            <div className="w-8 h-8 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">F</span>
+            <div className="w-9 h-9 bg-gradient-to-br from-glovo-purple via-glovo-green to-glovo-orange rounded-xl flex items-center justify-center shadow-lg">
+              <Fish className="h-4 w-4 text-white" strokeWidth={2.5} />
             </div>
             <div>
               <p className="font-bold text-sm">Fresh N'Good</p>
-              <p className="text-gray-400 text-xs">© 2024 • Produits de la Mer</p>
+              <p className="text-white/60 text-xs">© 2024 • Produits de la Mer</p>
             </div>
           </div>
 

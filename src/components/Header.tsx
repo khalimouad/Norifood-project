@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Search, User, LogOut, Phone, MapPin, ChevronDown } from 'lucide-react';
+import { ShoppingCart, Search, User, LogOut, Phone, MapPin, ChevronDown, Fish } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { useCart } from '@/hooks/useCart';
@@ -111,22 +111,30 @@ export const Header = () => {
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-3">
             {/* Logo & Location */}
-            <div className="flex items-center gap-2 flex-1">
-              <div className="w-10 h-10 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-xl flex items-center justify-center shrink-0 shadow-lg shadow-glovo-purple/20">
-                <span className="text-white font-bold text-lg">F</span>
-              </div>
-              
-              <div className="hidden sm:block">
-                <Link to="/" className="font-bold text-xl bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">
+            <div className="flex items-center gap-2.5 flex-1">
+              <Link
+                to="/"
+                className="relative w-11 h-11 bg-gradient-to-br from-glovo-purple via-glovo-green to-glovo-orange rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-glovo-purple/30 hover:scale-105 transition-transform focus-ring"
+                aria-label="Fresh N'Good accueil"
+              >
+                <Fish className="h-5 w-5 text-white drop-shadow-sm" strokeWidth={2.5} />
+                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-white dark:bg-card rounded-full border-2 border-glovo-orange"></span>
+              </Link>
+
+              <div className="hidden sm:flex flex-col leading-none">
+                <Link to="/" className="font-extrabold text-lg bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange bg-clip-text text-transparent tracking-tight">
                   Fresh N'Good
                 </Link>
+                <span className="text-[10px] text-muted-foreground font-medium tracking-wider uppercase mt-0.5">
+                  Produits de la Mer
+                </span>
               </div>
-              
+
               {/* Location Badge - Desktop */}
-              <button className="hidden md:flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+              <button className="hidden md:flex items-center gap-1 px-3 py-1.5 bg-glovo-purple/5 hover:bg-glovo-purple/10 rounded-full text-sm transition-colors border border-glovo-purple/15">
                 <MapPin className="h-3.5 w-3.5 text-glovo-purple" />
-                <span className="text-gray-700 dark:text-gray-300">Marrakech</span>
-                <ChevronDown className="h-3 w-3 text-gray-500" />
+                <span className="text-foreground font-medium">Marrakech</span>
+                <ChevronDown className="h-3 w-3 text-muted-foreground" />
               </button>
             </div>
 
@@ -164,12 +172,12 @@ export const Header = () => {
               {/* Cart */}
               <motion.button
                 onClick={() => navigate('/cart')}
-                className="relative w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-glovo-purple to-glovo-orange text-white shadow-lg shadow-glovo-purple/20"
+                className="relative w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-glovo-purple via-glovo-green to-glovo-orange text-white shadow-lg shadow-glovo-purple/25 hover:shadow-xl hover:shadow-glovo-purple/35 transition-shadow"
                 whileTap={{ scale: 0.95 }}
               >
                 <ShoppingCart className="h-4 w-4" />
                 {cartCount > 0 && (
-                  <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center bg-glovo-orange text-white text-[10px] font-bold border-2 border-white dark:border-gray-900">
+                  <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center bg-glovo-orange text-white text-[10px] font-bold border-2 border-white dark:border-card">
                     {cartCount}
                   </Badge>
                 )}

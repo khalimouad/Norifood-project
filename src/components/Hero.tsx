@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Clock, Star, Award, Sparkles, Truck, Shield } from 'lucide-react';
+import { ArrowRight, Truck, Waves, ShieldCheck } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselApi } from '@/components/ui/carousel';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
@@ -60,50 +60,34 @@ export const Hero = () => {
 
   return (
     <section className="relative py-6 md:py-12 lg:py-16 overflow-hidden">
-      {/* Glovo-style animated gradient background */}
+      {/* Ocean-inspired animated background */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Main gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-glovo-purple/5 via-background to-glovo-orange/5 dark:from-glovo-purple/10 dark:via-gray-950 dark:to-glovo-orange/10"></div>
+        {/* Soft ocean gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-glovo-purple/8 via-background to-glovo-green/8 dark:from-glovo-purple/15 dark:via-background dark:to-glovo-green/15"></div>
 
-        {/* Floating animated orbs */}
+        {/* Deep ocean glow */}
         <motion.div
-          className="absolute top-16 left-1/4 w-48 h-48 bg-glovo-purple/10 dark:bg-glovo-purple/15 rounded-full blur-3xl"
-          animate={{
-            y: [0, -20, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          className="absolute -top-10 -left-20 w-80 h-80 bg-glovo-purple/15 dark:bg-glovo-purple/25 rounded-full blur-3xl"
+          animate={{ y: [0, -24, 0], scale: [1, 1.08, 1] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-24 right-1/4 w-56 h-56 bg-glovo-orange/10 dark:bg-glovo-orange/15 rounded-full blur-3xl"
-          animate={{
-            y: [0, -20, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
+          className="absolute -bottom-20 -right-10 w-96 h-96 bg-glovo-green/15 dark:bg-glovo-green/25 rounded-full blur-3xl"
+          animate={{ y: [0, -18, 0], scale: [1, 1.05, 1] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
         />
         <motion.div
-          className="absolute top-1/2 left-8 w-40 h-40 bg-glovo-green/10 dark:bg-glovo-green/15 rounded-full blur-2xl"
-          animate={{
-            y: [0, -15, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
+          className="absolute top-1/3 right-1/3 w-48 h-48 bg-glovo-orange/12 dark:bg-glovo-orange/20 rounded-full blur-2xl"
+          animate={{ y: [0, -12, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
         />
+
+        {/* Rising ocean bubbles */}
+        <div className="bubble w-4 h-4 bottom-8 left-[12%]" style={{ animationDelay: '0s' }} />
+        <div className="bubble w-3 h-3 bottom-16 left-[28%]" style={{ animationDelay: '1.5s', animationDuration: '10s' }} />
+        <div className="bubble w-6 h-6 bottom-4 left-[65%]" style={{ animationDelay: '0.8s', animationDuration: '7s' }} />
+        <div className="bubble w-2.5 h-2.5 bottom-20 left-[80%]" style={{ animationDelay: '2.2s', animationDuration: '9s' }} />
+        <div className="bubble w-5 h-5 bottom-10 left-[45%]" style={{ animationDelay: '3s', animationDuration: '8s' }} />
       </div>
 
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
@@ -125,7 +109,7 @@ export const Hero = () => {
                 Produits de la Mer
               </motion.span>
               <motion.span
-                className="block mt-2 text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-glovo-purple via-glovo-orange to-glovo-green bg-clip-text text-transparent"
+                className="block mt-2 text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange bg-clip-text text-transparent"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -139,7 +123,7 @@ export const Hero = () => {
               <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight mb-2">
                 Produits de la Mer
               </h1>
-              <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">
+              <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange bg-clip-text text-transparent">
                 Frais Quotidiennement
               </p>
             </div>
@@ -170,7 +154,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <Button
-                className="bg-gradient-to-r from-glovo-purple to-glovo-orange hover:from-glovo-purple/90 hover:to-glovo-orange/90 text-white px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium shadow-lg shadow-glovo-purple/20 hover:shadow-xl hover:shadow-glovo-purple/30 transition-all duration-300 hover-lift focus-ring"
+                className="bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange hover:brightness-110 text-white px-7 md:px-9 py-2.5 md:py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover:shadow-xl hover:shadow-glovo-purple/35 transition-all duration-300 hover-lift focus-ring"
                 onClick={() => window.location.href = '/products'}
               >
                 Commander Maintenant
@@ -178,7 +162,7 @@ export const Hero = () => {
               </Button>
               <Button
                 variant="outline"
-                className="border-2 border-glovo-purple text-glovo-purple hover:bg-glovo-purple hover:text-white px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium transition-all duration-300 hover-lift focus-ring"
+                className="border-2 border-glovo-purple/60 text-glovo-purple bg-white dark:bg-card hover:bg-glovo-purple hover:text-white px-6 md:px-8 py-2.5 md:py-3 rounded-full font-semibold transition-all duration-300 hover-lift focus-ring"
               >
                 Nos Promotions
               </Button>
@@ -192,7 +176,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <Button
-                className="flex-1 bg-gradient-to-r from-glovo-purple to-glovo-orange text-white py-3 rounded-full font-medium shadow-lg hover-lift focus-ring text-sm"
+                className="flex-1 bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange text-white py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover-lift focus-ring text-sm"
                 onClick={() => window.location.href = '/products'}
               >
                 Commander
@@ -207,27 +191,27 @@ export const Hero = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <div className="flex flex-col md:flex-row items-center gap-2 md:gap-2">
-                <div className="bg-gradient-to-br from-glovo-purple/10 to-glovo-orange/10 p-2 md:p-2.5 rounded-xl shrink-0 shadow-sm">
+              <div className="flex flex-col md:flex-row items-center gap-2">
+                <div className="bg-glovo-purple/10 p-2.5 md:p-3 rounded-2xl shrink-0 ring-1 ring-glovo-purple/15">
                   <Truck className="h-4 w-4 md:h-5 md:w-5 text-glovo-purple" />
                 </div>
                 <div className="text-center md:text-left">
                   <p className="font-semibold text-xs md:text-sm text-foreground">Livraison</p>
-                  <p className="text-[10px] md:text-xs text-muted-foreground">Rapide</p>
+                  <p className="text-[10px] md:text-xs text-muted-foreground">1-2h à Marrakech</p>
                 </div>
               </div>
-              <div className="flex flex-col md:flex-row items-center gap-2 md:gap-2">
-                <div className="bg-gradient-to-br from-glovo-purple/10 to-glovo-orange/10 p-2 md:p-2.5 rounded-xl shrink-0 shadow-sm">
-                  <Star className="h-4 w-4 md:h-5 md:w-5 text-glovo-purple" />
+              <div className="flex flex-col md:flex-row items-center gap-2">
+                <div className="bg-glovo-green/10 p-2.5 md:p-3 rounded-2xl shrink-0 ring-1 ring-glovo-green/20">
+                  <Waves className="h-4 w-4 md:h-5 md:w-5 text-glovo-green" />
                 </div>
                 <div className="text-center md:text-left">
                   <p className="font-semibold text-xs md:text-sm text-foreground">Fraîcheur</p>
-                  <p className="text-[10px] md:text-xs text-muted-foreground">Garantie</p>
+                  <p className="text-[10px] md:text-xs text-muted-foreground">De l'océan</p>
                 </div>
               </div>
-              <div className="flex flex-col md:flex-row items-center gap-2 md:gap-2">
-                <div className="bg-gradient-to-br from-glovo-purple/10 to-glovo-orange/10 p-2 md:p-2.5 rounded-xl shrink-0 shadow-sm">
-                  <Shield className="h-4 w-4 md:h-5 md:w-5 text-glovo-purple" />
+              <div className="flex flex-col md:flex-row items-center gap-2">
+                <div className="bg-glovo-orange/10 p-2.5 md:p-3 rounded-2xl shrink-0 ring-1 ring-glovo-orange/20">
+                  <ShieldCheck className="h-4 w-4 md:h-5 md:w-5 text-glovo-orange" />
                 </div>
                 <div className="text-center md:text-left">
                   <p className="font-semibold text-xs md:text-sm text-foreground">Qualité</p>
@@ -315,8 +299,8 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Bottom subtle shadow effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-muted/5 via-transparent to-transparent dark:from-gray-950/20 dark:via-transparent dark:to-transparent pointer-events-none"></div>
+      {/* Subtle wave divider */}
+      <div className="wave-divider bottom-0"></div>
     </section>
   );
 };
