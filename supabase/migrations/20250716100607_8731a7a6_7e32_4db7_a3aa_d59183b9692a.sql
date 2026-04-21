@@ -22,12 +22,15 @@ FOR UPDATE
 TO authenticated
 USING (id = auth.uid());
 
--- Insert the admin user record
-INSERT INTO public.admin_users (id, email, name, role, is_active)
-VALUES (
-  (SELECT id FROM auth.users WHERE email = 'admin@freshngood.com' LIMIT 1),
-  'admin@freshngood.com',
-  'Admin User',
-  'admin',
-  true
-) ON CONFLICT (id) DO NOTHING;
+-- Insert the admin user record only if auth user exists
+DO $$
+DECLARE
+  admin_id UUID;
+BEGIN
+  SELECT id INTO admin_id FROM auth.users WHERE email = 'admin@freshngood.com' LIMIT 1;
+  IF admin_id IS NOT NULL THEN
+    INSERT INTO public.admin_users (id, email, name, role, is_active)
+    VALUES (admin_id, 'admin@freshngood.com', 'Admin User', 'admin', true)
+    ON CONFLICT (id) DO NOTHING;
+  END IF;
+END $$;

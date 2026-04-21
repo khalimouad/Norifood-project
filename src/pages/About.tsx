@@ -1,261 +1,169 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { BottomNavigation } from "@/components/BottomNavigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Fish, 
-  Waves, 
-  Award, 
-  Users, 
-  Clock, 
-  Truck, 
-  Shield, 
-  Star,
-  MapPin,
-  Phone,
-  Mail
-} from "lucide-react";
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { BottomNavigation } from '@/components/BottomNavigation';
+import { Fish, Award, Truck, Shield, Heart, Users } from 'lucide-react';
 
-const About = () => {
-  const stats = [
-    { label: "Années d'expérience", value: "25+", icon: Award },
-    { label: "Clients satisfaits", value: "10K+", icon: Users },
-    { label: "Livraisons par jour", value: "200+", icon: Truck },
-    { label: "Variétés de poissons", value: "50+", icon: Fish }
-  ];
-
+export default function About() {
   const values = [
     {
-      icon: Fish,
-      title: "Fraîcheur Garantie",
-      description: "Nos produits sont pêchés et livrés dans les 24h pour une fraîcheur optimale."
+      icon: Award,
+      title: "Qualité Premium",
+      description: "Sélection rigoureuse des meilleurs produits de la mer",
+      color: "text-yellow-500"
+    },
+    {
+      icon: Truck,
+      title: "Livraison Rapide",
+      description: "Fraîcheur garantie avec livraison en 24h",
+      color: "text-blue-500"
     },
     {
       icon: Shield,
-      title: "Qualité Premium",
-      description: "Sélection rigoureuse de nos fournisseurs et contrôle qualité à chaque étape."
+      title: "Confiance",
+      description: "Plus de 20 ans d'expérience à Marrakech",
+      color: "text-green-500"
     },
     {
-      icon: Clock,
-      title: "Livraison Rapide",
-      description: "Livraison le jour même possible avec notre service express."
-    },
-    {
-      icon: Waves,
-      title: "Pêche Durable",
-      description: "Nous soutenons la pêche responsable pour préserver nos océans."
+      icon: Heart,
+      title: "Passion",
+      description: "Amour des produits frais et du service client",
+      color: "text-red-500"
     }
   ];
 
-  const team = [
-    {
-      name: "Mohamed Alami",
-      role: "Fondateur & Directeur",
-      experience: "25 ans d'expérience dans la pêche",
-      image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      name: "Fatima Benali",
-      role: "Chef des Achats",
-      experience: "Expert en sélection de produits marins",
-      image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      name: "Omar Tazi",
-      role: "Responsable Qualité",
-      experience: "Spécialiste en sécurité alimentaire",
-      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=150&h=150&fit=crop&crop=face"
-    }
+  const stats = [
+    { value: "20+", label: "Années d'expérience" },
+    { value: "5000+", label: "Clients satisfaits" },
+    { value: "100+", label: "Produits frais" },
+    { value: "24h", label: "Livraison rapide" }
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      
       <main className="pb-20 md:pb-0">
         {/* Hero Section */}
-        <div className="bg-gradient-to-r from-ocean to-ocean-light text-white py-16">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              À Propos de Fresh N'Good
-            </h1>
-            <p className="text-xl mb-8 text-white/90 max-w-3xl mx-auto">
-              Depuis 1999, nous nous engageons à vous offrir les meilleurs produits de la mer 
-              avec une fraîcheur et une qualité inégalées.
-            </p>
-            <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
-              <Star className="h-4 w-4 mr-1" />
-              Note moyenne: 4.9/5
-            </Badge>
-          </div>
-        </div>
-
-        {/* Stats Section */}
-        <div className="py-16 bg-muted/30">
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-12 md:py-16 lg:py-24 pb-16 md:pb-20">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-ocean/10 rounded-full mb-4">
-                    <stat.icon className="h-8 w-8 text-ocean" />
-                  </div>
-                  <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
-                  <div className="text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
+            <div className="max-w-3xl mx-auto text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-primary/10 mb-4 md:mb-6 animate-in zoom-in duration-500">
+                <Fish className="h-8 w-8 md:h-10 md:w-10 text-primary" />
+              </div>
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 md:mb-6">
+                Fresh N'Good
+              </h1>
+              <p className="text-base md:text-xl text-muted-foreground leading-relaxed">
+                Votre partenaire de confiance pour les produits de la mer à Marrakech depuis plus de 20 ans
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Our Story */}
-        <div className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-                Notre Histoire
-              </h2>
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                  <h3 className="text-2xl font-semibold mb-6 text-primary">
-                    Une Passion Familiale
-                  </h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    Fresh N'Good a été fondée en 1999 par Mohamed Alami, un passionné de la mer 
-                    qui a grandi dans une famille de pêcheurs à Casablanca. Avec plus de 25 ans 
-                    d'expérience, nous avons développé un réseau de confiance avec les meilleurs 
-                    pêcheurs locaux.
+        {/* Stats Section - Overlapping */}
+        <div className="container mx-auto px-4 -mt-12 md:-mt-16 mb-12 md:mb-16 relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-5xl mx-auto">
+            {stats.map((stat, index) => (
+              <div
+                key={index}
+                className="bg-card rounded-xl md:rounded-2xl p-4 md:p-6 text-center shadow-sm border border-border animate-in fade-in slide-in-from-bottom-4 hover:shadow-lg transition-all duration-300"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-1 md:mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-xs md:text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Story Section */}
+        <div className="container mx-auto px-4 py-12 md:py-16">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div className="animate-in fade-in slide-in-from-left duration-700">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 md:mb-6">Notre Histoire</h2>
+                <div className="space-y-4 text-muted-foreground leading-relaxed">
+                  <p>
+                    Depuis plus de deux décennies, Fresh N'Good s'est imposé comme la référence incontournable 
+                    des produits de la mer à Marrakech. Notre passion pour la qualité et la fraîcheur guide 
+                    chacune de nos actions.
                   </p>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    Notre mission est simple : vous offrir des produits de la mer d'une fraîcheur 
-                    exceptionnelle, directement de l'océan à votre table. Nous croyons que la 
-                    qualité ne doit jamais être compromise.
+                  <p>
+                    Nous travaillons directement avec les meilleurs fournisseurs pour vous garantir des produits 
+                    d'exception, livrés dans les meilleures conditions. Notre engagement : votre satisfaction 
+                    et votre confiance.
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Aujourd'hui, Fresh N'Good est devenu une référence au Maroc pour les produits 
-                    de la mer premium, servant plus de 10 000 clients satisfaits à travers le pays.
+                  <p>
+                    Aujourd'hui, nous sommes fiers de servir des milliers de familles marocaines qui nous font 
+                    confiance pour leurs repas quotidiens et leurs occasions spéciales.
                   </p>
                 </div>
-                <div className="relative">
-                  <img 
-                    src="/placeholder.svg" 
-                    alt="Notre équipe" 
-                    className="rounded-lg shadow-lg w-full h-96 object-cover"
-                  />
-                  <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-lg shadow-lg">
-                    <div className="text-2xl font-bold text-ocean">1999</div>
-                    <div className="text-sm text-muted-foreground">Année de création</div>
-                  </div>
+              </div>
+              
+              <div className="relative animate-in fade-in slide-in-from-right duration-700">
+                <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                  <Users className="h-32 w-32 text-primary/40" />
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Our Values */}
-        <div className="py-16 bg-muted/30">
+        {/* Values Section */}
+        <div className="bg-muted/30 py-12 md:py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-              Nos Valeurs
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center mb-8 md:mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 md:mb-4">Nos Valeurs</h2>
+              <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
+                Ce qui nous guide au quotidien pour vous offrir le meilleur service
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
               {values.map((value, index) => (
-                <Card key={index} className="text-center border-0 shadow-sm hover:shadow-md transition-shadow">
-                  <CardContent className="p-6">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-ocean/10 rounded-full mb-4">
-                      <value.icon className="h-8 w-8 text-ocean" />
-                    </div>
-                    <h3 className="text-xl font-semibold mb-3 text-foreground">
-                      {value.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {value.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                <div
+                  key={index}
+                  className="bg-card rounded-xl md:rounded-2xl p-5 md:p-6 shadow-sm border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-4"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className={`inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-xl ${value.color} bg-current/10 mb-3 md:mb-4`}>
+                    <value.icon className={`h-6 w-6 md:h-7 md:w-7 ${value.color}`} />
+                  </div>
+                  <h3 className="text-base md:text-lg font-semibold text-foreground mb-1 md:mb-2">
+                    {value.title}
+                  </h3>
+                  <p className="text-xs md:text-sm text-muted-foreground">
+                    {value.description}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Team Section - Hidden */}
-        {false && (
-          <div className="py-16">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-                Notre Équipe
-              </h2>
-              <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                {team.map((member, index) => (
-                  <Card key={index} className="text-center border-0 shadow-sm hover:shadow-md transition-shadow">
-                    <CardContent className="p-6">
-                      <img 
-                        src={member.image} 
-                        alt={member.name}
-                        className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-                      />
-                      <h3 className="text-xl font-semibold mb-2 text-gray-900">
-                        {member.name}
-                      </h3>
-                      <p className="text-ocean font-medium mb-2">
-                        {member.role}
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        {member.experience}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Contact CTA */}
-        <div className="py-16 bg-gradient-to-r from-ocean to-ocean-light text-white">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Prêt à Découvrir Nos Produits ?
-            </h2>
-            <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-              Contactez-nous dès aujourd'hui pour commander vos produits de la mer frais 
-              ou visitez notre boutique.
+        {/* CTA Section */}
+        <div className="container mx-auto px-4 py-12 md:py-16">
+          <div className="max-w-3xl mx-auto text-center bg-gradient-to-br from-primary to-primary/80 rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-12 text-white animate-in fade-in zoom-in duration-700">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Prêt à commander ?</h2>
+            <p className="text-white/90 mb-6 md:mb-8 text-base md:text-lg">
+              Découvrez notre sélection de produits frais et passez votre commande en quelques clics
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="bg-white text-ocean hover:bg-gray-100">
-                <Phone className="h-5 w-5 mr-2" />
-                Nous Appeler
-              </Button>
-              <Button size="lg" variant="outline" className="bg-black border-white text-white hover:bg-white hover:text-ocean">
-                <Mail className="h-5 w-5 mr-2" />
-                Nous Écrire
-              </Button>
-            </div>
-            
-            <div className="mt-12 grid md:grid-cols-3 gap-6 text-center">
-              <div className="flex flex-col items-center">
-                <MapPin className="h-6 w-6 mb-2" />
-                <p className="font-medium">Adresse</p>
-                <p className="text-white/80 text-sm">123 Avenue Hassan II, Casablanca</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <Phone className="h-6 w-6 mb-2" />
-                <p className="font-medium">Téléphone</p>
-                <p className="text-white/80 text-sm">+212 522 123 456</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <Clock className="h-6 w-6 mb-2" />
-                <p className="font-medium">Horaires</p>
-                <p className="text-white/80 text-sm">Lun-Sam: 8h-20h</p>
-              </div>
-            </div>
+            <a
+              href="/products"
+              className="inline-flex items-center justify-center h-11 md:h-12 px-6 md:px-8 rounded-xl bg-white text-primary font-semibold hover:bg-white/90 transition-all duration-200 active:scale-95 text-sm md:text-base"
+            >
+              Voir nos produits
+            </a>
           </div>
         </div>
       </main>
+
       <Footer />
       <BottomNavigation />
     </div>
   );
-};
-
-export default About;
+}

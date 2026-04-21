@@ -31,12 +31,14 @@ CREATE TABLE IF NOT EXISTS public.orders (
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for orders
-CREATE POLICY IF NOT EXISTS "Users can view their own orders" 
+DROP POLICY IF EXISTS "Users can view their own orders" ON public.orders;
+CREATE POLICY "Users can view their own orders" 
 ON public.orders 
 FOR SELECT 
 USING (customer_id = auth.uid());
 
-CREATE POLICY IF NOT EXISTS "Admin full access orders" 
+DROP POLICY IF EXISTS "Admin full access orders" ON public.orders;
+CREATE POLICY "Admin full access orders" 
 ON public.orders 
 FOR ALL 
 USING (true);
@@ -57,14 +59,16 @@ CREATE TABLE IF NOT EXISTS public.order_items (
 ALTER TABLE public.order_items ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for order_items
-CREATE POLICY IF NOT EXISTS "Order items are viewable by order owner" 
+DROP POLICY IF EXISTS "Order items are viewable by order owner" ON public.order_items;
+CREATE POLICY "Order items are viewable by order owner" 
 ON public.order_items 
 FOR SELECT 
 USING (order_id IN (
   SELECT id FROM public.orders WHERE customer_id = auth.uid()
 ));
 
-CREATE POLICY IF NOT EXISTS "Admin full access order items" 
+DROP POLICY IF EXISTS "Admin full access order items" ON public.order_items;
+CREATE POLICY "Admin full access order items" 
 ON public.order_items 
 FOR ALL 
 USING (true);

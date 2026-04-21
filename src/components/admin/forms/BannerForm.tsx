@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { ImageUploader } from '@/components/admin/ImageUploader';
 
 const bannerFormSchema = z.object({
   title: z.string().min(1, 'Le titre est requis'),
@@ -96,35 +97,45 @@ export function BannerForm({ open, onOpenChange, onSubmit, initialData }: Banner
               )}
             />
 
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="image_url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Image (Desktop)</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <FormField
+              control={form.control}
+              name="image_url"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Image (Desktop)</FormLabel>
+                  <FormControl>
+                    <ImageUploader
+                      value={field.value}
+                      onChange={field.onChange}
+                      aspectRatio={16/9}
+                      bucket="banners"
+                    />
+                  </FormControl>
+                  <FormDescription>Ratio recommandé: 16:9 (1920x1080px)</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <FormField
-                control={form.control}
-                name="mobile_image_url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Image (Mobile)</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="mobile_image_url"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Image (Mobile - Optionnel)</FormLabel>
+                  <FormControl>
+                    <ImageUploader
+                      value={field.value}
+                      onChange={field.onChange}
+                      aspectRatio={9/16}
+                      bucket="banners"
+                    />
+                  </FormControl>
+                  <FormDescription>Ratio recommandé: 9:16 (1080x1920px)</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <div className="grid grid-cols-2 gap-4">
               <FormField

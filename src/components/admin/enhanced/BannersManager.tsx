@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { EnhancedTable } from './EnhancedTable';
 import { Button } from '@/components/ui/button';
@@ -6,7 +7,6 @@ import { Plus, Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { BannerForm } from '../forms/BannerForm';
 
 interface Banner {
   id: string;
@@ -26,11 +26,10 @@ interface Banner {
 }
 
 export function BannersManager() {
+  const navigate = useNavigate();
   const [banners, setBanners] = useState<Banner[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [formOpen, setFormOpen] = useState(false);
-  const [editingBanner, setEditingBanner] = useState<Banner | undefined>();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -141,54 +140,6 @@ export function BannersManager() {
     banner.subtitle?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleSubmit = async (values: any) => {
-    try {
-      setLoading(true);
-      const data = {
-        ...values,
-        start_date: values.start_date.toISOString(),
-        end_date: values.end_date.toISOString(),
-      };
-      
-      if (editingBanner) {
-        const { error } = await supabase
-          .from('banners')
-          .update(data)
-          .eq('id', editingBanner.id);
-        
-        if (error) throw error;
-        
-        toast({
-          title: "Succès",
-          description: "La bannière a été mise à jour",
-        });
-      } else {
-        const { error } = await supabase
-          .from('banners')
-          .insert([data]);
-        
-        if (error) throw error;
-        
-        toast({
-          title: "Succès",
-          description: "La bannière a été créée",
-        });
-      }
-      
-      fetchBanners();
-    } catch (error) {
-      console.error('Error saving banner:', error);
-      toast({
-        title: "Erreur",
-        description: "Une erreur est survenue",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-      setEditingBanner(undefined);
-    }
-  };
-
   const handleDelete = async (banner: Banner) => {
     if (!confirm('Êtes-vous sûr de vouloir supprimer cette bannière ?')) return;
     
@@ -228,24 +179,10 @@ export function BannersManager() {
         columns={columns}
         loading={loading}
         onRefresh={fetchBanners}
-        onAdd={() => setFormOpen(true)}
-        onEdit={(banner) => {
-          setEditingBanner(banner);
-          setFormOpen(true);
-        }}
+        onAdd={() => navigate('/admin/banners/new')}
+        onEdit={(banner) => navigate(`/admin/banners/${banner.id}`)}
         onDelete={handleDelete}
         addButtonText="Nouvelle bannière"
-      />
-
-      <BannerForm
-        open={formOpen}
-        onOpenChange={setFormOpen}
-        onSubmit={handleSubmit}
-        initialData={editingBanner ? {
-          ...editingBanner,
-          start_date: new Date(editingBanner.start_date),
-          end_date: new Date(editingBanner.end_date),
-        } : undefined}
       />
     </div>
   );

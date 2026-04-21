@@ -1,4 +1,4 @@
-import { Toaster } from "@/components/ui/toaster";
+// import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -21,9 +21,11 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import Shipping from "./pages/Shipping";
 import Recipes from "./pages/Recipes";
+import RecipeDetail from "./pages/RecipeDetail";
 import Admin from "./pages/Admin";
 import AdminEnhanced from "./pages/AdminEnhanced";
 import AdminProductForm from "./pages/AdminProductForm";
+import AdminBannerForm from "./pages/AdminBannerForm";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import { CartProvider } from "./hooks/useCart";
@@ -36,7 +38,7 @@ const App = () => (
   <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
+        {/* <Toaster /> */}
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
@@ -54,6 +56,7 @@ const App = () => (
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/order-confirmation" element={<OrderConfirmation />} />
                 <Route path="/recipes" element={<Recipes />} />
+                <Route path="/recipes/:slug" element={<RecipeDetail />} />
                 <Route path="/conditions-de-vente" element={<TermsOfSale />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -63,6 +66,8 @@ const App = () => (
                 <Route path="/admin-old/*" element={<Admin />} />
                 <Route path="/admin/product/new" element={<AdminProductForm />} />
                 <Route path="/admin/product/:id" element={<AdminProductForm />} />
+                <Route path="/admin/banners/new" element={<AdminBannerForm />} />
+                <Route path="/admin/banners/:id" element={<AdminBannerForm />} />
                 <Route path="/payment-success" element={<PaymentSuccess />} />
                 <Route path="/payment-cancel" element={<PaymentCancel />} />
                 <Route path="*" element={<NotFound />} />

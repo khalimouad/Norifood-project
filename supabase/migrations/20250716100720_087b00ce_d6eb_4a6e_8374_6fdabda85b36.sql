@@ -10,12 +10,14 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER STABLE;
 
 -- Create RLS policies for admin_users table
+DROP POLICY IF EXISTS "Admin users can view their own record" ON public.admin_users;
 CREATE POLICY "Admin users can view their own record"
 ON public.admin_users
 FOR SELECT
 TO authenticated
 USING (id = auth.uid());
 
+DROP POLICY IF EXISTS "Admin users can update their own record" ON public.admin_users;
 CREATE POLICY "Admin users can update their own record"
 ON public.admin_users
 FOR UPDATE
