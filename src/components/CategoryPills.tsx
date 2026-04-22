@@ -83,7 +83,7 @@ export const CategoryPills = ({ selectedCategory, onSelectCategory }: CategoryPi
           onClick={() => handleCategoryClick('all')}
           className={`group flex-shrink-0 flex items-center gap-2 pl-2.5 pr-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 button-press focus-ring border ${
             isAllActive
-              ? 'bg-gradient-to-r from-glovo-purple to-glovo-green text-white border-transparent shadow-lg shadow-glovo-purple/25 scale-[1.03]'
+              ? 'bg-glovo-purple text-white border-transparent shadow-lg shadow-glovo-purple/25 scale-[1.03]'
               : 'bg-white dark:bg-card text-foreground border-border hover:border-glovo-purple/40 hover:shadow-md'
           }`}
         >
@@ -112,7 +112,7 @@ export const CategoryPills = ({ selectedCategory, onSelectCategory }: CategoryPi
                 onClick={() => handleCategoryClick(category.id)}
                 className={`group flex-shrink-0 flex items-center gap-2 pl-2.5 pr-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 button-press focus-ring border ${
                   isActive
-                    ? 'bg-gradient-to-r from-glovo-purple to-glovo-green text-white border-transparent shadow-lg shadow-glovo-purple/25 scale-[1.03]'
+                    ? 'bg-glovo-purple text-white border-transparent shadow-lg shadow-glovo-purple/25 scale-[1.03]'
                     : 'bg-white dark:bg-card text-foreground border-border hover:border-glovo-purple/40 hover:shadow-md'
                 }`}
               >

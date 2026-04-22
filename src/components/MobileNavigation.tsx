@@ -29,7 +29,7 @@ export function MobileNavigation({ onClose }: MobileNavigationProps) {
     <div className="flex flex-col h-full bg-background">
       {/* Header */}
       <div className="p-4 border-b border-border/50">
-        <h2 className="text-lg font-bold bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">
+        <h2 className="text-lg font-bold text-primary">
           Fresh N'Good
         </h2>
         <p className="text-xs text-muted-foreground mt-0.5">Produits de la mer frais</p>

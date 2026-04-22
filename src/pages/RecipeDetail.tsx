@@ -115,7 +115,7 @@ const RecipeDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-background">
       <Header />
       <main className="pb-20 md:pb-0">
         {/* Elegant Hero with Parallax Effect */}
@@ -183,10 +183,10 @@ const RecipeDetail = () => {
 
               {/* Ingredients Card with 3D Effect */}
               <div className="relative group animate-slide-in" style={{ animationDelay: '100ms' }}>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
+                <div className="absolute inset-0 bg-primary/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
                 <div className="bg-card border-2 border-border rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 bg-gradient-to-br from-primary to-primary/80 rounded-2xl shadow-lg">
+                    <div className="p-3 bg-primary rounded-2xl shadow-lg">
                       <Utensils className="h-6 w-6 text-primary-foreground" />
                     </div>
                     <h2 className="text-3xl font-bold text-foreground">Ingrédients</h2>
@@ -206,10 +206,10 @@ const RecipeDetail = () => {
 
               {/* Instructions Card with 3D Effect */}
               <div className="relative group animate-slide-in" style={{ animationDelay: '200ms' }}>
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-accent/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
+                <div className="absolute inset-0 bg-primary/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
                 <div className="bg-card border-2 border-border rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 bg-gradient-to-br from-secondary to-accent rounded-2xl shadow-lg">
+                    <div className="p-3 bg-primary rounded-2xl shadow-lg">
                       <ChefHat className="h-6 w-6 text-white" />
                     </div>
                     <h2 className="text-3xl font-bold text-foreground">Préparation</h2>
@@ -218,7 +218,7 @@ const RecipeDetail = () => {
                     {recipe.instructions?.map((instruction, index) => (
                       <li key={index} className="flex gap-4 group/step">
                         <div className="flex-shrink-0">
-                          <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl flex items-center justify-center font-bold text-lg shadow-lg group-hover/step:scale-110 transition-transform">
+                          <div className="w-10 h-10 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center font-bold text-lg shadow-lg group-hover/step:scale-110 transition-transform">
                             {index + 1}
                           </div>
                         </div>
@@ -236,7 +236,7 @@ const RecipeDetail = () => {
             <div className="space-y-6">
               {/* Time Info Card with 3D Effect */}
               <div className="relative group animate-zoom-in" style={{ animationDelay: '300ms' }}>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
+                <div className="absolute inset-0 bg-primary/15 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
                 <div className="bg-card border-2 border-border rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all sticky top-24">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-primary/10 rounded-xl">
@@ -253,7 +253,7 @@ const RecipeDetail = () => {
                       <span className="text-muted-foreground text-sm">Cuisson</span>
                       <span className="font-bold text-foreground">{recipe.cook_time || 0} min</span>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-primary to-primary/80 rounded-xl shadow-lg">
+                    <div className="flex justify-between items-center p-4 bg-primary rounded-xl shadow-lg">
                       <span className="text-primary-foreground font-bold">Total</span>
                       <span className="text-primary-foreground font-bold text-xl">{(recipe.prep_time || 0) + (recipe.cook_time || 0)} min</span>
                     </div>
@@ -264,7 +264,7 @@ const RecipeDetail = () => {
               {/* Related Products Card with 3D Effect */}
               {products.length > 0 && (
                 <div className="relative group animate-zoom-in" style={{ animationDelay: '400ms' }}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-accent/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
+                  <div className="absolute inset-0 bg-primary/15 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
                   <div className="bg-card border-2 border-border rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="p-2 bg-secondary/10 rounded-xl">

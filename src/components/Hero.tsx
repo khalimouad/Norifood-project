@@ -60,29 +60,21 @@ export const Hero = () => {
 
   return (
     <section className="relative py-6 md:py-12 lg:py-16 overflow-hidden">
-      {/* Ocean-inspired animated background */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Soft ocean gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-glovo-purple/8 via-background to-glovo-green/8 dark:from-glovo-purple/15 dark:via-background dark:to-glovo-green/15"></div>
-
-        {/* Deep ocean glow */}
+      {/* Clean background — single-hue blue tint */}
+      <div className="absolute inset-0 pointer-events-none bg-glovo-purple/[0.03] dark:bg-glovo-purple/10">
+        {/* Soft vibrant-blue glows (single-color blurred shapes, not gradients) */}
         <motion.div
           className="absolute -top-10 -left-20 w-80 h-80 bg-glovo-purple/15 dark:bg-glovo-purple/25 rounded-full blur-3xl"
           animate={{ y: [0, -24, 0], scale: [1, 1.08, 1] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute -bottom-20 -right-10 w-96 h-96 bg-glovo-green/15 dark:bg-glovo-green/25 rounded-full blur-3xl"
+          className="absolute -bottom-20 -right-10 w-96 h-96 bg-glovo-orange/20 dark:bg-glovo-orange/25 rounded-full blur-3xl"
           animate={{ y: [0, -18, 0], scale: [1, 1.05, 1] }}
           transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
         />
-        <motion.div
-          className="absolute top-1/3 right-1/3 w-48 h-48 bg-glovo-orange/12 dark:bg-glovo-orange/20 rounded-full blur-2xl"
-          animate={{ y: [0, -12, 0], scale: [1, 1.1, 1] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        />
 
-        {/* Rising ocean bubbles */}
+        {/* Rising bubbles */}
         <div className="bubble w-4 h-4 bottom-8 left-[12%]" style={{ animationDelay: '0s' }} />
         <div className="bubble w-3 h-3 bottom-16 left-[28%]" style={{ animationDelay: '1.5s', animationDuration: '10s' }} />
         <div className="bubble w-6 h-6 bottom-4 left-[65%]" style={{ animationDelay: '0.8s', animationDuration: '7s' }} />
@@ -109,7 +101,7 @@ export const Hero = () => {
                 Produits de la Mer
               </motion.span>
               <motion.span
-                className="block mt-2 text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent"
+                className="block mt-2 text-3xl md:text-4xl lg:text-5xl font-bold text-glovo-purple"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -123,7 +115,7 @@ export const Hero = () => {
               <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight mb-2">
                 Produits de la Mer
               </h1>
-              <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">
+              <p className="text-xl md:text-2xl font-bold text-glovo-purple">
                 Frais Quotidiennement
               </p>
             </div>
@@ -154,7 +146,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <Button
-                className="bg-gradient-to-r from-glovo-purple to-glovo-orange hover:brightness-110 text-white px-7 md:px-9 py-2.5 md:py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover:shadow-xl hover:shadow-glovo-purple/35 transition-all duration-300 hover-lift focus-ring"
+                className="bg-glovo-purple hover:brightness-110 text-white px-7 md:px-9 py-2.5 md:py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover:shadow-xl hover:shadow-glovo-purple/35 transition-all duration-300 hover-lift focus-ring"
                 onClick={() => window.location.href = '/products'}
               >
                 Commander Maintenant
@@ -176,7 +168,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <Button
-                className="flex-1 bg-gradient-to-r from-glovo-purple to-glovo-orange text-white py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover-lift focus-ring text-sm"
+                className="flex-1 bg-glovo-purple text-white py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover-lift focus-ring text-sm"
                 onClick={() => window.location.href = '/products'}
               >
                 Commander

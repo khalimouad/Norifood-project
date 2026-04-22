@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 export default function FAQ() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pearl to-white py-12">
+    <div className="min-h-screen bg-background py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="mb-6">
@@ -31,7 +31,7 @@ export default function FAQ() {
 
           <div className="grid gap-6">
             <Card className="shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-ocean to-ocean/90 text-white rounded-t-lg">
+              <CardHeader className="bg-ocean text-white rounded-t-lg">
                 <CardTitle className="flex items-center">
                   <Truck className="h-6 w-6 mr-2" />
                   Livraison & Retours
@@ -64,7 +64,7 @@ export default function FAQ() {
             </Card>
 
             <Card className="shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-seafoam to-seafoam/90 text-white rounded-t-lg">
+              <CardHeader className="bg-seafoam text-white rounded-t-lg">
                 <CardTitle>Questions sur les Produits</CardTitle>
               </CardHeader>
               <CardContent className="p-6">
@@ -98,7 +98,7 @@ export default function FAQ() {
             </Card>
 
             <Card className="shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-ocean to-ocean/90 text-white rounded-t-lg">
+              <CardHeader className="bg-ocean text-white rounded-t-lg">
                 <CardTitle>Conservation & Préparation</CardTitle>
               </CardHeader>
               <CardContent className="p-6">
@@ -120,7 +120,7 @@ export default function FAQ() {
             </Card>
 
             <Card className="shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-seafoam to-seafoam/90 text-white rounded-t-lg">
+              <CardHeader className="bg-seafoam text-white rounded-t-lg">
                 <CardTitle>Commandes & Paiement</CardTitle>
               </CardHeader>
               <CardContent className="p-6">
@@ -138,7 +138,7 @@ export default function FAQ() {
             </Card>
 
             <Card className="shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-ocean to-ocean/90 text-white rounded-t-lg">
+              <CardHeader className="bg-ocean text-white rounded-t-lg">
                 <CardTitle>Besoin d'aide ?</CardTitle>
               </CardHeader>
               <CardContent className="p-6">
@@ -188,7 +188,7 @@ export default function FAQ() {
             </Card>
 
             <Card className="shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-ocean to-ocean/90 text-white rounded-t-lg">
+              <CardHeader className="bg-ocean text-white rounded-t-lg">
                 <CardTitle>Où nous trouver ?</CardTitle>
               </CardHeader>
               <CardContent className="p-6">

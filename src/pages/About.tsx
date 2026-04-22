@@ -44,7 +44,7 @@ export default function About() {
       
       <main className="pb-20 md:pb-0">
         {/* Hero Section */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-12 md:py-16 lg:py-24 pb-16 md:pb-20">
+        <div className="relative overflow-hidden bg-primary/5 py-12 md:py-16 lg:py-24 pb-16 md:pb-20">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
               <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-primary/10 mb-4 md:mb-6 animate-in zoom-in duration-500">
@@ -105,7 +105,7 @@ export default function About() {
               </div>
               
               <div className="relative animate-in fade-in slide-in-from-right duration-700">
-                <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                <div className="aspect-square rounded-3xl bg-primary/15 flex items-center justify-center">
                   <Users className="h-32 w-32 text-primary/40" />
                 </div>
               </div>
@@ -147,7 +147,7 @@ export default function About() {
 
         {/* CTA Section */}
         <div className="container mx-auto px-4 py-12 md:py-16">
-          <div className="max-w-3xl mx-auto text-center bg-gradient-to-br from-primary to-primary/80 rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-12 text-white animate-in fade-in zoom-in duration-700">
+          <div className="max-w-3xl mx-auto text-center bg-primary rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-12 text-white animate-in fade-in zoom-in duration-700">
             <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Prêt à commander ?</h2>
             <p className="text-white/90 mb-6 md:mb-8 text-base md:text-lg">
               Découvrez notre sélection de produits frais et passez votre commande en quelques clics

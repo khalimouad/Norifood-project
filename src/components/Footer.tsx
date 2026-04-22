@@ -11,10 +11,9 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-[hsl(var(--footer-dark))] via-[hsl(var(--deep-purple))] to-[hsl(var(--footer-dark))] text-white">
-      {/* Trust strip with brand gradient */}
-      <div className="relative bg-gradient-to-r from-glovo-purple to-glovo-orange p-4 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.18),transparent_60%)] pointer-events-none"></div>
+    <footer className="bg-[hsl(var(--footer-dark))] text-white">
+      {/* Trust strip — flat vibrant blue */}
+      <div className="relative bg-glovo-purple p-4">
         <div className="relative grid grid-cols-4 gap-2">
           {trustItems.map(({ icon: Icon, label }) => (
             <motion.div
@@ -36,7 +35,7 @@ export const Footer = () => {
         {/* Contact Section - Mobile First */}
         <div className="space-y-4 mb-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-full flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 bg-glovo-purple rounded-full flex items-center justify-center shrink-0">
               <Phone className="h-5 w-5 text-white" />
             </div>
             <div className="flex-1">
@@ -49,7 +48,7 @@ export const Footer = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-glovo-orange to-glovo-green rounded-full flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 bg-glovo-purple rounded-full flex items-center justify-center shrink-0">
               <MessageCircle className="h-5 w-5 text-white" />
             </div>
             <div className="flex-1">
@@ -85,7 +84,7 @@ export const Footer = () => {
         {/* Desktop Links */}
         <div className="hidden md:grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">Navigation</h3>
+            <h3 className="font-bold text-base mb-4 text-glovo-purple">Navigation</h3>
             <ul className="space-y-2">
               <li><Link to="/" className="text-gray-400 hover:text-white transition-colors text-sm">Accueil</Link></li>
               <li><Link to="/products" className="text-gray-400 hover:text-white transition-colors text-sm">Nos Produits</Link></li>
@@ -95,7 +94,7 @@ export const Footer = () => {
           </div>
           
           <div>
-            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-orange to-glovo-green bg-clip-text text-transparent">Informations</h3>
+            <h3 className="font-bold text-base mb-4 text-glovo-purple">Informations</h3>
             <ul className="space-y-2">
               <li><Link to="/faq" className="text-gray-400 hover:text-white transition-colors text-sm">FAQ</Link></li>
               <li><Link to="/shipping" className="text-gray-400 hover:text-white transition-colors text-sm">Livraison</Link></li>
@@ -105,7 +104,7 @@ export const Footer = () => {
           </div>
           
           <div>
-            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">Adresse</h3>
+            <h3 className="font-bold text-base mb-4 text-glovo-purple">Adresse</h3>
             <div className="space-y-2 text-sm text-gray-400">
               <p>Imm. Assala - 50 Gueliz</p>
               <p>Bd Mohamed VI</p>
@@ -118,7 +117,7 @@ export const Footer = () => {
           </div>
           
           <div>
-            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-orange to-glovo-green bg-clip-text text-transparent">Horaires</h3>
+            <h3 className="font-bold text-base mb-4 text-glovo-purple">Horaires</h3>
             <div className="space-y-2 text-sm text-gray-400">
               <p>Lun - Sam: 6h - 20h</p>
               <p>Dimanche: 8h - 18h</p>
@@ -130,7 +129,7 @@ export const Footer = () => {
         {/* Social & Copyright */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-white/10">
           <div className="flex items-center gap-3 mb-4 md:mb-0">
-            <div className="w-9 h-9 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-9 h-9 bg-glovo-purple rounded-xl flex items-center justify-center shadow-lg">
               <Fish className="h-4 w-4 text-white" strokeWidth={2.5} />
             </div>
             <div>
@@ -140,10 +139,10 @@ export const Footer = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <a href="https://instagram.com" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-glovo-purple hover:to-glovo-orange transition-all">
+            <a href="https://instagram.com" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-glovo-purple transition-all">
               <Instagram className="h-5 w-5" />
             </a>
-            <a href="https://facebook.com" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-glovo-purple hover:to-glovo-orange transition-all">
+            <a href="https://facebook.com" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-glovo-purple transition-all">
               <span className="text-lg font-bold">f</span>
             </a>
           </div>

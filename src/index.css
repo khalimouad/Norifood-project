@@ -27,8 +27,8 @@ All colors MUST be HSL.
     --muted: 210 22% 96%;
     --muted-foreground: 218 12% 42%;
 
-    --accent: 180 78% 40%; /* Teal */
-    --accent-foreground: 0 0% 100%;
+    --accent: 210 92% 68%; /* Light blue */
+    --accent-foreground: 218 50% 16%;
 
     --destructive: 0 78% 55%;
     --destructive-foreground: 0 0% 100%;
@@ -39,12 +39,12 @@ All colors MUST be HSL.
 
     --radius: 1rem;
 
-    /* Brand tokens (kept under `--glovo-*` names — now blue family) */
-    --glovo-purple: 215 92% 50%;       /* Vibrant blue — primary */
+    /* Brand tokens — single vibrant blue + light-blue tint (no teal) */
+    --glovo-purple: 215 92% 50%;       /* Vibrant blue — sole brand */
     --glovo-purple-light: 215 90% 62%;
-    --glovo-orange: 180 78% 40%;       /* Teal — secondary accent */
-    --glovo-orange-light: 180 70% 55%;
-    --glovo-green: 218 75% 32%;        /* Classic blue — depth */
+    --glovo-orange: 210 92% 68%;       /* Light blue — subtle accent */
+    --glovo-orange-light: 205 95% 80%;
+    --glovo-green: 218 75% 32%;        /* Classic blue — depth / dark text */
     --glovo-green-light: 218 65% 45%;
     --glovo-pink: 0 78% 55%;           /* Sale red */
     --wave: 210 40% 97%;
@@ -115,8 +115,8 @@ All colors MUST be HSL.
     --muted: 220 25% 16%;
     --muted-foreground: 210 12% 70%;
 
-    --accent: 180 80% 55%;
-    --accent-foreground: 220 35% 8%;
+    --accent: 210 95% 72%;
+    --accent-foreground: 220 50% 10%;
 
     --destructive: 0 70% 62%;
     --destructive-foreground: 0 0% 100%;
@@ -125,11 +125,11 @@ All colors MUST be HSL.
     --input: 220 25% 20%;
     --ring: 215 95% 62%;
 
-    /* Dark mode brand tokens */
+    /* Dark mode brand tokens — single vibrant blue + light blue */
     --glovo-purple: 215 95% 62%;       /* Bright vibrant blue */
     --glovo-purple-light: 215 95% 72%;
-    --glovo-orange: 180 80% 55%;       /* Bright teal */
-    --glovo-orange-light: 180 75% 68%;
+    --glovo-orange: 210 95% 72%;       /* Soft light blue */
+    --glovo-orange-light: 205 95% 82%;
     --glovo-green: 218 80% 55%;        /* Bright classic blue */
     --glovo-green-light: 218 75% 68%;
     --glovo-pink: 0 80% 65%;

@@ -39,7 +39,7 @@ export const BottomNavigation = () => {
         {/* Floating Mobile App Style Nav */}
         <div className="mx-3 mb-3 bg-white dark:bg-card rounded-3xl shadow-2xl shadow-glovo-purple/15 border border-glovo-purple/10 dark:border-white/5 overflow-hidden backdrop-blur-xl">
           {/* Gradient top line */}
-          <div className="h-1 bg-gradient-to-r from-glovo-purple to-glovo-orange"></div>
+          <div className="h-1 bg-glovo-purple"></div>
           
           <div className="flex items-center justify-around py-2 px-2">
             {navItems.map((item, index) => {
@@ -60,7 +60,7 @@ export const BottomNavigation = () => {
                   {/* Active Background */}
                   {isActive && (
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-glovo-purple to-glovo-green rounded-2xl shadow-md shadow-glovo-purple/30"
+                      className="absolute inset-0 bg-glovo-purple rounded-2xl shadow-md shadow-glovo-purple/30"
                       layoutId="activeTab"
                       transition={{ type: "spring", stiffness: 500, damping: 30 }}
                     />

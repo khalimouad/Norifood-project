@@ -206,7 +206,7 @@ const Products = () => {
               onClick={() => setSelectedCategory("all")}
               className={`category-pill flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 button-press focus-ring ${
                 selectedCategory === "all"
-                  ? "bg-gradient-to-r from-glovo-purple to-glovo-orange text-white shadow-lg shadow-glovo-purple/20"
+                  ? "bg-glovo-purple text-white shadow-lg shadow-glovo-purple/20"
                   : "glass-card text-foreground hover:bg-glovo-purple/10"
               }`}
             >
@@ -218,7 +218,7 @@ const Products = () => {
                 onClick={() => setSelectedCategory(category.id)}
                 className={`category-pill flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 button-press focus-ring ${
                   selectedCategory === category.id
-                    ? "bg-gradient-to-r from-glovo-purple to-glovo-orange text-white shadow-lg shadow-glovo-purple/20"
+                    ? "bg-glovo-purple text-white shadow-lg shadow-glovo-purple/20"
                     : "glass-card text-foreground hover:bg-glovo-purple/10"
                 }`}
               >
@@ -273,7 +273,7 @@ const Products = () => {
                         </Select>
                       </div>
                       <div className="flex gap-3 pt-4">
-                        <Button onClick={() => setFilterDrawerOpen(false)} className="flex-1 bg-gradient-to-r from-glovo-purple to-glovo-orange text-white rounded-xl button-press">Appliquer</Button>
+                        <Button onClick={() => setFilterDrawerOpen(false)} className="flex-1 bg-glovo-purple text-white rounded-xl button-press">Appliquer</Button>
                         {activeFilterCount > 0 && <Button variant="outline" onClick={clearFilters} className="flex-1 rounded-xl button-press">Effacer</Button>}
                       </div>
                     </div>
