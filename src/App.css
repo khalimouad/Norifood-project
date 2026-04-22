@@ -1,25 +1,25 @@
-/* Fresh N'Good — Fishmonger glass-morphism & gradient styles */
+/* Fresh N'Good — Glovo-style blue + teal */
 :root {
-  --glass-bg: rgba(255, 255, 255, 0.82);
-  --glass-border: rgba(15, 43, 95, 0.14);
-  --glass-shadow: 0 8px 32px 0 rgba(15, 43, 95, 0.10);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(26, 117, 240, 0.15);
+  --glass-shadow: 0 8px 32px 0 rgba(26, 117, 240, 0.10);
 
-  /* Navy → Ice blue → Coral (dawn over the fish market) */
-  --glovo-gradient: linear-gradient(135deg, #0F2B5B 0%, #15A4E9 50%, #EE6050 100%);
-  --glovo-gradient-alt: linear-gradient(135deg, #2B5AA8 0%, #F58876 100%);
-  --glovo-gradient-green: linear-gradient(135deg, #15A4E9 0%, #2B5AA8 100%);
-  --wave-gradient: linear-gradient(180deg, transparent 0%, rgba(15, 43, 95, 0.06) 50%, transparent 100%);
+  /* Vibrant blue → Teal (clean two-stop brand ribbon) */
+  --glovo-gradient: linear-gradient(135deg, #1A75F0 0%, #16C2C2 100%);
+  --glovo-gradient-alt: linear-gradient(135deg, #1A4488 0%, #1A75F0 100%);
+  --glovo-gradient-green: linear-gradient(135deg, #16C2C2 0%, #1A75F0 100%);
+  --wave-gradient: linear-gradient(180deg, transparent 0%, rgba(26, 117, 240, 0.06) 50%, transparent 100%);
 }
 
 .dark {
-  --glass-bg: rgba(8, 20, 40, 0.78);
-  --glass-border: rgba(77, 158, 240, 0.22);
+  --glass-bg: rgba(10, 18, 36, 0.80);
+  --glass-border: rgba(91, 156, 247, 0.22);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55);
 
-  --glovo-gradient: linear-gradient(135deg, #4D9EF0 0%, #42BEF5 50%, #F28675 100%);
-  --glovo-gradient-alt: linear-gradient(135deg, #74B4F5 0%, #F7A192 100%);
-  --glovo-gradient-green: linear-gradient(135deg, #42BEF5 0%, #4D9EF0 100%);
-  --wave-gradient: linear-gradient(180deg, transparent 0%, rgba(77, 158, 240, 0.12) 50%, transparent 100%);
+  --glovo-gradient: linear-gradient(135deg, #5B9CF7 0%, #3DD8D8 100%);
+  --glovo-gradient-alt: linear-gradient(135deg, #3866AC 0%, #5B9CF7 100%);
+  --glovo-gradient-green: linear-gradient(135deg, #3DD8D8 0%, #5B9CF7 100%);
+  --wave-gradient: linear-gradient(180deg, transparent 0%, rgba(91, 156, 247, 0.12) 50%, transparent 100%);
 }
 
 /* Glass-morphism Effect */
@@ -210,12 +210,12 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(15, 43, 95, 0.30);
+  background: rgba(26, 117, 240, 0.30);
   border-radius: 3px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(15, 43, 95, 0.55);
+  background: rgba(26, 117, 240, 0.55);
 }
 
 /* Pulse animation for notifications */
@@ -299,7 +299,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(15, 43, 95, 0.10) 0%, rgba(238, 96, 80, 0.10) 100%);
+  background: linear-gradient(135deg, rgba(26, 117, 240, 0.10) 0%, rgba(22, 194, 194, 0.10) 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -311,7 +311,7 @@
 
 .glovo-card:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 16px 40px rgba(15, 43, 95, 0.20);
+  box-shadow: 0 16px 40px rgba(26, 117, 240, 0.18);
 }
 
 /* Glovo-style category pill */
@@ -366,9 +366,9 @@
 .glovo-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(15, 43, 95, 0.06) 0%,
-    rgba(21, 164, 233, 0.16) 50%,
-    rgba(15, 43, 95, 0.06) 100%
+    rgba(26, 117, 240, 0.06) 0%,
+    rgba(22, 194, 194, 0.16) 50%,
+    rgba(26, 117, 240, 0.06) 100%
   );
   background-size: 200% 100%;
   animation: glovo-shimmer 2s infinite;
@@ -413,15 +413,15 @@
 
 /* Glow effect for primary elements */
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(15, 43, 95, 0.55); }
-  50% { box-shadow: 0 0 20px rgba(21, 164, 233, 0.85); }
+  0%, 100% { box-shadow: 0 0 5px rgba(26, 117, 240, 0.55); }
+  50% { box-shadow: 0 0 20px rgba(22, 194, 194, 0.85); }
 }
 
 .glovo-glow {
   animation: glow 2s ease-in-out infinite;
 }
 
-/* Ice-water bubble animation */
+/* Bubble animation */
 @keyframes bubbleFloat {
   0% { transform: translateY(0) scale(1); opacity: 0.35; }
   50% { transform: translateY(-20px) scale(1.05); opacity: 0.55; }
@@ -431,17 +431,17 @@
 .bubble {
   position: absolute;
   border-radius: 9999px;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(21,164,233,0.35) 60%, rgba(15,43,95,0.15));
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(22,194,194,0.35) 60%, rgba(26,117,240,0.15));
   backdrop-filter: blur(2px);
   animation: bubbleFloat 8s ease-in-out infinite;
   pointer-events: none;
 }
 
 .dark .bubble {
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.22), rgba(77,158,240,0.3) 60%, rgba(8,20,40,0.2));
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.22), rgba(91,156,247,0.3) 60%, rgba(10,18,36,0.2));
 }
 
-/* Subtle animated wave divider — navy + ice blue */
+/* Subtle animated wave divider — vibrant blue + teal */
 .wave-divider {
   position: absolute;
   left: 0;
@@ -449,5 +449,5 @@
   height: 60px;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'><path fill='%230F2B5B' fill-opacity='0.06' d='M0,32 C240,80 480,0 720,32 C960,64 1200,16 1440,40 L1440,80 L0,80 Z'/><path fill='%2315A4E9' fill-opacity='0.06' d='M0,48 C240,16 480,64 720,40 C960,16 1200,64 1440,32 L1440,80 L0,80 Z'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'><path fill='%231A75F0' fill-opacity='0.06' d='M0,32 C240,80 480,0 720,32 C960,64 1200,16 1440,40 L1440,80 L0,80 Z'/><path fill='%2316C2C2' fill-opacity='0.06' d='M0,48 C240,16 480,64 720,40 C960,16 1200,64 1440,32 L1440,80 L0,80 Z'/></svg>");
 }

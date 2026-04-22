@@ -39,7 +39,7 @@ export const BottomNavigation = () => {
         {/* Floating Mobile App Style Nav */}
         <div className="mx-3 mb-3 bg-white dark:bg-card rounded-3xl shadow-2xl shadow-glovo-purple/15 border border-glovo-purple/10 dark:border-white/5 overflow-hidden backdrop-blur-xl">
           {/* Gradient top line */}
-          <div className="h-1 bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange"></div>
+          <div className="h-1 bg-gradient-to-r from-glovo-purple to-glovo-orange"></div>
           
           <div className="flex items-center justify-around py-2 px-2">
             {navItems.map((item, index) => {

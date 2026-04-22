@@ -114,7 +114,7 @@ export const Header = () => {
             <div className="flex items-center gap-2.5 flex-1">
               <Link
                 to="/"
-                className="relative w-11 h-11 bg-gradient-to-br from-glovo-purple via-glovo-green to-glovo-orange rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-glovo-purple/30 hover:scale-105 transition-transform focus-ring"
+                className="relative w-11 h-11 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-glovo-purple/30 hover:scale-105 transition-transform focus-ring"
                 aria-label="Fresh N'Good accueil"
               >
                 <Fish className="h-5 w-5 text-white drop-shadow-sm" strokeWidth={2.5} />
@@ -122,7 +122,7 @@ export const Header = () => {
               </Link>
 
               <div className="hidden sm:flex flex-col leading-none">
-                <Link to="/" className="font-extrabold text-lg bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange bg-clip-text text-transparent tracking-tight">
+                <Link to="/" className="font-extrabold text-lg bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent tracking-tight">
                   Fresh N'Good
                 </Link>
                 <span className="text-[10px] text-muted-foreground font-medium tracking-wider uppercase mt-0.5">
@@ -172,7 +172,7 @@ export const Header = () => {
               {/* Cart */}
               <motion.button
                 onClick={() => navigate('/cart')}
-                className="relative w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-glovo-purple via-glovo-green to-glovo-orange text-white shadow-lg shadow-glovo-purple/25 hover:shadow-xl hover:shadow-glovo-purple/35 transition-shadow"
+                className="relative w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-glovo-purple to-glovo-orange text-white shadow-lg shadow-glovo-purple/25 hover:shadow-xl hover:shadow-glovo-purple/35 transition-shadow"
                 whileTap={{ scale: 0.95 }}
               >
                 <ShoppingCart className="h-4 w-4" />

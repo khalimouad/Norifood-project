@@ -109,7 +109,7 @@ export const Hero = () => {
                 Produits de la Mer
               </motion.span>
               <motion.span
-                className="block mt-2 text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange bg-clip-text text-transparent"
+                className="block mt-2 text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -123,7 +123,7 @@ export const Hero = () => {
               <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight mb-2">
                 Produits de la Mer
               </h1>
-              <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange bg-clip-text text-transparent">
+              <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">
                 Frais Quotidiennement
               </p>
             </div>
@@ -154,7 +154,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <Button
-                className="bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange hover:brightness-110 text-white px-7 md:px-9 py-2.5 md:py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover:shadow-xl hover:shadow-glovo-purple/35 transition-all duration-300 hover-lift focus-ring"
+                className="bg-gradient-to-r from-glovo-purple to-glovo-orange hover:brightness-110 text-white px-7 md:px-9 py-2.5 md:py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover:shadow-xl hover:shadow-glovo-purple/35 transition-all duration-300 hover-lift focus-ring"
                 onClick={() => window.location.href = '/products'}
               >
                 Commander Maintenant
@@ -176,7 +176,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <Button
-                className="flex-1 bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange text-white py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover-lift focus-ring text-sm"
+                className="flex-1 bg-gradient-to-r from-glovo-purple to-glovo-orange text-white py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover-lift focus-ring text-sm"
                 onClick={() => window.location.href = '/products'}
               >
                 Commander

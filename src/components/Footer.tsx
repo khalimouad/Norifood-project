@@ -13,7 +13,7 @@ export const Footer = () => {
   return (
     <footer className="bg-gradient-to-br from-[hsl(var(--footer-dark))] via-[hsl(var(--deep-purple))] to-[hsl(var(--footer-dark))] text-white">
       {/* Trust strip with brand gradient */}
-      <div className="relative bg-gradient-to-r from-glovo-purple via-glovo-green to-glovo-orange p-4 overflow-hidden">
+      <div className="relative bg-gradient-to-r from-glovo-purple to-glovo-orange p-4 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.18),transparent_60%)] pointer-events-none"></div>
         <div className="relative grid grid-cols-4 gap-2">
           {trustItems.map(({ icon: Icon, label }) => (
@@ -130,7 +130,7 @@ export const Footer = () => {
         {/* Social & Copyright */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-white/10">
           <div className="flex items-center gap-3 mb-4 md:mb-0">
-            <div className="w-9 h-9 bg-gradient-to-br from-glovo-purple via-glovo-green to-glovo-orange rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-9 h-9 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-xl flex items-center justify-center shadow-lg">
               <Fish className="h-4 w-4 text-white" strokeWidth={2.5} />
             </div>
             <div>
