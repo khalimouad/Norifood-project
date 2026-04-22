@@ -62,7 +62,7 @@ const ProductCard = ({
       <CardContent className="p-0">
         <div className="relative overflow-hidden">
           <Link to={`/product/${id}`}>
-            <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30">
+            <div className="relative aspect-[4/3] overflow-hidden bg-muted/40">
               <img
                 src={image || placeholderImage}
                 alt={name}

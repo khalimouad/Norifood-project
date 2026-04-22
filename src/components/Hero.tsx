@@ -146,7 +146,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <Button
-                className="bg-glovo-purple hover:brightness-110 text-white px-7 md:px-9 py-2.5 md:py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover:shadow-xl hover:shadow-glovo-purple/35 transition-all duration-300 hover-lift focus-ring"
+                className="bg-glovo-purple hover:bg-glovo-purple/90 text-white px-7 md:px-9 py-2.5 md:py-3 rounded-full font-semibold shadow-lg shadow-glovo-purple/25 hover:shadow-xl hover:shadow-glovo-purple/35 transition-all duration-300 hover-lift focus-ring"
                 onClick={() => window.location.href = '/products'}
               >
                 Commander Maintenant
