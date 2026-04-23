@@ -62,26 +62,26 @@ const ProductCard = ({
       <CardContent className="p-0">
         <div className="relative overflow-hidden">
           <Link to={`/product/${id}`}>
-            <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30">
+            <div className="relative aspect-[4/3] overflow-hidden bg-muted/40">
               <img
                 src={image || placeholderImage}
                 alt={name}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              {/* Glovo-style gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-glovo-purple/80 via-glovo-purple/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              {/* Flat blue overlay on hover */}
+              <div className="absolute inset-0 bg-glovo-purple/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
           </Link>
 
-          {/* Glovo-style badges */}
+          {/* Badges */}
           <div className="absolute top-2 left-2 flex flex-col gap-1.5">
             {discount && (
-              <Badge className="bg-gradient-to-r from-glovo-orange to-glovo-pink text-white shadow-md hover-lift font-bold text-xs px-2.5 py-1">
+              <Badge className="bg-glovo-pink text-white shadow-lg shadow-glovo-orange/30 font-bold text-xs px-2.5 py-1 ring-1 ring-white/40">
                 -{discount}%
               </Badge>
             )}
             {featured && (
-              <Badge className="bg-gradient-to-r from-glovo-purple to-glovo-orange text-white shadow-md hover-lift font-bold text-xs px-2.5 py-1">
+              <Badge className="bg-glovo-purple text-white shadow-lg shadow-glovo-purple/30 font-bold text-xs px-2.5 py-1 ring-1 ring-white/40">
                 <Star className="h-3 w-3 mr-1 fill-current" />
                 Top
               </Badge>
@@ -100,7 +100,7 @@ const ProductCard = ({
           <div className="absolute bottom-3 right-3 translate-y-16 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10">
             <Button
               size="icon"
-              className="h-11 w-11 rounded-full bg-gradient-to-br from-glovo-purple to-glovo-orange text-white shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 button-press"
+              className="h-11 w-11 rounded-full bg-glovo-purple text-white shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 button-press"
               onClick={handleAddToCart}
               disabled={!inStock}
             >
@@ -124,10 +124,10 @@ const ProductCard = ({
                 </span>
               )}
               <div className="flex items-baseline gap-0.5">
-                <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">
+                <span className="text-lg md:text-xl font-extrabold text-glovo-purple">
                   {discountedPrice.toFixed(2)}
                 </span>
-                <span className="text-xs text-muted-foreground font-medium">DH</span>
+                <span className="text-xs text-muted-foreground font-semibold">DH</span>
               </div>
             </div>
             <span className="text-xs text-muted-foreground">/ {unitType}</span>
@@ -163,7 +163,7 @@ const ProductCard = ({
               disabled={!inStock}
               size="sm"
               variant="cart"
-              className="flex-1 h-9 md:h-10 text-xs md:text-sm font-medium px-3 bg-gradient-to-r from-glovo-purple to-glovo-orange hover:from-glovo-purple/90 hover:to-glovo-orange/90 text-white shadow-md hover:shadow-lg transition-all duration-300 button-press focus-ring rounded-xl"
+              className="flex-1 h-9 md:h-10 text-xs md:text-sm font-medium px-3 bg-glovo-purple text-white shadow-md hover:shadow-lg transition-all duration-300 button-press focus-ring rounded-xl"
             >
               <ShoppingCart className="h-3 w-3 md:h-4 md:w-4 mr-1" />
               <span className="hidden sm:inline">Ajouter</span>

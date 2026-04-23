@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Truck, Package, RefreshCw, Clock, MapPin, Phone, Mail, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 export default function Shipping() {
-  return <div className="min-h-screen bg-gradient-to-br from-pearl to-white py-12">
+  return <div className="min-h-screen bg-background py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="mb-6">
@@ -28,7 +28,7 @@ export default function Shipping() {
 
           <div className="grid gap-6">
             <Card className="shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-ocean to-ocean/90 text-white rounded-t-lg">
+              <CardHeader className="bg-ocean text-white rounded-t-lg">
                 <CardTitle className="flex items-center">
                   <Truck className="h-6 w-6 mr-2" />
                   Conditions de Livraison
@@ -51,7 +51,7 @@ export default function Shipping() {
 
                   <div>
                     <h3 className="font-semibold text-ocean mb-3">Frais de livraison</h3>
-                    <div className="bg-gradient-to-r from-seafoam/10 to-ocean/10 p-4 rounded-lg">
+                    <div className="bg-ocean/10 p-4 rounded-lg">
                       <ul className="space-y-2">
                         <li className="flex items-center">
                           <Package className="h-5 w-5 text-seafoam mr-2" />
@@ -118,7 +118,7 @@ export default function Shipping() {
             </Card>
 
             <Card className="shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-seafoam to-seafoam/90 text-white rounded-t-lg">
+              <CardHeader className="bg-seafoam text-white rounded-t-lg">
                 <CardTitle className="flex items-center">
                   <RefreshCw className="h-6 w-6 mr-2" />
                   Politique de Retour
@@ -192,7 +192,7 @@ export default function Shipping() {
             </Card>
 
             <Card className="shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-ocean to-ocean/90 text-white rounded-t-lg">
+              <CardHeader className="bg-ocean text-white rounded-t-lg">
                 <CardTitle>Service Client</CardTitle>
               </CardHeader>
               <CardContent className="p-6">

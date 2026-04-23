@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 export default function Terms() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pearl to-white py-12">
+    <div className="min-h-screen bg-background py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="mb-6">
@@ -29,7 +29,7 @@ export default function Terms() {
           </div>
 
           <Card className="shadow-lg">
-            <CardHeader className="bg-gradient-to-r from-ocean to-ocean/90 text-white rounded-t-lg">
+            <CardHeader className="bg-ocean text-white rounded-t-lg">
               <CardTitle className="flex items-center">
                 <FileText className="h-6 w-6 mr-2" />
                 Conditions d'Utilisation du Site Web

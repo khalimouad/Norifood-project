@@ -1,4 +1,4 @@
-import { Home, Search, ShoppingBag, User, Utensils } from 'lucide-react';
+import { Home, Fish, ShoppingBag, User, UtensilsCrossed } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
 import { useState } from 'react';
@@ -13,9 +13,9 @@ export const BottomNavigation = () => {
 
   const navItems = [
     { icon: Home, label: 'Accueil', path: '/', action: 'navigate' },
-    { icon: Search, label: 'Explorer', path: '/products', action: 'navigate' },
+    { icon: Fish, label: 'Produits', path: '/products', action: 'navigate' },
     { icon: ShoppingBag, label: 'Panier', path: '/cart', badge: getTotalItems(), action: 'navigate' },
-    { icon: Utensils, label: 'Recettes', path: '/recipes', action: 'navigate' },
+    { icon: UtensilsCrossed, label: 'Recettes', path: '/recipes', action: 'navigate' },
     { icon: User, label: 'Compte', path: '/auth', action: 'navigate' },
   ];
 
@@ -37,9 +37,9 @@ export const BottomNavigation = () => {
         transition={{ duration: 0.3, delay: 0.2 }}
       >
         {/* Floating Mobile App Style Nav */}
-        <div className="mx-3 mb-3 bg-white dark:bg-gray-900 rounded-3xl shadow-2xl shadow-black/10 border border-gray-200/50 dark:border-gray-800/50 overflow-hidden">
+        <div className="mx-3 mb-3 bg-white dark:bg-card rounded-3xl shadow-2xl shadow-glovo-purple/15 border border-glovo-purple/10 dark:border-white/5 overflow-hidden backdrop-blur-xl">
           {/* Gradient top line */}
-          <div className="h-1 bg-gradient-to-r from-glovo-purple via-glovo-orange to-glovo-green"></div>
+          <div className="h-1 bg-glovo-purple"></div>
           
           <div className="flex items-center justify-around py-2 px-2">
             {navItems.map((item, index) => {
@@ -60,7 +60,7 @@ export const BottomNavigation = () => {
                   {/* Active Background */}
                   {isActive && (
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-2xl"
+                      className="absolute inset-0 bg-glovo-purple rounded-2xl shadow-md shadow-glovo-purple/30"
                       layoutId="activeTab"
                       transition={{ type: "spring", stiffness: 500, damping: 30 }}
                     />

@@ -114,7 +114,7 @@ const Recipes = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 relative overflow-hidden">
+    <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Elegant Background Pattern */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.02] dark:opacity-[0.01]">
         <div className="absolute top-0 left-0 w-full h-full" style={{
@@ -127,7 +127,7 @@ const Recipes = () => {
       <Header />
       <main className="pb-20 md:pb-0 relative z-10">
         {/* Elegant Hero Section */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/70 text-primary-foreground">
+        <div className="relative overflow-hidden bg-primary text-primary-foreground">
           {/* Animated Background Elements */}
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float"></div>
@@ -154,7 +154,7 @@ const Recipes = () => {
               {/* Elegant Search Bar */}
               <div className="max-w-2xl mx-auto pt-4 animate-slide-in" style={{ animationDelay: '200ms' }}>
                 <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-secondary to-accent rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                  <div className="absolute inset-0 bg-primary rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
                   <div className="relative bg-card/95 backdrop-blur-xl rounded-full shadow-2xl border border-white/20">
                     <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                     <Input
@@ -193,13 +193,13 @@ const Recipes = () => {
                     onClick={() => setSelectedCategory(category)}
                     className={`group relative px-6 py-4 rounded-2xl transition-all duration-300 ${
                       isSelected
-                        ? 'bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-xl scale-105'
+                        ? 'bg-primary text-primary-foreground shadow-xl scale-105'
                         : 'bg-card hover:bg-muted border border-border hover:border-primary/50 text-foreground hover:scale-105'
                     }`}
                   >
                     {/* 3D Glow Effect */}
                     {isSelected && (
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-2xl blur-xl opacity-50 -z-10 animate-pulse"></div>
+                      <div className="absolute inset-0 bg-primary rounded-2xl blur-xl opacity-50 -z-10 animate-pulse"></div>
                     )}
                     
                     <div className="flex items-center gap-3">
@@ -224,7 +224,7 @@ const Recipes = () => {
           {selectedCategory === 'Tous' && featuredRecipes.length > 0 && (
             <div className="mb-16 animate-fade-in" style={{ animationDelay: '400ms' }}>
               <div className="text-center mb-10">
-                <Badge className="mb-4 px-4 py-2 bg-gradient-to-r from-secondary to-accent text-white text-sm font-semibold">
+                <Badge className="mb-4 px-4 py-2 bg-primary text-white text-sm font-semibold">
                   ⭐ Sélection du Chef
                 </Badge>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -242,7 +242,7 @@ const Recipes = () => {
                   >
                     <div className="relative h-full">
                       {/* 3D Card Effect */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 transform group-hover:scale-110"></div>
+                      <div className="absolute inset-0 bg-primary/15 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 transform group-hover:scale-110"></div>
                       
                       <Card className="h-full overflow-hidden border-2 border-border bg-card hover:border-primary/50 transition-all duration-500 rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2">
                         <div className="relative h-72 md:h-80 overflow-hidden">
@@ -256,7 +256,7 @@ const Recipes = () => {
                           
                           {/* Floating Badge */}
                           <div className="absolute top-4 left-4">
-                            <Badge className="bg-gradient-to-r from-secondary to-accent text-white shadow-2xl backdrop-blur-sm px-4 py-2 text-sm font-bold">
+                            <Badge className="bg-primary text-white shadow-2xl backdrop-blur-sm px-4 py-2 text-sm font-bold">
                               ⭐ Vedette
                             </Badge>
                           </div>
@@ -293,7 +293,7 @@ const Recipes = () => {
                             <Badge variant="outline" className={`${getDifficultyColor(recipe.difficulty)} font-semibold`}>
                               {getDifficultyLabel(recipe.difficulty)}
                             </Badge>
-                            <Button className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground shadow-lg group-hover:shadow-xl transition-all">
+                            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg group-hover:shadow-xl transition-all">
                               Voir la recette →
                             </Button>
                           </div>
@@ -322,7 +322,7 @@ const Recipes = () => {
                 >
                   <div className="relative h-full">
                     {/* 3D Hover Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                    <div className="absolute inset-0 bg-primary/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
                     
                     <Card className="h-full overflow-hidden border border-border bg-card hover:border-primary/30 transition-all duration-300 rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 cursor-pointer">
                       <div className="relative h-48 overflow-hidden">
@@ -334,7 +334,7 @@ const Recipes = () => {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         
                         {recipe.featured_image && (
-                          <Badge className="absolute top-3 left-3 bg-gradient-to-r from-secondary to-accent text-white text-xs shadow-lg">
+                          <Badge className="absolute top-3 left-3 bg-primary text-white text-xs shadow-lg">
                             ⭐
                           </Badge>
                         )}
@@ -372,7 +372,7 @@ const Recipes = () => {
                         
                         <Button 
                           size="sm" 
-                          className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground shadow-md group-hover:shadow-lg transition-all"
+                          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-md group-hover:shadow-lg transition-all"
                         >
                           Voir →
                         </Button>

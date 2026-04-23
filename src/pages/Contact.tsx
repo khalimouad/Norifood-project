@@ -58,7 +58,7 @@ export default function Contact() {
       
       <main className="pb-20 md:pb-0">
         {/* Hero Section */}
-        <div className="bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-8 md:py-12 lg:py-16">
+        <div className="bg-primary/5 py-8 md:py-12 lg:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
               <div className="inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary/10 mb-4 md:mb-6">
