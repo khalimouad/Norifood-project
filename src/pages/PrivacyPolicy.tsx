@@ -22,7 +22,7 @@ export default function PrivacyPolicy() {
               <h1 className="text-4xl font-bold text-ocean">Politique de Confidentialité</h1>
             </div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Fresh N'Good s'engage à protéger votre vie privée et vos données personnelles
+              Norifood s'engage à protéger votre vie privée et vos données personnelles
             </p>
           </div>
 
@@ -40,7 +40,7 @@ export default function PrivacyPolicy() {
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">1. Collecte des informations</h3>
                     <p className="text-justify mb-4">
-                      Fresh N'Good SARL collecte des informations personnelles lorsque vous visitez notre site web, passez une commande, vous inscrivez à notre newsletter ou contactez notre service client. Ces informations peuvent inclure votre nom, votre adresse email, votre adresse postale, votre numéro de téléphone et vos préférences d'achat.
+                      Norifood SARL collecte des informations personnelles lorsque vous visitez notre site web, passez une commande, vous inscrivez à notre newsletter ou contactez notre service client. Ces informations peuvent inclure votre nom, votre adresse email, votre adresse postale, votre numéro de téléphone et vos préférences d'achat.
                     </p>
                   </section>
 
@@ -60,7 +60,7 @@ export default function PrivacyPolicy() {
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">3. Partage des informations</h3>
                     <p className="text-justify mb-4">
-                      Fresh N'Good ne vend, n'échange ni ne loue vos informations personnelles à des tiers. Nous pouvons partager vos informations avec nos partenaires de confiance uniquement dans le but de vous fournir nos services (transporteurs, services de paiement, etc.). Ces partenaires sont tenus de maintenir la confidentialité de vos informations.
+                      Norifood ne vend, n'échange ni ne loue vos informations personnelles à des tiers. Nous pouvons partager vos informations avec nos partenaires de confiance uniquement dans le but de vous fournir nos services (transporteurs, services de paiement, etc.). Ces partenaires sont tenus de maintenir la confidentialité de vos informations.
                     </p>
                   </section>
 
@@ -96,7 +96,7 @@ export default function PrivacyPolicy() {
                       <li>Droit de portabilité de vos données</li>
                     </ul>
                     <p className="text-justify">
-                      Pour exercer ces droits, contactez-nous à l'adresse contact@freshngood.ma ou par courrier à notre adresse postale.
+                      Pour exercer ces droits, contactez-nous à l'adresse contact@norifood.ma ou par courrier à notre adresse postale.
                     </p>
                   </section>
 
@@ -110,7 +110,7 @@ export default function PrivacyPolicy() {
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">9. Modifications de la politique</h3>
                     <p className="text-justify mb-4">
-                      Fresh N'Good se réserve le droit de modifier cette politique de confidentialité à tout moment. Les modifications seront publiées sur cette page avec la date de mise à jour. Nous vous encourageons à consulter régulièrement cette politique pour rester informé de la façon dont nous protégeons vos informations.
+                      Norifood se réserve le droit de modifier cette politique de confidentialité à tout moment. Les modifications seront publiées sur cette page avec la date de mise à jour. Nous vous encourageons à consulter régulièrement cette politique pour rester informé de la façon dont nous protégeons vos informations.
                     </p>
                   </section>
 
@@ -120,8 +120,8 @@ export default function PrivacyPolicy() {
                       Pour toute question concernant cette politique de confidentialité ou le traitement de vos données personnelles, vous pouvez nous contacter à :
                     </p>
                     <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="font-semibold">Fresh N'Good SARL</p>
-                      <p>Email : contact@freshngood.ma</p>
+                      <p className="font-semibold">Norifood SARL</p>
+                      <p>Email : contact@norifood.ma</p>
                       <p>Téléphone : 0608 611 511</p>
                       <p>Adresse : Imm. Assala - 50 Gueliz, Bd Mohamed VI, Marrakesh 40000</p>
                     </div>

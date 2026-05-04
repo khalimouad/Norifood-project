@@ -179,7 +179,7 @@ export default function Shipping() {
                         En cas d'exercice du droit de rétractation, vous avez le choix entre :
                       </p>
                       <ul className="space-y-1 text-gray-700">
-                        <li>• Un remboursement via un avoir utilisable sur le site freshngood.ma</li>
+                        <li>• Un remboursement via un avoir utilisable sur le site norifood.ma</li>
                         <li>• Un échange du produit (réexpédition aux frais du consommateur)</li>
                       </ul>
                       <p className="text-sm text-gray-600 mt-3">
@@ -213,7 +213,7 @@ export default function Shipping() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-ocean">Email</h4>
-                      <p className="text-gray-600">support@freshngood.ma</p>
+                      <p className="text-gray-600">support@norifood.ma</p>
                       <p className="text-sm text-gray-500">Réponse sous 24h</p>
                     </div>
                   </div>

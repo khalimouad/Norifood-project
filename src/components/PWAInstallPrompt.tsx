@@ -36,7 +36,7 @@ export const PWAInstallPrompt = () => {
       setShowInstallPrompt(false);
       toast({
         title: "App installed!",
-        description: "Fresh N'Good has been installed on your device.",
+        description: "Norifood has been installed on your device.",
       });
     };
 
@@ -114,7 +114,7 @@ export const PWAInstallPrompt = () => {
             <Smartphone className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h3 className="font-semibold text-sm">Installer Fresh N'Good</h3>
+            <h3 className="font-semibold text-sm">Installer Norifood</h3>
             <p className="text-xs text-gray-600 dark:text-gray-400">
               {deferredPrompt ? "Accès rapide depuis votre écran d'accueil" : "Utilisez le menu de votre navigateur pour installer"}
             </p>

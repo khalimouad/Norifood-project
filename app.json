@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Fresh N'Good",
-    "slug": "freshngood",
+    "name": "Norifood",
+    "slug": "norifood",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./favicon.png",
@@ -15,14 +15,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "ma.freshngood.app"
+      "bundleIdentifier": "ma.norifood.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./favicon.png",
         "backgroundColor": "#8B5CF6"
       },
-      "package": "ma.freshngood.app",
+      "package": "ma.norifood.app",
       "versionCode": 1,
       "permissions": [
         "INTERNET",
@@ -38,7 +38,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "freshngood"
+        "projectId": "norifood"
       }
     }
   }

@@ -1,4 +1,4 @@
-package app.lovable.freshngood;
+package app.pixein.norifood;
 
 import com.getcapacitor.BridgeActivity;
 

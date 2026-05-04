@@ -194,28 +194,30 @@ const ProductDetail = () => {
                 onSelectVariation={setSelectedVariation}
               />
 
-              {/* Quantity Selector */}
-              <div className="space-y-4">
+              {/* Quantity + CTA */}
+              <div className="space-y-4 pt-2">
                 <div className="flex items-center gap-4">
-                  <span className="font-medium text-foreground">Quantité:</span>
-                  <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                    Quantité
+                  </span>
+                  <div className="inline-flex items-center bg-secondary border border-border rounded-md h-11">
                     <Button
-                      variant="outline"
-                      size="sm"
+                      variant="ghost"
                       onClick={() => updateQuantity(quantity - 1)}
                       disabled={quantity <= 1}
-                      className="h-10 w-10 p-0"
+                      className="h-11 w-11 p-0 rounded-none hover:bg-primary/10 hover:text-primary"
+                      aria-label="Diminuer"
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    <span className="min-w-[3rem] text-center font-medium text-lg text-foreground">
+                    <span className="min-w-[3rem] text-center font-bold text-lg tabular-nums">
                       {quantity}
                     </span>
                     <Button
-                      variant="outline"
-                      size="sm"
+                      variant="ghost"
                       onClick={() => updateQuantity(quantity + 1)}
-                      className="h-10 w-10 p-0"
+                      className="h-11 w-11 p-0 rounded-none hover:bg-primary/10 hover:text-primary"
+                      aria-label="Augmenter"
                     >
                       <Plus className="h-4 w-4" />
                     </Button>
@@ -225,15 +227,16 @@ const ProductDetail = () => {
                 <Button
                   onClick={handleAddToCart}
                   disabled={
-                    selectedVariation 
+                    selectedVariation
                       ? !selectedVariation.stock_quantity || selectedVariation.stock_quantity <= 0
                       : !product.stock_quantity || product.stock_quantity <= 0
                   }
-                  className="w-full"
                   size="lg"
-                  variant="cart"
+                  className="w-full h-14 rounded-md bg-primary text-primary-foreground hover:bg-nori-light font-bold uppercase tracking-wider text-sm shadow-[0_8px_24px_-6px_hsl(var(--nori-red)/0.5)]"
                 >
-                  Ajouter au Panier - {((selectedVariation ? selectedVariation.price : product.base_price) * quantity).toFixed(2)} DH
+                  Ajouter au panier ·{' '}
+                  {((selectedVariation ? selectedVariation.price : product.base_price) * quantity).toFixed(2)}{' '}
+                  €
                 </Button>
               </div>
 
@@ -245,8 +248,8 @@ const ProductDetail = () => {
           {/* Product Details */}
           <div className="mt-16">
             <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="font-bold text-lg mb-4">Détails du Produit</h3>
+              <div className="rounded-xl border border-border bg-card p-6">
+                <h3 className="nori-section-title text-primary mb-4">Détails du produit</h3>
                 <div className="space-y-3 text-sm">
                   {product.product_type && (
                     <div className="flex justify-between">
@@ -274,8 +277,8 @@ const ProductDetail = () => {
                   )}
                 </div>
               </div>
-              <div>
-                <h3 className="font-bold text-lg mb-4">Conseils de Préparation</h3>
+              <div className="rounded-xl border border-border bg-card p-6">
+                <h3 className="nori-section-title text-primary mb-4">Conseils de préparation</h3>
                 {product.preparation_tips ? (
                   <div className="text-sm text-muted-foreground whitespace-pre-line">
                     {product.preparation_tips}

@@ -24,7 +24,7 @@ export default function Terms() {
               <h1 className="text-4xl font-bold text-ocean">Conditions d'Utilisation</h1>
             </div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Conditions régissant l'utilisation du site web freshngood.ma
+              Conditions régissant l'utilisation du site web norifood.ma
             </p>
           </div>
 
@@ -42,14 +42,14 @@ export default function Terms() {
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">1. Objet</h3>
                     <p className="text-justify mb-4">
-                      Les présentes conditions d'utilisation régissent l'accès et l'utilisation du site web freshngood.ma (ci-après "le Site") exploité par Fresh N'Good SARL. L'utilisation du Site implique l'acceptation pleine et entière des présentes conditions.
+                      Les présentes conditions d'utilisation régissent l'accès et l'utilisation du site web norifood.ma (ci-après "le Site") exploité par Norifood SARL. L'utilisation du Site implique l'acceptation pleine et entière des présentes conditions.
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">2. Définitions</h3>
                     <ul className="list-disc pl-6 space-y-1 mb-4">
-                      <li><strong>Site</strong> : le site web freshngood.ma et toutes ses pages</li>
+                      <li><strong>Site</strong> : le site web norifood.ma et toutes ses pages</li>
                       <li><strong>Utilisateur</strong> : toute personne accédant au Site</li>
                       <li><strong>Services</strong> : l'ensemble des services proposés sur le Site</li>
                       <li><strong>Contenu</strong> : tous les éléments présents sur le Site (textes, images, vidéos, etc.)</li>
@@ -62,7 +62,7 @@ export default function Terms() {
                       L'accès au Site est gratuit pour tout utilisateur disposant d'un accès à Internet. Tous les frais supportés par l'utilisateur pour accéder au service (matériel informatique, logiciels, connexion Internet, etc.) sont à sa charge.
                     </p>
                     <p className="text-justify mb-4">
-                      L'utilisateur est seul responsable du bon fonctionnement de son équipement informatique et de son accès Internet. Fresh N'Good se réserve le droit de refuser l'accès au Site, unilatéralement et sans notification préalable, à tout utilisateur ne respectant pas les présentes conditions d'utilisation.
+                      L'utilisateur est seul responsable du bon fonctionnement de son équipement informatique et de son accès Internet. Norifood se réserve le droit de refuser l'accès au Site, unilatéralement et sans notification préalable, à tout utilisateur ne respectant pas les présentes conditions d'utilisation.
                     </p>
                   </section>
 
@@ -72,7 +72,7 @@ export default function Terms() {
                     <ul className="list-disc pl-6 space-y-1 mb-4">
                       <li>D'utiliser le Site à des fins illégales ou non autorisées</li>
                       <li>De porter atteinte à l'ordre public ou aux bonnes mœurs</li>
-                      <li>De violer les droits de propriété intellectuelle de Fresh N'Good ou de tiers</li>
+                      <li>De violer les droits de propriété intellectuelle de Norifood ou de tiers</li>
                       <li>De diffuser des contenus violents, diffamatoires ou contraires à la loi</li>
                       <li>De perturber le bon fonctionnement du Site</li>
                       <li>De tenter d'accéder de manière non autorisée au Site ou aux systèmes informatiques</li>
@@ -82,48 +82,48 @@ export default function Terms() {
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">5. Propriété intellectuelle</h3>
                     <p className="text-justify mb-4">
-                      Tous les éléments du Site (textes, images, vidéos, logos, etc.) sont protégés par le droit d'auteur, le droit des marques et/ou tout autre droit de propriété intellectuelle. Ces éléments sont la propriété exclusive de Fresh N'Good ou de ses partenaires.
+                      Tous les éléments du Site (textes, images, vidéos, logos, etc.) sont protégés par le droit d'auteur, le droit des marques et/ou tout autre droit de propriété intellectuelle. Ces éléments sont la propriété exclusive de Norifood ou de ses partenaires.
                     </p>
                     <p className="text-justify mb-4">
-                      Toute reproduction, distribution, modification ou utilisation des contenus du Site à des fins commerciales est strictement interdite sans autorisation préalable écrite de Fresh N'Good.
+                      Toute reproduction, distribution, modification ou utilisation des contenus du Site à des fins commerciales est strictement interdite sans autorisation préalable écrite de Norifood.
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">6. Données personnelles</h3>
                     <p className="text-justify mb-4">
-                      Fresh N'Good s'engage à respecter la vie privée de ses utilisateurs. Les modalités de traitement des données personnelles sont détaillées dans notre Politique de Confidentialité, accessible depuis le Site.
+                      Norifood s'engage à respecter la vie privée de ses utilisateurs. Les modalités de traitement des données personnelles sont détaillées dans notre Politique de Confidentialité, accessible depuis le Site.
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">7. Responsabilité</h3>
                     <p className="text-justify mb-4">
-                      Fresh N'Good s'efforce de fournir des informations exactes et à jour sur le Site. Cependant, la société ne peut garantir l'exactitude, la complétude ou la pertinence des informations diffusées.
+                      Norifood s'efforce de fournir des informations exactes et à jour sur le Site. Cependant, la société ne peut garantir l'exactitude, la complétude ou la pertinence des informations diffusées.
                     </p>
                     <p className="text-justify mb-4">
-                      Fresh N'Good ne saurait être tenue responsable des dommages de toute nature qui pourraient résulter de l'utilisation du Site ou de l'impossibilité d'y accéder.
+                      Norifood ne saurait être tenue responsable des dommages de toute nature qui pourraient résulter de l'utilisation du Site ou de l'impossibilité d'y accéder.
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">8. Disponibilité du Site</h3>
                     <p className="text-justify mb-4">
-                      Fresh N'Good s'efforce d'assurer la disponibilité du Site 24h/24 et 7j/7. Cependant, la société se réserve le droit d'interrompre l'accès au Site pour des raisons de maintenance, de mise à jour ou pour toute autre raison technique.
+                      Norifood s'efforce d'assurer la disponibilité du Site 24h/24 et 7j/7. Cependant, la société se réserve le droit d'interrompre l'accès au Site pour des raisons de maintenance, de mise à jour ou pour toute autre raison technique.
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">9. Liens hypertextes</h3>
                     <p className="text-justify mb-4">
-                      Le Site peut contenir des liens vers d'autres sites web. Fresh N'Good n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu ou leur utilisation.
+                      Le Site peut contenir des liens vers d'autres sites web. Norifood n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu ou leur utilisation.
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-xl font-semibold text-ocean mb-3">10. Modifications</h3>
                     <p className="text-justify mb-4">
-                      Fresh N'Good se réserve le droit de modifier à tout moment les présentes conditions d'utilisation. Les modifications prendront effet dès leur publication sur le Site. Il est recommandé aux utilisateurs de consulter régulièrement ces conditions.
+                      Norifood se réserve le droit de modifier à tout moment les présentes conditions d'utilisation. Les modifications prendront effet dès leur publication sur le Site. Il est recommandé aux utilisateurs de consulter régulièrement ces conditions.
                     </p>
                   </section>
 
@@ -140,8 +140,8 @@ export default function Terms() {
                       Pour toute question relative aux présentes conditions d'utilisation, vous pouvez nous contacter :
                     </p>
                     <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="font-semibold">Fresh N'Good SARL</p>
-                      <p>Email : contact@freshngood.ma</p>
+                      <p className="font-semibold">Norifood SARL</p>
+                      <p>Email : contact@norifood.ma</p>
                       <p>Téléphone : 0608 611 511</p>
                       <p>Adresse : Imm. Assala - 50 Gueliz, Bd Mohamed VI, Marrakesh 40000</p>
                     </div>

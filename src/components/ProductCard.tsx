@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useCart } from '@/hooks/useCart';
-import { ShoppingCart, Plus, Minus, Sparkles, Star, Flame } from 'lucide-react';
+import { ShoppingCart, Plus, Minus, Star } from 'lucide-react';
 import placeholderImage from '@/assets/placeholder-product.jpg';
 
 interface ProductCardProps {
@@ -29,150 +28,119 @@ const ProductCard = ({
   unitType,
   inStock = true,
   featured = false,
-  discount
+  discount,
 }: ProductCardProps) => {
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCart();
   const { toast } = useToast();
 
   const handleAddToCart = () => {
-    addItem({
-      id,
-      name,
-      price,
-      image,
-      unitType: unitType as string
-    });
+    addItem({ id, name, price, image, unitType: unitType as string });
     toast({
-      title: "Produit ajouté !",
-      description: `${quantity} ${unitType} de ${name} ajouté(s) au panier`
+      title: 'Ajouté au panier',
+      description: `${quantity} × ${name}`,
     });
   };
 
-  const updateQuantity = (newQuantity: number) => {
-    if (newQuantity >= 1) {
-      setQuantity(newQuantity);
-    }
+  const updateQuantity = (n: number) => {
+    if (n >= 1) setQuantity(n);
   };
 
   const discountedPrice = discount ? price * (1 - discount / 100) : price;
 
   return (
-    <Card className="group glovo-card glass-card overflow-hidden fade-in rounded-2xl">
-      <CardContent className="p-0">
-        <div className="relative overflow-hidden">
-          <Link to={`/product/${id}`}>
-            <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30">
-              <img
-                src={image || placeholderImage}
-                alt={name}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              {/* Glovo-style gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-glovo-purple/80 via-glovo-purple/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-          </Link>
+    <article className="group relative flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-primary/60 hover:shadow-[0_12px_30px_-12px_hsl(var(--nori-red)/0.45)]">
+      <div className="relative aspect-square overflow-hidden bg-nori-surface-2">
+        <Link to={`/product/${id}`} className="block w-full h-full">
+          <img
+            src={image || placeholderImage}
+            alt={name}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+        </Link>
 
-          {/* Glovo-style badges */}
-          <div className="absolute top-2 left-2 flex flex-col gap-1.5">
-            {discount && (
-              <Badge className="bg-gradient-to-r from-glovo-orange to-glovo-pink text-white shadow-md hover-lift font-bold text-xs px-2.5 py-1">
-                -{discount}%
-              </Badge>
-            )}
-            {featured && (
-              <Badge className="bg-gradient-to-r from-glovo-purple to-glovo-orange text-white shadow-md hover-lift font-bold text-xs px-2.5 py-1">
-                <Star className="h-3 w-3 mr-1 fill-current" />
-                Top
-              </Badge>
-            )}
-          </div>
-
-          {!inStock && (
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-10 transition-opacity duration-300">
-              <Badge variant="destructive" className="text-sm px-4 py-2 rounded-full">
-                Rupture
-              </Badge>
-            </div>
+        {/* Badges */}
+        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5">
+          {discount ? (
+            <Badge className="bg-primary text-primary-foreground font-bold text-xs px-2 py-1 rounded-md border-0">
+              -{discount}%
+            </Badge>
+          ) : null}
+          {featured && (
+            <Badge className="bg-black/80 text-foreground font-bold text-[10px] px-2 py-1 rounded-md border border-border backdrop-blur-sm">
+              <Star className="h-2.5 w-2.5 mr-1 fill-primary text-primary" />
+              TOP
+            </Badge>
           )}
-
-          {/* Quick add button on hover */}
-          <div className="absolute bottom-3 right-3 translate-y-16 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10">
-            <Button
-              size="icon"
-              className="h-11 w-11 rounded-full bg-gradient-to-br from-glovo-purple to-glovo-orange text-white shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 button-press"
-              onClick={handleAddToCart}
-              disabled={!inStock}
-            >
-              <ShoppingCart className="h-4 w-4" />
-            </Button>
-          </div>
         </div>
 
-        <div className="p-3 md:p-4 space-y-2">
-          <Link to={`/product/${id}`}>
-            <h3 className="font-semibold text-foreground text-sm md:text-base line-clamp-2 hover:text-glovo-purple transition-colors leading-tight min-h-[2.5rem]">
-              {name}
-            </h3>
-          </Link>
-
-          <div className="flex items-center justify-between flex-wrap gap-1">
-            <div className="flex items-center gap-1.5">
-              {discount && (
-                <span className="text-xs text-muted-foreground line-through font-medium">
-                  {price.toFixed(2)} DH
-                </span>
-              )}
-              <div className="flex items-baseline gap-0.5">
-                <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">
-                  {discountedPrice.toFixed(2)}
-                </span>
-                <span className="text-xs text-muted-foreground font-medium">DH</span>
-              </div>
-            </div>
-            <span className="text-xs text-muted-foreground">/ {unitType}</span>
+        {!inStock && (
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-10">
+            <Badge className="bg-primary text-primary-foreground text-sm px-4 py-2 rounded-md uppercase tracking-wider">
+              Rupture
+            </Badge>
           </div>
+        )}
+      </div>
 
-          <div className="flex items-center gap-2 pt-1">
-            <div className="flex items-center bg-muted/80 rounded-xl p-0.5 min-w-[90px] md:min-w-[100px] border border-border/50">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => updateQuantity(quantity - 1)}
-                disabled={quantity <= 1 || !inStock}
-                className="h-7 w-7 p-0 rounded-lg text-xs hover:bg-glovo-purple hover:text-white icon-bounce focus-ring"
-              >
-                <Minus className="h-3 w-3" />
-              </Button>
-              <span className="flex-1 text-center text-sm font-semibold px-1 text-foreground">
-                {quantity}
-              </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => updateQuantity(quantity + 1)}
-                disabled={!inStock}
-                className="h-7 w-7 p-0 rounded-lg text-xs hover:bg-glovo-purple hover:text-white icon-bounce focus-ring"
-              >
-                <Plus className="h-3 w-3" />
-              </Button>
-            </div>
+      <div className="flex flex-col flex-1 p-3 md:p-4 gap-2">
+        <Link to={`/product/${id}`} className="block">
+          <h3 className="font-semibold text-foreground text-sm md:text-base leading-tight line-clamp-2 min-h-[2.5rem] group-hover:text-primary transition-colors">
+            {name}
+          </h3>
+        </Link>
 
+        <div className="flex items-baseline gap-2">
+          {discount ? (
+            <span className="text-xs text-muted-foreground line-through">
+              {price.toFixed(2)} €
+            </span>
+          ) : null}
+          <span className="text-xl md:text-2xl font-extrabold text-primary leading-none">
+            {discountedPrice.toFixed(2)} €
+          </span>
+          <span className="text-xs text-muted-foreground">/ {unitType}</span>
+        </div>
+
+        <div className="mt-auto flex items-center gap-2 pt-2">
+          <div className="inline-flex items-center bg-secondary rounded-md border border-border h-9">
             <Button
-              onClick={handleAddToCart}
-              disabled={!inStock}
+              variant="ghost"
               size="sm"
-              variant="cart"
-              className="flex-1 h-9 md:h-10 text-xs md:text-sm font-medium px-3 bg-gradient-to-r from-glovo-purple to-glovo-orange hover:from-glovo-purple/90 hover:to-glovo-orange/90 text-white shadow-md hover:shadow-lg transition-all duration-300 button-press focus-ring rounded-xl"
+              onClick={() => updateQuantity(quantity - 1)}
+              disabled={quantity <= 1 || !inStock}
+              className="h-9 w-8 p-0 rounded-none hover:bg-primary/10 hover:text-primary"
+              aria-label="Diminuer"
             >
-              <ShoppingCart className="h-3 w-3 md:h-4 md:w-4 mr-1" />
-              <span className="hidden sm:inline">Ajouter</span>
-              <span className="sm:hidden">+</span>
+              <Minus className="h-3 w-3" />
+            </Button>
+            <span className="w-7 text-center text-sm font-bold tabular-nums">{quantity}</span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => updateQuantity(quantity + 1)}
+              disabled={!inStock}
+              className="h-9 w-8 p-0 rounded-none hover:bg-primary/10 hover:text-primary"
+              aria-label="Augmenter"
+            >
+              <Plus className="h-3 w-3" />
             </Button>
           </div>
+
+          <Button
+            onClick={handleAddToCart}
+            disabled={!inStock}
+            size="sm"
+            className="flex-1 h-9 rounded-md bg-primary text-primary-foreground hover:bg-nori-light font-semibold text-xs uppercase tracking-wide gap-1.5"
+          >
+            <ShoppingCart className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Ajouter</span>
+          </Button>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </article>
   );
 };
 

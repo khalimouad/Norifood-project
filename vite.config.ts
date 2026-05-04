@@ -2,14 +2,13 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { fileURLToPath } from 'url';
-import { componentTagger } from "lovable-tagger";
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   server: {
     host: "0.0.0.0",
     port: 8081,
@@ -17,15 +16,13 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     tsconfigPaths(),
-    mode === 'development' &&
-    componentTagger(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'robots.txt'],
       manifest: {
-        name: 'Fresh N\'Good - Produits de la Mer Frais',
-        short_name: 'Fresh N\'Good',
-        description: 'Poissons et fruits de mer de qualité premium, de l\'océan à votre table avec fraîcheur garantie',
+        name: 'Norifood — Ingrédients Asiatiques Pro',
+        short_name: 'Norifood',
+        description: 'Ingrédients sushi, asiatiques et surgelés de qualité premium pour les professionnels de la restauration',
         theme_color: '#0ea5e9',
         background_color: '#ffffff',
         display: 'standalone',

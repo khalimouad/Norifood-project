@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductListItem } from "@/components/ProductListItem";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -152,9 +153,9 @@ const Products = () => {
         <main className="pb-20 md:pb-0">
           <div className="relative overflow-hidden glovo-gradient-bg text-white py-12 md:py-16">
             <div className="container mx-auto px-4 text-center relative z-10">
-              <h1 className="text-3xl md:text-5xl font-bold mb-3 slide-up">Nos Produits Frais</h1>
+              <h1 className="text-3xl md:text-5xl font-bold mb-3 slide-up">Notre Catalogue</h1>
               <p className="text-lg md:text-xl opacity-90 fade-in">
-                Découvrez notre sélection de poissons et fruits de mer de qualité premium
+                Une sélection rigoureuse d'ingrédients sushi, asiatiques et surgelés pour les professionnels
               </p>
             </div>
             {/* Wave decoration */}
@@ -182,10 +183,10 @@ const Products = () => {
         <div className="relative overflow-hidden glovo-gradient-bg text-white py-12 md:py-16">
           <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="text-3xl md:text-5xl font-bold mb-3 slide-up drop-shadow-lg">
-              Nos Produits Frais
+              Notre Catalogue
             </h1>
             <p className="text-lg md:text-xl opacity-90 fade-in max-w-2xl mx-auto" style={{ animationDelay: '100ms' }}>
-              Découvrez notre sélection de poissons et fruits de mer de qualité premium
+              Une sélection rigoureuse d'ingrédients sushi, asiatiques et surgelés pour les professionnels
             </p>
           </div>
           {/* Floating decorations */}
@@ -434,22 +435,51 @@ const Products = () => {
 
           {/* Products Grid/List */}
           {filteredProducts.length > 0 ? (
-            <div className={`${viewMode === "grid" ? "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6" : "space-y-4"} stagger-children`}>
-              {filteredProducts.map((product, index) => (
-                <div key={product.id} className="fade-in" style={{ animationDelay: `${Math.min(index * 50, 400)}ms` }}>
-                  <ProductCard
+            <>
+              {/* Mobile: always list view to match the brand mock */}
+              <div className="md:hidden space-y-2.5">
+                {filteredProducts.map((product) => (
+                  <ProductListItem
+                    key={product.id}
                     id={product.id}
                     name={product.name}
-                    description={product.description || ""}
                     price={product.base_price}
                     image={product.image_url || "/placeholder.svg"}
                     unitType={product.unit_type as 'kg' | 'units' | 'g' | 'pieces'}
                     inStock={product.stock_quantity ? product.stock_quantity > 0 : true}
-                    featured={product.featured || false}
                   />
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+
+              {/* Desktop: respect viewMode */}
+              <div className={`hidden md:block ${viewMode === "grid" ? "grid grid-cols-3 lg:grid-cols-4 gap-6" : "space-y-3"} stagger-children`}>
+                {filteredProducts.map((product, index) => (
+                  <div key={product.id} className="fade-in" style={{ animationDelay: `${Math.min(index * 50, 400)}ms` }}>
+                    {viewMode === 'list' ? (
+                      <ProductListItem
+                        id={product.id}
+                        name={product.name}
+                        price={product.base_price}
+                        image={product.image_url || "/placeholder.svg"}
+                        unitType={product.unit_type as 'kg' | 'units' | 'g' | 'pieces'}
+                        inStock={product.stock_quantity ? product.stock_quantity > 0 : true}
+                      />
+                    ) : (
+                      <ProductCard
+                        id={product.id}
+                        name={product.name}
+                        description={product.description || ""}
+                        price={product.base_price}
+                        image={product.image_url || "/placeholder.svg"}
+                        unitType={product.unit_type as 'kg' | 'units' | 'g' | 'pieces'}
+                        inStock={product.stock_quantity ? product.stock_quantity > 0 : true}
+                        featured={product.featured || false}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </>
           ) : (
             <div className="text-center py-16 fade-in">
               <div className="glass-card inline-block p-8 mb-4">
