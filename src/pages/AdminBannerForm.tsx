@@ -106,6 +106,17 @@ export default function AdminBannerForm() {
     }
   };
 
+  const onInvalid = (errors: Record<string, { message?: string }>) => {
+    const first = Object.values(errors)[0];
+    const message = first?.message ?? 'Veuillez vérifier les champs en rouge.';
+    console.warn('Banner form validation errors:', errors);
+    toast({
+      title: 'Formulaire incomplet',
+      description: message,
+      variant: 'destructive',
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="border-b bg-card">
@@ -127,7 +138,7 @@ export default function AdminBannerForm() {
 
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-6">
             <div className="bg-card rounded-lg border p-6 space-y-6">
               <h2 className="text-lg font-semibold">Informations générales</h2>
 
