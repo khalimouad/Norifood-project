@@ -9,23 +9,23 @@
 @layer base {
   :root {
     /* Default to dark brand palette — Norifood is a dark theme by design */
-    --background: 0 0% 6%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 9%;
+    --card: 0 0% 5%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 9%;
+    --popover: 0 0% 5%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 358 79% 51%;            /* Nori red #E32028 */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 14%;
+    --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 95%;
 
-    --muted: 0 0% 13%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 0 0% 7%;
+    --muted-foreground: 0 0% 60%;
 
     --accent: 358 79% 51%;
     --accent-foreground: 0 0% 100%;
@@ -33,8 +33,8 @@
     --destructive: 358 79% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 16%;
-    --input: 0 0% 14%;
+    --border: 0 0% 12%;
+    --input: 0 0% 9%;
     --ring: 358 79% 51%;
 
     --radius: 0.75rem;
@@ -43,12 +43,12 @@
     --nori-red: 358 79% 51%;           /* #E32028 */
     --nori-red-light: 358 85% 60%;
     --nori-red-dark: 358 79% 42%;
-    --nori-black: 0 0% 6%;
-    --nori-surface: 0 0% 9%;
-    --nori-surface-2: 0 0% 12%;
-    --nori-line: 0 0% 18%;
+    --nori-black: 0 0% 0%;
+    --nori-surface: 0 0% 5%;
+    --nori-surface-2: 0 0% 8%;
+    --nori-line: 0 0% 14%;
     --nori-text: 0 0% 98%;
-    --nori-text-muted: 0 0% 65%;
+    --nori-text-muted: 0 0% 60%;
     --nori-gold: 45 75% 60%;
 
     /* Legacy "glovo-*" tokens kept for compatibility — remapped to brand colors. */
@@ -65,14 +65,14 @@
     --gold: var(--nori-gold);
     --cart-purple: var(--nori-red);
 
-    /* Gradients */
-    --gradient-nori: linear-gradient(135deg, hsl(var(--nori-red)) 0%, hsl(var(--nori-red-dark)) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 4%) 0%, hsl(0 0% 8%) 50%, hsl(358 50% 12%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 11%) 0%, hsl(0 0% 8%) 100%);
-    --gradient-glovo: var(--gradient-nori);
-    --gradient-glovo-green: var(--gradient-nori);
-    --gradient-wave: linear-gradient(180deg, hsl(0 0% 10%), hsl(var(--background)));
-    --gradient-footer: linear-gradient(180deg, hsl(0 0% 7%), hsl(0 0% 4%));
+    /* Flats — no gradients in the brand */
+    --gradient-nori: hsl(var(--nori-red));
+    --gradient-hero: hsl(var(--background));
+    --gradient-card: hsl(var(--card));
+    --gradient-glovo: hsl(var(--nori-red));
+    --gradient-glovo-green: hsl(var(--nori-red));
+    --gradient-wave: hsl(var(--background));
+    --gradient-footer: hsl(var(--background));
 
     /* Shadows */
     --shadow-nori: 0 8px 30px -6px hsl(var(--nori-red) / 0.45);
@@ -95,24 +95,24 @@
 
   /* `.dark` is identical — site is always dark, but kept so the toggle is a no-op rather than a crash. */
   .dark {
-    --background: 0 0% 6%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 9%;
+    --card: 0 0% 5%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 9%;
+    --popover: 0 0% 5%;
     --popover-foreground: 0 0% 98%;
     --primary: 358 79% 51%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 14%;
+    --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 95%;
-    --muted: 0 0% 13%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 0 0% 7%;
+    --muted-foreground: 0 0% 60%;
     --accent: 358 79% 51%;
     --accent-foreground: 0 0% 100%;
     --destructive: 358 79% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 16%;
-    --input: 0 0% 14%;
+    --border: 0 0% 12%;
+    --input: 0 0% 9%;
     --ring: 358 79% 51%;
   }
 }
@@ -143,17 +143,14 @@
 @layer components {
   .nori-card {
     @apply bg-card border border-border rounded-xl;
-    background-image: var(--gradient-card);
   }
 
   .nori-button {
-    @apply bg-primary text-primary-foreground font-semibold rounded-md transition-all;
-    box-shadow: 0 4px 14px -2px hsl(var(--nori-red) / 0.4);
+    @apply bg-primary text-primary-foreground font-semibold rounded-md transition-colors;
   }
 
   .nori-button:hover {
     background-color: hsl(var(--nori-red-light));
-    box-shadow: 0 6px 20px -2px hsl(var(--nori-red) / 0.55);
   }
 
   .nori-chip {

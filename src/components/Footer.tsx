@@ -4,7 +4,7 @@ import { NorifoodLogo } from '@/components/NorifoodLogo';
 
 export const Footer = () => {
   return (
-    <footer className="bg-gradient-footer text-foreground border-t border-border mt-12">
+    <footer className="bg-background text-foreground border-t border-border mt-12">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-10">
           {/* Brand */}

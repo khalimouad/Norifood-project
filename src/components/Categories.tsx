@@ -71,7 +71,7 @@ export const Categories = () => {
         {loading ? (
           <CategoryGridSkeleton count={6} />
         ) : (
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 md:gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2.5 md:gap-3">
             {categories.map((category) => {
               const IconComponent = category.custom_svg
                 ? null
@@ -82,22 +82,20 @@ export const Categories = () => {
                 <button
                   key={category.id}
                   onClick={() => navigate(`/products?category=${category.slug}`)}
-                  className="group flex flex-col items-center gap-2.5 p-3 rounded-xl bg-card border border-border hover:border-primary/60 hover:bg-secondary transition-all duration-200"
+                  className="group flex flex-col items-center justify-center gap-2 px-2 py-4 md:py-5 rounded-xl bg-card border border-border hover:border-primary hover:bg-secondary transition-colors"
                 >
-                  <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-nori-surface-2 to-black border border-border overflow-hidden flex items-center justify-center group-hover:border-primary/60 transition-colors">
-                    {category.image_url ? (
-                      <img
-                        src={category.image_url}
-                        alt={category.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : IconComponent ? (
-                      <IconComponent className="h-7 w-7 md:h-8 md:w-8 text-primary" />
-                    ) : (
-                      <Fish className="h-7 w-7 md:h-8 md:w-8 text-primary" />
-                    )}
-                  </div>
-                  <span className="text-xs md:text-sm font-semibold text-center text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                  {IconComponent ? (
+                    <IconComponent
+                      className="h-7 w-7 md:h-8 md:w-8 text-foreground/80 group-hover:text-primary transition-colors"
+                      strokeWidth={1.5}
+                    />
+                  ) : (
+                    <Fish
+                      className="h-7 w-7 md:h-8 md:w-8 text-foreground/80 group-hover:text-primary transition-colors"
+                      strokeWidth={1.5}
+                    />
+                  )}
+                  <span className="text-[11px] md:text-xs font-semibold text-center text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
                     {category.name}
                   </span>
                 </button>

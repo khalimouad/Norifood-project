@@ -114,12 +114,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-background flex flex-col">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] rounded-full bg-primary/15 blur-[120px]" />
-        <div className="absolute -bottom-40 right-0 w-[30rem] h-[30rem] rounded-full bg-primary/10 blur-[120px]" />
-      </div>
-
+    <div className="min-h-screen relative bg-background flex flex-col">
       {view === 'home' ? (
         <HomeView
           onSignIn={() => setView('signin')}
@@ -170,14 +165,13 @@ const HomeView = ({
     <div className="flex flex-col items-center gap-8 max-w-sm w-full mt-6">
       <NorifoodLogo size="xl" />
 
-      <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-border shadow-2xl">
+      <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-border bg-card">
         <img
           src={salmonImage}
           alt="Sélection Norifood"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
-        <div className="absolute bottom-0 left-0 right-0 p-5 text-center">
+        <div className="absolute bottom-0 left-0 right-0 p-5 bg-black/80 backdrop-blur-sm border-t border-border">
           <p className="text-xs uppercase tracking-[0.3em] text-primary font-bold mb-1">
             Norifood Pro
           </p>
@@ -257,7 +251,7 @@ const FormView = ({
         <NorifoodLogo size="md" />
       </div>
 
-      <div className="rounded-2xl border border-border bg-card/80 backdrop-blur-xl p-6 md:p-8 shadow-2xl">
+      <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
         <h1 className="text-2xl font-extrabold text-center mb-1">
           {view === 'signin' ? 'Bon retour' : 'Créer un compte'}
         </h1>
