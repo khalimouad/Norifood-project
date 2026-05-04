@@ -16,6 +16,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { NorifoodLogo } from '@/components/NorifoodLogo';
 import { MobileNavigation } from '@/components/MobileNavigation';
+import { formatPrice } from '@/lib/format';
 
 interface Product {
   id: string;
@@ -232,7 +233,7 @@ export const Header = () => {
                   <div className="flex-1">
                     <p className="font-medium">{product.name}</p>
                     <p className="text-sm text-muted-foreground">
-                      {product.base_price.toFixed(2)} MAD / {product.unit_type}
+                      {formatPrice(product.base_price)} MAD / {product.unit_type}
                     </p>
                   </div>
                 </CommandItem>

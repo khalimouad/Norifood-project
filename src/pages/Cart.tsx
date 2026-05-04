@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useCart } from '@/hooks/useCart';
 import { ShoppingBag, Plus, Minus, Trash2, ArrowRight } from 'lucide-react';
+import { formatPrice, safeNumber } from '@/lib/format';
 
 const Cart = () => {
   const { items, updateQuantity, removeItem, clearCart, getTotalPrice } = useCart();
@@ -103,7 +104,7 @@ const Cart = () => {
                     <p className="text-xs text-muted-foreground">{item.weight}kg</p>
                   )}
                   <p className="text-base md:text-lg font-extrabold text-primary mt-1">
-                    {(item.price * item.quantity).toFixed(2)} €
+                    {formatPrice(safeNumber(item.price) * safeNumber(item.quantity))} €
                   </p>
                 </div>
 
@@ -179,18 +180,18 @@ const Cart = () => {
           <div className="mt-6 rounded-xl border border-border bg-card p-5 space-y-3">
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Sous-total</span>
-              <span className="font-semibold tabular-nums">{subtotal.toFixed(2)} €</span>
+              <span className="font-semibold tabular-nums">{formatPrice(subtotal)} €</span>
             </div>
             {discount > 0 && (
               <div className="flex justify-between text-sm text-primary">
                 <span>Réduction ({appliedPromo})</span>
-                <span className="font-semibold tabular-nums">-{discount.toFixed(2)} €</span>
+                <span className="font-semibold tabular-nums">-{formatPrice(discount)} €</span>
               </div>
             )}
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Livraison</span>
               <span className="font-semibold tabular-nums">
-                {deliveryFee === 0 ? 'Gratuite' : `${deliveryFee.toFixed(2)} €`}
+                {deliveryFee === 0 ? 'Gratuite' : `${formatPrice(deliveryFee)} €`}
               </span>
             </div>
             {subtotal < 200 && (
@@ -201,7 +202,7 @@ const Cart = () => {
             <div className="border-t border-border pt-3 flex justify-between items-baseline">
               <span className="text-sm uppercase tracking-wider font-bold">Total</span>
               <span className="text-2xl font-extrabold text-primary tabular-nums">
-                {total.toFixed(2)} €
+                {formatPrice(total)} €
               </span>
             </div>
           </div>

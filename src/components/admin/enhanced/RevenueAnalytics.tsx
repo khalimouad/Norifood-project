@@ -95,7 +95,7 @@ export function RevenueAnalytics() {
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{revenueData.thisMonth.toFixed(2)} MAD</div>
+            <div className="text-2xl font-bold">{((revenueData.thisMonth) ?? 0).toFixed(2)} MAD</div>
             <div className="flex items-center text-xs text-muted-foreground">
               {revenueData.growth > 0 ? (
                 <TrendingUp className="h-3 w-3 mr-1 text-green-500" />
@@ -113,7 +113,7 @@ export function RevenueAnalytics() {
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{revenueData.lastMonth.toFixed(2)} MAD</div>
+            <div className="text-2xl font-bold">{((revenueData.lastMonth) ?? 0).toFixed(2)} MAD</div>
             <div className="text-xs text-muted-foreground">Mois précédent</div>
           </CardContent>
         </Card>
@@ -124,7 +124,7 @@ export function RevenueAnalytics() {
             <Target className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{revenueData.target.toFixed(2)} MAD</div>
+            <div className="text-2xl font-bold">{((revenueData.target) ?? 0).toFixed(2)} MAD</div>
             <div className="text-xs text-muted-foreground">
               {((revenueData.thisMonth / revenueData.target) * 100).toFixed(1)}% atteint
             </div>
@@ -137,7 +137,7 @@ export function RevenueAnalytics() {
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{revenueData.dailyAverage.toFixed(2)} MAD</div>
+            <div className="text-2xl font-bold">{((revenueData.dailyAverage) ?? 0).toFixed(2)} MAD</div>
             <div className="text-xs text-muted-foreground">Par jour ce mois</div>
           </CardContent>
         </Card>

@@ -167,7 +167,7 @@ export function AdminDashboard() {
     },
     {
       title: "Chiffre d'affaires",
-      value: `${stats.totalRevenue.toFixed(2)} MAD`,
+      value: `${((stats.totalRevenue) ?? 0).toFixed(2)} MAD`,
       icon: DollarSign,
       color: "text-emerald-600",
       bgColor: "bg-emerald-50",
@@ -407,7 +407,7 @@ export function AdminDashboard() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium">{product.revenue.toFixed(2)} MAD</p>
+                    <p className="font-medium">{((product.revenue) ?? 0).toFixed(2)} MAD</p>
                     <p className="text-xs text-muted-foreground">Revenue</p>
                   </div>
                 </div>

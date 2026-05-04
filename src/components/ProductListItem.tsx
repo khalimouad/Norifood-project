@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
 import { useToast } from '@/hooks/use-toast';
 import placeholderImage from '@/assets/placeholder-product.jpg';
+import { formatPrice, safeNumber } from '@/lib/format';
 
 interface ProductListItemProps {
   id: string;
@@ -26,10 +27,11 @@ export const ProductListItem = ({
   const { addItem } = useCart();
   const { toast } = useToast();
 
+  const safePrice = safeNumber(price);
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addItem({ id, name, price, image, unitType: unitType as string });
+    addItem({ id, name, price: safePrice, image, unitType: unitType as string });
     toast({ title: 'Ajouté', description: name });
   };
 
@@ -52,7 +54,7 @@ export const ProductListItem = ({
           <p className="text-xs text-muted-foreground mt-0.5">{weight} kg</p>
         )}
         <p className="text-base md:text-lg font-extrabold text-primary mt-1 leading-none">
-          {price.toFixed(2)} €
+          {formatPrice(price)} €
           <span className="text-xs text-muted-foreground font-normal ml-1">/ {unitType}</span>
         </p>
       </div>

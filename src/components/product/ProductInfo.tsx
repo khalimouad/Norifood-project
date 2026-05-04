@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Star, Check } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
+import { formatPrice } from '@/lib/format';
 
 type Product = Tables<'products'>;
 type ProductVariation = Tables<'product_variations'>;
@@ -48,7 +49,7 @@ export const ProductInfo = ({ product, selectedVariation }: ProductInfoProps) =>
 
       <div className="flex items-baseline gap-2 pt-1">
         <span className="text-4xl md:text-5xl font-extrabold text-primary leading-none">
-          {price.toFixed(2)} €
+          {formatPrice(price)} €
         </span>
         <span className="text-sm text-muted-foreground">/ {unit}</span>
       </div>
