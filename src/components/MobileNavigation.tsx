@@ -1,14 +1,16 @@
-import { Home, Package, Info, MessageCircle, User, Phone, LogOut, ChevronRight } from 'lucide-react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { Home, Package, Info, MessageCircle, User, Phone, LogOut, ChevronRight, Utensils, HelpCircle } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Separator } from '@/components/ui/separator';
+import { NorifoodLogo } from '@/components/NorifoodLogo';
 
 const menuItems = [
   { title: 'Accueil', url: '/', icon: Home },
-  { title: 'Produits', url: '/products', icon: Package },
-  { title: 'À Propos', url: '/about', icon: Info },
+  { title: 'Catalogue', url: '/products', icon: Package },
+  { title: 'Recettes', url: '/recipes', icon: Utensils },
+  { title: 'À propos', url: '/about', icon: Info },
   { title: 'Contact', url: '/contact', icon: MessageCircle },
+  { title: 'FAQ', url: '/faq', icon: HelpCircle },
 ];
 
 interface MobileNavigationProps {
@@ -17,114 +19,90 @@ interface MobileNavigationProps {
 
 export function MobileNavigation({ onClose }: MobileNavigationProps) {
   const { user, signOut } = useAuth();
-  const navigate = useNavigate();
-
-  const handleNavigate = (path: string) => {
-    window.scrollTo(0, 0);
-    navigate(path);
-    onClose();
-  };
 
   return (
     <div className="flex flex-col h-full bg-background">
-      {/* Header */}
-      <div className="p-4 border-b border-border/50">
-        <h2 className="text-lg font-bold bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">
-          Norifood
-        </h2>
-        <p className="text-xs text-muted-foreground mt-0.5">Produits de la mer frais</p>
+      <div className="p-5 border-b border-border">
+        <NorifoodLogo size="md" showTagline />
       </div>
 
-      {/* User Section */}
       {user ? (
-        <div className="p-4 border-b border-border/50">
-          <button
-            onClick={() => handleNavigate('/profile')}
-            className="w-full flex items-center gap-3 p-3 rounded-xl bg-primary/5 hover:bg-primary/10 active:scale-[0.98] transition-all"
+        <div className="p-4 border-b border-border">
+          <NavLink
+            to="/profile"
+            onClick={onClose}
+            className="w-full flex items-center gap-3 p-3 rounded-lg bg-secondary hover:bg-primary/10 transition-colors"
           >
-            <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center">
+            <div className="h-10 w-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
               <User className="h-5 w-5 text-primary" />
             </div>
             <div className="flex-1 text-left">
-              <p className="text-sm font-semibold text-foreground">Mon Compte</p>
+              <p className="text-sm font-semibold text-foreground">Mon compte</p>
               <p className="text-xs text-muted-foreground">Voir le profil</p>
             </div>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
-          </button>
+          </NavLink>
         </div>
       ) : (
-        <div className="p-4 border-b border-border/50">
-          <button
-            onClick={() => handleNavigate('/auth')}
-            className="w-full flex items-center justify-center gap-2 p-3 rounded-xl bg-primary text-white font-medium active:scale-[0.98] transition-all shadow-sm"
+        <div className="p-4 border-b border-border">
+          <NavLink
+            to="/auth"
+            onClick={onClose}
+            className="w-full flex items-center justify-center gap-2 h-11 rounded-md bg-primary text-primary-foreground font-semibold uppercase tracking-wide text-sm hover:bg-nori-light transition-colors"
           >
             <User className="h-4 w-4" />
             Se connecter
-          </button>
+          </NavLink>
         </div>
       )}
 
-      {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+      <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
         {menuItems.map((item) => (
           <NavLink
             key={item.title}
             to={item.url}
-            onClick={() => {
-              window.scrollTo(0, 0);
-              onClose();
-            }}
+            end={item.url === '/'}
+            onClick={onClose}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-xl transition-all active:scale-[0.98] ${
+              `flex items-center gap-3 px-3 py-3 rounded-md transition-colors ${
                 isActive
-                  ? 'bg-primary/10 text-primary font-semibold shadow-sm'
-                  : 'text-foreground/80 hover:bg-muted/50 hover:text-foreground'
+                  ? 'bg-primary/10 text-primary font-semibold'
+                  : 'text-foreground/80 hover:bg-secondary hover:text-foreground'
               }`
             }
           >
             <item.icon className="h-5 w-5 shrink-0" />
             <span className="text-sm">{item.title}</span>
-            {({ isActive }) => isActive && <ChevronRight className="h-4 w-4 ml-auto" />}
           </NavLink>
         ))}
 
-        <Separator className="my-4" />
+        <Separator className="my-3 bg-border" />
 
-        {/* WhatsApp Contact */}
         <a
           href="https://wa.me/212608611511"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-3 px-4 py-3 rounded-xl bg-green-500/10 text-green-600 dark:text-green-400 hover:bg-green-500/20 active:scale-[0.98] transition-all"
+          className="flex items-center gap-3 px-3 py-3 rounded-md bg-secondary hover:bg-primary/10 transition-colors"
         >
-          <Phone className="h-5 w-5 shrink-0" />
+          <Phone className="h-5 w-5 text-primary shrink-0" />
           <div className="flex-1 text-left">
-            <p className="text-sm font-semibold">Contactez-nous</p>
-            <p className="text-xs opacity-80">0608 611 511</p>
+            <p className="text-sm font-semibold text-foreground">Contactez-nous</p>
+            <p className="text-xs text-muted-foreground">0608 611 511</p>
           </div>
         </a>
       </nav>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-border/50 space-y-3">
-        <div className="flex items-center justify-between px-2">
-          <span className="text-sm font-medium text-foreground/80">Thème</span>
-          <ThemeToggle variant="outline" showLabel={false} className="h-9" />
-        </div>
-
-        {user && (
+      {user && (
+        <div className="p-4 border-t border-border">
           <button
-            onClick={() => {
-              signOut();
-              onClose();
-            }}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-destructive hover:bg-destructive/10 active:scale-[0.98] transition-all text-sm font-medium"
+            onClick={() => { signOut(); onClose(); }}
+            className="w-full flex items-center justify-center gap-2 h-10 rounded-md text-foreground/80 hover:text-primary hover:bg-secondary transition-colors text-sm font-medium"
           >
             <LogOut className="h-4 w-4" />
             Se déconnecter
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

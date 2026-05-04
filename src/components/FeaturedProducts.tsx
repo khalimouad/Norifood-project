@@ -23,71 +23,80 @@ export const FeaturedProducts = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchFeaturedProducts();
+    (async () => {
+      try {
+        const { data } = await supabase
+          .from('products')
+          .select('*')
+          .eq('featured', true)
+          .eq('is_active', true)
+          .limit(8);
+        if (data) setProducts(data);
+      } catch (e) {
+        console.error('Error fetching featured products:', e);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
 
-  const fetchFeaturedProducts = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('featured', true)
-        .eq('is_active', true)
-        .limit(8);
-
-      if (error) throw error;
-      setProducts(data || []);
-    } catch (error) {
-      console.error('Error fetching featured products:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <section className="py-8 md:py-12 lg:py-16 bg-background">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="text-center mb-6 md:mb-10 lg:mb-12 space-y-2 md:space-y-3">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
-              Produits Vedettes
-            </h2>
-            <p className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-2xl mx-auto px-4">
-              Découvrez notre sélection des produits les plus frais
-            </p>
-          </div>
-          <ProductGridSkeleton count={8} />
-        </div>
-      </section>
-    );
-  }
-  return <section className="py-8 md:py-12 lg:py-16 bg-background">
+  return (
+    <section className="py-10 md:py-16 bg-background border-t border-border/60">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="text-center mb-6 md:mb-10 lg:mb-12 space-y-2 md:space-y-3">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
-            Produits Vedettes
-          </h2>
-          <p className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-2xl mx-auto px-4">
-            Découvrez notre sélection des produits les plus frais
-          </p>
+        <div className="flex items-end justify-between mb-6 md:mb-10">
+          <div>
+            <p className="nori-section-title text-primary mb-2">Meilleures ventes</p>
+            <h2 className="text-2xl md:text-4xl font-extrabold tracking-tight">
+              Les références préférées des chefs
+            </h2>
+          </div>
+          <Link
+            to="/products"
+            className="hidden md:inline-flex text-sm font-semibold uppercase tracking-wide text-primary hover:text-nori-light transition-colors"
+          >
+            Voir tout →
+          </Link>
         </div>
 
-        {products.length > 0 ? <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
-              {products.map(product => <ProductCard key={product.id} id={product.id} name={product.name} description={product.description} price={product.base_price} image={product.image_url} unitType={product.unit_type === 'l' ? 'units' : product.unit_type as 'kg' | 'pieces' | 'g' | 'units'} inStock={product.stock_quantity > 0} featured={product.featured} />)}
+        {loading ? (
+          <ProductGridSkeleton count={8} />
+        ) : products.length > 0 ? (
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+              {products.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  id={p.id}
+                  name={p.name}
+                  description={p.description}
+                  price={p.base_price}
+                  image={p.image_url}
+                  unitType={
+                    p.unit_type === 'l'
+                      ? 'units'
+                      : (p.unit_type as 'kg' | 'pieces' | 'g' | 'units')
+                  }
+                  inStock={p.stock_quantity > 0}
+                  featured={p.featured}
+                />
+              ))}
             </div>
 
-            <div className="text-center mt-8 md:mt-10 lg:mt-12">
+            <div className="text-center mt-10 md:hidden">
               <Link to="/products">
-                <Button className="px-6 md:px-8 py-3 md:py-3.5 rounded-full font-medium bg-gradient-to-r from-glovo-purple to-glovo-orange text-white shadow-lg shadow-glovo-purple/20 hover:shadow-xl hover:shadow-glovo-purple/30 transition-all button-press">
-                  Voir Tous les Produits
+                <Button className="h-11 px-6 rounded-md bg-primary text-primary-foreground hover:bg-nori-light font-semibold uppercase tracking-wide">
+                  Voir tout le catalogue
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
-          </> : <div className="text-center py-12 md:py-16">
-            <p className="text-muted-foreground">Aucun produit vedette disponible pour le moment.</p>
-          </div>}
+          </>
+        ) : (
+          <div className="text-center py-12 md:py-16">
+            <p className="text-muted-foreground">Aucun produit vedette disponible.</p>
+          </div>
+        )}
       </div>
-    </section>;
+    </section>
+  );
 };

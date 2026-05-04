@@ -1,6 +1,6 @@
-# Norifood - Produits de la Mer Frais
+# Norifood — Ingrédients Asiatiques pour Professionnels
 
-Application e-commerce B2C pour la vente de produits de la mer frais au Maroc.
+Plateforme e-commerce B2B / B2C pour la distribution d'ingrédients sushi, asiatiques et surgelés de qualité premium au Maroc.
 
 ## 🚀 Stack Technique
 

@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Search, User, LogOut, Phone, MapPin, ChevronDown } from 'lucide-react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { ShoppingCart, Search, User, LogOut, Phone, MapPin, Menu } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
+import {
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from '@/components/ui/command';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
-import { motion } from 'framer-motion';
+import { NorifoodLogo } from '@/components/NorifoodLogo';
+import { MobileNavigation } from '@/components/MobileNavigation';
 
 interface Product {
   id: string;
@@ -19,203 +28,183 @@ interface Product {
   keywords: string[] | null;
 }
 
+const navLinks = [
+  { to: '/', label: 'Accueil' },
+  { to: '/products', label: 'Catégories' },
+  { to: '/products?featured=1', label: 'Best-sellers' },
+  { to: '/recipes', label: 'Recettes' },
+  { to: '/about', label: 'À propos' },
+];
+
 export const Header = () => {
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const { getTotalItems } = useCart();
   const { user, signOut } = useAuth();
   const cartCount = getTotalItems();
 
-  const normalizeText = (text: string) => {
-    return text
+  const normalize = (text: string) =>
+    text
       .toLowerCase()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[̀-ͯ]/g, '')
       .replace(/[^a-z0-9\s]/g, '')
       .replace(/\s+/g, ' ')
       .trim();
-  };
-
-  const calculateRelevanceScore = (product: Product, searchWords: string[]) => {
-    const name = normalizeText(product.name || '');
-    const description = normalizeText(product.description || '');
-    const keywords = product.keywords || [];
-    
-    let score = 0;
-    
-    searchWords.forEach(word => {
-      if (word.length < 2) return;
-      
-      if (name === word) score += 100;
-      else if (name.startsWith(word)) score += 80;
-      else if (name.split(' ').includes(word)) score += 60;
-      else if (word.length >= 3 && name.includes(word)) score += 30;
-      
-      if (description.split(' ').includes(word)) score += 20;
-      
-      keywords.forEach(keyword => {
-        const normalizedKeyword = normalizeText(keyword);
-        if (normalizedKeyword === word) score += 70;
-        else if (normalizedKeyword.includes(word) && word.length >= 3) score += 40;
-      });
-    });
-    
-    return score;
-  };
 
   useEffect(() => {
-    const loadProducts = async () => {
+    (async () => {
       try {
         const { data } = await supabase
           .from('products')
           .select('id, name, image_url, slug, base_price, unit_type, description, keywords')
           .eq('is_active', true)
           .limit(100);
-        
         if (data) setProducts(data);
-      } catch (error) {
-        console.error('Error loading products:', error);
+      } catch (e) {
+        console.error('Error loading products:', e);
       }
-    };
-
-    loadProducts();
+    })();
   }, []);
 
-  const filteredProducts = products
-    .map(product => {
-      const searchWords = normalizeText(searchTerm).split(' ').filter(w => w.length > 0);
-      const score = calculateRelevanceScore(product, searchWords);
-      return { ...product, relevanceScore: score };
-    })
-    .filter(product => product.relevanceScore > 0)
-    .sort((a, b) => b.relevanceScore - a.relevanceScore)
-    .slice(0, 8);
-
-  const handleProductClick = (product: Product) => {
-    setSearchOpen(false);
-    setSearchTerm('');
-    navigate(`/product/${product.slug}`);
-  };
+  const filteredProducts = (() => {
+    if (!searchTerm.trim()) return [];
+    const q = normalize(searchTerm);
+    return products
+      .filter((p) => normalize(p.name).includes(q))
+      .slice(0, 8);
+  })();
 
   return (
     <>
-      <motion.header 
-        className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-800/50"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        {/* Mobile App Style Header */}
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-3">
-            {/* Logo & Location */}
-            <div className="flex items-center gap-2 flex-1">
-              <div className="w-10 h-10 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-xl flex items-center justify-center shrink-0 shadow-lg shadow-glovo-purple/20">
-                <span className="text-white font-bold text-lg">F</span>
-              </div>
-              
-              <div className="hidden sm:block">
-                <Link to="/" className="font-bold text-xl bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">
-                  Norifood
-                </Link>
-              </div>
-              
-              {/* Location Badge - Desktop */}
-              <button className="hidden md:flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                <MapPin className="h-3.5 w-3.5 text-glovo-purple" />
-                <span className="text-gray-700 dark:text-gray-300">Marrakech</span>
-                <ChevronDown className="h-3 w-3 text-gray-500" />
-              </button>
+      {/* Utility bar */}
+      <div className="hidden md:block bg-black border-b border-border/60">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="flex items-center justify-between h-9 text-xs text-muted-foreground">
+            <div className="flex items-center gap-5">
+              <span className="inline-flex items-center gap-1.5">
+                <MapPin className="h-3 w-3 text-primary" />
+                Livraison Marrakech
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Phone className="h-3 w-3 text-primary" />
+                0608 611 511
+              </span>
             </div>
-
-            {/* Search Bar - Desktop */}
-            <div className="hidden md:flex flex-1 max-w-md">
-              <button 
-                onClick={() => setSearchOpen(true)}
-                className="w-full flex items-center gap-2 px-4 py-2.5 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              >
-                <Search className="h-4 w-4" />
-                <span className="text-sm">Rechercher des produits...</span>
-              </button>
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center gap-2">
-              {/* Search - Mobile */}
-              <motion.button 
-                onClick={() => setSearchOpen(true)}
-                className="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                whileTap={{ scale: 0.95 }}
-              >
-                <Search className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-              </motion.button>
-
-              {/* Phone */}
-              <motion.a 
-                href="tel:0608611511"
-                className="hidden sm:flex w-10 h-10 items-center justify-center rounded-full bg-green-500 text-white shadow-lg shadow-green-500/20"
-                whileTap={{ scale: 0.95 }}
-              >
-                <Phone className="h-4 w-4" />
-              </motion.a>
-
-              {/* Cart */}
-              <motion.button
-                onClick={() => navigate('/cart')}
-                className="relative w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-glovo-purple to-glovo-orange text-white shadow-lg shadow-glovo-purple/20"
-                whileTap={{ scale: 0.95 }}
-              >
-                <ShoppingCart className="h-4 w-4" />
-                {cartCount > 0 && (
-                  <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center bg-glovo-orange text-white text-[10px] font-bold border-2 border-white dark:border-gray-900">
-                    {cartCount}
-                  </Badge>
-                )}
-              </motion.button>
-
-              {/* User */}
-              {user ? (
-                <motion.button
-                  onClick={signOut}
-                  className="hidden sm:flex w-10 h-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <LogOut className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-                </motion.button>
-              ) : (
-                <motion.button
-                  onClick={() => navigate('/auth')}
-                  className="hidden sm:flex w-10 h-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <User className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-                </motion.button>
-              )}
-            </div>
-          </div>
-
-          {/* Location & Info - Mobile */}
-          <div className="md:hidden flex items-center justify-between mt-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-            <button className="flex items-center gap-1 text-sm">
-              <MapPin className="h-3.5 w-3.5 text-glovo-purple" />
-              <span className="text-gray-700 dark:text-gray-300 font-medium">Marrakech</span>
-              <ChevronDown className="h-3 w-3 text-gray-500" />
-            </button>
-            
-            <div className="flex items-center gap-1 text-xs text-gray-500">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span>Livraison en 1-2h</span>
+            <div className="flex items-center gap-5">
+              <Link to="/about" className="hover:text-foreground transition-colors">À propos</Link>
+              <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
+              <Link to="/faq" className="hover:text-foreground transition-colors">FAQ</Link>
             </div>
           </div>
         </div>
-      </motion.header>
+      </div>
 
-      {/* Search Dialog */}
+      {/* Main bar */}
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="flex items-center gap-4 h-16 md:h-20">
+            {/* Mobile menu */}
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild>
+                <button
+                  className="md:hidden w-10 h-10 inline-flex items-center justify-center rounded-md hover:bg-secondary transition-colors"
+                  aria-label="Menu"
+                >
+                  <Menu className="h-5 w-5" />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[85%] max-w-xs p-0 bg-background border-border">
+                <MobileNavigation onClose={() => setMobileOpen(false)} />
+              </SheetContent>
+            </Sheet>
+
+            {/* Logo */}
+            <Link to="/" className="shrink-0">
+              <NorifoodLogo size="md" showTagline={false} />
+            </Link>
+
+            {/* Desktop nav */}
+            <nav className="hidden lg:flex items-center gap-1 ml-6">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  end={link.to === '/'}
+                  className={({ isActive }) =>
+                    `px-3 py-2 text-sm font-semibold uppercase tracking-wide transition-colors ${
+                      isActive ? 'text-primary' : 'text-foreground/80 hover:text-foreground'
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+            </nav>
+
+            <div className="flex-1" />
+
+            {/* Search trigger */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="hidden md:inline-flex items-center gap-2 h-10 px-3 rounded-md bg-secondary text-muted-foreground hover:bg-secondary/80 transition-colors text-sm w-48 lg:w-64"
+              aria-label="Rechercher"
+            >
+              <Search className="h-4 w-4" />
+              <span>Rechercher un produit…</span>
+            </button>
+
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="md:hidden w-10 h-10 inline-flex items-center justify-center rounded-md hover:bg-secondary transition-colors"
+              aria-label="Rechercher"
+            >
+              <Search className="h-5 w-5" />
+            </button>
+
+            {/* User */}
+            {user ? (
+              <button
+                onClick={signOut}
+                className="hidden sm:inline-flex w-10 h-10 items-center justify-center rounded-md hover:bg-secondary transition-colors"
+                aria-label="Se déconnecter"
+              >
+                <LogOut className="h-5 w-5" />
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate('/auth')}
+                className="hidden sm:inline-flex w-10 h-10 items-center justify-center rounded-md hover:bg-secondary transition-colors"
+                aria-label="Mon compte"
+              >
+                <User className="h-5 w-5" />
+              </button>
+            )}
+
+            {/* Cart */}
+            <button
+              onClick={() => navigate('/cart')}
+              className="relative inline-flex items-center gap-2 h-10 px-3 rounded-md bg-primary text-primary-foreground hover:bg-nori-light transition-colors font-semibold text-sm shadow-[0_4px_14px_-2px_hsl(var(--nori-red)/0.4)]"
+              aria-label="Panier"
+            >
+              <ShoppingCart className="h-4 w-4" />
+              <span className="hidden md:inline">Panier</span>
+              {cartCount > 0 && (
+                <Badge className="ml-1 h-5 min-w-5 px-1.5 bg-black text-white text-[10px] font-bold border-0">
+                  {cartCount}
+                </Badge>
+              )}
+            </button>
+          </div>
+        </div>
+      </header>
+
       <CommandDialog open={searchOpen} onOpenChange={setSearchOpen}>
-        <CommandInput 
-          placeholder="Rechercher des produits..." 
+        <CommandInput
+          placeholder="Rechercher un produit…"
           value={searchTerm}
           onValueChange={setSearchTerm}
         />
@@ -226,19 +215,23 @@ export const Header = () => {
               {filteredProducts.map((product) => (
                 <CommandItem
                   key={product.id}
-                  onSelect={() => handleProductClick(product)}
+                  onSelect={() => {
+                    setSearchOpen(false);
+                    setSearchTerm('');
+                    navigate(`/product/${product.slug}`);
+                  }}
                   className="flex items-center gap-3 p-3"
                 >
                   {product.image_url && (
-                    <img 
-                      src={product.image_url} 
+                    <img
+                      src={product.image_url}
                       alt={product.name}
-                      className="w-12 h-12 object-cover rounded-lg"
+                      className="w-12 h-12 object-cover rounded-md"
                     />
                   )}
                   <div className="flex-1">
                     <p className="font-medium">{product.name}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-muted-foreground">
                       {product.base_price.toFixed(2)} MAD / {product.unit_type}
                     </p>
                   </div>

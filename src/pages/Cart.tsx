@@ -221,16 +221,16 @@ const Cart = () => {
                     Code Promo
                   </h3>
                   {appliedPromo ? (
-                    <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800">
+                    <div className="flex items-center justify-between p-3 bg-primary/10 rounded-md border border-primary/40">
                       <div>
-                        <p className="font-medium text-green-800 dark:text-green-300">Code appliqué: {appliedPromo}</p>
-                        <p className="text-sm text-green-600 dark:text-green-400">10% de réduction</p>
+                        <p className="font-medium text-primary">Code appliqué : {appliedPromo}</p>
+                        <p className="text-sm text-muted-foreground">10% de réduction</p>
                       </div>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => setAppliedPromo(null)}
-                        className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300"
+                        className="text-primary hover:text-nori-light hover:bg-primary/10"
                       >
                         Retirer
                       </Button>
@@ -265,8 +265,8 @@ const Cart = () => {
                       <span>{subtotal.toFixed(2)} DH</span>
                     </div>
                     {discount > 0 && (
-                      <div className="flex justify-between text-green-600 dark:text-green-400">
-                        <span>Réduction (FRESH10)</span>
+                      <div className="flex justify-between text-primary">
+                        <span>Réduction ({appliedPromo})</span>
                         <span>-{discount.toFixed(2)} DH</span>
                       </div>
                     )}
@@ -341,12 +341,12 @@ const Cart = () => {
 
               {/* Trust Indicators */}
               <div className="text-center space-y-2">
-                <div className="flex justify-center gap-4">
-                  <Badge variant="outline" className="text-green-600 dark:text-green-400 border-green-600 dark:border-green-400">
+                <div className="flex justify-center gap-2">
+                  <Badge variant="outline" className="text-primary border-primary/50">
                     <Shield className="h-3 w-3 mr-1" />
                     Paiement Sécurisé
                   </Badge>
-                  <Badge variant="outline" className="text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400">
+                  <Badge variant="outline" className="text-foreground border-border">
                     <Truck className="h-3 w-3 mr-1" />
                     Livraison Rapide
                   </Badge>

@@ -1,171 +1,99 @@
-import { Phone, Mail, MapPin, Instagram, Award, Truck, Shield, RefreshCw, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Instagram, Facebook, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { NorifoodLogo } from '@/components/NorifoodLogo';
 
 export const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 text-white">
-      {/* Mobile App Style Bottom Features - Fixed at bottom on mobile */}
-      <div className="bg-gradient-to-r from-glovo-purple via-glovo-orange to-glovo-green p-4">
-        <div className="grid grid-cols-4 gap-2">
-          <motion.div 
-            className="flex flex-col items-center text-white"
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
-              <Award className="h-5 w-5" />
+    <footer className="bg-gradient-footer text-foreground border-t border-border mt-12">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-10">
+          {/* Brand */}
+          <div className="lg:col-span-4 space-y-4">
+            <NorifoodLogo size="lg" showTagline />
+            <p className="text-sm text-muted-foreground max-w-sm">
+              Le partenaire des restaurants pour des ingrédients asiatiques, sushi
+              et surgelés de qualité. Livraison rapide, sélection premium.
+            </p>
+            <div className="flex items-center gap-2 pt-1">
+              <a
+                href="https://instagram.com"
+                aria-label="Instagram"
+                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-colors"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
+              <a
+                href="https://facebook.com"
+                aria-label="Facebook"
+                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-colors"
+              >
+                <Facebook className="h-4 w-4" />
+              </a>
+              <a
+                href="https://wa.me/212608611511"
+                aria-label="WhatsApp"
+                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-colors"
+              >
+                <MessageCircle className="h-4 w-4" />
+              </a>
             </div>
-            <span className="text-[10px] font-medium text-center">Qualité</span>
-          </motion.div>
-          
-          <motion.div 
-            className="flex flex-col items-center text-white"
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
-              <Truck className="h-5 w-5" />
-            </div>
-            <span className="text-[10px] font-medium text-center">Livraison</span>
-          </motion.div>
-          
-          <motion.div 
-            className="flex flex-col items-center text-white"
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
-              <Shield className="h-5 w-5" />
-            </div>
-            <span className="text-[10px] font-medium text-center">Sécurisé</span>
-          </motion.div>
-          
-          <motion.div 
-            className="flex flex-col items-center text-white"
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-1 backdrop-blur-sm">
-              <RefreshCw className="h-5 w-5" />
-            </div>
-            <span className="text-[10px] font-medium text-center">Fraîcheur</span>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Main Footer - Mobile App Style */}
-      <div className="container mx-auto px-4 py-6 md:py-8">
-        {/* Contact Section - Mobile First */}
-        <div className="space-y-4 mb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-full flex items-center justify-center shrink-0">
-              <Phone className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex-1">
-              <p className="font-semibold text-sm">Commandez par téléphone</p>
-              <p className="text-gray-400 text-xs">0608 611 511 • 0608 411 511</p>
-            </div>
-            <a href="tel:0608611511" className="px-4 py-2 bg-glovo-purple rounded-full text-white text-sm font-medium">
-              Appeler
-            </a>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-glovo-orange to-glovo-green rounded-full flex items-center justify-center shrink-0">
-              <MessageCircle className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex-1">
-              <p className="font-semibold text-sm">WhatsApp</p>
-              <p className="text-gray-400 text-xs">Réponse rapide garantie</p>
-            </div>
-            <a href="https://wa.me/212608611511" className="px-4 py-2 bg-green-500 rounded-full text-white text-sm font-medium">
-              Chat
-            </a>
-          </div>
-        </div>
-
-        {/* Quick Links - Mobile App Style */}
-        <div className="grid grid-cols-2 gap-3 mb-6 md:hidden">
-          <Link to="/products" className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
-            <p className="font-medium text-sm">Nos Produits</p>
-            <p className="text-gray-400 text-xs">Poissons & Fruits de mer</p>
-          </Link>
-          <Link to="/about" className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
-            <p className="font-medium text-sm">À Propos</p>
-            <p className="text-gray-400 text-xs">Notre histoire</p>
-          </Link>
-          <Link to="/faq" className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
-            <p className="font-medium text-sm">FAQ</p>
-            <p className="text-gray-400 text-xs">Questions fréquentes</p>
-          </Link>
-          <Link to="/contact" className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
-            <p className="font-medium text-sm">Contact</p>
-            <p className="text-gray-400 text-xs">Nous joindre</p>
-          </Link>
-        </div>
-
-        {/* Desktop Links */}
-        <div className="hidden md:grid md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">Navigation</h3>
-            <ul className="space-y-2">
-              <li><Link to="/" className="text-gray-400 hover:text-white transition-colors text-sm">Accueil</Link></li>
-              <li><Link to="/products" className="text-gray-400 hover:text-white transition-colors text-sm">Nos Produits</Link></li>
-              <li><Link to="/about" className="text-gray-400 hover:text-white transition-colors text-sm">À Propos</Link></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">Contact</Link></li>
+          {/* Catalogue */}
+          <div className="lg:col-span-2">
+            <h3 className="nori-section-title mb-4">Catalogue</h3>
+            <ul className="space-y-2.5 text-sm">
+              <li><Link to="/products" className="text-muted-foreground hover:text-primary transition-colors">Tous les produits</Link></li>
+              <li><Link to="/products?category=sushi" className="text-muted-foreground hover:text-primary transition-colors">Sushi</Link></li>
+              <li><Link to="/products?category=surgeles" className="text-muted-foreground hover:text-primary transition-colors">Surgelés</Link></li>
+              <li><Link to="/products?category=epicerie" className="text-muted-foreground hover:text-primary transition-colors">Épicerie</Link></li>
+              <li><Link to="/recipes" className="text-muted-foreground hover:text-primary transition-colors">Recettes</Link></li>
             </ul>
           </div>
-          
-          <div>
-            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-orange to-glovo-green bg-clip-text text-transparent">Informations</h3>
-            <ul className="space-y-2">
-              <li><Link to="/faq" className="text-gray-400 hover:text-white transition-colors text-sm">FAQ</Link></li>
-              <li><Link to="/shipping" className="text-gray-400 hover:text-white transition-colors text-sm">Livraison</Link></li>
-              <li><Link to="/conditions-de-vente" className="text-gray-400 hover:text-white transition-colors text-sm">Conditions</Link></li>
-              <li><Link to="/privacy" className="text-gray-400 hover:text-white transition-colors text-sm">Confidentialité</Link></li>
+
+          {/* Infos */}
+          <div className="lg:col-span-2">
+            <h3 className="nori-section-title mb-4">Informations</h3>
+            <ul className="space-y-2.5 text-sm">
+              <li><Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">À propos</Link></li>
+              <li><Link to="/faq" className="text-muted-foreground hover:text-primary transition-colors">FAQ</Link></li>
+              <li><Link to="/shipping" className="text-muted-foreground hover:text-primary transition-colors">Livraison</Link></li>
+              <li><Link to="/conditions-de-vente" className="text-muted-foreground hover:text-primary transition-colors">Conditions</Link></li>
+              <li><Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">Confidentialité</Link></li>
             </ul>
           </div>
-          
-          <div>
-            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">Adresse</h3>
-            <div className="space-y-2 text-sm text-gray-400">
-              <p>Imm. Assala - 50 Gueliz</p>
-              <p>Bd Mohamed VI</p>
-              <p>Marrakech 40000, Maroc</p>
-              <div className="flex items-center gap-2 mt-3">
-                <Mail className="h-4 w-4 text-glovo-purple" />
-                <span>contact@norifood.ma</span>
+
+          {/* Contact */}
+          <div className="lg:col-span-4">
+            <h3 className="nori-section-title mb-4">Contact</h3>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-start gap-3 text-muted-foreground">
+                <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                <span>Imm. Assala – 50 Gueliz, Bd Mohamed VI, Marrakech 40000, Maroc</span>
               </div>
+              <a href="tel:0608611511" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
+                <Phone className="h-4 w-4 text-primary" />
+                0608 611 511 · 0608 411 511
+              </a>
+              <a href="mailto:contact@norifood.ma" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
+                <Mail className="h-4 w-4 text-primary" />
+                contact@norifood.ma
+              </a>
             </div>
-          </div>
-          
-          <div>
-            <h3 className="font-bold text-base mb-4 bg-gradient-to-r from-glovo-orange to-glovo-green bg-clip-text text-transparent">Horaires</h3>
-            <div className="space-y-2 text-sm text-gray-400">
-              <p>Lun - Sam: 6h - 20h</p>
-              <p>Dimanche: 8h - 18h</p>
-              <p className="text-glovo-purple font-medium mt-3">Livraison 7j/7</p>
+
+            <div className="mt-5 inline-flex flex-col gap-1 px-4 py-3 rounded-md bg-card border border-border">
+              <span className="text-[11px] uppercase tracking-wider text-primary font-bold">
+                Horaires
+              </span>
+              <span className="text-sm text-foreground">Lun – Sam : 6h – 20h</span>
+              <span className="text-sm text-foreground">Dimanche : 8h – 18h</span>
             </div>
           </div>
         </div>
 
-        {/* Social & Copyright */}
-        <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-white/10">
-          <div className="flex items-center gap-3 mb-4 md:mb-0">
-            <div className="w-8 h-8 bg-gradient-to-br from-glovo-purple to-glovo-orange rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">F</span>
-            </div>
-            <div>
-              <p className="font-bold text-sm">Norifood</p>
-              <p className="text-gray-400 text-xs">© 2024 • Produits de la Mer</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <a href="https://instagram.com" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-glovo-purple hover:to-glovo-orange transition-all">
-              <Instagram className="h-5 w-5" />
-            </a>
-            <a href="https://facebook.com" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-glovo-purple hover:to-glovo-orange transition-all">
-              <span className="text-lg font-bold">f</span>
-            </a>
-          </div>
+        <div className="mt-10 pt-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
+          <p>© {new Date().getFullYear()} Norifood SARL. Tous droits réservés.</p>
+          <p className="uppercase tracking-[0.2em]">Frozen · Asian · Sushi</p>
         </div>
       </div>
     </footer>

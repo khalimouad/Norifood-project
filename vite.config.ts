@@ -20,9 +20,9 @@ export default defineConfig(() => ({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'robots.txt'],
       manifest: {
-        name: 'Norifood - Produits de la Mer Frais',
+        name: 'Norifood — Ingrédients Asiatiques Pro',
         short_name: 'Norifood',
-        description: 'Poissons et fruits de mer de qualité premium, de l\'océan à votre table avec fraîcheur garantie',
+        description: 'Ingrédients sushi, asiatiques et surgelés de qualité premium pour les professionnels de la restauration',
         theme_color: '#0ea5e9',
         background_color: '#ffffff',
         display: 'standalone',

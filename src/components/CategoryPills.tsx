@@ -86,8 +86,8 @@ export const CategoryPills = ({ selectedCategory, onSelectCategory }: CategoryPi
           onClick={() => handleCategoryClick('all')}
           className={`category-pill flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium transition-all duration-300 button-press focus-ring ${
             selectedCategory === 'all' || !selectedCategory
-              ? 'bg-gradient-to-r from-glovo-purple to-glovo-orange text-white shadow-lg shadow-glovo-purple/20 scale-105'
-              : 'bg-white dark:bg-gray-800 text-foreground hover:bg-glovo-purple/10 border border-border shadow-sm'
+              ? 'bg-primary text-primary-foreground shadow-[0_4px_14px_-2px_hsl(var(--nori-red)/0.4)]'
+              : 'bg-card text-foreground hover:border-primary/60 border border-border'
           }`}
         >
           <span className="relative z-10 flex items-center gap-2">
@@ -113,8 +113,8 @@ export const CategoryPills = ({ selectedCategory, onSelectCategory }: CategoryPi
                 onClick={() => handleCategoryClick(category.id)}
                 className={`category-pill flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium transition-all duration-300 button-press focus-ring ${
                   selectedCategory === category.id
-                    ? 'bg-gradient-to-r from-glovo-purple to-glovo-orange text-white shadow-lg shadow-glovo-purple/20 scale-105'
-                    : 'bg-white dark:bg-gray-800 text-foreground hover:bg-glovo-purple/10 border border-border shadow-sm'
+                    ? 'bg-primary text-primary-foreground shadow-[0_4px_14px_-2px_hsl(var(--nori-red)/0.4)]'
+                    : 'bg-card text-foreground hover:border-primary/60 border border-border'
                 }`}
               >
                 <span className="relative z-10 flex items-center gap-2">

@@ -152,9 +152,9 @@ const Products = () => {
         <main className="pb-20 md:pb-0">
           <div className="relative overflow-hidden glovo-gradient-bg text-white py-12 md:py-16">
             <div className="container mx-auto px-4 text-center relative z-10">
-              <h1 className="text-3xl md:text-5xl font-bold mb-3 slide-up">Nos Produits Frais</h1>
+              <h1 className="text-3xl md:text-5xl font-bold mb-3 slide-up">Notre Catalogue</h1>
               <p className="text-lg md:text-xl opacity-90 fade-in">
-                Découvrez notre sélection de poissons et fruits de mer de qualité premium
+                Une sélection rigoureuse d'ingrédients sushi, asiatiques et surgelés pour les professionnels
               </p>
             </div>
             {/* Wave decoration */}
@@ -182,10 +182,10 @@ const Products = () => {
         <div className="relative overflow-hidden glovo-gradient-bg text-white py-12 md:py-16">
           <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="text-3xl md:text-5xl font-bold mb-3 slide-up drop-shadow-lg">
-              Nos Produits Frais
+              Notre Catalogue
             </h1>
             <p className="text-lg md:text-xl opacity-90 fade-in max-w-2xl mx-auto" style={{ animationDelay: '100ms' }}>
-              Découvrez notre sélection de poissons et fruits de mer de qualité premium
+              Une sélection rigoureuse d'ingrédients sushi, asiatiques et surgelés pour les professionnels
             </p>
           </div>
           {/* Floating decorations */}

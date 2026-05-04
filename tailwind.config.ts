@@ -62,35 +62,54 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				nori: {
+					DEFAULT: 'hsl(var(--nori-red))',
+					red: 'hsl(var(--nori-red))',
+					light: 'hsl(var(--nori-red-light))',
+					dark: 'hsl(var(--nori-red-dark))',
+					black: 'hsl(var(--nori-black))',
+					surface: 'hsl(var(--nori-surface))',
+					'surface-2': 'hsl(var(--nori-surface-2))',
+					line: 'hsl(var(--nori-line))',
+					gold: 'hsl(var(--nori-gold))'
+				},
+				/* Legacy aliases pointed at the new brand. */
 				ocean: {
-					DEFAULT: 'hsl(var(--glovo-purple))',
-					light: 'hsl(var(--glovo-purple-light))',
-					deep: 'hsl(var(--deep-purple))'
+					DEFAULT: 'hsl(var(--nori-red))',
+					light: 'hsl(var(--nori-red-light))',
+					deep: 'hsl(var(--nori-red-dark))'
 				},
 				glovo: {
-					DEFAULT: 'hsl(var(--glovo-purple))',
-					orange: 'hsl(var(--glovo-orange))',
-					orangeLight: 'hsl(var(--glovo-orange-light))',
-					green: 'hsl(var(--glovo-green))',
-					greenLight: 'hsl(var(--glovo-green-light))',
-					purple: 'hsl(var(--glovo-purple))',
-					purpleLight: 'hsl(var(--glovo-purple-light))',
-					pink: 'hsl(var(--glovo-pink))',
-					light: 'hsl(var(--glovo-purple-light))',
-					deep: 'hsl(var(--deep-purple))'
+					DEFAULT: 'hsl(var(--nori-red))',
+					orange: 'hsl(var(--nori-red))',
+					orangeLight: 'hsl(var(--nori-red-light))',
+					green: 'hsl(var(--nori-text-muted))',
+					greenLight: 'hsl(var(--nori-text-muted))',
+					purple: 'hsl(var(--nori-red))',
+					purpleLight: 'hsl(var(--nori-red-light))',
+					pink: 'hsl(var(--nori-red))',
+					light: 'hsl(var(--nori-red-light))',
+					deep: 'hsl(var(--nori-red-dark))'
 				},
-				seafoam: 'hsl(var(--glovo-green))',
-				coral: 'hsl(var(--glovo-orange))',
+				seafoam: 'hsl(var(--nori-text-muted))',
+				coral: 'hsl(var(--nori-red))',
 				wave: 'hsl(var(--wave))',
-				gold: 'hsl(var(--gold))',
-				'cart-purple': 'hsl(var(--cart-purple))'
+				gold: 'hsl(var(--nori-gold))',
+				'cart-purple': 'hsl(var(--nori-red))'
 			},
 			backgroundImage: {
-				'gradient-glovo': 'var(--gradient-glovo)',
-				'gradient-glovo-green': 'var(--gradient-glovo-green)',
-				'gradient-glovo-alt': 'var(--gradient-glovo-alt)',
+				'gradient-nori': 'var(--gradient-nori)',
+				'gradient-card': 'var(--gradient-card)',
+				'gradient-glovo': 'var(--gradient-nori)',
+				'gradient-glovo-green': 'var(--gradient-nori)',
+				'gradient-glovo-alt': 'var(--gradient-nori)',
 				'gradient-wave': 'var(--gradient-wave)',
-				'gradient-hero': 'var(--gradient-hero)'
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-footer': 'var(--gradient-footer)'
+			},
+			fontFamily: {
+				sans: ['Montserrat', 'system-ui', 'sans-serif'],
+				display: ['Montserrat', 'sans-serif']
 			},
 			boxShadow: {
 				'glovo': 'var(--shadow-glovo)',
