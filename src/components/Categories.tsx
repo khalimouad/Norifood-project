@@ -71,7 +71,7 @@ export const Categories = () => {
         {loading ? (
           <CategoryGridSkeleton count={6} />
         ) : (
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2.5 md:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 gap-3">
             {categories.map((category) => {
               const IconComponent = category.custom_svg
                 ? null
@@ -82,22 +82,37 @@ export const Categories = () => {
                 <button
                   key={category.id}
                   onClick={() => navigate(`/products?category=${category.slug}`)}
-                  className="group flex flex-col items-center justify-center gap-2 px-2 py-4 md:py-5 rounded-xl bg-card border border-border hover:border-primary hover:bg-secondary transition-colors"
+                  className="group flex flex-col rounded-xl overflow-hidden bg-card border border-border hover:border-primary transition-colors text-left"
                 >
-                  {IconComponent ? (
-                    <IconComponent
-                      className="h-7 w-7 md:h-8 md:w-8 text-foreground/80 group-hover:text-primary transition-colors"
-                      strokeWidth={1.5}
-                    />
-                  ) : (
-                    <Fish
-                      className="h-7 w-7 md:h-8 md:w-8 text-foreground/80 group-hover:text-primary transition-colors"
-                      strokeWidth={1.5}
-                    />
-                  )}
-                  <span className="text-[11px] md:text-xs font-semibold text-center text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
-                    {category.name}
-                  </span>
+                  <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
+                    {category.image_url ? (
+                      <img
+                        src={category.image_url}
+                        alt={category.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        {IconComponent ? (
+                          <IconComponent
+                            className="h-9 w-9 text-foreground/70 group-hover:text-primary transition-colors"
+                            strokeWidth={1.5}
+                          />
+                        ) : (
+                          <Fish
+                            className="h-9 w-9 text-foreground/70 group-hover:text-primary transition-colors"
+                            strokeWidth={1.5}
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <div className="px-3 py-2.5">
+                    <span className="text-xs md:text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight block">
+                      {category.name}
+                    </span>
+                  </div>
                 </button>
               );
             })}
