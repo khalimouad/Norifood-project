@@ -40,23 +40,21 @@ const AdminRecipeForm = () => {
 
   const fetchRecipe = async () => {
     if (!id) return;
-    
     try {
       setLoading(true);
-      const { data, error } = await supabase.functions.invoke('manage-recipes', {
-        method: 'GET',
-        body: { id }
-      });
-      
+      const { data, error } = await supabase
+        .from('recipes')
+        .select('*')
+        .eq('id', id)
+        .single();
       if (error) throw error;
-      
       if (data) {
         setFormData({
           title: data.title || '',
           slug: data.slug || '',
           description: data.description || '',
-          ingredients: data.ingredients || [''],
-          instructions: data.instructions || [''],
+          ingredients: (data.ingredients as string[]) || [''],
+          instructions: (data.instructions as string[]) || [''],
           prep_time: data.prep_time || 0,
           cook_time: data.cook_time || 0,
           servings: data.servings || 4,
@@ -68,9 +66,9 @@ const AdminRecipeForm = () => {
     } catch (error) {
       console.error('Error fetching recipe:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger la recette",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger la recette',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -80,42 +78,33 @@ const AdminRecipeForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const payload = {
         ...formData,
-        slug: formData.slug || formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
+        slug:
+          formData.slug ||
+          formData.title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, ''),
       };
 
-      const url = new URL('https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-recipes');
-      if (id) {
-        url.searchParams.set('id', id);
-      }
-
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      const response = await fetch(url.toString(), {
-        method: id ? 'PUT' : 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session?.access_token}`,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error('Failed to save recipe');
+      const { error } = id
+        ? await supabase.from('recipes').update(payload).eq('id', id)
+        : await supabase.from('recipes').insert(payload);
+      if (error) throw error;
 
       toast({
-        title: "Succès",
-        description: id ? "Recette modifiée avec succès" : "Recette créée avec succès",
+        title: 'Succès',
+        description: id ? 'Recette modifiée avec succès' : 'Recette créée avec succès',
       });
       navigate('/admin/recipes');
     } catch (error) {
       console.error('Error saving recipe:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder la recette",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de sauvegarder la recette',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);

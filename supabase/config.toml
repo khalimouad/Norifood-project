@@ -1,4 +1,4 @@
-project_id = "fxqeczayzxuvewncpaod"
+project_id = "zkpsbrhadbblpsnhdlav"
 
 [functions.manage-products]
 verify_jwt = true

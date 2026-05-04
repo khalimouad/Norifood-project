@@ -53,14 +53,18 @@ export const PromoCodesAdmin = () => {
 
   const fetchPromoCodes = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-promo-codes');
+      const { data, error } = await supabase
+        .from('promo_codes')
+        .select('*')
+        .order('created_at', { ascending: false });
       if (error) throw error;
-      setPromoCodes(Array.isArray(data) ? data : (data?.promo_codes || []));
+      setPromoCodes((data ?? []) as any);
     } catch (error) {
+      console.error('Error fetching promo codes:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les codes promo",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger les codes promo',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -70,52 +74,46 @@ export const PromoCodesAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const endpoint = editingCode ? `manage-promo-codes?id=${editingCode.id}` : 'manage-promo-codes';
-      
-      const { error } = await supabase.functions.invoke(endpoint, {
-        method: editingCode ? 'PUT' : 'POST',
-        body: formData,
-      });
-      
+      const payload = {
+        ...formData,
+        valid_from: formData.valid_from || null,
+        valid_until: formData.valid_until || null,
+      };
+      const { error } = editingCode
+        ? await supabase.from('promo_codes').update(payload).eq('id', editingCode.id)
+        : await supabase.from('promo_codes').insert(payload);
       if (error) throw error;
-      
       toast({
-        title: "Succès",
-        description: editingCode ? "Code promo modifié" : "Code promo créé",
+        title: 'Succès',
+        description: editingCode ? 'Code promo modifié' : 'Code promo créé',
       });
-      
       setIsDialogOpen(false);
       setEditingCode(null);
       resetForm();
       fetchPromoCodes();
     } catch (error) {
+      console.error('Error saving promo code:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder le code promo",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de sauvegarder le code promo',
+        variant: 'destructive',
       });
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer ce code promo ?")) return;
-    
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce code promo ?')) return;
     try {
-      const { error } = await supabase.functions.invoke(`manage-promo-codes?id=${id}`);
-      
+      const { error } = await supabase.from('promo_codes').delete().eq('id', id);
       if (error) throw error;
-      
-      toast({
-        title: "Succès",
-        description: "Code promo supprimé",
-      });
-      
+      toast({ title: 'Succès', description: 'Code promo supprimé' });
       fetchPromoCodes();
     } catch (error) {
+      console.error('Error deleting promo code:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de supprimer le code promo",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de supprimer le code promo',
+        variant: 'destructive',
       });
     }
   };

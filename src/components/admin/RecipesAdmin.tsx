@@ -56,14 +56,18 @@ export const RecipesAdmin = () => {
 
   const fetchRecipes = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-recipes');
+      const { data, error } = await supabase
+        .from('recipes')
+        .select('*')
+        .order('created_at', { ascending: false });
       if (error) throw error;
-      setRecipes(Array.isArray(data) ? data : (data?.recipes || []));
+      setRecipes((data ?? []) as any);
     } catch (error) {
+      console.error('Error fetching recipes:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les recettes",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger les recettes',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -73,59 +77,49 @@ export const RecipesAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const endpoint = editingRecipe ? `manage-recipes?id=${editingRecipe.id}` : 'manage-recipes';
-      
       const cleanData = {
         ...formData,
-        ingredients: formData.ingredients.filter(i => i.trim() !== ""),
-        instructions: formData.instructions.filter(i => i.trim() !== ""),
-        images: formData.images.filter(i => i.trim() !== ""),
+        ingredients: formData.ingredients.filter((i) => i.trim() !== ''),
+        instructions: formData.instructions.filter((i) => i.trim() !== ''),
+        images: formData.images.filter((i) => i.trim() !== ''),
       };
-      
-      const { error } = await supabase.functions.invoke(endpoint, {
-        method: editingRecipe ? 'PUT' : 'POST',
-        body: cleanData,
-      });
-      
+
+      const { error } = editingRecipe
+        ? await supabase.from('recipes').update(cleanData).eq('id', editingRecipe.id)
+        : await supabase.from('recipes').insert(cleanData);
       if (error) throw error;
-      
+
       toast({
-        title: "Succès",
-        description: editingRecipe ? "Recette modifiée" : "Recette créée",
+        title: 'Succès',
+        description: editingRecipe ? 'Recette modifiée' : 'Recette créée',
       });
-      
       setIsDialogOpen(false);
       setEditingRecipe(null);
       resetForm();
       fetchRecipes();
     } catch (error) {
+      console.error('Error saving recipe:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder la recette",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de sauvegarder la recette',
+        variant: 'destructive',
       });
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cette recette ?")) return;
-    
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')) return;
     try {
-      const { error } = await supabase.functions.invoke(`manage-recipes?id=${id}`);
-      
+      const { error } = await supabase.from('recipes').delete().eq('id', id);
       if (error) throw error;
-      
-      toast({
-        title: "Succès",
-        description: "Recette supprimée",
-      });
-      
+      toast({ title: 'Succès', description: 'Recette supprimée' });
       fetchRecipes();
     } catch (error) {
+      console.error('Error deleting recipe:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de supprimer la recette",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de supprimer la recette',
+        variant: 'destructive',
       });
     }
   };

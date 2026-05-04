@@ -46,16 +46,18 @@ export const CustomersAdmin = () => {
 
   const fetchCustomers = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-customers');
+      const { data, error } = await supabase
+        .from('customers')
+        .select('*')
+        .order('created_at', { ascending: false });
       if (error) throw error;
-      // Handle the response structure - it returns an object with customers array
-      const customersData = data?.customers || data || [];
-      setCustomers(customersData);
+      setCustomers((data ?? []) as any);
     } catch (error) {
+      console.error('Error fetching customers:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les clients",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger les clients',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -65,51 +67,41 @@ export const CustomersAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const endpoint = editingCustomer ? `manage-customers?id=${editingCustomer.id}` : 'manage-customers';
-      
-      const { error } = await supabase.functions.invoke(endpoint, {
-        body: formData,
-      });
-      
+      const { error } = editingCustomer
+        ? await supabase.from('customers').update(formData).eq('id', editingCustomer.id)
+        : await supabase.from('customers').insert(formData);
       if (error) throw error;
-      
       toast({
-        title: "Succès",
-        description: editingCustomer ? "Client modifié" : "Client créé",
+        title: 'Succès',
+        description: editingCustomer ? 'Client modifié' : 'Client créé',
       });
-      
       setIsDialogOpen(false);
       setEditingCustomer(null);
       resetForm();
       fetchCustomers();
     } catch (error) {
+      console.error('Error saving customer:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder le client",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de sauvegarder le client',
+        variant: 'destructive',
       });
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer ce client ?")) return;
-    
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce client ?')) return;
     try {
-      const { error } = await supabase.functions.invoke(`manage-customers?id=${id}`);
-      
+      const { error } = await supabase.from('customers').delete().eq('id', id);
       if (error) throw error;
-      
-      toast({
-        title: "Succès",
-        description: "Client supprimé",
-      });
-      
+      toast({ title: 'Succès', description: 'Client supprimé' });
       fetchCustomers();
     } catch (error) {
+      console.error('Error deleting customer:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de supprimer le client",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de supprimer le client',
+        variant: 'destructive',
       });
     }
   };
