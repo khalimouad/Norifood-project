@@ -107,7 +107,7 @@ export function PaymentsManager() {
       label: 'Montant',
       render: (payment: PaymentTransaction) => (
         <span className="font-medium">
-          {payment.amount.toFixed(2)} {payment.currency}
+          {((payment.amount) ?? 0).toFixed(2)} {payment.currency}
         </span>
       )
     },

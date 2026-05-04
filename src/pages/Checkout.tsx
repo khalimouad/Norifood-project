@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/useCart";
 import { useAuth } from "@/hooks/useAuth";
 import { AddressMapSelector } from "@/components/AddressMapSelector";
+import { formatPrice, safeNumber } from "@/lib/format";
 import { 
   CreditCard, 
   MapPin, 
@@ -468,7 +469,7 @@ const Checkout = () => {
                           </p>
                         </div>
                         <p className="font-medium">
-                          {(item.price * item.quantity).toFixed(2)} DH
+                          {formatPrice(safeNumber(item.price) * safeNumber(item.quantity))} DH
                         </p>
                       </div>
                     ))}
@@ -478,7 +479,7 @@ const Checkout = () => {
                     <div className="space-y-2">
                       <div className="flex justify-between">
                         <span>Sous-total</span>
-                        <span>{subtotal.toFixed(2)} DH</span>
+                        <span>{formatPrice(subtotal)} DH</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Livraison</span>
@@ -487,7 +488,7 @@ const Checkout = () => {
                       <Separator />
                       <div className="flex justify-between text-lg font-bold">
                         <span>Total</span>
-                        <span>{total.toFixed(2)} DH</span>
+                        <span>{formatPrice(total)} DH</span>
                       </div>
                     </div>
                   </CardContent>

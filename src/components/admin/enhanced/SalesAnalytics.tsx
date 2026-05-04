@@ -144,7 +144,7 @@ export function SalesAnalytics() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{salesData.totalRevenue.toFixed(2)} MAD</div>
+            <div className="text-2xl font-bold">{((salesData.totalRevenue) ?? 0).toFixed(2)} MAD</div>
             <div className="flex items-center text-xs text-muted-foreground">
               <TrendingUp className="h-3 w-3 mr-1" />
               +{salesData.revenueGrowth}% ce mois
@@ -204,7 +204,7 @@ export function SalesAnalytics() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-medium">{order.total_amount.toFixed(2)} MAD</div>
+                  <div className="font-medium">{((order.total_amount) ?? 0).toFixed(2)} MAD</div>
                   <Badge variant={order.status === 'completed' ? 'default' : 'secondary'}>
                     {order.status}
                   </Badge>

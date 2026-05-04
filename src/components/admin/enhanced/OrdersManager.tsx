@@ -223,7 +223,7 @@ export function OrdersManager() {
       label: 'Total',
       sortable: true,
       render: (value: number) => (
-        <span className="font-medium">{value.toFixed(2)} MAD</span>
+        <span className="font-medium">{((value) ?? 0).toFixed(2)} MAD</span>
       ),
     },
     {
@@ -410,23 +410,23 @@ export function OrdersManager() {
                         <tr key={item.id} className="border-t">
                           <td className="p-3">{item.products?.name}</td>
                           <td className="text-right p-3">{item.quantity}</td>
-                          <td className="text-right p-3">{item.unit_price.toFixed(2)} MAD</td>
-                          <td className="text-right p-3 font-medium">{item.total_price.toFixed(2)} MAD</td>
+                          <td className="text-right p-3">{((item.unit_price) ?? 0).toFixed(2)} MAD</td>
+                          <td className="text-right p-3 font-medium">{((item.total_price) ?? 0).toFixed(2)} MAD</td>
                         </tr>
                       ))}
                     </tbody>
                     <tfoot className="bg-muted">
                       <tr>
                         <td colSpan={3} className="text-right p-3 font-medium">Sous-total:</td>
-                        <td className="text-right p-3 font-medium">{selectedOrder.subtotal.toFixed(2)} MAD</td>
+                        <td className="text-right p-3 font-medium">{((selectedOrder.subtotal) ?? 0).toFixed(2)} MAD</td>
                       </tr>
                       <tr>
                         <td colSpan={3} className="text-right p-3 font-medium">Frais de livraison:</td>
-                        <td className="text-right p-3 font-medium">{selectedOrder.delivery_fee.toFixed(2)} MAD</td>
+                        <td className="text-right p-3 font-medium">{((selectedOrder.delivery_fee) ?? 0).toFixed(2)} MAD</td>
                       </tr>
                       <tr>
                         <td colSpan={3} className="text-right p-3 font-bold">Total:</td>
-                        <td className="text-right p-3 font-bold text-lg">{selectedOrder.total_amount.toFixed(2)} MAD</td>
+                        <td className="text-right p-3 font-bold text-lg">{((selectedOrder.total_amount) ?? 0).toFixed(2)} MAD</td>
                       </tr>
                     </tfoot>
                   </table>

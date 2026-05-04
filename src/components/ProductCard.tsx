@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useCart } from '@/hooks/useCart';
 import { Plus, Minus, Star } from 'lucide-react';
 import placeholderImage from '@/assets/placeholder-product.jpg';
+import { formatPrice, safeNumber } from '@/lib/format';
 
 interface ProductCardProps {
   id: string;
@@ -32,8 +33,9 @@ const ProductCard = ({
   const { addItem } = useCart();
   const { toast } = useToast();
 
+  const safePrice = safeNumber(price);
   const handleAdd = () => {
-    addItem({ id, name, price, image, unitType: unitType as string });
+    addItem({ id, name, price: safePrice, image, unitType: unitType as string });
     setQuantity((q) => q + 1);
     toast({
       title: 'Ajouté au panier',
@@ -45,7 +47,7 @@ const ProductCard = ({
     setQuantity((q) => (q > 1 ? q - 1 : 1));
   };
 
-  const discountedPrice = discount ? price * (1 - discount / 100) : price;
+  const discountedPrice = discount ? safePrice * (1 - discount / 100) : safePrice;
 
   return (
     <article className="group relative flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-colors hover:border-primary">
@@ -94,11 +96,11 @@ const ProductCard = ({
           <div className="flex items-baseline gap-1.5 min-w-0">
             {discount ? (
               <span className="text-xs text-muted-foreground line-through">
-                {price.toFixed(2)} €
+                {formatPrice(price)} €
               </span>
             ) : null}
             <span className="text-xl md:text-2xl font-extrabold text-primary leading-none truncate">
-              {discountedPrice.toFixed(2)} €
+              {formatPrice(discountedPrice)} €
             </span>
             <span className="text-[10px] md:text-xs text-muted-foreground shrink-0">
               / {unitType}

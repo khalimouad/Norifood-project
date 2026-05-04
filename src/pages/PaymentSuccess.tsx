@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Package, Clock, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { formatPrice, safeNumber } from "@/lib/format";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
@@ -126,7 +127,7 @@ const PaymentSuccess = () => {
                       </div>
                       <div>
                         <p className="font-medium text-gray-700">Montant total</p>
-                        <p className="text-gray-900 font-semibold">{orderDetails.total?.toFixed(2)} DH</p>
+                        <p className="text-gray-900 font-semibold">{formatPrice(orderDetails.total)} DH</p>
                       </div>
                       <div>
                         <p className="font-medium text-gray-700">Mode de paiement</p>
@@ -148,7 +149,7 @@ const PaymentSuccess = () => {
                           <p className="font-medium">{item.name}</p>
                           <p className="text-sm text-gray-600">Quantité: {item.quantity}</p>
                         </div>
-                        <p className="font-medium">{(item.price * item.quantity).toFixed(2)} DH</p>
+                        <p className="font-medium">{formatPrice(safeNumber(item.price) * safeNumber(item.quantity))} DH</p>
                       </div>
                     ))}
                   </div>

@@ -9,6 +9,7 @@ import { useCart } from "@/hooks/useCart";
 import { Plus, Minus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
+import { formatPrice, safeNumber } from "@/lib/format";
 
 // Product components
 import { ProductImageGallery } from "@/components/product/ProductImageGallery";
@@ -235,7 +236,11 @@ const ProductDetail = () => {
                   className="w-full h-14 rounded-md bg-primary text-primary-foreground hover:bg-nori-light font-bold uppercase tracking-wider text-sm shadow-[0_8px_24px_-6px_hsl(var(--nori-red)/0.5)]"
                 >
                   Ajouter au panier ·{' '}
-                  {((selectedVariation ? selectedVariation.price : product.base_price) * quantity).toFixed(2)}{' '}
+                  {formatPrice(
+                    safeNumber(
+                      selectedVariation ? selectedVariation.price : product.base_price,
+                    ) * quantity,
+                  )}{' '}
                   €
                 </Button>
               </div>

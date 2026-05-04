@@ -9,6 +9,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { Package, ArrowRight, Trash2, Calendar, MapPin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { formatPrice } from '@/lib/format';
 
 interface Order {
   id: string;
@@ -167,7 +168,7 @@ const Orders = () => {
 
                     <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
                       <span className="text-2xl font-extrabold text-primary tabular-nums">
-                        {o.total_amount.toFixed(2)} €
+                        {formatPrice(o.total_amount)} €
                       </span>
                       {canCancel && (
                         <button

@@ -1,4 +1,5 @@
 import { Tables } from "@/integrations/supabase/types";
+import { formatPrice, safeNumber } from "@/lib/format";
 
 type ProductVariation = Tables<"product_variations">;
 
@@ -37,9 +38,12 @@ export const ProductVariations = ({
                 </p>
               </div>
               <div className="text-right">
-                <p className="font-bold text-primary">{variation.price} DH</p>
+                <p className="font-bold text-primary">{formatPrice(variation.price)} DH</p>
                 <p className="text-xs text-muted-foreground">
-                  {(variation.price / variation.weight_kg!).toFixed(2)} DH/kg
+                  {(() => {
+                    const w = safeNumber(variation.weight_kg);
+                    return w > 0 ? `${formatPrice(safeNumber(variation.price) / w)} DH/kg` : '—';
+                  })()}
                 </p>
               </div>
             </div>
