@@ -22,8 +22,6 @@ interface Banner {
   is_active: boolean;
   show_on_mobile: boolean;
   show_on_desktop: boolean;
-  start_date: string;
-  end_date: string;
   created_at: string;
 }
 
@@ -45,8 +43,6 @@ export const BannersAdmin = () => {
     is_active: true,
     show_on_mobile: true,
     show_on_desktop: true,
-    start_date: "",
-    end_date: "",
   });
 
   useEffect(() => {
@@ -76,14 +72,9 @@ export const BannersAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const payload = {
-        ...formData,
-        start_date: formData.start_date || null,
-        end_date: formData.end_date || null,
-      };
       const { error } = editingBanner
-        ? await supabase.from('banners').update(payload).eq('id', editingBanner.id)
-        : await supabase.from('banners').insert(payload);
+        ? await supabase.from('banners').update(formData).eq('id', editingBanner.id)
+        : await supabase.from('banners').insert(formData);
       if (error) throw error;
       toast({
         title: 'Succès',
@@ -132,8 +123,6 @@ export const BannersAdmin = () => {
       is_active: true,
       show_on_mobile: true,
       show_on_desktop: true,
-      start_date: "",
-      end_date: "",
     });
   };
 
@@ -150,8 +139,6 @@ export const BannersAdmin = () => {
       is_active: banner.is_active,
       show_on_mobile: banner.show_on_mobile,
       show_on_desktop: banner.show_on_desktop,
-      start_date: banner.start_date ? new Date(banner.start_date).toISOString().split('T')[0] : "",
-      end_date: banner.end_date ? new Date(banner.end_date).toISOString().split('T')[0] : "",
     });
     setIsDialogOpen(true);
   };
@@ -243,27 +230,6 @@ export const BannersAdmin = () => {
                 />
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="start_date">Date de début</Label>
-                  <Input
-                    id="start_date"
-                    type="date"
-                    value={formData.start_date}
-                    onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="end_date">Date de fin</Label>
-                  <Input
-                    id="end_date"
-                    type="date"
-                    value={formData.end_date}
-                    onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
-                  />
-                </div>
-              </div>
-              
               <div className="flex gap-6">
                 <div className="flex items-center space-x-2">
                   <Switch
@@ -324,11 +290,6 @@ export const BannersAdmin = () => {
                     <span>Mobile: {banner.show_on_mobile ? 'Oui' : 'Non'}</span>
                     <span>Desktop: {banner.show_on_desktop ? 'Oui' : 'Non'}</span>
                   </div>
-                  {banner.start_date && banner.end_date && (
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Période: {new Date(banner.start_date).toLocaleDateString()} - {new Date(banner.end_date).toLocaleDateString()}
-                    </p>
-                  )}
                 </div>
                 <div className="flex gap-2">
                   <Button
