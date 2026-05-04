@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { useCart } from '@/hooks/useCart';
-import { ShoppingCart, Plus, Minus, Star } from 'lucide-react';
+import { Plus, Minus, Star } from 'lucide-react';
 import placeholderImage from '@/assets/placeholder-product.jpg';
 
 interface ProductCardProps {
@@ -22,7 +21,6 @@ interface ProductCardProps {
 const ProductCard = ({
   id,
   name,
-  description,
   price,
   image,
   unitType,
@@ -34,22 +32,23 @@ const ProductCard = ({
   const { addItem } = useCart();
   const { toast } = useToast();
 
-  const handleAddToCart = () => {
+  const handleAdd = () => {
     addItem({ id, name, price, image, unitType: unitType as string });
+    setQuantity((q) => q + 1);
     toast({
       title: 'Ajouté au panier',
-      description: `${quantity} × ${name}`,
+      description: name,
     });
   };
 
-  const updateQuantity = (n: number) => {
-    if (n >= 1) setQuantity(n);
+  const handleDecrement = () => {
+    setQuantity((q) => (q > 1 ? q - 1 : 1));
   };
 
   const discountedPrice = discount ? price * (1 - discount / 100) : price;
 
   return (
-    <article className="group relative flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-primary/60 hover:shadow-[0_12px_30px_-12px_hsl(var(--nori-red)/0.45)]">
+    <article className="group relative flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-colors hover:border-primary">
       <div className="relative aspect-square overflow-hidden bg-nori-surface-2">
         <Link to={`/product/${id}`} className="block w-full h-full">
           <img
@@ -68,9 +67,9 @@ const ProductCard = ({
             </Badge>
           ) : null}
           {featured && (
-            <Badge className="bg-black/80 text-foreground font-bold text-[10px] px-2 py-1 rounded-md border border-border backdrop-blur-sm">
-              <Star className="h-2.5 w-2.5 mr-1 fill-primary text-primary" />
-              TOP
+            <Badge className="bg-primary text-primary-foreground font-bold text-[10px] px-2 py-1 rounded-md border-0 uppercase tracking-wider">
+              <Star className="h-2.5 w-2.5 mr-1 fill-current" />
+              Top
             </Badge>
           )}
         </div>
@@ -91,52 +90,40 @@ const ProductCard = ({
           </h3>
         </Link>
 
-        <div className="flex items-baseline gap-2">
-          {discount ? (
-            <span className="text-xs text-muted-foreground line-through">
-              {price.toFixed(2)} €
+        <div className="mt-auto flex items-end justify-between gap-2 pt-1">
+          <div className="flex items-baseline gap-1.5 min-w-0">
+            {discount ? (
+              <span className="text-xs text-muted-foreground line-through">
+                {price.toFixed(2)} €
+              </span>
+            ) : null}
+            <span className="text-xl md:text-2xl font-extrabold text-primary leading-none truncate">
+              {discountedPrice.toFixed(2)} €
             </span>
-          ) : null}
-          <span className="text-xl md:text-2xl font-extrabold text-primary leading-none">
-            {discountedPrice.toFixed(2)} €
-          </span>
-          <span className="text-xs text-muted-foreground">/ {unitType}</span>
-        </div>
-
-        <div className="mt-auto flex items-center gap-2 pt-2">
-          <div className="inline-flex items-center bg-secondary rounded-md border border-border h-9">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => updateQuantity(quantity - 1)}
-              disabled={quantity <= 1 || !inStock}
-              className="h-9 w-8 p-0 rounded-none hover:bg-primary/10 hover:text-primary"
-              aria-label="Diminuer"
-            >
-              <Minus className="h-3 w-3" />
-            </Button>
-            <span className="w-7 text-center text-sm font-bold tabular-nums">{quantity}</span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => updateQuantity(quantity + 1)}
-              disabled={!inStock}
-              className="h-9 w-8 p-0 rounded-none hover:bg-primary/10 hover:text-primary"
-              aria-label="Augmenter"
-            >
-              <Plus className="h-3 w-3" />
-            </Button>
+            <span className="text-[10px] md:text-xs text-muted-foreground shrink-0">
+              / {unitType}
+            </span>
           </div>
 
-          <Button
-            onClick={handleAddToCart}
-            disabled={!inStock}
-            size="sm"
-            className="flex-1 h-9 rounded-md bg-primary text-primary-foreground hover:bg-nori-light font-semibold text-xs uppercase tracking-wide gap-1.5"
-          >
-            <ShoppingCart className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Ajouter</span>
-          </Button>
+          <div className="inline-flex items-center bg-secondary border border-border rounded-md h-9 shrink-0">
+            <button
+              onClick={handleDecrement}
+              disabled={quantity <= 1 || !inStock}
+              className="h-9 w-8 inline-flex items-center justify-center text-foreground/80 hover:text-primary disabled:opacity-40"
+              aria-label="Diminuer"
+            >
+              <Minus className="h-3.5 w-3.5" />
+            </button>
+            <span className="w-6 text-center text-sm font-bold tabular-nums">{quantity}</span>
+            <button
+              onClick={handleAdd}
+              disabled={!inStock}
+              className="h-9 w-9 inline-flex items-center justify-center bg-primary text-primary-foreground hover:bg-nori-light disabled:opacity-40 rounded-r-md"
+              aria-label={`Ajouter ${name} au panier`}
+            >
+              <Plus className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
     </article>
