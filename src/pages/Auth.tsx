@@ -153,51 +153,60 @@ const HomeView = ({
   onSignUp: () => void;
   onBack: () => void;
 }) => (
-  <div className="relative flex-1 flex flex-col items-center justify-between px-6 py-10">
-    <button
-      onClick={onBack}
-      className="self-start inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-    >
-      <ArrowLeft className="h-4 w-4" />
-      Retour
-    </button>
+  <div className="relative flex-1 min-h-screen overflow-hidden">
+    {/* Full-bleed background photo */}
+    <img
+      src={salmonImage}
+      alt=""
+      aria-hidden="true"
+      className="absolute inset-0 w-full h-full object-cover"
+    />
+    {/* Bottom-up dark gradient for legibility */}
+    <div
+      className="absolute inset-0"
+      style={{
+        background:
+          'linear-gradient(to top, hsl(0 0% 0%) 0%, hsl(0 0% 0% / 0.92) 28%, hsl(0 0% 0% / 0.55) 55%, hsl(0 0% 0% / 0.25) 78%, transparent 100%)',
+      }}
+    />
 
-    <div className="flex flex-col items-center gap-8 max-w-sm w-full mt-6">
-      <NorifoodLogo size="xl" />
+    {/* Content */}
+    <div className="relative z-10 flex flex-col min-h-screen px-6 pt-8 pb-10">
+      <button
+        onClick={onBack}
+        className="self-start inline-flex items-center gap-2 text-sm text-foreground/85 hover:text-foreground transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Retour
+      </button>
 
-      <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-border bg-card">
-        <img
-          src={salmonImage}
-          alt="Sélection Norifood"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute bottom-0 left-0 right-0 p-5 bg-black/80 backdrop-blur-sm border-t border-border">
-          <p className="text-xs uppercase tracking-[0.3em] text-primary font-bold mb-1">
-            Norifood Pro
-          </p>
-          <p className="text-foreground text-sm font-semibold">
-            Votre partenaire d'ingrédients asiatiques
-          </p>
+      <div className="flex-1" />
+
+      <div className="flex flex-col items-center gap-7 max-w-sm w-full mx-auto pb-2">
+        <NorifoodLogo size="lg" className="drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]" />
+
+        <p className="text-foreground/85 text-sm text-center max-w-xs">
+          Votre partenaire d'ingrédients sushi, asiatiques et surgelés.
+        </p>
+
+        <div className="flex flex-col gap-3 w-full pt-2">
+          <Button
+            onClick={onSignIn}
+            size="lg"
+            className="w-full h-12 rounded-md bg-primary text-primary-foreground hover:bg-nori-light font-bold uppercase tracking-wider text-sm shadow-[0_8px_24px_-6px_hsl(var(--nori-red)/0.5)]"
+          >
+            Se connecter
+          </Button>
+          <Button
+            onClick={onSignUp}
+            size="lg"
+            variant="outline"
+            className="w-full h-12 rounded-md border-foreground/30 bg-foreground/5 text-foreground hover:bg-foreground/10 backdrop-blur-sm font-semibold uppercase tracking-wider text-sm"
+          >
+            Créer un compte
+          </Button>
         </div>
       </div>
-    </div>
-
-    <div className="flex flex-col gap-3 w-full max-w-sm pt-8">
-      <Button
-        onClick={onSignIn}
-        size="lg"
-        className="w-full h-12 rounded-md bg-primary text-primary-foreground hover:bg-nori-light font-bold uppercase tracking-wider text-sm shadow-[0_8px_24px_-6px_hsl(var(--nori-red)/0.5)]"
-      >
-        Se connecter
-      </Button>
-      <Button
-        onClick={onSignUp}
-        size="lg"
-        variant="outline"
-        className="w-full h-12 rounded-md border-border bg-transparent text-foreground hover:bg-secondary font-semibold uppercase tracking-wider text-sm"
-      >
-        Créer un compte
-      </Button>
     </div>
   </div>
 );
