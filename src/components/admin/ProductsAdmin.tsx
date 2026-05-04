@@ -94,32 +94,28 @@ export const ProductsAdmin = () => {
     setFilteredProducts(filtered);
   }, [products, searchTerm, statusFilter, featuredFilter]);
 
+  const slugify = (s: string) =>
+    s
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
   const fetchProducts = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const response = await fetch(`https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${session?.access_token}`,
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4cWVjemF5enh1dmV3bmNwYW9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2MTM0NjUsImV4cCI6MjA2ODE4OTQ2NX0.j_n5rgp75XkDVkl617685i_g4CcVkAv5OyLC7qdtkR8',
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      // Handle paginated response
-      const productsData = data?.products || data || [];
-      setProducts(productsData);
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      setProducts((data ?? []) as Product[]);
     } catch (error) {
       console.error('Error fetching products:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les produits",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger les produits',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -129,72 +125,60 @@ export const ProductsAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const method = editingProduct ? 'PUT' : 'POST';
-      const url = editingProduct 
-        ? `https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products?id=${editingProduct.id}`
-        : 'https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products';
-      
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Authorization': `Bearer ${session?.access_token}`,
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4cWVjemF5enh1dmV3bmNwYW9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2MTM0NjUsImV4cCI6MjA2ODE4OTQ2NX0.j_n5rgp75XkDVkl617685i_g4CcVkAv5OyLC7qdtkR8',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
+      const payload = {
+        name: formData.name,
+        description: formData.description,
+        base_price: formData.base_price,
+        unit_type: formData.unit_type,
+        stock_quantity: formData.stock_quantity,
+        is_active: formData.is_active,
+        featured: formData.featured,
+        image_url: formData.image_url,
+        product_type: formData.product_type,
+        origin: formData.origin,
+        storage_conditions: formData.storage_conditions,
+        shelf_life: formData.shelf_life,
+        preparation_tips: formData.preparation_tips,
+        slug: editingProduct?.slug || slugify(formData.name),
+      };
+
+      const { error } = editingProduct
+        ? await supabase.from('products').update(payload).eq('id', editingProduct.id)
+        : await supabase.from('products').insert(payload);
+      if (error) throw error;
+
       toast({
-        title: "Succès",
-        description: editingProduct ? "Produit modifié" : "Produit créé",
+        title: 'Succès',
+        description: editingProduct ? 'Produit modifié' : 'Produit créé',
       });
-      
+
       setIsDialogOpen(false);
       setEditingProduct(null);
       resetForm();
       fetchProducts();
     } catch (error) {
+      console.error('Error saving product:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder le produit",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de sauvegarder le produit',
+        variant: 'destructive',
       });
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) return;
-    
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) return;
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const response = await fetch(`https://fxqeczayzxuvewncpaod.supabase.co/functions/v1/manage-products?id=${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${session?.access_token}`,
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4cWVjemF5enh1dmV3bmNwYW9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2MTM0NjUsImV4cCI6MjA2ODE4OTQ2NX0.j_n5rgp75XkDVkl617685i_g4CcVkAv5OyLC7qdtkR8',
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      toast({
-        title: "Succès",
-        description: "Produit supprimé",
-      });
-      
+      const { error } = await supabase.from('products').delete().eq('id', id);
+      if (error) throw error;
+      toast({ title: 'Succès', description: 'Produit supprimé' });
       fetchProducts();
     } catch (error) {
+      console.error('Error deleting product:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de supprimer le produit",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de supprimer le produit',
+        variant: 'destructive',
       });
     }
   };

@@ -84,13 +84,23 @@ const AdminProductForm = () => {
     }
   }, [id]);
 
+  const slugify = (s: string) =>
+    s
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
   const fetchCategories = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-categories', {
-        body: { method: 'GET' }
-      });
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .eq('is_active', true)
+        .order('name');
       if (error) throw error;
-      setCategories(Array.isArray(data) ? data : []);
+      setCategories(data ?? []);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
@@ -98,14 +108,15 @@ const AdminProductForm = () => {
 
   const fetchProduct = async () => {
     if (!id) return;
-    
     try {
       setLoading(true);
-      const { data, error } = await supabase.functions.invoke('manage-products', {
-        body: { method: 'GET', id }
-      });
+      const { data, error } = await supabase
+        .from('products')
+        .select('*, product_variations(*)')
+        .eq('id', id)
+        .single();
       if (error) throw error;
-      
+
       if (data) {
         setFormData({
           name: data.name || '',
@@ -124,14 +135,14 @@ const AdminProductForm = () => {
           preparation_tips: data.preparation_tips || '',
           category_id: data.category_id || '',
         });
-        setVariations(data.product_variations || []);
+        setVariations(((data as any).product_variations as ProductVariation[]) || []);
       }
     } catch (error) {
       console.error('Error fetching product:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger le produit",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger le produit',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -143,31 +154,77 @@ const AdminProductForm = () => {
     setLoading(true);
 
     try {
-      const functionName = 'manage-products';
-      const payload = {
-        ...formData,
-        variations: variations,
-        method: id ? 'PUT' : 'POST',
-        id: id || undefined,
+      const productPayload = {
+        name: formData.name,
+        description: formData.description,
+        base_price: formData.base_price,
+        unit_type: formData.unit_type,
+        stock_quantity: formData.stock_quantity,
+        is_active: formData.is_active,
+        featured: formData.featured,
+        image_url: formData.image || formData.image_url,
+        product_type: formData.product_type,
+        origin: formData.origin,
+        storage_conditions: formData.storage_conditions,
+        shelf_life: formData.shelf_life,
+        preparation_tips: formData.preparation_tips,
+        category_id: formData.category_id || null,
+        slug: slugify(formData.name),
       };
 
-      const { data, error } = await supabase.functions.invoke(functionName, {
-        body: payload,
-      });
+      let productId = id;
+      if (id) {
+        const { error } = await supabase
+          .from('products')
+          .update(productPayload)
+          .eq('id', id);
+        if (error) throw error;
+      } else {
+        const { data, error } = await supabase
+          .from('products')
+          .insert(productPayload)
+          .select('id')
+          .single();
+        if (error) throw error;
+        productId = data!.id;
+      }
 
-      if (error) throw error;
+      // Sync variations: delete old (when editing), insert current set
+      if (productId) {
+        if (id) {
+          const { error: delErr } = await supabase
+            .from('product_variations')
+            .delete()
+            .eq('product_id', productId);
+          if (delErr) throw delErr;
+        }
+        if (variations.length > 0) {
+          const rows = variations.map((v) => ({
+            product_id: productId!,
+            name: v.name,
+            price: v.price,
+            weight_kg: v.weight_kg,
+            stock_quantity: v.stock_quantity,
+            is_active: v.is_active,
+          }));
+          const { error: insErr } = await supabase
+            .from('product_variations')
+            .insert(rows);
+          if (insErr) throw insErr;
+        }
+      }
 
       toast({
-        title: "Succès",
-        description: id ? "Produit modifié avec succès" : "Produit créé avec succès",
+        title: 'Succès',
+        description: id ? 'Produit modifié avec succès' : 'Produit créé avec succès',
       });
       navigate('/admin');
     } catch (error) {
       console.error('Error saving product:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder le produit",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de sauvegarder le produit',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);

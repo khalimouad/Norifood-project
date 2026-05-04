@@ -27,15 +27,18 @@ export const PaymentsAdmin = () => {
 
   const fetchPayments = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-payments');
+      const { data, error } = await supabase
+        .from('payment_transactions')
+        .select('*, orders(id, total_amount, customers(first_name, last_name))')
+        .order('created_at', { ascending: false });
       if (error) throw error;
-      setPayments(Array.isArray(data) ? data : []);
+      setPayments((data ?? []) as any);
     } catch (error) {
       console.error('Error fetching payments:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les paiements",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger les paiements',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);

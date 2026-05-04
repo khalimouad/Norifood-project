@@ -55,14 +55,18 @@ export const BannersAdmin = () => {
 
   const fetchBanners = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-banners');
+      const { data, error } = await supabase
+        .from('banners')
+        .select('*')
+        .order('position', { ascending: true });
       if (error) throw error;
-      setBanners(Array.isArray(data) ? data : (data?.banners || []));
+      setBanners((data ?? []) as Banner[]);
     } catch (error) {
+      console.error('Error fetching banners:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les bannières",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger les bannières',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -72,52 +76,46 @@ export const BannersAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const endpoint = editingBanner ? `manage-banners?id=${editingBanner.id}` : 'manage-banners';
-      
-      const { error } = await supabase.functions.invoke(endpoint, {
-        method: editingBanner ? 'PUT' : 'POST',
-        body: formData,
-      });
-      
+      const payload = {
+        ...formData,
+        start_date: formData.start_date || null,
+        end_date: formData.end_date || null,
+      };
+      const { error } = editingBanner
+        ? await supabase.from('banners').update(payload).eq('id', editingBanner.id)
+        : await supabase.from('banners').insert(payload);
       if (error) throw error;
-      
       toast({
-        title: "Succès",
-        description: editingBanner ? "Bannière modifiée" : "Bannière créée",
+        title: 'Succès',
+        description: editingBanner ? 'Bannière modifiée' : 'Bannière créée',
       });
-      
       setIsDialogOpen(false);
       setEditingBanner(null);
       resetForm();
       fetchBanners();
     } catch (error) {
+      console.error('Error saving banner:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder la bannière",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de sauvegarder la bannière',
+        variant: 'destructive',
       });
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cette bannière ?")) return;
-    
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette bannière ?')) return;
     try {
-      const { error } = await supabase.functions.invoke(`manage-banners?id=${id}`);
-      
+      const { error } = await supabase.from('banners').delete().eq('id', id);
       if (error) throw error;
-      
-      toast({
-        title: "Succès",
-        description: "Bannière supprimée",
-      });
-      
+      toast({ title: 'Succès', description: 'Bannière supprimée' });
       fetchBanners();
     } catch (error) {
+      console.error('Error deleting banner:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de supprimer la bannière",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de supprimer la bannière',
+        variant: 'destructive',
       });
     }
   };

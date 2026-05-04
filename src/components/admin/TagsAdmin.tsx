@@ -38,16 +38,18 @@ export const TagsAdmin = () => {
 
   const fetchTags = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-tags', {
-        method: 'GET'
-      });
+      const { data, error } = await supabase
+        .from('tags')
+        .select('*')
+        .order('name');
       if (error) throw error;
-      setTags(data || []);
+      setTags((data ?? []) as any);
     } catch (error) {
+      console.error('Error fetching tags:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les étiquettes",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger les étiquettes',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -57,54 +59,41 @@ export const TagsAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const endpoint = editingTag ? `manage-tags?id=${editingTag.id}` : 'manage-tags';
-      
-      const { error } = await supabase.functions.invoke(endpoint, {
-        method: editingTag ? 'PUT' : 'POST',
-        body: formData,
-      });
-      
+      const { error } = editingTag
+        ? await supabase.from('tags').update(formData).eq('id', editingTag.id)
+        : await supabase.from('tags').insert(formData);
       if (error) throw error;
-      
       toast({
-        title: "Succès",
-        description: editingTag ? "Étiquette modifiée" : "Étiquette créée",
+        title: 'Succès',
+        description: editingTag ? 'Étiquette modifiée' : 'Étiquette créée',
       });
-      
       setIsDialogOpen(false);
       setEditingTag(null);
       resetForm();
       fetchTags();
     } catch (error) {
+      console.error('Error saving tag:', error);
       toast({
-        title: "Erreur",
+        title: 'Erreur',
         description: "Impossible de sauvegarder l'étiquette",
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cette étiquette ?")) return;
-    
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette étiquette ?')) return;
     try {
-      const { error } = await supabase.functions.invoke(`manage-tags?id=${id}`, {
-        method: 'DELETE',
-      });
-      
+      const { error } = await supabase.from('tags').delete().eq('id', id);
       if (error) throw error;
-      
-      toast({
-        title: "Succès",
-        description: "Étiquette supprimée",
-      });
-      
+      toast({ title: 'Succès', description: 'Étiquette supprimée' });
       fetchTags();
     } catch (error) {
+      console.error('Error deleting tag:', error);
       toast({
-        title: "Erreur",
+        title: 'Erreur',
         description: "Impossible de supprimer l'étiquette",
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };

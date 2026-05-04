@@ -66,17 +66,28 @@ export const CategoriesAdmin = () => {
     setFilteredCategories(filtered);
   }, [categories, searchTerm, statusFilter]);
 
+  const slugify = (s: string) =>
+    s
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
   const fetchCategories = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-categories');
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .order('name');
       if (error) throw error;
-      setCategories(Array.isArray(data) ? data : []);
+      setCategories((data ?? []) as Category[]);
     } catch (error) {
       console.error('Error fetching categories:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les catégories",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger les catégories',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -86,52 +97,50 @@ export const CategoriesAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const method = editingCategory ? 'PUT' : 'POST';
-      const url = editingCategory ? `manage-categories?id=${editingCategory.id}` : 'manage-categories';
-      
-      const { error } = await supabase.functions.invoke(url, {
-        body: formData,
-      });
-      
+      const payload = {
+        name: formData.name,
+        description: formData.description,
+        image_url: formData.image_url,
+        is_active: formData.is_active,
+        slug: editingCategory?.slug || slugify(formData.name),
+      };
+
+      const { error } = editingCategory
+        ? await supabase.from('categories').update(payload).eq('id', editingCategory.id)
+        : await supabase.from('categories').insert(payload);
       if (error) throw error;
-      
+
       toast({
-        title: "Succès",
-        description: editingCategory ? "Catégorie modifiée" : "Catégorie créée",
+        title: 'Succès',
+        description: editingCategory ? 'Catégorie modifiée' : 'Catégorie créée',
       });
-      
       setIsDialogOpen(false);
       setEditingCategory(null);
       resetForm();
       fetchCategories();
     } catch (error) {
+      console.error('Error saving category:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder la catégorie",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de sauvegarder la catégorie',
+        variant: 'destructive',
       });
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cette catégorie ?")) return;
-    
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')) return;
     try {
-      const { error } = await supabase.functions.invoke(`manage-categories?id=${id}`);
-      
+      const { error } = await supabase.from('categories').delete().eq('id', id);
       if (error) throw error;
-      
-      toast({
-        title: "Succès",
-        description: "Catégorie supprimée",
-      });
-      
+      toast({ title: 'Succès', description: 'Catégorie supprimée' });
       fetchCategories();
     } catch (error) {
+      console.error('Error deleting category:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de supprimer la catégorie",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de supprimer la catégorie',
+        variant: 'destructive',
       });
     }
   };

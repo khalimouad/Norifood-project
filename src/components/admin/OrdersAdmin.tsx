@@ -66,14 +66,20 @@ export const OrdersAdmin = () => {
 
   const fetchOrders = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('manage-orders');
+      const { data, error } = await supabase
+        .from('orders')
+        .select(
+          `*, customers(first_name, last_name, email), order_items(*, products(name))`,
+        )
+        .order('created_at', { ascending: false });
       if (error) throw error;
-      setOrders(Array.isArray(data) ? data : (data?.orders || []));
+      setOrders((data ?? []) as any);
     } catch (error) {
+      console.error('Error fetching orders:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les commandes",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de charger les commandes',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -82,27 +88,22 @@ export const OrdersAdmin = () => {
 
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
-      const { error } = await supabase.functions.invoke('manage-orders', {
-        body: {
-          method: 'PUT',
-          id: orderId,
-          status: newStatus
-        }
-      });
-      
+      const { error } = await supabase
+        .from('orders')
+        .update({ status: newStatus, updated_at: new Date().toISOString() })
+        .eq('id', orderId);
       if (error) throw error;
-      
       toast({
-        title: "Succès",
-        description: "Statut de la commande mis à jour",
+        title: 'Succès',
+        description: 'Statut de la commande mis à jour',
       });
-      
       fetchOrders();
     } catch (error) {
+      console.error('Error updating order:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de mettre à jour le statut",
-        variant: "destructive",
+        title: 'Erreur',
+        description: 'Impossible de mettre à jour le statut',
+        variant: 'destructive',
       });
     }
   };
