@@ -25,8 +25,8 @@ export const ProductImageGallery = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {/* Main Image - Mobile App Style */}
-      <div className="relative aspect-square rounded-3xl overflow-hidden bg-gray-100 dark:bg-gray-800 shadow-xl">
+      {/* Main Image */}
+      <div className="relative aspect-square rounded-2xl overflow-hidden bg-card border border-border shadow-2xl">
         <motion.img
           key={selectedImage}
           src={validImages[selectedImage]}
@@ -58,10 +58,10 @@ export const ProductImageGallery = ({
             <motion.button
               key={index}
               onClick={() => onSelectImage(index)}
-              className={`shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden border-2 transition-all ${
-                selectedImage === index 
-                  ? "border-glovo-purple shadow-lg shadow-glovo-purple/20 scale-105" 
-                  : "border-gray-200 dark:border-gray-700 hover:border-glovo-purple/50"
+              className={`shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                selectedImage === index
+                  ? "border-primary shadow-lg shadow-primary/30"
+                  : "border-border hover:border-primary/50"
               }`}
               whileTap={{ scale: 0.95 }}
             >

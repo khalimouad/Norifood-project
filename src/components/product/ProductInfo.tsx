@@ -1,9 +1,9 @@
-import { Badge } from "@/components/ui/badge";
-import { Star, Check } from "lucide-react";
-import { Tables } from "@/integrations/supabase/types";
+import { Badge } from '@/components/ui/badge';
+import { Star, Check } from 'lucide-react';
+import { Tables } from '@/integrations/supabase/types';
 
-type Product = Tables<"products">;
-type ProductVariation = Tables<"product_variations">;
+type Product = Tables<'products'>;
+type ProductVariation = Tables<'product_variations'>;
 
 interface ProductInfoProps {
   product: Product;
@@ -11,38 +11,46 @@ interface ProductInfoProps {
 }
 
 export const ProductInfo = ({ product, selectedVariation }: ProductInfoProps) => {
+  const inStock = (selectedVariation ? selectedVariation.stock_quantity : product.stock_quantity) ?? 0;
+  const price = selectedVariation ? selectedVariation.price : product.base_price;
+  const unit = selectedVariation ? `pièce (${selectedVariation.weight_kg}kg)` : product.unit_type;
+
   return (
-    <div>
-      <div className="flex items-center gap-2 mb-2">
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
         {product.featured && (
-          <Badge className="bg-accent text-accent-foreground">Produit Vedette</Badge>
+          <Badge className="bg-primary text-primary-foreground border-0 uppercase text-[10px] tracking-wider">
+            Top vente
+          </Badge>
         )}
-        {product.stock_quantity && product.stock_quantity > 0 ? (
-          <Badge variant="outline" className="text-green-600 border-green-600 dark:text-green-400 dark:border-green-400">
+        {inStock > 0 ? (
+          <Badge variant="outline" className="text-primary border-primary/40 uppercase text-[10px] tracking-wider">
             <Check className="h-3 w-3 mr-1" />
-            En Stock
+            En stock
           </Badge>
         ) : (
-          <Badge variant="outline" className="text-red-600 border-red-600 dark:text-red-400 dark:border-red-400">
-            Rupture de Stock
+          <Badge variant="outline" className="border-border text-muted-foreground uppercase text-[10px] tracking-wider">
+            Rupture
           </Badge>
         )}
       </div>
-      <h1 className="text-3xl font-bold text-foreground mb-4">
+
+      <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground">
         {product.name}
       </h1>
-      <div className="flex items-center gap-2 mb-4">
-        <div className="flex text-yellow-400">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <Star key={star} className="h-5 w-5 fill-current" />
-          ))}
-        </div>
+
+      <div className="flex items-center gap-1.5">
+        {[1, 2, 3, 4, 5].map((s) => (
+          <Star key={s} className="h-4 w-4 fill-primary text-primary" />
+        ))}
+        <span className="text-xs text-muted-foreground ml-1">(qualité pro)</span>
       </div>
-      <div className="text-3xl font-bold text-primary mb-4">
-        {selectedVariation ? selectedVariation.price : product.base_price} DH
-        <span className="text-lg font-normal text-muted-foreground ml-2">
-          {selectedVariation ? `/ pièce (${selectedVariation.weight_kg}kg)` : `/ ${product.unit_type}`}
+
+      <div className="flex items-baseline gap-2 pt-1">
+        <span className="text-4xl md:text-5xl font-extrabold text-primary leading-none">
+          {price.toFixed(2)} €
         </span>
+        <span className="text-sm text-muted-foreground">/ {unit}</span>
       </div>
     </div>
   );

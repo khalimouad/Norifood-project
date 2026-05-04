@@ -1,77 +1,37 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { BottomNavigation } from "@/components/BottomNavigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
-import { useCart } from "@/hooks/useCart";
-import { 
-  ShoppingBag, 
-  Plus, 
-  Minus, 
-  Trash2, 
-  ArrowRight,
-  Tag,
-  Truck,
-  Clock,
-  Shield
-} from "lucide-react";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { BottomNavigation } from '@/components/BottomNavigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
+import { useCart } from '@/hooks/useCart';
+import { ShoppingBag, Plus, Minus, Trash2, ArrowRight } from 'lucide-react';
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, clearCart, getTotalItems, getTotalPrice } = useCart();
-  const [promoCode, setPromoCode] = useState("");
+  const { items, updateQuantity, removeItem, clearCart, getTotalPrice } = useCart();
+  const [promoCode, setPromoCode] = useState('');
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const handleClearCart = () => {
-    clearCart();
-    setAppliedPromo(null);
-    toast({
-      title: "Panier vidé",
-      description: "Tous les produits ont été retirés de votre panier",
-    });
+  const handleUpdate = (id: string, n: number) => {
+    if (n < 1) return removeItem(id);
+    updateQuantity(id, n);
   };
 
-  const handleUpdateQuantity = (id: string, newQuantity: number) => {
-    if (newQuantity < 1) {
-      handleRemoveItem(id);
-      return;
-    }
-    updateQuantity(id, newQuantity);
-  };
-
-  const handleRemoveItem = (id: string) => {
-    removeItem(id);
-    toast({
-      title: "Produit retiré",
-      description: "Le produit a été retiré de votre panier",
-    });
-  };
-
-  const applyPromoCode = () => {
-    if (promoCode.toLowerCase() === "fresh10") {
-      setAppliedPromo("FRESH10");
-      toast({
-        title: "Code promo appliqué !",
-        description: "10% de réduction sur votre commande",
-      });
+  const applyPromo = () => {
+    if (promoCode.toLowerCase() === 'nori10') {
+      setAppliedPromo('NORI10');
+      toast({ title: 'Code appliqué', description: '10% de réduction' });
     } else {
-      toast({
-        title: "Code promo invalide",
-        description: "Veuillez vérifier votre code promo",
-        variant: "destructive"
-      });
+      toast({ title: 'Code invalide', variant: 'destructive' });
     }
-    setPromoCode("");
+    setPromoCode('');
   };
 
   const subtotal = getTotalPrice();
-  const discount = appliedPromo === "FRESH10" ? subtotal * 0.1 : 0;
+  const discount = appliedPromo ? subtotal * 0.1 : 0;
   const deliveryFee = subtotal > 200 ? 0 : 25;
   const total = subtotal - discount + deliveryFee;
 
@@ -80,24 +40,23 @@ const Cart = () => {
       <div className="min-h-screen bg-background">
         <Header />
         <main className="pb-20 md:pb-0">
-          <div className="container mx-auto px-4 py-16">
-            <div className="text-center max-w-md mx-auto">
-              <div className="mb-8">
-                <ShoppingBag className="h-24 w-24 mx-auto text-muted-foreground mb-4" />
-                <h1 className="text-3xl font-bold text-foreground mb-4">
-                  Votre Panier est Vide
-                </h1>
-                <p className="text-muted-foreground mb-8">
-                  Découvrez nos produits frais et commencez vos achats
-                </p>
-              </div>
-              <Link to="/products">
-                <Button size="lg" className="w-full">
-                  <ArrowRight className="h-5 w-5 mr-2" />
-                  Découvrir nos Produits
-                </Button>
-              </Link>
+          <div className="container mx-auto px-4 py-20 text-center max-w-md">
+            <div className="w-20 h-20 mx-auto rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center mb-6">
+              <ShoppingBag className="h-9 w-9 text-primary" />
             </div>
+            <h1 className="text-2xl md:text-3xl font-extrabold mb-3">Votre panier est vide</h1>
+            <p className="text-muted-foreground mb-8">
+              Découvrez notre catalogue d'ingrédients sushi, asiatiques et surgelés.
+            </p>
+            <Link to="/products">
+              <Button
+                size="lg"
+                className="h-12 px-8 bg-primary text-primary-foreground hover:bg-nori-light font-bold uppercase tracking-wider text-sm"
+              >
+                Voir le catalogue
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </main>
         <Footer />
@@ -109,253 +68,164 @@ const Cart = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="pb-20 md:pb-0">
-        <div className="bg-muted py-8">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <ShoppingBag className="h-8 w-8 text-primary" />
-                <h1 className="text-3xl font-bold text-foreground">
-                  Mon Panier
-                </h1>
+      <main className="pb-32 md:pb-0">
+        <div className="container mx-auto px-4 py-6 md:py-10 max-w-3xl">
+          {/* Heading */}
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <p className="nori-section-title text-primary mb-1">Mon panier</p>
+              <h1 className="text-2xl md:text-3xl font-extrabold">
+                Votre panier ({items.length})
+              </h1>
+            </div>
+            <button
+              onClick={clearCart}
+              className="text-xs text-muted-foreground hover:text-primary uppercase tracking-wide font-semibold"
+            >
+              Vider
+            </button>
+          </div>
+
+          {/* Items */}
+          <div className="rounded-xl border border-border bg-card overflow-hidden divide-y divide-border">
+            {items.map((item) => (
+              <div key={item.id} className="flex items-center gap-3 p-3 md:p-4">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover bg-secondary border border-border shrink-0"
+                />
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-sm md:text-base text-foreground truncate">
+                    {item.name}
+                  </h3>
+                  {item.weight && (
+                    <p className="text-xs text-muted-foreground">{item.weight}kg</p>
+                  )}
+                  <p className="text-base md:text-lg font-extrabold text-primary mt-1">
+                    {(item.price * item.quantity).toFixed(2)} €
+                  </p>
+                </div>
+
+                <div className="flex flex-col items-end gap-2">
+                  <div className="inline-flex items-center bg-secondary border border-border rounded-md h-8">
+                    <button
+                      onClick={() => handleUpdate(item.id, item.quantity - 1)}
+                      className="h-8 w-7 inline-flex items-center justify-center hover:text-primary"
+                      aria-label="Diminuer"
+                    >
+                      <Minus className="h-3 w-3" />
+                    </button>
+                    <span className="w-7 text-center text-xs font-bold tabular-nums">
+                      {item.quantity}
+                    </span>
+                    <button
+                      onClick={() => handleUpdate(item.id, item.quantity + 1)}
+                      className="h-8 w-7 inline-flex items-center justify-center hover:text-primary"
+                      aria-label="Augmenter"
+                    >
+                      <Plus className="h-3 w-3" />
+                    </button>
+                  </div>
+                  <button
+                    onClick={() => removeItem(item.id)}
+                    className="text-muted-foreground hover:text-primary"
+                    aria-label="Retirer"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
+            ))}
+          </div>
+
+          {/* Promo */}
+          <div className="mt-6 rounded-xl border border-border bg-card p-4">
+            {appliedPromo ? (
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-primary font-bold">
+                    Code {appliedPromo}
+                  </p>
+                  <p className="text-sm text-muted-foreground">10% de réduction appliquée</p>
+                </div>
+                <button
+                  onClick={() => setAppliedPromo(null)}
+                  className="text-xs text-muted-foreground hover:text-primary uppercase tracking-wide font-semibold"
+                >
+                  Retirer
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Code promo (essayez NORI10)"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  className="bg-secondary border-border"
+                />
+                <Button
+                  onClick={applyPromo}
+                  disabled={!promoCode}
+                  className="bg-primary text-primary-foreground hover:bg-nori-light font-semibold uppercase tracking-wide text-xs"
+                >
+                  Appliquer
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {/* Totals */}
+          <div className="mt-6 rounded-xl border border-border bg-card p-5 space-y-3">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Sous-total</span>
+              <span className="font-semibold tabular-nums">{subtotal.toFixed(2)} €</span>
+            </div>
+            {discount > 0 && (
+              <div className="flex justify-between text-sm text-primary">
+                <span>Réduction ({appliedPromo})</span>
+                <span className="font-semibold tabular-nums">-{discount.toFixed(2)} €</span>
+              </div>
+            )}
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Livraison</span>
+              <span className="font-semibold tabular-nums">
+                {deliveryFee === 0 ? 'Gratuite' : `${deliveryFee.toFixed(2)} €`}
+              </span>
+            </div>
+            {subtotal < 200 && (
+              <p className="text-xs text-muted-foreground">
+                Livraison gratuite à partir de 200 €.
+              </p>
+            )}
+            <div className="border-t border-border pt-3 flex justify-between items-baseline">
+              <span className="text-sm uppercase tracking-wider font-bold">Total</span>
+              <span className="text-2xl font-extrabold text-primary tabular-nums">
+                {total.toFixed(2)} €
+              </span>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-6 space-y-2.5">
+            <Link to="/checkout" className="block">
+              <Button
+                size="lg"
+                className="w-full h-14 rounded-md bg-primary text-primary-foreground hover:bg-nori-light font-bold uppercase tracking-wider text-sm shadow-[0_8px_24px_-6px_hsl(var(--nori-red)/0.5)]"
+              >
+                Initier la commande
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+            <Link to="/products">
               <Button
                 variant="outline"
-                size="sm"
-                onClick={handleClearCart}
-                className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                size="lg"
+                className="w-full h-12 rounded-md border-border bg-transparent hover:bg-secondary uppercase tracking-wider text-sm"
               >
-                <Trash2 className="h-4 w-4 mr-2" />
-                Vider le panier
+                Continuer mes achats
               </Button>
-            </div>
-            <p className="text-muted-foreground">
-              {items.length} article{items.length > 1 ? "s" : ""} dans votre panier
-            </p>
-          </div>
-        </div>
-
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Cart Items */}
-            <div className="lg:col-span-2 space-y-4">
-              {items.map((item) => (
-                <Card key={item.id} className="border-0 shadow-sm hover:shadow-md transition-shadow">
-                  <CardContent className="p-4 md:p-6">
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full sm:w-24 md:w-28 h-24 md:h-28 object-cover rounded-lg flex-shrink-0"
-                      />
-                      <div className="flex-1 min-w-0 space-y-3">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h3 className="font-semibold text-foreground text-lg mb-1">
-                              {item.name}
-                            </h3>
-                            {item.weight && (
-                              <p className="text-sm text-muted-foreground mb-1">
-                                Poids: {item.weight}kg
-                              </p>
-                            )}
-                            <div className="flex items-center gap-2">
-                              <span className="text-xl font-bold text-primary">
-                                {item.price} DH
-                              </span>
-                              <span className="text-sm text-muted-foreground">
-                                / {item.weight ? `pièce (${item.weight}kg)` : item.unitType}
-                              </span>
-                            </div>
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleRemoveItem(item.id)}
-                            className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8 p-0 flex-shrink-0"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                        
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3 bg-muted rounded-lg p-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                              className="h-8 w-8 p-0 border-0 bg-background shadow-sm"
-                            >
-                              <Minus className="h-4 w-4" />
-                            </Button>
-                            <span className="min-w-[3rem] text-center font-semibold text-lg">
-                              {item.quantity}
-                            </span>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                              className="h-8 w-8 p-0 border-0 bg-background shadow-sm"
-                            >
-                              <Plus className="h-4 w-4" />
-                            </Button>
-                          </div>
-                          <div className="text-right">
-                            <p className="text-sm text-muted-foreground mb-1">Total</p>
-                            <span className="font-bold text-2xl text-primary">
-                              {(item.price * item.quantity).toFixed(2)} DH
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-
-              {/* Promo Code */}
-              <Card className="border-0 shadow-sm">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-                    <Tag className="h-5 w-5 text-primary" />
-                    Code Promo
-                  </h3>
-                  {appliedPromo ? (
-                    <div className="flex items-center justify-between p-3 bg-primary/10 rounded-md border border-primary/40">
-                      <div>
-                        <p className="font-medium text-primary">Code appliqué : {appliedPromo}</p>
-                        <p className="text-sm text-muted-foreground">10% de réduction</p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setAppliedPromo(null)}
-                        className="text-primary hover:text-nori-light hover:bg-primary/10"
-                      >
-                        Retirer
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="flex gap-2">
-                      <Input
-                        placeholder="Entrez votre code promo"
-                        value={promoCode}
-                        onChange={(e) => setPromoCode(e.target.value)}
-                        className="flex-1"
-                      />
-                      <Button onClick={applyPromoCode} disabled={!promoCode}>
-                        Appliquer
-                      </Button>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Order Summary */}
-            <div className="space-y-6">
-              <Card className="border-0 shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-xl">Résumé de la Commande</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span>Sous-total</span>
-                      <span>{subtotal.toFixed(2)} DH</span>
-                    </div>
-                    {discount > 0 && (
-                      <div className="flex justify-between text-primary">
-                        <span>Réduction ({appliedPromo})</span>
-                        <span>-{discount.toFixed(2)} DH</span>
-                      </div>
-                    )}
-                    <div className="flex justify-between">
-                      <span>Livraison</span>
-                      <span>{deliveryFee === 0 ? "Gratuite" : `${deliveryFee} DH`}</span>
-                    </div>
-                    {subtotal < 200 && (
-                      <p className="text-sm text-muted-foreground">
-                        Livraison gratuite à partir de 200 DH
-                      </p>
-                    )}
-                    <Separator />
-                    <div className="flex justify-between text-lg font-bold">
-                      <span>Total</span>
-                      <span>{total.toFixed(2)} DH</span>
-                    </div>
-                  </div>
-
-                  <Link to="/checkout">
-                    <Button size="lg" className="w-full">
-                      <ArrowRight className="h-5 w-5 mr-2" />
-                      Passer la Commande
-                    </Button>
-                  </Link>
-
-                  <Link to="/products">
-                    <Button variant="outline" size="lg" className="w-full">
-                      Continuer mes Achats
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-
-              {/* Delivery Info */}
-              <Card className="border-0 shadow-sm">
-                <CardContent className="p-4 md:p-6">
-                  <h3 className="font-semibold text-foreground mb-3 md:mb-4 text-center md:text-left">
-                    Informations de Livraison
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:space-y-3 md:grid-cols-1">
-                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-muted sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
-                      <div className="flex-shrink-0">
-                        <Truck className="h-6 w-6 md:h-5 md:w-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-sm md:text-sm">Livraison Express</p>
-                        <p className="text-xs text-muted-foreground">Même jour ou 24h</p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-muted sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
-                      <div className="flex-shrink-0">
-                        <Clock className="h-6 w-6 md:h-5 md:w-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-sm md:text-sm">Créneau Flexible</p>
-                        <p className="text-xs text-muted-foreground">Choix de l'heure</p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col sm:flex-row md:flex-row items-center sm:items-start md:items-center gap-2 md:gap-3 text-center sm:text-left md:text-left p-3 sm:p-0 bg-muted sm:bg-transparent md:bg-transparent rounded-lg sm:rounded-none md:rounded-none">
-                      <div className="flex-shrink-0">
-                        <Shield className="h-6 w-6 md:h-5 md:w-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-sm md:text-sm">Fraîcheur Garantie</p>
-                        <p className="text-xs text-muted-foreground">Chaîne du froid respectée</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Trust Indicators */}
-              <div className="text-center space-y-2">
-                <div className="flex justify-center gap-2">
-                  <Badge variant="outline" className="text-primary border-primary/50">
-                    <Shield className="h-3 w-3 mr-1" />
-                    Paiement Sécurisé
-                  </Badge>
-                  <Badge variant="outline" className="text-foreground border-border">
-                    <Truck className="h-3 w-3 mr-1" />
-                    Livraison Rapide
-                  </Badge>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Satisfait ou remboursé sous 24h
-                </p>
-              </div>
-            </div>
+            </Link>
           </div>
         </div>
       </main>
