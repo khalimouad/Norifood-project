@@ -205,7 +205,7 @@ const Auth = () => {
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center space-y-2">
           <CardTitle className="text-3xl font-bold text-primary">
-            Fresh N'Good
+            Norifood
           </CardTitle>
           <CardDescription className="text-base">
             Connectez-vous pour accéder à votre compte

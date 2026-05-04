@@ -27,10 +27,10 @@ DO $$
 DECLARE
   admin_id UUID;
 BEGIN
-  SELECT id INTO admin_id FROM auth.users WHERE email = 'admin@freshngood.com' LIMIT 1;
+  SELECT id INTO admin_id FROM auth.users WHERE email = 'admin@norifood.com' LIMIT 1;
   IF admin_id IS NOT NULL THEN
     INSERT INTO public.admin_users (id, email, name, role, is_active)
-    VALUES (admin_id, 'admin@freshngood.com', 'Admin User', 'admin', true)
+    VALUES (admin_id, 'admin@norifood.com', 'Admin User', 'admin', true)
     ON CONFLICT (id) DO NOTHING;
   END IF;
 END $$;

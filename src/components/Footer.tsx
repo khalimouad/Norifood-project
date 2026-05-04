@@ -131,7 +131,7 @@ export const Footer = () => {
               <p>Marrakech 40000, Maroc</p>
               <div className="flex items-center gap-2 mt-3">
                 <Mail className="h-4 w-4 text-glovo-purple" />
-                <span>contact@freshngood.ma</span>
+                <span>contact@norifood.ma</span>
               </div>
             </div>
           </div>
@@ -153,7 +153,7 @@ export const Footer = () => {
               <span className="text-white font-bold text-sm">F</span>
             </div>
             <div>
-              <p className="font-bold text-sm">Fresh N'Good</p>
+              <p className="font-bold text-sm">Norifood</p>
               <p className="text-gray-400 text-xs">© 2024 • Produits de la Mer</p>
             </div>
           </div>

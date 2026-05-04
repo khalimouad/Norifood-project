@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Fresh N\'Good</string>
-    <string name="title_activity_main">Fresh N\'Good</string>
-    <string name="package_name">app.lovable.freshngood</string>
-    <string name="custom_url_scheme">app.lovable.freshngood</string>
+    <string name="app_name">Norifood</string>
+    <string name="title_activity_main">Norifood</string>
+    <string name="package_name">app.pixein.norifood</string>
+    <string name="custom_url_scheme">app.pixein.norifood</string>
 </resources>

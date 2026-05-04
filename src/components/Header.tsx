@@ -118,7 +118,7 @@ export const Header = () => {
               
               <div className="hidden sm:block">
                 <Link to="/" className="font-bold text-xl bg-gradient-to-r from-glovo-purple to-glovo-orange bg-clip-text text-transparent">
-                  Fresh N'Good
+                  Norifood
                 </Link>
               </div>
               

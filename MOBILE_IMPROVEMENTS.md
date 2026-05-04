@@ -1,4 +1,4 @@
-# Mobile App-Like Improvements - FreshNGood v2
+# Mobile App-Like Improvements - Norifood v2
 
 ## Overview
 Transformed the mobile experience to feel like a native mobile app with better touch interactions, cleaner header, and improved navigation.

@@ -129,7 +129,7 @@ export default function FAQ() {
                     <h3 className="font-semibold text-ocean mb-2">Comment peut-on passer commande ?</h3>
                     <p className="text-gray-700 mb-2">Vous avez plusieurs choix :</p>
                     <ul className="text-gray-700 space-y-1">
-                      <li>• Via notre site de commande en ligne : freshngood.ma, vous pouvez payer en ligne par carte bancaire</li>
+                      <li>• Via notre site de commande en ligne : norifood.ma, vous pouvez payer en ligne par carte bancaire</li>
                       <li>• Par téléphone ou WhatsApp au : 0608 611 511 (Marrakech)</li>
                     </ul>
                   </div>
@@ -159,7 +159,7 @@ export default function FAQ() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-ocean">Email</h4>
-                        <p className="text-gray-600">sales@freshngood.ma</p>
+                        <p className="text-gray-600">sales@norifood.ma</p>
                       </div>
                     </div>
                   </div>
@@ -170,7 +170,7 @@ export default function FAQ() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-seafoam">Facebook</h4>
-                        <p className="text-gray-600">freshngood.ma</p>
+                        <p className="text-gray-600">norifood.ma</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
@@ -179,7 +179,7 @@ export default function FAQ() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-seafoam">Instagram</h4>
-                        <p className="text-gray-600">freshngood.ma</p>
+                        <p className="text-gray-600">norifood.ma</p>
                       </div>
                     </div>
                   </div>

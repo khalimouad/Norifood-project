@@ -45,8 +45,8 @@ jobs:
       - name: Sync Capacitor
         run: |
           echo 'webDir=dist' > capacitor.config.json
-          echo 'appId=app.lovable.freshngood' >> capacitor.config.json
-          echo 'appName=Fresh N\\'"'"'Good" >> capacitor.config.json
+          echo 'appId=app.pixein.norifood' >> capacitor.config.json
+          echo 'appName=Norifood' >> capacitor.config.json
           npx cap add android
           npx cap sync android
 

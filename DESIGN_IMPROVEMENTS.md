@@ -1,4 +1,4 @@
-# Design Improvements - FreshNGood v2
+# Design Improvements - Norifood v2
 
 ## Summary of Changes
 

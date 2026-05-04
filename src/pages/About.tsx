@@ -51,7 +51,7 @@ export default function About() {
                 <Fish className="h-8 w-8 md:h-10 md:w-10 text-primary" />
               </div>
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 md:mb-6">
-                Fresh N'Good
+                Norifood
               </h1>
               <p className="text-base md:text-xl text-muted-foreground leading-relaxed">
                 Votre partenaire de confiance pour les produits de la mer à Marrakech depuis plus de 20 ans
@@ -88,7 +88,7 @@ export default function About() {
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 md:mb-6">Notre Histoire</h2>
                 <div className="space-y-4 text-muted-foreground leading-relaxed">
                   <p>
-                    Depuis plus de deux décennies, Fresh N'Good s'est imposé comme la référence incontournable 
+                    Depuis plus de deux décennies, Norifood s'est imposé comme la référence incontournable 
                     des produits de la mer à Marrakech. Notre passion pour la qualité et la fraîcheur guide 
                     chacune de nos actions.
                   </p>

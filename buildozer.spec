@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = Fresh N'Good
+title = Norifood
 
 # (str) Package name
-package.name = freshngood
+package.name = norifood
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = app.lovable.freshngood
+package.domain = app.pixein.norifood
 
 # (str) Source files location (dir)
 source.dir = dist

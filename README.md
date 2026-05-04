@@ -1,4 +1,4 @@
-# Fresh N'Good - Produits de la Mer Frais
+# Norifood - Produits de la Mer Frais
 
 Application e-commerce B2C pour la vente de produits de la mer frais au Maroc.
 

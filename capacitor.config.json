@@ -1,6 +1,6 @@
 {
-  "appId": "ma.freshngood.app",
-  "appName": "Fresh N'Good",
+  "appId": "ma.norifood.app",
+  "appName": "Norifood",
   "webDir": "dist",
   "plugins": {
     "SplashScreen": {

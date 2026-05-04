@@ -39,8 +39,8 @@ export default function Contact() {
     {
       icon: Mail,
       title: "Email",
-      details: ["contact@freshngood.ma"],
-      action: "mailto:contact@freshngood.ma",
+      details: ["contact@norifood.ma"],
+      action: "mailto:contact@norifood.ma",
       color: "text-blue-500"
     },
     {
