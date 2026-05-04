@@ -65,13 +65,7 @@ export const Hero = () => {
         ];
 
   return (
-    <section className="relative overflow-hidden bg-background">
-      {/* Ambient red glow */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-32 -right-32 w-[40rem] h-[40rem] rounded-full bg-primary/15 blur-[120px]" />
-        <div className="absolute -bottom-40 -left-40 w-[36rem] h-[36rem] rounded-full bg-primary/10 blur-[120px]" />
-      </div>
-
+    <section className="relative overflow-hidden bg-background border-b border-border">
       <Carousel setApi={setApi} className="w-full" opts={{ loop: true }}>
         <CarouselContent>
           {slides.map((slide) => (
@@ -136,8 +130,7 @@ export const Hero = () => {
 
                   {/* Visual */}
                   <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-transparent to-transparent rounded-3xl blur-2xl" />
-                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-border bg-nori-surface shadow-2xl">
+                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-border bg-card">
                       {slide.image_url ? (
                         <img
                           src={slide.image_url}
@@ -147,7 +140,6 @@ export const Hero = () => {
                       ) : (
                         <DefaultHeroVisual />
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                     </div>
                   </div>
                 </div>
@@ -177,19 +169,14 @@ export const Hero = () => {
 };
 
 const DefaultHeroVisual = () => (
-  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-nori-surface via-black to-nori-surface relative">
+  <div className="w-full h-full flex items-center justify-center bg-card relative">
     <div className="text-center space-y-3">
-      <div className="text-7xl md:text-8xl font-black text-primary opacity-20 tracking-tighter">
+      <div className="text-7xl md:text-8xl font-black text-primary opacity-25 tracking-tighter">
         和
       </div>
       <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">
         Premium Asian Ingredients
       </div>
-    </div>
-    <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-[0.04] pointer-events-none">
-      {Array.from({ length: 9 }).map((_, i) => (
-        <div key={i} className="border border-foreground/30" />
-      ))}
     </div>
   </div>
 );
